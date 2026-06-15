@@ -1,5 +1,6 @@
 package com.footballxtream.ui.profiles
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.footballxtream.FootballXtreamApp
+import com.footballxtream.R
 import com.footballxtream.data.ContentRepository
 import com.footballxtream.data.local.ProfileDao
 import com.footballxtream.data.local.ProfileEntity
@@ -46,6 +48,7 @@ data class AddProfileUiState(
 class AddProfileViewModel(
     private val profileDao: ProfileDao,
     private val repository: ContentRepository,
+    private val context: Context,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AddProfileUiState())
@@ -105,7 +108,7 @@ class AddProfileViewModel(
                         persist(ProfileEntity(name = name, type = ProfileType.M3U, m3uUrl = url))
                         onSaved()
                     }
-                    .onFailure { fail("No se pudo cargar la lista M3U. Revisa la URL.") }
+                    .onFailure { fail(context.getString(R.string.error_m3u_load)) }
             } else {
                 val profile = XtreamProfile(
                     name = current.name.ifBlank { current.username },
@@ -127,7 +130,7 @@ class AddProfileViewModel(
                         )
                         onSaved()
                     }
-                    .onFailure { fail("No se pudo conectar. Revisa servidor, usuario y contraseña.") }
+                    .onFailure { fail(context.getString(R.string.error_xtream_connect)) }
             }
         }
     }
@@ -145,7 +148,7 @@ class AddProfileViewModel(
         return when {
             base.lowercase() !in generic -> base
             host.isNotBlank() -> host
-            else -> "Lista M3U"
+            else -> context.getString(R.string.default_m3u_name)
         }
     }
 
@@ -162,8 +165,8 @@ class AddProfileViewModel(
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val container = (this[APPLICATION_KEY] as FootballXtreamApp).container
-                AddProfileViewModel(container.profileDao, container.repository)
+                val app = this[APPLICATION_KEY] as FootballXtreamApp
+                AddProfileViewModel(app.container.profileDao, app.container.repository, app)
             }
         }
     }

@@ -27,6 +27,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,6 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.Button
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.footballxtream.R
 import com.footballxtream.data.local.ProfileType
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.TvTextField
@@ -74,32 +76,33 @@ fun AddProfileScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
-                text = if (state.isEditing) "Editar perfil" else "Conecta tu lista",
+                text = stringResource(
+                    if (state.isEditing) R.string.add_edit_profile else R.string.add_connect_list,
+                ),
                 style = MaterialTheme.typography.headlineSmall,
                 color = colors.onSurface,
             )
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                ModeChip("Xtream", state.mode == ProfileType.XTREAM) {
+                ModeChip(stringResource(R.string.profile_type_xtream), state.mode == ProfileType.XTREAM) {
                     viewModel.onModeChange(ProfileType.XTREAM)
                 }
-                ModeChip("Lista M3U", state.mode == ProfileType.M3U) {
+                ModeChip(stringResource(R.string.profile_type_m3u), state.mode == ProfileType.M3U) {
                     viewModel.onModeChange(ProfileType.M3U)
                 }
-                ModeChip("Enlace directo", state.mode == ProfileType.DIRECT) {
+                ModeChip(stringResource(R.string.profile_type_direct), state.mode == ProfileType.DIRECT) {
                     viewModel.onModeChange(ProfileType.DIRECT)
                 }
             }
 
             Text(
-                text = when {
-                    state.isDirect ->
-                        "Pega una URL de stream (HLS .m3u8 o DASH .mpd). Se reproduce tal cual, sin filtrar por deporte."
-                    state.isM3u ->
-                        "Pega la URL de tu lista (.m3u / m3u_plus). Lo más compatible si tu proveedor bloquea la API."
-                    else ->
-                        "Conéctate con la dirección del servidor, tu usuario y tu contraseña."
-                },
+                text = stringResource(
+                    when {
+                        state.isDirect -> R.string.add_desc_direct
+                        state.isM3u -> R.string.add_desc_m3u
+                        else -> R.string.add_desc_xtream
+                    },
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
@@ -108,42 +111,42 @@ fun AddProfileScreen(
                 TvTextField(
                     value = state.m3uUrl,
                     onValueChange = viewModel::onM3uUrlChange,
-                    label = if (state.isDirect) "URL del stream (HLS/DASH)" else "URL de la lista M3U",
+                    label = stringResource(
+                        if (state.isDirect) R.string.field_stream_url else R.string.field_m3u_url,
+                    ),
                     modifier = fieldModifier,
                     keyboardType = KeyboardType.Uri,
                     focusRequester = firstField,
-                    helper = if (state.isDirect) {
-                        "Ej.: https://servidor/stream.m3u8  ·  https://servidor/manifest.mpd"
-                    } else {
-                        "Ej.: http://host:puerto/get.php?username=…&password=…&type=m3u_plus"
-                    },
+                    helper = stringResource(
+                        if (state.isDirect) R.string.helper_direct else R.string.helper_m3u,
+                    ),
                 )
                 TvTextField(
                     value = state.name,
                     onValueChange = viewModel::onNameChange,
-                    label = "Nombre del perfil (opcional)",
+                    label = stringResource(R.string.field_profile_name),
                     modifier = fieldModifier,
                 )
             } else {
                 TvTextField(
                     value = state.server,
                     onValueChange = viewModel::onServerChange,
-                    label = "URL del servidor",
+                    label = stringResource(R.string.field_server_url),
                     modifier = fieldModifier,
                     keyboardType = KeyboardType.Uri,
                     focusRequester = firstField,
-                    helper = "Ej.: http://midominio.com:8080",
+                    helper = stringResource(R.string.helper_server),
                 )
                 TvTextField(
                     value = state.username,
                     onValueChange = viewModel::onUsernameChange,
-                    label = "Usuario",
+                    label = stringResource(R.string.field_username),
                     modifier = fieldModifier,
                 )
                 TvTextField(
                     value = state.password,
                     onValueChange = viewModel::onPasswordChange,
-                    label = "Contraseña",
+                    label = stringResource(R.string.field_password),
                     modifier = fieldModifier,
                     isPassword = true,
                     keyboardType = KeyboardType.Password,
@@ -151,7 +154,7 @@ fun AddProfileScreen(
                 TvTextField(
                     value = state.name,
                     onValueChange = viewModel::onNameChange,
-                    label = "Nombre del perfil (opcional)",
+                    label = stringResource(R.string.field_profile_name),
                     modifier = fieldModifier,
                 )
             }
@@ -170,11 +173,13 @@ fun AddProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = when {
-                        state.isConnecting -> "Conectando…"
-                        state.isEditing -> "Guardar cambios"
-                        else -> "Guardar y entrar"
-                    },
+                    text = stringResource(
+                        when {
+                            state.isConnecting -> R.string.btn_connecting
+                            state.isEditing -> R.string.btn_save_changes
+                            else -> R.string.btn_save_enter
+                        },
+                    ),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                 )

@@ -1,5 +1,6 @@
 package com.footballxtream.ui.player
 
+import android.content.Context
 import androidx.annotation.OptIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.HttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import com.footballxtream.FootballXtreamApp
+import com.footballxtream.R
 import com.footballxtream.data.ContentRepository
 import com.footballxtream.data.local.SettingsStore
 import com.footballxtream.model.ChannelGroup
@@ -43,8 +45,8 @@ data class PlayerUiState(
     val resolution: String? = null,
     val isBuffering: Boolean = true,
     val menuOpen: Boolean = false,
-    /** Section shown in the OK menu: "Calidad", "Audio" or "Subtítulos". */
-    val menuSection: String = "Calidad",
+    /** Localized label of the OK-menu section currently shown (Quality / Audio / Subtitles / Guide). */
+    val menuSection: String = "",
     val menuOptions: List<String> = emptyList(),
     val menuSelectedIndex: Int = 0,
     /** "Now / next" programme titles from EPG (Xtream API or M3U's XMLTV), null when unavailable. */
@@ -64,6 +66,7 @@ class PlayerViewModel(
     private val settingsStore: SettingsStore,
     private val playerEngine: PlayerEngine,
     private val repository: ContentRepository,
+    private val context: Context,
 ) : ViewModel() {
 
     val canPlay: Boolean = playbackSession.current != null
@@ -206,7 +209,7 @@ class PlayerViewModel(
         val group = currentGroup ?: return
         val options = emissionOptions(group)
         if (options.count { it != null } < 2) {
-            showNotice("Única calidad disponible")
+            showNotice(context.getString(R.string.player_only_one_quality))
             return
         }
         val currentIndex = options.indexOf(selectedEmission).coerceAtLeast(0)
@@ -249,9 +252,22 @@ class PlayerViewModel(
         }
     }
 
-    // --- OK menu with sections: Calidad / Audio / Subtítulos (◀▶ switches section) ---
+    // --- OK menu with sections: Quality / Audio / Subtitles / Guide (◀▶ switches section) ---
 
-    private val menuSections = listOf("Calidad", "Audio", "Subtítulos", "Guía")
+    /** Stable identity of each menu section, independent of its (translated) display label. */
+    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE }
+
+    private var currentSection = MenuSection.QUALITY
+
+    /** Localized label shown for a section header. */
+    private fun sectionLabel(section: MenuSection): String = context.getString(
+        when (section) {
+            MenuSection.QUALITY -> R.string.menu_section_quality
+            MenuSection.AUDIO -> R.string.menu_section_audio
+            MenuSection.SUBTITLES -> R.string.menu_section_subtitles
+            MenuSection.GUIDE -> R.string.menu_section_guide
+        },
+    )
 
     /** Labels + current selection + how to apply a pick, for whichever section is showing. */
     private class MenuOptions(val labels: List<String>, val selected: Int, val apply: (Int) -> Unit)
@@ -259,19 +275,20 @@ class PlayerViewModel(
     private var menuApply: (Int) -> Unit = {}
 
     fun openMenu() {
-        showSection(menuSections.first())
+        showSection(MenuSection.QUALITY)
     }
 
     fun closeMenu() {
         _ui.update { it.copy(menuOpen = false) }
     }
 
-    /** Cycles to the previous/next section (Calidad ↔ Audio ↔ Subtítulos). */
+    /** Cycles to the previous/next section (Quality ↔ Audio ↔ Subtitles ↔ Guide). */
     fun moveMenuSection(delta: Int) {
         if (!_ui.value.menuOpen) return
-        val current = menuSections.indexOf(_ui.value.menuSection).coerceAtLeast(0)
-        val next = (current + delta + menuSections.size) % menuSections.size
-        showSection(menuSections[next])
+        val all = MenuSection.entries
+        val current = all.indexOf(currentSection)
+        val next = (current + delta + all.size) % all.size
+        showSection(all[next])
     }
 
     fun moveMenuSelection(delta: Int) {
@@ -290,18 +307,19 @@ class PlayerViewModel(
         _ui.update { it.copy(menuOpen = false) }
     }
 
-    private fun showSection(section: String) {
+    private fun showSection(section: MenuSection) {
+        currentSection = section
         val options = when (section) {
-            "Audio" -> audioMenuOptions()
-            "Subtítulos" -> subtitleMenuOptions()
-            "Guía" -> guideMenuOptions()
-            else -> qualityMenuOptions()
+            MenuSection.AUDIO -> audioMenuOptions()
+            MenuSection.SUBTITLES -> subtitleMenuOptions()
+            MenuSection.GUIDE -> guideMenuOptions()
+            MenuSection.QUALITY -> qualityMenuOptions()
         }
         menuApply = options.apply
         _ui.update {
             it.copy(
                 menuOpen = true,
-                menuSection = section,
+                menuSection = sectionLabel(section),
                 menuOptions = options.labels,
                 menuSelectedIndex = options.selected,
             )
@@ -339,11 +357,11 @@ class PlayerViewModel(
             .forEach { g ->
                 for (i in 0 until g.length) {
                     if (g.isTrackSelected(i)) selected = labels.size
-                    labels += trackLabel(g.getTrackFormat(i), "Audio ${labels.size + 1}")
+                    labels += trackLabel(g.getTrackFormat(i), context.getString(R.string.audio_track_n, labels.size + 1))
                     overrides += TrackSelectionOverride(g.mediaTrackGroup, i)
                 }
             }
-        if (labels.isEmpty()) return MenuOptions(listOf("Sin pistas de audio"), 0) {}
+        if (labels.isEmpty()) return MenuOptions(listOf(context.getString(R.string.audio_none)), 0) {}
         return MenuOptions(labels, selected) { index ->
             overrides.getOrNull(index)?.let { ov ->
                 player.trackSelectionParameters =
@@ -353,7 +371,7 @@ class PlayerViewModel(
     }
 
     private fun subtitleMenuOptions(): MenuOptions {
-        val labels = mutableListOf("Desactivados")
+        val labels = mutableListOf(context.getString(R.string.subtitles_off))
         val overrides = mutableListOf<TrackSelectionOverride?>(null)
         val textDisabled = player.trackSelectionParameters.disabledTrackTypes.contains(C.TRACK_TYPE_TEXT)
         var selected = 0
@@ -362,7 +380,7 @@ class PlayerViewModel(
             .forEach { g ->
                 for (i in 0 until g.length) {
                     if (!textDisabled && g.isTrackSelected(i)) selected = labels.size
-                    labels += trackLabel(g.getTrackFormat(i), "Subtítulo ${labels.size}")
+                    labels += trackLabel(g.getTrackFormat(i), context.getString(R.string.subtitle_track_n, labels.size))
                     overrides += TrackSelectionOverride(g.mediaTrackGroup, i)
                 }
             }
@@ -381,7 +399,7 @@ class PlayerViewModel(
 
     /** Read-only schedule for the current channel: the now-playing programme plus the next few. */
     private fun guideMenuOptions(): MenuOptions {
-        if (currentEpg.isEmpty()) return MenuOptions(listOf("Sin guía disponible"), 0) {}
+        if (currentEpg.isEmpty()) return MenuOptions(listOf(context.getString(R.string.guide_none)), 0) {}
         val now = System.currentTimeMillis()
         val currentIndex = currentEpg.indexOfFirst { it.nowFlag }
             .takeIf { it >= 0 }
@@ -397,7 +415,7 @@ class PlayerViewModel(
     private fun trackLabel(format: Format, fallback: String): String {
         format.label?.takeIf { it.isNotBlank() }?.let { return it }
         format.language?.takeIf { it.isNotBlank() && it != "und" }?.let { lang ->
-            return java.util.Locale(lang).getDisplayLanguage(java.util.Locale("es")).ifBlank { lang }
+            return java.util.Locale(lang).getDisplayLanguage(java.util.Locale.getDefault()).ifBlank { lang }
         }
         return fallback
     }
@@ -512,19 +530,21 @@ class PlayerViewModel(
                 ?: return
             _ui.update { it.copy(isBuffering = true, errorMessage = null) }
             showNotice(
-                if (blocked) "Bloqueado en tu región ($httpCode) · saltando…"
-                else "Saltando canal no disponible…",
+                if (blocked) context.getString(R.string.player_blocked_skipping, httpCode ?: 0)
+                else context.getString(R.string.player_skipping_unavailable),
             )
             viewModelScope.launch { playGroup(next) }
         } else {
-            val origin = group.country?.let { " · canal de ${countryName(it)}" }.orEmpty()
+            val origin = group.country
+                ?.let { context.getString(R.string.player_channel_from, countryName(it)) }
+                .orEmpty()
             _ui.update {
                 it.copy(
                     isBuffering = false,
                     errorMessage = if (blocked) {
-                        "Bloqueado en tu región o sin acceso ($httpCode)$origin"
+                        context.getString(R.string.player_blocked_no_access, httpCode ?: 0, origin)
                     } else {
-                        "Ningún canal disponible"
+                        context.getString(R.string.player_no_channel)
                     },
                 )
             }
@@ -534,7 +554,7 @@ class PlayerViewModel(
     /** Localised country name for an ISO code (iptv-org's "uk" mapped to GB), falling back to the code. */
     private fun countryName(code: String): String {
         val norm = if (code.equals("uk", ignoreCase = true)) "GB" else code.uppercase()
-        return java.util.Locale("", norm).getDisplayCountry(java.util.Locale("es"))
+        return java.util.Locale("", norm).getDisplayCountry(java.util.Locale.getDefault())
             .ifBlank { code.uppercase() }
     }
 
@@ -546,7 +566,7 @@ class PlayerViewModel(
         (listOf<Quality?>(null) + group.variants.map { it.quality })
             .distinctBy(::emissionLabel)
 
-    private fun emissionLabel(quality: Quality?): String = quality?.label ?: "Auto"
+    private fun emissionLabel(quality: Quality?): String = quality?.label ?: context.getString(R.string.quality_auto)
 
     private suspend fun variantForEmission(group: ChannelGroup): ChannelVariant {
         val fixed = selectedEmission
@@ -620,12 +640,14 @@ class PlayerViewModel(
 
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val container = (this[APPLICATION_KEY] as FootballXtreamApp).container
+                val app = this[APPLICATION_KEY] as FootballXtreamApp
+                val container = app.container
                 PlayerViewModel(
                     container.playbackSession,
                     container.settingsStore,
                     container.playerEngine,
                     container.repository,
+                    app,
                 )
             }
         }

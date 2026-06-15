@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.footballxtream.FootballXtreamApp
+import com.footballxtream.R
 import com.footballxtream.data.ChannelNameParser
 import com.footballxtream.data.ContentRepository
 import com.footballxtream.data.local.FavoriteFolderDao
@@ -29,11 +30,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-data class ChannelRow(val title: String, val folders: List<ChannelFolder>)
+data class ChannelRow(val titleRes: Int, val folders: List<ChannelFolder>)
 
 sealed interface ChannelsUiState {
     data object Loading : ChannelsUiState
-    data class Error(val message: String) : ChannelsUiState
+    data class Error(val messageRes: Int) : ChannelsUiState
     data class Content(
         val rows: List<ChannelRow>,
         val qualityMode: QualityMode,
@@ -55,14 +56,12 @@ class ChannelsViewModel(
 
     private sealed interface Load {
         data object Loading : Load
-        data class Error(val message: String) : Load
+        data class Error(val messageRes: Int) : Load
         data class Data(val folders: List<ChannelFolder>) : Load
     }
 
-    /** Header: "Deporte en directo de <perfil>", or just "Deporte en directo" when there's no name. */
-    val title: String = repository.activeProfileName
-        ?.let { "Deporte en directo de $it" }
-        ?: "Deporte en directo"
+    /** Custom/default profile name for the header ("Live sports of <name>"); null when unnamed. */
+    val activeProfileName: String? = repository.activeProfileName
 
     private val load = MutableStateFlow<Load>(Load.Loading)
 
@@ -95,7 +94,7 @@ class ChannelsViewModel(
         ) { loadState, favorites, mode, q, (recentKeys, favKeys) ->
             when (loadState) {
                 Load.Loading -> ChannelsUiState.Loading
-                is Load.Error -> ChannelsUiState.Error(loadState.message)
+                is Load.Error -> ChannelsUiState.Error(loadState.messageRes)
                 is Load.Data -> ChannelsUiState.Content(
                     rows = buildRows(loadState.folders, favorites, mode, q),
                     qualityMode = mode,
@@ -139,7 +138,7 @@ class ChannelsViewModel(
                         }
                     }
                 },
-                onFailure = { load.value = Load.Error("No se pudieron cargar los canales.") },
+                onFailure = { load.value = Load.Error(R.string.error_load_channels) },
             )
         }
     }
@@ -260,9 +259,9 @@ class ChannelsViewModel(
         val otherFolders = visible.filter { !it.isFootball && !isFavorite(it) }
 
         return buildList {
-            if (favoriteFolders.isNotEmpty()) add(ChannelRow("Carpetas favoritas", favoriteFolders))
-            if (footballFolders.isNotEmpty()) add(ChannelRow("Fútbol", footballFolders))
-            if (otherFolders.isNotEmpty()) add(ChannelRow("Más deporte", otherFolders))
+            if (favoriteFolders.isNotEmpty()) add(ChannelRow(R.string.section_favorite_folders, favoriteFolders))
+            if (footballFolders.isNotEmpty()) add(ChannelRow(R.string.section_football, footballFolders))
+            if (otherFolders.isNotEmpty()) add(ChannelRow(R.string.section_more_sports, otherFolders))
         }
     }
 

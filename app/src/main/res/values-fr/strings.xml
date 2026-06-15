@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Sport en direct uniquement</string>
+    <string name="app_loading">Chargement…</string>
+
+    <string name="live_sports">Sport en direct</string>
+    <string name="live_sports_of">Sport en direct de %1$s</string>
+    <string name="channels_count">%1$d chaînes</string>
+    <string name="error_load_channels">Impossible de charger les chaînes.</string>
+    <string name="action_retry">Réessayer</string>
+    <string name="action_search">🔍 Rechercher</string>
+    <string name="action_reload">↻ Recharger</string>
+    <string name="search_field_label">Rechercher  (p. ex. football, laliga, sport)</string>
+    <string name="no_sports_channels">Aucune chaîne de sport trouvée dans ce profil.</string>
+    <string name="no_results">Aucun résultat pour \"%1$s\".</string>
+    <string name="section_favorite_channels">Chaînes favorites</string>
+    <string name="section_recent">Récentes</string>
+    <string name="section_favorite_folders">Dossiers favoris</string>
+    <string name="section_football">Football</string>
+    <string name="section_more_sports">Plus de sport</string>
+    <string name="loading_channels">Chargement des chaînes…</string>
+    <string name="folder_back_hint">Retour pour revenir</string>
+
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ pour changer de chaîne</string>
+    <string name="menu_nav_hint">▲▼ choisir · ◀▶ section · OK confirmer</string>
+    <string name="controls_legend">OK : menu  ·  ▲▼ : qualité  ·  ◀▶ : chaîne (×2 dossier)</string>
+    <string name="epg_now">Maintenant : %1$s</string>
+    <string name="epg_next_suffix">   ·   Ensuite : %1$s</string>
+    <string name="menu_section_quality">Qualité</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Sous-titres</string>
+    <string name="menu_section_guide">Guide</string>
+    <string name="player_only_one_quality">Une seule qualité disponible</string>
+    <string name="audio_none">Aucune piste audio</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Désactivés</string>
+    <string name="subtitle_track_n">Sous-titre %1$d</string>
+    <string name="guide_none">Aucun guide disponible</string>
+    <string name="player_blocked_skipping">Bloqué dans ta région (%1$d) · passage…</string>
+    <string name="player_skipping_unavailable">Chaîne indisponible, on passe…</string>
+    <string name="player_blocked_no_access">Bloqué dans ta région ou sans accès (%1$d)%2$s</string>
+    <string name="player_channel_from"> · chaîne de %1$s</string>
+    <string name="player_no_channel">Aucune chaîne disponible</string>
+
+    <string name="add_edit_profile">Modifier le profil</string>
+    <string name="add_connect_list">Connecte ta liste</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Liste M3U</string>
+    <string name="profile_type_direct">Lien direct</string>
+    <string name="add_desc_direct">Colle une URL de flux (HLS .m3u8 ou DASH .mpd). Lue telle quelle, sans filtre sport.</string>
+    <string name="add_desc_m3u">Colle l\'URL de ta liste (.m3u / m3u_plus). Le plus compatible si ton fournisseur bloque l\'API.</string>
+    <string name="add_desc_xtream">Connecte-toi avec l\'adresse du serveur, ton identifiant et ton mot de passe.</string>
+    <string name="field_stream_url">URL du flux (HLS/DASH)</string>
+    <string name="field_m3u_url">URL de la liste M3U</string>
+    <string name="helper_direct">Ex. : https://serveur/stream.m3u8  ·  https://serveur/manifest.mpd</string>
+    <string name="helper_m3u">Ex. : http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Nom du profil (facultatif)</string>
+    <string name="field_server_url">URL du serveur</string>
+    <string name="field_username">Identifiant</string>
+    <string name="field_password">Mot de passe</string>
+    <string name="helper_server">Ex. : http://mondomaine.com:8080</string>
+    <string name="btn_connecting">Connexion…</string>
+    <string name="btn_save_changes">Enregistrer les modifications</string>
+    <string name="btn_save_enter">Enregistrer et entrer</string>
+    <string name="error_m3u_load">Impossible de charger la liste M3U. Vérifie l\'URL.</string>
+    <string name="error_xtream_connect">Connexion impossible. Vérifie le serveur, l\'identifiant et le mot de passe.</string>
+    <string name="default_m3u_name">Liste M3U</string>
+
+    <string name="profiles_longpress_hint">Maintiens un profil appuyé pour le modifier ou le supprimer</string>
+    <string name="action_edit">Modifier</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_add">Ajouter</string>
+
+    <string name="settings_language">Langue</string>
+    <string name="language_system">Automatique (appareil)</string>
+</resources>

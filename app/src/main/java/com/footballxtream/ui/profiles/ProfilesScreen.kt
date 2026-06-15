@@ -33,6 +33,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.footballxtream.R
 import com.footballxtream.data.local.ProfileEntity
 import com.footballxtream.ui.components.BrandHeader
 
@@ -92,7 +94,7 @@ fun ProfilesScreen(
             }
             if (profiles.isNotEmpty()) {
                 Text(
-                    text = "Mantén pulsado un perfil para editarlo o eliminarlo",
+                    text = stringResource(R.string.profiles_longpress_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = colors.onSurfaceVariant,
                 )
@@ -174,13 +176,13 @@ private fun ProfileActionMenu(
                 onClick = onEdit,
                 modifier = Modifier.fillMaxWidth().focusRequester(firstButton),
             ) {
-                Text(text = "Editar", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                Text(text = stringResource(R.string.action_edit), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
             }
             Button(onClick = onDelete, modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Eliminar", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                Text(text = stringResource(R.string.action_delete), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
             }
             Button(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Cancelar", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                Text(text = stringResource(R.string.action_cancel), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
             }
         }
     }
@@ -250,11 +252,13 @@ private fun ProfileCard(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
                 )
                 TypeBadge(
-                    label = when {
-                        profile.isDirect -> "Enlace directo"
-                        profile.isM3u -> "Lista M3U"
-                        else -> "Xtream"
-                    },
+                    label = stringResource(
+                        when {
+                            profile.isDirect -> R.string.profile_type_direct
+                            profile.isM3u -> R.string.profile_type_m3u
+                            else -> R.string.profile_type_xtream
+                        },
+                    ),
                 )
             }
         }
@@ -290,7 +294,7 @@ private fun AddCard(focusable: Boolean, onClick: () -> Unit) {
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "Añadir",
+                text = stringResource(R.string.action_add),
                 style = MaterialTheme.typography.titleSmall,
                 color = colors.onSurface,
                 textAlign = TextAlign.Center,

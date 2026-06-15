@@ -33,6 +33,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -45,6 +46,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.PlayerView
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.footballxtream.R
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -173,7 +175,7 @@ fun PlayerScreen(
 
         ui.errorMessage?.let { msg ->
             Text(
-                text = "$msg  ·  ◀▶ para cambiar de canal",
+                text = stringResource(R.string.player_error_with_hint, msg),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color(0xFFE6EAEE),
                 modifier = Modifier.align(Alignment.Center),
@@ -197,7 +199,7 @@ fun PlayerScreen(
         // While the menu is open, show its navigation hint.
         if (ui.menuOpen) {
             Text(
-                text = "▲▼ elegir · ◀▶ sección · OK confirmar",
+                text = stringResource(R.string.menu_nav_hint),
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0x99FFFFFF),
                 modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
@@ -211,7 +213,7 @@ fun PlayerScreen(
             modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
         ) {
             Text(
-                text = "OK: menú  ·  ▲▼: calidad  ·  ◀▶: canal (×2 carpeta)",
+                text = stringResource(R.string.controls_legend),
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0x99FFFFFF),
             )
@@ -265,6 +267,8 @@ private fun StatsOverlay(
 
 @Composable
 private fun EpgOverlay(now: String, next: String?, modifier: Modifier = Modifier) {
+    val nowText = stringResource(R.string.epg_now, now)
+    val nextText = if (!next.isNullOrBlank()) stringResource(R.string.epg_next_suffix, next) else ""
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
@@ -272,10 +276,7 @@ private fun EpgOverlay(now: String, next: String?, modifier: Modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 5.dp),
     ) {
         Text(
-            text = buildString {
-                append("Ahora: ").append(now)
-                if (!next.isNullOrBlank()) append("   ·   Luego: ").append(next)
-            },
+            text = nowText + nextText,
             style = MaterialTheme.typography.labelSmall,
             color = Color(0xCCE6EAEE),
         )

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Kirola zuzenean soilik</string>
+    <string name="app_loading">Kargatzen…</string>
+
+    <string name="live_sports">Kirola zuzenean</string>
+    <string name="live_sports_of">Kirola zuzenean — %1$s</string>
+    <string name="channels_count">%1$d kanal</string>
+    <string name="error_load_channels">Ezin izan dira kanalak kargatu.</string>
+    <string name="action_retry">Saiatu berriro</string>
+    <string name="action_search">🔍 Bilatu</string>
+    <string name="action_reload">↻ Birkargatu</string>
+    <string name="search_field_label">Bilatu  (adib. futbola, laliga, kirola)</string>
+    <string name="no_sports_channels">Ez da kirol-kanalik aurkitu profil honetan.</string>
+    <string name="no_results">Emaitzarik ez: \"%1$s\".</string>
+    <string name="section_favorite_channels">Gogoko kanalak</string>
+    <string name="section_recent">Azkenak</string>
+    <string name="section_favorite_folders">Gogoko karpetak</string>
+    <string name="section_football">Futbola</string>
+    <string name="section_more_sports">Kirol gehiago</string>
+    <string name="loading_channels">Kanalak kargatzen…</string>
+    <string name="folder_back_hint">Atzera itzultzeko</string>
+
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ kanalez aldatzeko</string>
+    <string name="menu_nav_hint">▲▼ aukeratu · ◀▶ atala · OK berretsi</string>
+    <string name="controls_legend">OK: menua  ·  ▲▼: kalitatea  ·  ◀▶: kanala (×2 karpeta)</string>
+    <string name="epg_now">Orain: %1$s</string>
+    <string name="epg_next_suffix">   ·   Gero: %1$s</string>
+    <string name="menu_section_quality">Kalitatea</string>
+    <string name="menu_section_audio">Audioa</string>
+    <string name="menu_section_subtitles">Azpidatziak</string>
+    <string name="menu_section_guide">Gida</string>
+    <string name="player_only_one_quality">Kalitate bakarra eskuragarri</string>
+    <string name="audio_none">Audio-pistarik ez</string>
+    <string name="audio_track_n">Audioa %1$d</string>
+    <string name="subtitles_off">Desaktibatuta</string>
+    <string name="subtitle_track_n">Azpidatzia %1$d</string>
+    <string name="guide_none">Ez dago gidarik eskuragarri</string>
+    <string name="player_blocked_skipping">Zure eskualdean blokeatuta (%1$d) · saltatzen…</string>
+    <string name="player_skipping_unavailable">Kanal ez-eskuragarria saltatzen…</string>
+    <string name="player_blocked_no_access">Zure eskualdean blokeatuta edo sarbiderik gabe (%1$d)%2$s</string>
+    <string name="player_channel_from"> · kanala: %1$s</string>
+    <string name="player_no_channel">Ez dago kanalik eskuragarri</string>
+
+    <string name="add_edit_profile">Editatu profila</string>
+    <string name="add_connect_list">Konektatu zure zerrenda</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U zerrenda</string>
+    <string name="profile_type_direct">Esteka zuzena</string>
+    <string name="add_desc_direct">Itsatsi stream-URL bat (HLS .m3u8 edo DASH .mpd). Dagoen bezala erreproduzitzen da, kirolaren arabera iragazi gabe.</string>
+    <string name="add_desc_m3u">Itsatsi zure zerrendaren URLa (.m3u / m3u_plus). Bateragarriena zure hornitzaileak APIa blokeatzen badu.</string>
+    <string name="add_desc_xtream">Konektatu zerbitzariaren helbidearekin, zure erabiltzailearekin eta pasahitzarekin.</string>
+    <string name="field_stream_url">Stream-URLa (HLS/DASH)</string>
+    <string name="field_m3u_url">M3U zerrendaren URLa</string>
+    <string name="helper_direct">Adib.: https://zerbitzaria/stream.m3u8  ·  https://zerbitzaria/manifest.mpd</string>
+    <string name="helper_m3u">Adib.: http://host:ataka/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Profilaren izena (aukerakoa)</string>
+    <string name="field_server_url">Zerbitzariaren URLa</string>
+    <string name="field_username">Erabiltzailea</string>
+    <string name="field_password">Pasahitza</string>
+    <string name="helper_server">Adib.: http://niredomeinua.com:8080</string>
+    <string name="btn_connecting">Konektatzen…</string>
+    <string name="btn_save_changes">Gorde aldaketak</string>
+    <string name="btn_save_enter">Gorde eta sartu</string>
+    <string name="error_m3u_load">Ezin izan da M3U zerrenda kargatu. Egiaztatu URLa.</string>
+    <string name="error_xtream_connect">Ezin izan da konektatu. Egiaztatu zerbitzaria, erabiltzailea eta pasahitza.</string>
+    <string name="default_m3u_name">M3U zerrenda</string>
+
+    <string name="profiles_longpress_hint">Eduki sakatuta profila editatzeko edo ezabatzeko</string>
+    <string name="action_edit">Editatu</string>
+    <string name="action_delete">Ezabatu</string>
+    <string name="action_cancel">Utzi</string>
+    <string name="action_add">Gehitu</string>
+
+    <string name="settings_language">Hizkuntza</string>
+    <string name="language_system">Automatikoa (gailua)</string>
+</resources>

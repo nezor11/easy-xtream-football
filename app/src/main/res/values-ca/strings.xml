@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Només esport en directe</string>
+    <string name="app_loading">Carregant…</string>
+
+    <string name="live_sports">Esport en directe</string>
+    <string name="live_sports_of">Esport en directe de %1$s</string>
+    <string name="channels_count">%1$d canals</string>
+    <string name="error_load_channels">No s\'han pogut carregar els canals.</string>
+    <string name="action_retry">Reintenta</string>
+    <string name="action_search">🔍 Cerca</string>
+    <string name="action_reload">↻ Recarrega</string>
+    <string name="search_field_label">Cerca  (p. ex. futbol, laliga, esport)</string>
+    <string name="no_sports_channels">No s\'ha trobat cap canal d\'esport en aquest perfil.</string>
+    <string name="no_results">Cap resultat per a \"%1$s\".</string>
+    <string name="section_favorite_channels">Canals preferits</string>
+    <string name="section_recent">Recents</string>
+    <string name="section_favorite_folders">Carpetes preferides</string>
+    <string name="section_football">Futbol</string>
+    <string name="section_more_sports">Més esport</string>
+    <string name="loading_channels">S\'estan carregant els canals…</string>
+    <string name="folder_back_hint">Enrere per tornar</string>
+
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ per canviar de canal</string>
+    <string name="menu_nav_hint">▲▼ triar · ◀▶ secció · OK confirmar</string>
+    <string name="controls_legend">OK: menú  ·  ▲▼: qualitat  ·  ◀▶: canal (×2 carpeta)</string>
+    <string name="epg_now">Ara: %1$s</string>
+    <string name="epg_next_suffix">   ·   Després: %1$s</string>
+    <string name="menu_section_quality">Qualitat</string>
+    <string name="menu_section_audio">Àudio</string>
+    <string name="menu_section_subtitles">Subtítols</string>
+    <string name="menu_section_guide">Guia</string>
+    <string name="player_only_one_quality">Només hi ha una qualitat disponible</string>
+    <string name="audio_none">Sense pistes d\'àudio</string>
+    <string name="audio_track_n">Àudio %1$d</string>
+    <string name="subtitles_off">Desactivats</string>
+    <string name="subtitle_track_n">Subtítol %1$d</string>
+    <string name="guide_none">No hi ha guia disponible</string>
+    <string name="player_blocked_skipping">Bloquejat a la teva regió (%1$d) · saltant…</string>
+    <string name="player_skipping_unavailable">Saltant canal no disponible…</string>
+    <string name="player_blocked_no_access">Bloquejat a la teva regió o sense accés (%1$d)%2$s</string>
+    <string name="player_channel_from"> · canal de %1$s</string>
+    <string name="player_no_channel">Cap canal disponible</string>
+
+    <string name="add_edit_profile">Edita el perfil</string>
+    <string name="add_connect_list">Connecta la teva llista</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Llista M3U</string>
+    <string name="profile_type_direct">Enllaç directe</string>
+    <string name="add_desc_direct">Enganxa una URL d\'stream (HLS .m3u8 o DASH .mpd). Es reprodueix tal qual, sense filtrar per esport.</string>
+    <string name="add_desc_m3u">Enganxa la URL de la teva llista (.m3u / m3u_plus). El més compatible si el teu proveïdor bloqueja l\'API.</string>
+    <string name="add_desc_xtream">Connecta\'t amb l\'adreça del servidor, el teu usuari i la teva contrasenya.</string>
+    <string name="field_stream_url">URL de l\'stream (HLS/DASH)</string>
+    <string name="field_m3u_url">URL de la llista M3U</string>
+    <string name="helper_direct">Ex.: https://servidor/stream.m3u8  ·  https://servidor/manifest.mpd</string>
+    <string name="helper_m3u">Ex.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Nom del perfil (opcional)</string>
+    <string name="field_server_url">URL del servidor</string>
+    <string name="field_username">Usuari</string>
+    <string name="field_password">Contrasenya</string>
+    <string name="helper_server">Ex.: http://elmeudomini.com:8080</string>
+    <string name="btn_connecting">Connectant…</string>
+    <string name="btn_save_changes">Desa els canvis</string>
+    <string name="btn_save_enter">Desa i entra</string>
+    <string name="error_m3u_load">No s\'ha pogut carregar la llista M3U. Comprova la URL.</string>
+    <string name="error_xtream_connect">No s\'ha pogut connectar. Comprova el servidor, l\'usuari i la contrasenya.</string>
+    <string name="default_m3u_name">Llista M3U</string>
+
+    <string name="profiles_longpress_hint">Mantén premut un perfil per editar-lo o eliminar-lo</string>
+    <string name="action_edit">Edita</string>
+    <string name="action_delete">Elimina</string>
+    <string name="action_cancel">Cancel·la</string>
+    <string name="action_add">Afegeix</string>
+
+    <string name="settings_language">Idioma</string>
+    <string name="language_system">Automàtic (dispositiu)</string>
+</resources>

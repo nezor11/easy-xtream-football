@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -64,7 +65,7 @@ private fun AppRoot() {
         contentAlignment = Alignment.Center,
     ) {
         when (startState) {
-            StartState.LOADING -> Text("Cargando…", color = MaterialTheme.colorScheme.onBackground)
+            StartState.LOADING -> Text(stringResource(R.string.app_loading), color = MaterialTheme.colorScheme.onBackground)
             StartState.HAS_PROFILES -> AppNavigation(start = Routes.PROFILES)
             StartState.NO_PROFILES -> AppNavigation(start = Routes.ADD_PROFILE)
             // Last profile remembered: start on the picker but jump straight into its channels, so

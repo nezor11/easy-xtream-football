@@ -1,4 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Football Xtream</string>
+    <string name="app_name">Easy Xtream Football</string>
+    <string name="brand_tagline">Live sports only</string>
+    <string name="app_loading">Loading…</string>
+
+    <!-- Channels screen -->
+    <string name="live_sports">Live sports</string>
+    <string name="live_sports_of">Live sports of %1$s</string>
+    <string name="channels_count">%1$d channels</string>
+    <string name="error_load_channels">Couldn\'t load the channels.</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_search">🔍 Search</string>
+    <string name="action_reload">↻ Reload</string>
+    <string name="search_field_label">Search  (e.g. football, laliga, sports)</string>
+    <string name="no_sports_channels">No sports channels found in this profile.</string>
+    <string name="no_results">No results for \"%1$s\".</string>
+    <string name="section_favorite_channels">Favorite channels</string>
+    <string name="section_recent">Recent</string>
+    <string name="section_favorite_folders">Favorite folders</string>
+    <string name="section_football">Football</string>
+    <string name="section_more_sports">More sports</string>
+    <string name="loading_channels">Loading channels…</string>
+    <string name="folder_back_hint">Back to return</string>
+
+    <!-- Player overlay / menu -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ to change channel</string>
+    <string name="menu_nav_hint">▲▼ choose · ◀▶ section · OK confirm</string>
+    <string name="controls_legend">OK: menu  ·  ▲▼: quality  ·  ◀▶: channel (×2 folder)</string>
+    <string name="epg_now">Now: %1$s</string>
+    <string name="epg_next_suffix">   ·   Next: %1$s</string>
+    <string name="menu_section_quality">Quality</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Subtitles</string>
+    <string name="menu_section_guide">Guide</string>
+    <string name="player_only_one_quality">Only one quality available</string>
+    <string name="audio_none">No audio tracks</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Off</string>
+    <string name="subtitle_track_n">Subtitle %1$d</string>
+    <string name="guide_none">No guide available</string>
+    <string name="player_blocked_skipping">Blocked in your region (%1$d) · skipping…</string>
+    <string name="player_skipping_unavailable">Skipping unavailable channel…</string>
+    <string name="player_blocked_no_access">Blocked in your region or no access (%1$d)%2$s</string>
+    <string name="player_channel_from"> · channel from %1$s</string>
+    <string name="player_no_channel">No channel available</string>
+
+    <!-- Add / edit profile -->
+    <string name="add_edit_profile">Edit profile</string>
+    <string name="add_connect_list">Connect your list</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U list</string>
+    <string name="profile_type_direct">Direct link</string>
+    <string name="add_desc_direct">Paste a stream URL (HLS .m3u8 or DASH .mpd). It plays as-is, with no sports filtering.</string>
+    <string name="add_desc_m3u">Paste your playlist URL (.m3u / m3u_plus). The most compatible option if your provider blocks the API.</string>
+    <string name="add_desc_xtream">Connect with the server address, your username and your password.</string>
+    <string name="field_stream_url">Stream URL (HLS/DASH)</string>
+    <string name="field_m3u_url">M3U playlist URL</string>
+    <string name="helper_direct">E.g.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">E.g.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Profile name (optional)</string>
+    <string name="field_server_url">Server URL</string>
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="helper_server">E.g.: http://mydomain.com:8080</string>
+    <string name="btn_connecting">Connecting…</string>
+    <string name="btn_save_changes">Save changes</string>
+    <string name="btn_save_enter">Save and enter</string>
+    <string name="error_m3u_load">Couldn\'t load the M3U playlist. Check the URL.</string>
+    <string name="error_xtream_connect">Couldn\'t connect. Check the server, username and password.</string>
+    <string name="default_m3u_name">M3U list</string>
+
+    <!-- Profiles picker -->
+    <string name="profiles_longpress_hint">Long-press a profile to edit or delete it</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_add">Add</string>
+
+    <!-- Language selection -->
+    <string name="settings_language">Language</string>
+    <string name="language_system">Automatic (device)</string>
 </resources>

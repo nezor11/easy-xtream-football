@@ -53,6 +53,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -65,6 +66,7 @@ import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import coil.compose.AsyncImage
+import com.footballxtream.R
 import com.footballxtream.model.ChannelFolder
 import com.footballxtream.model.ChannelGroup
 import com.footballxtream.model.Quality
@@ -105,15 +107,17 @@ fun ChannelsScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Text(
-                    (state as ChannelsUiState.Error).message,
+                    stringResource((state as ChannelsUiState.Error).messageRes),
                     color = MaterialTheme.colorScheme.onBackground,
                 )
-                Button(onClick = viewModel::reload) { Text("Reintentar") }
+                Button(onClick = viewModel::reload) { Text(stringResource(R.string.action_retry)) }
             }
 
             state is ChannelsUiState.Content -> FolderGrid(
                 content = state as ChannelsUiState.Content,
-                title = viewModel.title,
+                title = viewModel.activeProfileName
+                    ?.let { stringResource(R.string.live_sports_of, it) }
+                    ?: stringResource(R.string.live_sports),
                 favoriteNames = favoriteNames,
                 favoriteChannelKeys = favoriteChannelKeys,
                 query = searchQuery,
@@ -164,7 +168,7 @@ private fun FolderGrid(
             label = "channelCount",
         )
         Text(
-            text = "$animatedCount canales",
+            text = stringResource(R.string.channels_count, animatedCount),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(start = 48.dp, bottom = 14.dp),
@@ -184,14 +188,14 @@ private fun FolderGrid(
                 )
             }
             Chip(
-                label = "🔍 Buscar",
+                label = stringResource(R.string.action_search),
                 selected = searchOpen || query.isNotBlank(),
                 onClick = {
                     searchOpen = !searchOpen
                     if (!searchOpen) onQueryChange("")
                 },
             )
-            Chip(label = "↻ Recargar", selected = false, onClick = onReload)
+            Chip(label = stringResource(R.string.action_reload), selected = false, onClick = onReload)
         }
 
         if (searchOpen) {
@@ -199,7 +203,7 @@ private fun FolderGrid(
             TvTextField(
                 value = query,
                 onValueChange = onQueryChange,
-                label = "Buscar  (p. ej. fútbol, laliga, deporte)",
+                label = stringResource(R.string.search_field_label),
                 modifier = Modifier.padding(start = 48.dp, bottom = 18.dp).width(520.dp),
                 focusRequester = searchFocus,
             )
@@ -208,9 +212,9 @@ private fun FolderGrid(
         if (content.rows.isEmpty()) {
             Text(
                 text = if (query.isBlank()) {
-                    "No se encontraron canales de deporte en este perfil."
+                    stringResource(R.string.no_sports_channels)
                 } else {
-                    "Sin resultados para \"$query\"."
+                    stringResource(R.string.no_results, query)
                 },
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 48.dp, top = 24.dp),
@@ -225,7 +229,7 @@ private fun FolderGrid(
         ) {
             if (content.favoriteChannels.isNotEmpty()) {
                 item {
-                    ChannelRowSection(title = "Canales favoritos") {
+                    ChannelRowSection(title = stringResource(R.string.section_favorite_channels)) {
                         WrappingRow(content.favoriteChannels) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
@@ -240,7 +244,7 @@ private fun FolderGrid(
             }
             if (content.recent.isNotEmpty()) {
                 item {
-                    ChannelRowSection(title = "Recientes") {
+                    ChannelRowSection(title = stringResource(R.string.section_recent)) {
                         WrappingRow(content.recent) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
@@ -254,7 +258,7 @@ private fun FolderGrid(
                 }
             }
             items(content.rows) { row ->
-                ChannelRowSection(title = row.title) {
+                ChannelRowSection(title = stringResource(row.titleRes)) {
                     WrappingRow(row.folders) { folder, cardModifier ->
                         FolderCard(
                             folder = folder,
@@ -296,7 +300,7 @@ private fun LoadingSkeleton() {
             )
         }
         Text(
-            text = "Cargando canales…",
+            text = stringResource(R.string.loading_channels),
             style = MaterialTheme.typography.titleMedium,
             color = colors.onSurfaceVariant,
         )
@@ -395,7 +399,7 @@ private fun FolderDetail(
             modifier = Modifier.padding(start = 48.dp, bottom = 4.dp),
         )
         Text(
-            text = "Atrás para volver",
+            text = stringResource(R.string.folder_back_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 48.dp, bottom = 16.dp),
@@ -453,7 +457,7 @@ private fun FolderCard(
     val subtitle = if (folder.isSingle) {
         qualityLabels(folder.single)
     } else {
-        "${folder.channels.size} canales"
+        stringResource(R.string.channels_count, folder.channels.size)
     }
     ImageCard(
         title = folder.name,
