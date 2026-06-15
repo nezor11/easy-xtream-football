@@ -7,7 +7,10 @@
     <!-- Pantalla de canales -->
     <string name="live_sports">Deporte en directo</string>
     <string name="live_sports_of">Deporte en directo de %1$s</string>
-    <string name="channels_count">%1$d canales</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d canal</item>
+        <item quantity="other">%1$d canales</item>
+    </plurals>
     <string name="error_load_channels">No se pudieron cargar los canales.</string>
     <string name="action_retry">Reintentar</string>
     <string name="action_search">🔍 Buscar</string>

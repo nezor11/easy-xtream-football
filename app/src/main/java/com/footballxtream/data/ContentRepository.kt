@@ -26,7 +26,7 @@ import kotlinx.serialization.json.decodeFromJsonElement
 import java.io.File
 import java.io.IOException
 
-class XtreamAuthException : Exception("Autenticación rechazada por el servidor")
+class XtreamAuthException : Exception("Authentication rejected by the server")
 
 /**
  * Single entry point for channel data. Holds the active source (Xtream API or an M3U playlist)
@@ -264,7 +264,7 @@ class ContentRepository(
     private fun loadDirect(url: String): List<ChannelGroup> {
         val host = Regex("""https?://([^/:]+)""", RegexOption.IGNORE_CASE)
             .find(url)?.groupValues?.get(1)?.removePrefix("www.").orEmpty()
-        val name = host.ifBlank { "Directo" }
+        val name = host.ifBlank { "Direct" }
         val channel = LiveChannel(
             streamId = url.hashCode(),
             name = name,

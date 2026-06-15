@@ -53,6 +53,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -168,7 +169,7 @@ private fun FolderGrid(
             label = "channelCount",
         )
         Text(
-            text = stringResource(R.string.channels_count, animatedCount),
+            text = pluralStringResource(R.plurals.channels_count, animatedCount, animatedCount),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(start = 48.dp, bottom = 14.dp),
@@ -457,7 +458,7 @@ private fun FolderCard(
     val subtitle = if (folder.isSingle) {
         qualityLabels(folder.single)
     } else {
-        stringResource(R.string.channels_count, folder.channels.size)
+        pluralStringResource(R.plurals.channels_count, folder.channels.size, folder.channels.size)
     }
     ImageCard(
         title = folder.name,

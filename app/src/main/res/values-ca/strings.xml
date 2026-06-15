@@ -6,7 +6,10 @@
 
     <string name="live_sports">Esport en directe</string>
     <string name="live_sports_of">Esport en directe de %1$s</string>
-    <string name="channels_count">%1$d canals</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d canal</item>
+        <item quantity="other">%1$d canals</item>
+    </plurals>
     <string name="error_load_channels">No s\'han pogut carregar els canals.</string>
     <string name="action_retry">Reintenta</string>
     <string name="action_search">🔍 Cerca</string>

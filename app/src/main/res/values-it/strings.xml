@@ -6,7 +6,10 @@
 
     <string name="live_sports">Sport in diretta</string>
     <string name="live_sports_of">Sport in diretta di %1$s</string>
-    <string name="channels_count">%1$d canali</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d canale</item>
+        <item quantity="other">%1$d canali</item>
+    </plurals>
     <string name="error_load_channels">Impossibile caricare i canali.</string>
     <string name="action_retry">Riprova</string>
     <string name="action_search">🔍 Cerca</string>

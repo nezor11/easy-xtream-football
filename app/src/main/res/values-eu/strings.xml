@@ -6,7 +6,10 @@
 
     <string name="live_sports">Kirola zuzenean</string>
     <string name="live_sports_of">Kirola zuzenean — %1$s</string>
-    <string name="channels_count">%1$d kanal</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d kanal</item>
+        <item quantity="other">%1$d kanal</item>
+    </plurals>
     <string name="error_load_channels">Ezin izan dira kanalak kargatu.</string>
     <string name="action_retry">Saiatu berriro</string>
     <string name="action_search">🔍 Bilatu</string>

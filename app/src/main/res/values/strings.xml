@@ -8,7 +8,10 @@
     <!-- Channels screen -->
     <string name="live_sports">Live sports</string>
     <string name="live_sports_of">Live sports of %1$s</string>
-    <string name="channels_count">%1$d channels</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d channel</item>
+        <item quantity="other">%1$d channels</item>
+    </plurals>
     <string name="error_load_channels">Couldn\'t load the channels.</string>
     <string name="action_retry">Retry</string>
     <string name="action_search">🔍 Search</string>
