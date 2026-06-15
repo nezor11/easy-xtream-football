@@ -1,0 +1,28 @@
+# Gradle / build
+.gradle/
+.kotlin/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.DS_Store
+captures/
+.cxx/
+
+# Keystores / secrets
+*.jks
+*.keystore
+keystore.properties
+
+# Logs
+*.log
+
+# Datos sensibles / temporales de depuración (nunca commitear)
+_db/
+_s.png
+_screen.png
+_s*.png

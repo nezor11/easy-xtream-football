@@ -1,0 +1,319 @@
+package com.footballxtream.ui.player
+
+import android.view.ViewGroup
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.annotation.OptIn
+import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.ui.PlayerView
+import androidx.tv.material3.MaterialTheme
+import androidx.tv.material3.Text
+
+@OptIn(UnstableApi::class)
+@Composable
+fun PlayerScreen(
+    onBack: () -> Unit,
+    viewModel: PlayerViewModel = viewModel(factory = PlayerViewModel.Factory),
+) {
+    if (!viewModel.canPlay) {
+        LaunchedEffect(Unit) { onBack() }
+        return
+    }
+
+    val ui by viewModel.ui.collectAsStateWithLifecycle()
+    val focusRequester = remember { FocusRequester() }
+
+    // Back closes the options menu first; otherwise it leaves the player.
+    BackHandler(enabled = ui.menuOpen) { viewModel.closeMenu() }
+    BackHandler(enabled = !ui.menuOpen, onBack = onBack)
+
+    LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
+
+    // Pause when the app is backgrounded so the audio stops (and system audio focus is released)
+    // instead of playing on, then resume when it comes back to the foreground.
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_STOP -> viewModel.onBackground()
+                Lifecycle.Event.ON_START -> viewModel.onForeground()
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .focusRequester(focusRequester)
+            .focusable()
+            .onKeyEvent { event ->
+                if (event.type != KeyEventType.KeyDown) return@onKeyEvent false
+                if (ui.menuOpen) {
+                    when (event.key) {
+                        Key.DirectionUp -> {
+                            viewModel.moveMenuSelection(-1); true
+                        }
+                        Key.DirectionDown -> {
+                            viewModel.moveMenuSelection(1); true
+                        }
+                        Key.DirectionLeft -> {
+                            viewModel.moveMenuSection(-1); true
+                        }
+                        Key.DirectionRight -> {
+                            viewModel.moveMenuSection(1); true
+                        }
+                        Key.DirectionCenter, Key.Enter -> {
+                            viewModel.confirmMenuSelection(); true
+                        }
+                        else -> false
+                    }
+                } else {
+                    when (event.key) {
+                        Key.DirectionLeft -> {
+                            viewModel.previousChannel(); true
+                        }
+                        Key.DirectionRight -> {
+                            viewModel.nextChannel(); true
+                        }
+                        Key.DirectionUp -> {
+                            viewModel.stepQuality(-1); true
+                        }
+                        Key.DirectionDown -> {
+                            viewModel.stepQuality(1); true
+                        }
+                        Key.DirectionCenter, Key.Enter -> {
+                            viewModel.openMenu(); true
+                        }
+                        else -> false
+                    }
+                }
+            },
+    ) {
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { ctx ->
+                PlayerView(ctx).apply {
+                    player = viewModel.player
+                    useController = false
+                    // Keep the device awake while the player is open so it doesn't go idle and put
+                    // the TV into standby via HDMI-CEC (happens on dead/buffering channels too).
+                    keepScreenOn = true
+                    setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING)
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                    )
+                }
+            },
+        )
+
+        Column(
+            modifier = Modifier.align(Alignment.BottomStart).padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            StatsOverlay(
+                channelName = ui.channelName,
+                emissionLabel = ui.emissionLabel,
+                throughputMbps = ui.throughputMbps,
+                resolution = ui.resolution,
+                isBuffering = ui.isBuffering,
+            )
+            ui.nowProgram?.let { now ->
+                EpgOverlay(now = now, next = ui.nextProgram)
+            }
+            if (ui.menuOpen) {
+                OptionsMenu(
+                    section = ui.menuSection,
+                    options = ui.menuOptions,
+                    selectedIndex = ui.menuSelectedIndex,
+                )
+            }
+        }
+
+        ui.errorMessage?.let { msg ->
+            Text(
+                text = "$msg  ·  ◀▶ para cambiar de canal",
+                style = MaterialTheme.typography.titleMedium,
+                color = Color(0xFFE6EAEE),
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
+
+        ui.notice?.let { msg ->
+            Text(
+                text = msg,
+                style = MaterialTheme.typography.titleMedium,
+                color = Color(0xFFE6EAEE),
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 28.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xE60A0E12))
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+        }
+
+        // While the menu is open, show its navigation hint.
+        if (ui.menuOpen) {
+            Text(
+                text = "▲▼ elegir · ◀▶ sección · OK confirmar",
+                style = MaterialTheme.typography.labelMedium,
+                color = Color(0x99FFFFFF),
+                modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
+            )
+        }
+        // Controls legend: only the first few times — fades in, stays a few seconds, fades out.
+        AnimatedVisibility(
+            visible = ui.showControlsHint && !ui.menuOpen,
+            enter = fadeIn() + slideInVertically { it / 2 },
+            exit = fadeOut(),
+            modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
+        ) {
+            Text(
+                text = "OK: menú  ·  ▲▼: calidad  ·  ◀▶: canal (×2 carpeta)",
+                style = MaterialTheme.typography.labelMedium,
+                color = Color(0x99FFFFFF),
+            )
+        }
+    }
+}
+
+@Composable
+private fun StatsOverlay(
+    channelName: String,
+    emissionLabel: String,
+    throughputMbps: Double,
+    resolution: String?,
+    isBuffering: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val color = if (isBuffering) MaterialTheme.colorScheme.primary else Color(0xCCE6EAEE)
+    val style = MaterialTheme.typography.labelMedium
+    val separator = "  •  "
+
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0x990A0E12))
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (channelName.isNotBlank()) {
+            Text(channelName, style = style, color = color, maxLines = 1)
+            Text(separator, style = style, color = color)
+        }
+        Text("‹ $emissionLabel ›", style = style, color = color, maxLines = 1)
+        Text(separator, style = style, color = color)
+        // Tabular figures keep the digits steady; the number sits right after the arrow with no gap.
+        Text(
+            text = "⬇ %.1f Mbps".format(throughputMbps),
+            style = style.copy(fontFeatureSettings = "tnum"),
+            color = color,
+            maxLines = 1,
+        )
+        resolution?.let {
+            Text(separator, style = style, color = color)
+            Text(it, style = style, color = color, maxLines = 1)
+        }
+        if (isBuffering) {
+            Text(separator, style = style, color = color)
+            Text("⟳", style = style, color = color)
+        }
+    }
+}
+
+@Composable
+private fun EpgOverlay(now: String, next: String?, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0x990A0E12))
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+    ) {
+        Text(
+            text = buildString {
+                append("Ahora: ").append(now)
+                if (!next.isNullOrBlank()) append("   ·   Luego: ").append(next)
+            },
+            style = MaterialTheme.typography.labelSmall,
+            color = Color(0xCCE6EAEE),
+        )
+    }
+}
+
+@Composable
+private fun OptionsMenu(
+    section: String,
+    options: List<String>,
+    selectedIndex: Int,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MaterialTheme.colorScheme
+    Column(
+        modifier = modifier
+            .width(280.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0xE60A0E12))
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        // Section header with ‹ › to hint that left/right switches between Calidad/Audio/Subtítulos.
+        Text(
+            text = "‹ $section ›",
+            style = MaterialTheme.typography.labelMedium,
+            color = colors.primary,
+            modifier = Modifier.padding(bottom = 4.dp),
+        )
+        options.forEachIndexed { index, label ->
+            val selected = index == selectedIndex
+            Text(
+                text = (if (selected) "● " else "○ ") + label,
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (selected) colors.primary else Color(0xFFE6EAEE),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
