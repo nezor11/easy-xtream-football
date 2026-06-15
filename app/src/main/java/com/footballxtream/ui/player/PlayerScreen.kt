@@ -254,10 +254,11 @@ private fun StatsOverlay(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (channelName.isNotBlank()) {
+            // Only the channel name stands out: a step larger and in the brand green.
             Text(
                 text = if (isFavorite) "★ $channelName" else channelName,
-                style = style,
-                color = if (isFavorite) MaterialTheme.colorScheme.primary else color,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
             )
             Text(separator, style = style, color = color)
