@@ -47,6 +47,8 @@ import androidx.tv.material3.Text
 import com.footballxtream.R
 import com.footballxtream.data.local.ProfileEntity
 import com.footballxtream.ui.components.BrandHeader
+import com.footballxtream.ui.components.LanguageButton
+import com.footballxtream.ui.components.LanguageDialog
 
 @Composable
 fun ProfilesScreen(
@@ -58,6 +60,7 @@ fun ProfilesScreen(
     val profiles by viewModel.profiles.collectAsStateWithLifecycle()
     val colors = MaterialTheme.colorScheme
     var menuProfile by remember { mutableStateOf<ProfileEntity?>(null) }
+    var showLanguage by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
@@ -68,7 +71,7 @@ fun ProfilesScreen(
             // The brand is the heading now (replaces the Netflix-style "¿Quién está viendo?").
             BrandHeader()
 
-            val menuOpen = menuProfile != null
+            val menuOpen = menuProfile != null || showLanguage
             // Auto-focus the first profile on entry, so the remote works immediately without a
             // first "blind" press to grab focus.
             val firstFocus = remember { FocusRequester() }
@@ -114,6 +117,17 @@ fun ProfilesScreen(
                 },
                 onDismiss = { menuProfile = null },
             )
+        }
+
+        // Language picker: a discreet globe in the corner, hidden while another overlay is open.
+        if (menuProfile == null && !showLanguage) {
+            LanguageButton(
+                onClick = { showLanguage = true },
+                modifier = Modifier.align(Alignment.TopEnd).padding(24.dp),
+            )
+        }
+        if (showLanguage) {
+            LanguageDialog(onDismiss = { showLanguage = false })
         }
     }
 }

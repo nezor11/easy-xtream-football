@@ -1,5 +1,6 @@
 package com.footballxtream
 
+import android.content.Context
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -39,6 +40,11 @@ object Routes {
 }
 
 class MainActivity : ComponentActivity() {
+    // Apply the saved language to the Activity context so stringResource() in Compose follows it.
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Keep the device awake while the app is in the foreground (any screen) so it doesn't go
