@@ -76,6 +76,7 @@
     <string name="action_delete">Supprimer</string>
     <string name="action_cancel">Annuler</string>
     <string name="action_add">Ajouter</string>
+    <string name="add_profile">Ajouter un profil</string>
 
     <string name="settings_language">Langue</string>
     <string name="language_system">Automatique (appareil)</string>

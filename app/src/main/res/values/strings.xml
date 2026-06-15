@@ -81,6 +81,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_add">Add</string>
+    <string name="add_profile">Add profile</string>
 
     <!-- Language selection -->
     <string name="settings_language">Language</string>

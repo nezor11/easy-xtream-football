@@ -80,6 +80,7 @@
     <string name="action_delete">Eliminar</string>
     <string name="action_cancel">Cancelar</string>
     <string name="action_add">Añadir</string>
+    <string name="add_profile">Añadir perfil</string>
 
     <!-- Selección de idioma -->
     <string name="settings_language">Idioma</string>

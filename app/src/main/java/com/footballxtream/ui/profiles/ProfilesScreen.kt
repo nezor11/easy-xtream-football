@@ -2,6 +2,8 @@ package com.footballxtream.ui.profiles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -92,8 +95,12 @@ fun ProfilesScreen(
             // Auto-focus the first profile on entry, so the remote works immediately without a
             // first "blind" press to grab focus.
             val firstFocus = remember { FocusRequester() }
+            val addFocus = remember { FocusRequester() }
             LaunchedEffect(profiles.isNotEmpty(), menuOpen) {
-                if (profiles.isNotEmpty() && !menuOpen) runCatching { firstFocus.requestFocus() }
+                if (!menuOpen) {
+                    if (profiles.isNotEmpty()) runCatching { firstFocus.requestFocus() }
+                    else runCatching { addFocus.requestFocus() }
+                }
             }
             // A plain centered Row (not a LazyRow) keeps the cards centered and, since it does not
             // clip, the focus zoom never gets cut off. Fine for the handful of profiles a user has.
@@ -110,8 +117,13 @@ fun ProfilesScreen(
                         modifier = if (index == 0) Modifier.focusRequester(firstFocus) else Modifier,
                     )
                 }
-                AddCard(focusable = !menuOpen, onClick = onAddProfile)
             }
+            // Add a new profile: a wide button below the cards (was a "+" tile at the end of the row).
+            AddProfileButton(
+                focusable = !menuOpen,
+                onClick = onAddProfile,
+                modifier = Modifier.focusRequester(addFocus),
+            )
             if (profiles.isNotEmpty()) {
                 Text(
                     text = stringResource(R.string.profiles_longpress_hint),
@@ -311,25 +323,33 @@ private fun TypeBadge(label: String) {
     )
 }
 
+/** Wide "Add profile" button below the profile cards. Filled green when focused, outlined otherwise. */
 @Composable
-private fun AddCard(focusable: Boolean, onClick: () -> Unit) {
+private fun AddProfileButton(
+    focusable: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val colors = MaterialTheme.colorScheme
-    Card(
-        onClick = onClick,
-        modifier = Modifier.width(CardWidth).focusProperties { canFocus = focusable },
-        scale = CardDefaults.scale(focusedScale = 1.06f),
+    var focused by remember { mutableStateOf(false) }
+    val shape = RoundedCornerShape(50)
+    Box(
+        modifier = modifier
+            .widthIn(max = 360.dp)
+            .fillMaxWidth()
+            .clip(shape)
+            .background(if (focused) colors.primary else colors.surface)
+            .border(2.dp, colors.primary, shape)
+            .focusProperties { canFocus = focusable }
+            .onFocusChanged { focused = it.isFocused }
+            .clickable { onClick() }
+            .padding(vertical = 13.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        CardAvatar(letter = "+")
-        Box(
-            modifier = Modifier.fillMaxWidth().height(LabelAreaHeight),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = stringResource(R.string.action_add),
-                style = MaterialTheme.typography.titleSmall,
-                color = colors.onSurface,
-                textAlign = TextAlign.Center,
-            )
-        }
+        Text(
+            text = "+  " + stringResource(R.string.add_profile),
+            style = MaterialTheme.typography.titleSmall,
+            color = if (focused) colors.onPrimary else colors.primary,
+        )
     }
 }

@@ -76,6 +76,7 @@
     <string name="action_delete">Ezabatu</string>
     <string name="action_cancel">Utzi</string>
     <string name="action_add">Gehitu</string>
+    <string name="add_profile">Gehitu profila</string>
 
     <string name="settings_language">Hizkuntza</string>
     <string name="language_system">Automatikoa (gailua)</string>
