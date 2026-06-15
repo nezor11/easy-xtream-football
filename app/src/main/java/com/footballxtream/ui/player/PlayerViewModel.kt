@@ -43,6 +43,8 @@ data class PlayerUiState(
     val emissionLabel: String = "Auto",
     val throughputMbps: Double = 0.0,
     val resolution: String? = null,
+    /** Position of the playing channel within its folder, e.g. "3/12"; blank if unknown. */
+    val channelPosition: String = "",
     val isBuffering: Boolean = true,
     val menuOpen: Boolean = false,
     /** Localized label of the OK-menu section currently shown (Quality / Audio / Subtitles / Guide). */
@@ -450,6 +452,7 @@ class PlayerViewModel(
             it.copy(
                 channelName = group.displayName,
                 emissionLabel = emissionLabel(selectedEmission),
+                channelPosition = "${playbackSession.channelIndex + 1}/${playbackSession.size}",
                 isBuffering = true,
                 menuOpen = false,
                 nowProgram = null,

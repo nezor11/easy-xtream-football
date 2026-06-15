@@ -164,6 +164,7 @@ fun PlayerScreen(
         ) {
             StatsOverlay(
                 channelName = ui.channelName,
+                channelPosition = ui.channelPosition,
                 emissionLabel = ui.emissionLabel,
                 throughputMbps = ui.throughputMbps,
                 resolution = ui.resolution,
@@ -233,6 +234,7 @@ fun PlayerScreen(
 @Composable
 private fun StatsOverlay(
     channelName: String,
+    channelPosition: String,
     emissionLabel: String,
     throughputMbps: Double,
     resolution: String?,
@@ -241,7 +243,7 @@ private fun StatsOverlay(
     modifier: Modifier = Modifier,
 ) {
     val color = if (isBuffering) MaterialTheme.colorScheme.primary else Color(0xCCE6EAEE)
-    val style = MaterialTheme.typography.labelMedium
+    val style = MaterialTheme.typography.labelSmall
     val separator = "  •  "
 
     Row(
@@ -260,11 +262,15 @@ private fun StatsOverlay(
             )
             Text(separator, style = style, color = color)
         }
+        if (channelPosition.isNotBlank()) {
+            Text(channelPosition, style = style.copy(fontFeatureSettings = "tnum"), color = color, maxLines = 1)
+            Text(separator, style = style, color = color)
+        }
         Text("‹ $emissionLabel ›", style = style, color = color, maxLines = 1)
         Text(separator, style = style, color = color)
-        // Tabular figures keep the digits steady; the number sits right after the arrow with no gap.
+        // Tabular figures keep the digits steady; the leading zero keeps single-digit rates aligned.
         Text(
-            text = "⬇ %.1f Mbps".format(throughputMbps),
+            text = "⬇ %04.1f Mbps".format(throughputMbps),
             style = style.copy(fontFeatureSettings = "tnum"),
             color = color,
             maxLines = 1,
