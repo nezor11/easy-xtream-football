@@ -53,6 +53,9 @@ class PlaybackSession {
     private fun stepChannel(delta: Int): ChannelGroup? {
         val n = currentChannels.size
         if (n == 0) return null
+        // A folder with a single channel has nothing to cycle through, so a plain next/previous
+        // steps to the adjacent folder instead of staying put on the same channel.
+        if (n == 1) return stepFolder(delta)
         channelIndex = (channelIndex + delta + n) % n
         return current
     }

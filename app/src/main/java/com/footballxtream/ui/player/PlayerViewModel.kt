@@ -190,10 +190,13 @@ class PlayerViewModel(
         val now = System.currentTimeMillis()
         val jumpFolder = now - lastNextPressAt < DOUBLE_PRESS_MS
         lastNextPressAt = now
+        val folderBefore = playbackSession.folderIndex
         val group = (if (jumpFolder) playbackSession.nextFolder() else playbackSession.next()) ?: return
         lastDirection = 1
         autoSkipCount = 0 // a manual zap gets a fresh auto-skip budget
-        if (jumpFolder) showNotice("▸ ${playbackSession.currentFolderName}")
+        // Announce the folder whenever it changed — by a double-press jump or a single step out of a
+        // single-channel folder.
+        if (playbackSession.folderIndex != folderBefore) showNotice("▸ ${playbackSession.currentFolderName}")
         viewModelScope.launch { playGroup(group) }
     }
 
@@ -202,11 +205,12 @@ class PlayerViewModel(
         val now = System.currentTimeMillis()
         val jumpFolder = now - lastPrevPressAt < DOUBLE_PRESS_MS
         lastPrevPressAt = now
+        val folderBefore = playbackSession.folderIndex
         val group =
             (if (jumpFolder) playbackSession.previousFolder() else playbackSession.previous()) ?: return
         lastDirection = -1
         autoSkipCount = 0
-        if (jumpFolder) showNotice("◂ ${playbackSession.currentFolderName}")
+        if (playbackSession.folderIndex != folderBefore) showNotice("◂ ${playbackSession.currentFolderName}")
         viewModelScope.launch { playGroup(group) }
     }
 
