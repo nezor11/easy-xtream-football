@@ -36,6 +36,8 @@ It supports both the **Xtream Codes** protocol and **M3U / M3U-plus playlists**.
     background.
   - Extended pre-buffering to smooth out IPTV playback.
 - **Favorites** (long-press a card).
+- **Multi-language**: English, Spanish, Catalan, Basque, Galician, Portuguese, French and Italian —
+  follows the device language, with an in-app picker on the profiles screen.
 - UI built with **Jetpack Compose for TV**.
 
 ## Stack
@@ -83,12 +85,12 @@ Android TV / Fire TV devices use **arm64-v8a**.
 
 - [ ] **Catch-up / timeshift** (`has_archive`).
 - [ ] **Encryption of credentials at rest.**
-- [ ] **Multi-language UI** (device language + in-app selector).
 - [ ] **Optional Chromecast** (decoupled to avoid depending on Google Play Services on Fire TV).
 - [ ] (Optional) VOD / Movies and Series, if scope grows beyond sports.
 
-Done recently: Room migrations (no destructive wipe), EPG via XMLTV for M3U playlists,
-profile editing/renaming.
+Done recently: multi-language UI (English, Spanish, Catalan, Basque, Galician, Portuguese,
+French, Italian — follows the device language, with an in-app picker), Room migrations (no
+destructive wipe), EPG via XMLTV for M3U playlists, profile editing/renaming.
 
 ## Disclaimer
 
