@@ -31,7 +31,9 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ to change channel</string>
     <string name="menu_nav_hint">▲▼ choose · ◀▶ section · OK confirm</string>
-    <string name="controls_legend">OK: menu  ·  ▲▼: quality  ·  ◀▶: channel (×2 folder)</string>
+    <string name="controls_legend">OK: menu  ·  hold OK: ★  ·  ▲▼: quality  ·  ◀▶: channel (×2 folder)</string>
+    <string name="added_to_favorites">★ Added to favorites</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
     <string name="epg_now">Now: %1$s</string>
     <string name="epg_next_suffix">   ·   Next: %1$s</string>
     <string name="menu_section_quality">Quality</string>

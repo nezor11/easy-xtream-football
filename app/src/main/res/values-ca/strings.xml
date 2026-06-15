@@ -28,7 +28,9 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ per canviar de canal</string>
     <string name="menu_nav_hint">▲▼ triar · ◀▶ secció · OK confirmar</string>
-    <string name="controls_legend">OK: menú  ·  ▲▼: qualitat  ·  ◀▶: canal (×2 carpeta)</string>
+    <string name="controls_legend">OK: menú  ·  OK llarg: ★  ·  ▲▼: qualitat  ·  ◀▶: canal (×2 carpeta)</string>
+    <string name="added_to_favorites">★ Afegit a preferits</string>
+    <string name="removed_from_favorites">Tret de preferits</string>
     <string name="epg_now">Ara: %1$s</string>
     <string name="epg_next_suffix">   ·   Després: %1$s</string>
     <string name="menu_section_quality">Qualitat</string>

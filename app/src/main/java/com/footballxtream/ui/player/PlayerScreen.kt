@@ -61,6 +61,8 @@ fun PlayerScreen(
 
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val focusRequester = remember { FocusRequester() }
+    // Timestamp of the OK key-down, to tell a short press (menu) from a long press (toggle favorite).
+    val okDownAt = remember { LongArray(1) }
 
     // Back closes the options menu first; otherwise it leaves the player.
     BackHandler(enabled = ui.menuOpen) { viewModel.closeMenu() }
@@ -90,42 +92,48 @@ fun PlayerScreen(
             .focusRequester(focusRequester)
             .focusable()
             .onKeyEvent { event ->
-                if (event.type != KeyEventType.KeyDown) return@onKeyEvent false
                 if (ui.menuOpen) {
+                    if (event.type != KeyEventType.KeyDown) return@onKeyEvent false
                     when (event.key) {
-                        Key.DirectionUp -> {
-                            viewModel.moveMenuSelection(-1); true
-                        }
-                        Key.DirectionDown -> {
-                            viewModel.moveMenuSelection(1); true
-                        }
-                        Key.DirectionLeft -> {
-                            viewModel.moveMenuSection(-1); true
-                        }
-                        Key.DirectionRight -> {
-                            viewModel.moveMenuSection(1); true
-                        }
-                        Key.DirectionCenter, Key.Enter -> {
-                            viewModel.confirmMenuSelection(); true
-                        }
+                        Key.DirectionUp -> { viewModel.moveMenuSelection(-1); true }
+                        Key.DirectionDown -> { viewModel.moveMenuSelection(1); true }
+                        Key.DirectionLeft -> { viewModel.moveMenuSection(-1); true }
+                        Key.DirectionRight -> { viewModel.moveMenuSection(1); true }
+                        Key.DirectionCenter, Key.Enter -> { viewModel.confirmMenuSelection(); true }
                         else -> false
                     }
                 } else {
-                    when (event.key) {
-                        Key.DirectionLeft -> {
-                            viewModel.previousChannel(); true
+                    val isOk = event.key == Key.DirectionCenter || event.key == Key.Enter
+                    when {
+                        // Short OK opens the menu; holding OK toggles the channel favorite. Detected
+                        // by the native long-press flag (set on real long-presses and adb injection)
+                        // and, as a fallback, by the key-down→key-up hold time (>= 450 ms).
+                        isOk && event.type == KeyEventType.KeyDown -> {
+                            val native = event.nativeKeyEvent
+                            if (native.isLongPress) {
+                                viewModel.toggleCurrentChannelFavorite()
+                                okDownAt[0] = -1L
+                            } else if (native.repeatCount == 0) {
+                                okDownAt[0] = System.currentTimeMillis()
+                            }
+                            true
                         }
-                        Key.DirectionRight -> {
-                            viewModel.nextChannel(); true
+                        isOk && event.type == KeyEventType.KeyUp -> {
+                            when {
+                                okDownAt[0] == -1L -> Unit
+                                System.currentTimeMillis() - okDownAt[0] >= 450L ->
+                                    viewModel.toggleCurrentChannelFavorite()
+                                else -> viewModel.openMenu()
+                            }
+                            okDownAt[0] = 0L
+                            true
                         }
-                        Key.DirectionUp -> {
-                            viewModel.stepQuality(-1); true
-                        }
-                        Key.DirectionDown -> {
-                            viewModel.stepQuality(1); true
-                        }
-                        Key.DirectionCenter, Key.Enter -> {
-                            viewModel.openMenu(); true
+                        event.type == KeyEventType.KeyDown -> when (event.key) {
+                            Key.DirectionLeft -> { viewModel.previousChannel(); true }
+                            Key.DirectionRight -> { viewModel.nextChannel(); true }
+                            Key.DirectionUp -> { viewModel.stepQuality(-1); true }
+                            Key.DirectionDown -> { viewModel.stepQuality(1); true }
+                            else -> false
                         }
                         else -> false
                     }
@@ -160,6 +168,7 @@ fun PlayerScreen(
                 throughputMbps = ui.throughputMbps,
                 resolution = ui.resolution,
                 isBuffering = ui.isBuffering,
+                isFavorite = ui.isFavorite,
             )
             ui.nowProgram?.let { now ->
                 EpgOverlay(now = now, next = ui.nextProgram)
@@ -228,6 +237,7 @@ private fun StatsOverlay(
     throughputMbps: Double,
     resolution: String?,
     isBuffering: Boolean,
+    isFavorite: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val color = if (isBuffering) MaterialTheme.colorScheme.primary else Color(0xCCE6EAEE)
@@ -242,7 +252,12 @@ private fun StatsOverlay(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (channelName.isNotBlank()) {
-            Text(channelName, style = style, color = color, maxLines = 1)
+            Text(
+                text = if (isFavorite) "★ $channelName" else channelName,
+                style = style,
+                color = if (isFavorite) MaterialTheme.colorScheme.primary else color,
+                maxLines = 1,
+            )
             Text(separator, style = style, color = color)
         }
         Text("‹ $emissionLabel ›", style = style, color = color, maxLines = 1)

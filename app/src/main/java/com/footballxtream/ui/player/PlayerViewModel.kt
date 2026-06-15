@@ -58,6 +58,8 @@ data class PlayerUiState(
     val notice: String? = null,
     /** Whether to show the on-screen controls legend (only the first few times). */
     val showControlsHint: Boolean = false,
+    /** Whether the channel currently playing is marked as a favorite. */
+    val isFavorite: Boolean = false,
 )
 
 @OptIn(UnstableApi::class)
@@ -78,6 +80,10 @@ class PlayerViewModel(
 
     private var currentGroup: ChannelGroup? = null
     private var currentQuality: Quality = Quality.UNKNOWN
+
+    /** Keys of favorite channels, kept in sync so the overlay star and toggle reflect the latest. */
+    @Volatile
+    private var favoriteKeys: Set<String> = emptySet()
 
     /** Full EPG of the current channel, for the "Guía" menu section (now + upcoming). */
     private var currentEpg: List<EpgProgram> = emptyList()
@@ -166,6 +172,13 @@ class PlayerViewModel(
                 selectedEmission = settingsStore.qualityMode.first().fixedQuality
                 playGroup(first)
                 pollStats()
+            }
+            // Keep the favorite state in sync with what's stored, for the overlay star.
+            viewModelScope.launch {
+                settingsStore.favoriteChannelKeys.collect { keys ->
+                    favoriteKeys = keys
+                    _ui.update { it.copy(isFavorite = currentGroup?.key in keys) }
+                }
             }
         }
     }
@@ -438,10 +451,24 @@ class PlayerViewModel(
                 nowProgram = null,
                 nextProgram = null,
                 errorMessage = null,
+                isFavorite = group.key in favoriteKeys,
             )
         }
         playUri(variant)
         loadEpg(group)
+    }
+
+    /** Toggles the playing channel as a favorite (long-press OK), with a brief on-screen notice. */
+    fun toggleCurrentChannelFavorite() {
+        if (_ui.value.menuOpen) return
+        val group = currentGroup ?: return
+        val willBeFavorite = group.key !in favoriteKeys
+        viewModelScope.launch { settingsStore.toggleFavoriteChannel(group.key) }
+        showNotice(
+            context.getString(
+                if (willBeFavorite) R.string.added_to_favorites else R.string.removed_from_favorites,
+            ),
+        )
     }
 
     /** Fetches "now / next" EPG for the playing channel (Xtream API or M3U's XMLTV guide). */
