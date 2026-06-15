@@ -14,8 +14,8 @@ android {
         applicationId = "com.footballxtream"
         minSdk = 24
         targetSdk = 35
-        versionCode = 3
-        versionName = "0.1.2"
+        versionCode = 4
+        versionName = "0.1.3"
     }
 
     // Split the FFmpeg native libs per ABI. Real Android TV / Fire TV / phone devices are ARM, so a
