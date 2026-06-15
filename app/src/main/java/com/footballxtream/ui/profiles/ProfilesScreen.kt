@@ -33,6 +33,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,11 +45,13 @@ import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import android.widget.Toast
 import com.footballxtream.R
 import com.footballxtream.data.local.ProfileEntity
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.LanguageButton
 import com.footballxtream.ui.components.LanguageDialog
+import com.footballxtream.ui.components.findActivity
 
 @Composable
 fun ProfilesScreen(
@@ -61,6 +64,20 @@ fun ProfilesScreen(
     val colors = MaterialTheme.colorScheme
     var menuProfile by remember { mutableStateOf<ProfileEntity?>(null) }
     var showLanguage by remember { mutableStateOf(false) }
+
+    // Profiles is the root screen: Back here would exit the app. Require a quick double-press (with
+    // an on-screen hint) so a single stray Back/Exit doesn't drop the user out by accident.
+    val context = LocalContext.current
+    var lastBackAt by remember { mutableStateOf(0L) }
+    BackHandler(enabled = menuProfile == null && !showLanguage) {
+        val now = System.currentTimeMillis()
+        if (now - lastBackAt < 2500L) {
+            context.findActivity()?.finishAffinity()
+        } else {
+            lastBackAt = now
+            Toast.makeText(context, R.string.press_back_to_exit, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(

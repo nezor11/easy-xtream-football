@@ -2,6 +2,7 @@
 <resources>
     <string name="brand_tagline">Apenas desporto em direto</string>
     <string name="app_loading">A carregar…</string>
+    <string name="press_back_to_exit">Prime Voltar outra vez para sair</string>
 
     <string name="live_sports">Desporto em direto</string>
     <string name="live_sports_of">Desporto em direto de %1$s</string>

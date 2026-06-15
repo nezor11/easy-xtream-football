@@ -2,6 +2,7 @@
 <resources>
     <string name="brand_tagline">Kirola zuzenean soilik</string>
     <string name="app_loading">Kargatzen…</string>
+    <string name="press_back_to_exit">Sakatu Atzera berriro irteteko</string>
 
     <string name="live_sports">Kirola zuzenean</string>
     <string name="live_sports_of">Kirola zuzenean — %1$s</string>

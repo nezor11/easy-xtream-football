@@ -2,6 +2,7 @@
 <resources>
     <string name="brand_tagline">Només esport en directe</string>
     <string name="app_loading">Carregant…</string>
+    <string name="press_back_to_exit">Torna a prémer Enrere per sortir</string>
 
     <string name="live_sports">Esport en directe</string>
     <string name="live_sports_of">Esport en directe de %1$s</string>

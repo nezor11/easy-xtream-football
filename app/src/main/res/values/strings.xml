@@ -3,6 +3,7 @@
     <string name="app_name">Easy Xtream Football</string>
     <string name="brand_tagline">Live sports only</string>
     <string name="app_loading">Loading…</string>
+    <string name="press_back_to_exit">Press Back again to exit</string>
 
     <!-- Channels screen -->
     <string name="live_sports">Live sports</string>

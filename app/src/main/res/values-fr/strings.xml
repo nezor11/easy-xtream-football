@@ -2,6 +2,7 @@
 <resources>
     <string name="brand_tagline">Sport en direct uniquement</string>
     <string name="app_loading">Chargement…</string>
+    <string name="press_back_to_exit">Appuie encore sur Retour pour quitter</string>
 
     <string name="live_sports">Sport en direct</string>
     <string name="live_sports_of">Sport en direct de %1$s</string>

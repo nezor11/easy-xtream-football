@@ -56,7 +56,8 @@ private fun autonym(tag: String): String = when (tag) {
     else -> tag
 }
 
-private fun Context.findActivity(): Activity? {
+/** Walks the ContextWrapper chain to find the hosting Activity (for finish/restart from Compose). */
+internal fun Context.findActivity(): Activity? {
     var ctx: Context? = this
     while (ctx is ContextWrapper) {
         if (ctx is Activity) return ctx
