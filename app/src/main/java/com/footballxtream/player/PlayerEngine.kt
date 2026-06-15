@@ -40,12 +40,16 @@ class PlayerEngine(
     // A fresh LoadControl per player: a single shared DefaultLoadControl across ExoPlayer instances
     // (each with its own playback thread) throws "Players that share the same LoadControl must share
     // the same playback thread", which would loop the player into an error/auto-skip storm.
+    //
+    // Buffer kept moderate (15–30 s) rather than huge: a live stream can't use a long look-ahead
+    // anyway, and a 30 s cap roughly halves the in-memory buffer (~30 MB vs ~60 MB at high bitrate),
+    // which matters on low-RAM TV boxes — while still absorbing the jitter typical of Xtream streams.
     private fun newLoadControl(): DefaultLoadControl = DefaultLoadControl.Builder()
         .setBufferDurationsMs(
-            /* minBufferMs = */ 20_000,
-            /* maxBufferMs = */ 60_000,
-            /* bufferForPlaybackMs = */ 3_000,
-            /* bufferForPlaybackAfterRebufferMs = */ 6_000,
+            /* minBufferMs = */ 15_000,
+            /* maxBufferMs = */ 30_000,
+            /* bufferForPlaybackMs = */ 2_500,
+            /* bufferForPlaybackAfterRebufferMs = */ 5_000,
         )
         .build()
 
