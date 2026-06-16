@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -100,13 +103,14 @@ fun ProfilesScreen(
             LaunchedEffect(profiles.isNotEmpty(), menuOpen) {
                 if (profiles.isNotEmpty() && !menuOpen) runCatching { firstFocus.requestFocus() }
             }
-            // A plain centered Row (not a LazyRow) keeps the cards centered and, since it does not
-            // clip, the focus zoom never gets cut off. Fine for the handful of profiles a user has.
-            Row(
+            // Horizontally scrollable so any number of profiles is reachable. The vertical content
+            // padding leaves room for the focus zoom so the grown card isn't clipped.
+            LazyRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.spacedBy(28.dp),
+                contentPadding = PaddingValues(horizontal = 48.dp, vertical = 12.dp),
             ) {
-                profiles.forEachIndexed { index, profile ->
+                itemsIndexed(profiles) { index, profile ->
                     ProfileCard(
                         profile = profile,
                         focusable = !menuOpen,
