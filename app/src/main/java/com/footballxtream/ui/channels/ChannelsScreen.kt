@@ -151,14 +151,28 @@ private fun FolderGrid(
     onChannelLongClick: (ChannelGroup) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize().padding(top = 28.dp)) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(start = 48.dp, end = 48.dp, bottom = 2.dp),
-        )
+        // Filters (quality chips, search, reload) are tucked away and only shown on demand, to keep
+        // the header clean and give the channels more room.
+        var filtersOpen by remember { mutableStateOf(false) }
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(start = 48.dp, end = 48.dp, bottom = 2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            Chip(
+                label = stringResource(R.string.action_filters),
+                selected = filtersOpen,
+                onClick = { filtersOpen = !filtersOpen },
+            )
+        }
         // Count up from 0 to the real total, so the user gets a feel for how big the list is.
         var countStarted by remember { mutableStateOf(false) }
         LaunchedEffect(content.totalChannels) { countStarted = true }
@@ -176,37 +190,39 @@ private fun FolderGrid(
         val searchFocus = remember { FocusRequester() }
         var searchOpen by remember { mutableStateOf(query.isNotBlank()) }
 
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 48.dp, bottom = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            QualityMode.entries.forEach { mode ->
+        if (filtersOpen) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(start = 48.dp, bottom = 14.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                QualityMode.entries.forEach { mode ->
+                    Chip(
+                        label = mode.label,
+                        selected = mode == content.qualityMode,
+                        onClick = { onQualitySelected(mode) },
+                    )
+                }
                 Chip(
-                    label = mode.label,
-                    selected = mode == content.qualityMode,
-                    onClick = { onQualitySelected(mode) },
+                    label = stringResource(R.string.action_search),
+                    selected = searchOpen || query.isNotBlank(),
+                    onClick = {
+                        searchOpen = !searchOpen
+                        if (!searchOpen) onQueryChange("")
+                    },
+                )
+                Chip(label = stringResource(R.string.action_reload), selected = false, onClick = onReload)
+            }
+
+            if (searchOpen) {
+                LaunchedEffect(Unit) { runCatching { searchFocus.requestFocus() } }
+                TvTextField(
+                    value = query,
+                    onValueChange = onQueryChange,
+                    label = stringResource(R.string.search_field_label),
+                    modifier = Modifier.padding(start = 48.dp, bottom = 18.dp).width(520.dp),
+                    focusRequester = searchFocus,
                 )
             }
-            Chip(
-                label = stringResource(R.string.action_search),
-                selected = searchOpen || query.isNotBlank(),
-                onClick = {
-                    searchOpen = !searchOpen
-                    if (!searchOpen) onQueryChange("")
-                },
-            )
-            Chip(label = stringResource(R.string.action_reload), selected = false, onClick = onReload)
-        }
-
-        if (searchOpen) {
-            LaunchedEffect(Unit) { runCatching { searchFocus.requestFocus() } }
-            TvTextField(
-                value = query,
-                onValueChange = onQueryChange,
-                label = stringResource(R.string.search_field_label),
-                modifier = Modifier.padding(start = 48.dp, bottom = 18.dp).width(520.dp),
-                focusRequester = searchFocus,
-            )
         }
 
         if (content.rows.isEmpty()) {

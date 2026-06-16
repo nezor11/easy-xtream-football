@@ -14,6 +14,7 @@
     <string name="action_retry">Saiatu berriro</string>
     <string name="action_search">🔍 Bilatu</string>
     <string name="action_reload">↻ Birkargatu</string>
+    <string name="action_filters">Iragazkiak</string>
     <string name="search_field_label">Bilatu  (adib. futbola, laliga, kirola)</string>
     <string name="no_sports_channels">Ez da kirol-kanalik aurkitu profil honetan.</string>
     <string name="no_results">Emaitzarik ez: \"%1$s\".</string>

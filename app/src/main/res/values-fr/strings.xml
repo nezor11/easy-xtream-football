@@ -14,6 +14,7 @@
     <string name="action_retry">Réessayer</string>
     <string name="action_search">🔍 Rechercher</string>
     <string name="action_reload">↻ Recharger</string>
+    <string name="action_filters">Filtres</string>
     <string name="search_field_label">Rechercher  (p. ex. football, laliga, sport)</string>
     <string name="no_sports_channels">Aucune chaîne de sport trouvée dans ce profil.</string>
     <string name="no_results">Aucun résultat pour \"%1$s\".</string>
