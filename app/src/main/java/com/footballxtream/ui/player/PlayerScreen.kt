@@ -128,6 +128,10 @@ fun PlayerScreen(
                             okDownAt[0] = 0L
                             true
                         }
+                        event.type == KeyEventType.KeyDown &&
+                            event.nativeKeyEvent.keyCode == android.view.KeyEvent.KEYCODE_LAST_CHANNEL -> {
+                            viewModel.jumpToLastChannel(); true
+                        }
                         event.type == KeyEventType.KeyDown -> when (event.key) {
                             Key.DirectionLeft -> { viewModel.previousChannel(); true }
                             Key.DirectionRight -> { viewModel.nextChannel(); true }

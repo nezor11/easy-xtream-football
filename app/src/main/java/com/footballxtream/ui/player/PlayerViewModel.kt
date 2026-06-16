@@ -216,6 +216,14 @@ class PlayerViewModel(
         viewModelScope.launch { playGroup(group) }
     }
 
+    /** Zaps back to the previously watched channel (the remote's "last channel" button). */
+    fun jumpToLastChannel() {
+        if (_ui.value.menuOpen) return
+        val group = playbackSession.jumpToLast() ?: return
+        autoSkipCount = 0
+        viewModelScope.launch { playGroup(group) }
+    }
+
     // --- Quality stepping: up/down change emission type directly (no menu) ---
 
     /**
