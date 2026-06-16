@@ -33,6 +33,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,7 @@ import androidx.media3.ui.PlayerView
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.R
+import com.footballxtream.ui.components.findActivity
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -69,6 +71,12 @@ fun PlayerScreen(
     BackHandler(enabled = !ui.menuOpen, onBack = onBack)
 
     LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
+
+    // Sleep timer fired: close the app so the device can idle (and the TV go to standby).
+    val context = LocalContext.current
+    LaunchedEffect(ui.sleepExpired) {
+        if (ui.sleepExpired) context.findActivity()?.finishAffinity()
+    }
 
     // Pause when the app is backgrounded so the audio stops (and system audio focus is released)
     // instead of playing on, then resume when it comes back to the foreground.

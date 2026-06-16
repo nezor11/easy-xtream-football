@@ -62,6 +62,8 @@ data class PlayerUiState(
     val showControlsHint: Boolean = false,
     /** Whether the channel currently playing is marked as a favorite. */
     val isFavorite: Boolean = false,
+    /** Set when the sleep timer fires, so the screen can close the app. */
+    val sleepExpired: Boolean = false,
 )
 
 @OptIn(UnstableApi::class)
@@ -98,6 +100,11 @@ class PlayerViewModel(
     private var rebufferCount = 0
     private var hasStartedOnce = false
     private var noticeJob: Job? = null
+
+    /** Sleep timer: minutes selected (0 = off) and the pending countdown job. */
+    private var sleepMinutes = 0
+    private var sleepJob: Job? = null
+    private val sleepChoices = listOf(0, 15, 30, 45, 60, 90)
 
     /** Watchdog that fires if the current channel never starts; drives the auto-skip. */
     private var failoverJob: Job? = null
@@ -282,7 +289,7 @@ class PlayerViewModel(
     // --- OK menu with sections: Quality / Audio / Subtitles / Guide (◀▶ switches section) ---
 
     /** Stable identity of each menu section, independent of its (translated) display label. */
-    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE }
+    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE, SLEEP }
 
     private var currentSection = MenuSection.QUALITY
 
@@ -293,6 +300,7 @@ class PlayerViewModel(
             MenuSection.AUDIO -> R.string.menu_section_audio
             MenuSection.SUBTITLES -> R.string.menu_section_subtitles
             MenuSection.GUIDE -> R.string.menu_section_guide
+            MenuSection.SLEEP -> R.string.menu_section_sleep
         },
     )
 
@@ -340,6 +348,7 @@ class PlayerViewModel(
             MenuSection.AUDIO -> audioMenuOptions()
             MenuSection.SUBTITLES -> subtitleMenuOptions()
             MenuSection.GUIDE -> guideMenuOptions()
+            MenuSection.SLEEP -> sleepMenuOptions()
             MenuSection.QUALITY -> qualityMenuOptions()
         }
         menuApply = options.apply
@@ -436,6 +445,33 @@ class PlayerViewModel(
             .map { "${fmt.format(java.util.Date(it.start))}  ${it.title}" }
         // The now-playing programme is first and pre-selected; OK just closes (read-only).
         return MenuOptions(labels, 0) {}
+    }
+
+    /** Sleep-timer options; picking one (re)arms the countdown that closes the app when it fires. */
+    private fun sleepMenuOptions(): MenuOptions {
+        val labels = sleepChoices.map { mins ->
+            if (mins == 0) context.getString(R.string.sleep_off)
+            else context.getString(R.string.sleep_minutes, mins)
+        }
+        return MenuOptions(labels, sleepChoices.indexOf(sleepMinutes).coerceAtLeast(0)) { index ->
+            setSleepTimer(sleepChoices.getOrElse(index) { 0 })
+        }
+    }
+
+    private fun setSleepTimer(minutes: Int) {
+        sleepJob?.cancel()
+        sleepMinutes = minutes
+        showNotice(
+            if (minutes == 0) context.getString(R.string.sleep_off)
+            else context.getString(R.string.sleep_minutes, minutes),
+        )
+        if (minutes > 0) {
+            sleepJob = viewModelScope.launch {
+                delay(minutes * 60_000L)
+                player.playWhenReady = false
+                _ui.update { it.copy(sleepExpired = true) }
+            }
+        }
     }
 
     /** A readable label for an audio/text track: its name, else its language, else [fallback]. */
@@ -666,6 +702,7 @@ class PlayerViewModel(
     override fun onCleared() {
         failoverJob?.cancel()
         noticeJob?.cancel()
+        sleepJob?.cancel()
         player.removeListener(listener)
         player.release()
     }
