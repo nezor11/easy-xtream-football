@@ -95,12 +95,10 @@ fun ProfilesScreen(
             // Auto-focus the first profile on entry, so the remote works immediately without a
             // first "blind" press to grab focus.
             val firstFocus = remember { FocusRequester() }
-            val addFocus = remember { FocusRequester() }
+            // Only focus the first profile on entry — never the Add button, so it doesn't flash
+            // green while the profile list is still loading (it starts out momentarily empty).
             LaunchedEffect(profiles.isNotEmpty(), menuOpen) {
-                if (!menuOpen) {
-                    if (profiles.isNotEmpty()) runCatching { firstFocus.requestFocus() }
-                    else runCatching { addFocus.requestFocus() }
-                }
+                if (profiles.isNotEmpty() && !menuOpen) runCatching { firstFocus.requestFocus() }
             }
             // A plain centered Row (not a LazyRow) keeps the cards centered and, since it does not
             // clip, the focus zoom never gets cut off. Fine for the handful of profiles a user has.
@@ -122,7 +120,6 @@ fun ProfilesScreen(
             AddProfileButton(
                 focusable = !menuOpen,
                 onClick = onAddProfile,
-                modifier = Modifier.focusRequester(addFocus),
             )
             if (profiles.isNotEmpty()) {
                 Text(
