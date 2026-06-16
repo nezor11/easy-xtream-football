@@ -8,6 +8,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -44,6 +45,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.key.Key
@@ -52,6 +54,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -167,8 +170,7 @@ private fun FolderGrid(
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
             )
-            Chip(
-                label = stringResource(R.string.action_filters),
+            FiltersChip(
                 selected = filtersOpen,
                 onClick = { filtersOpen = !filtersOpen },
             )
@@ -471,6 +473,31 @@ private fun Chip(label: String, selected: Boolean, onClick: () -> Unit) {
             text = label,
             style = MaterialTheme.typography.labelLarge,
             color = if (selected) colors.onPrimary else colors.onSurface,
+        )
+    }
+}
+
+/** The header's filters toggle: a funnel icon chip that shows/hides the quality/search/reload row. */
+@Composable
+private fun FiltersChip(selected: Boolean, onClick: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    var focused by remember { mutableStateOf(false) }
+    val shape = RoundedCornerShape(50)
+    Box(
+        modifier = Modifier
+            .clip(shape)
+            .background(if (selected) colors.primary else colors.surfaceVariant)
+            .border(2.dp, if (focused) colors.onBackground else Color.Transparent, shape)
+            .onFocusChanged { focused = it.isFocused }
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_filter),
+            contentDescription = stringResource(R.string.action_filters),
+            colorFilter = ColorFilter.tint(if (selected) colors.onPrimary else colors.onSurface),
+            modifier = Modifier.size(22.dp),
         )
     }
 }
