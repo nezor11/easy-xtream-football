@@ -240,11 +240,12 @@ private fun FolderGrid(
             return@Column
         }
 
-        // First content row that will render, to land the focus on it: favorites > recents > rows.
+        // First content row that will render, to land the focus on it: live-now > favorites > recents > rows.
         val firstSection = when {
-            content.favoriteChannels.isNotEmpty() -> 0
-            content.recent.isNotEmpty() -> 1
-            else -> 2
+            content.liveNow.isNotEmpty() -> 0
+            content.favoriteChannels.isNotEmpty() -> 1
+            content.recent.isNotEmpty() -> 2
+            else -> 3
         }
 
         LazyColumn(
@@ -252,10 +253,23 @@ private fun FolderGrid(
             contentPadding = PaddingValues(bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
+            if (content.liveNow.isNotEmpty()) {
+                item {
+                    ChannelRowSection(title = stringResource(R.string.now_live)) {
+                        WrappingRow(content.liveNow, autoFocus = firstSection == 0) { item, cardModifier ->
+                            LiveNowCard(
+                                item = item,
+                                onClick = { onResume(item.group.key) },
+                                modifier = cardModifier,
+                            )
+                        }
+                    }
+                }
+            }
             if (content.favoriteChannels.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.section_favorite_channels)) {
-                        WrappingRow(content.favoriteChannels, autoFocus = firstSection == 0) { group, cardModifier ->
+                        WrappingRow(content.favoriteChannels, autoFocus = firstSection == 1) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
                                 onClick = { onResume(group.key) },
@@ -270,7 +284,7 @@ private fun FolderGrid(
             if (content.recent.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.section_recent)) {
-                        WrappingRow(content.recent, autoFocus = firstSection == 1) { group, cardModifier ->
+                        WrappingRow(content.recent, autoFocus = firstSection == 2) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
                                 onClick = { onResume(group.key) },
@@ -284,7 +298,7 @@ private fun FolderGrid(
             }
             lazyItemsIndexed(content.rows) { index, row ->
                 ChannelRowSection(title = stringResource(row.titleRes)) {
-                    WrappingRow(row.folders, autoFocus = firstSection == 2 && index == 0) { folder, cardModifier ->
+                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0) { folder, cardModifier ->
                         FolderCard(
                             folder = folder,
                             isFavorite = favoriteNames.contains(folder.name),
@@ -527,6 +541,38 @@ private fun FolderCard(
         countryCode = folder.country,
         geoBlocked = folder.geoBlocked,
     )
+}
+
+/**
+ * A "live now" card: same artwork as a channel card, but the subtitle is the programme on air right
+ * now (with its start time) instead of the quality tags. Tapping resumes that channel.
+ */
+@Composable
+private fun LiveNowCard(
+    item: LiveNowItem,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ImageCard(
+        title = item.group.displayName,
+        subtitle = liveNowSubtitle(item),
+        iconUrl = item.group.iconUrl,
+        showFavorite = false,
+        showFolderHint = false,
+        onClick = onClick,
+        onLongClick = null,
+        modifier = modifier,
+        countryCode = item.group.country,
+        geoBlocked = item.group.geoBlocked,
+    )
+}
+
+private fun liveNowSubtitle(item: LiveNowItem): String {
+    val title = item.title.trim()
+    if (item.start <= 0L) return title
+    val time = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
+        .format(java.util.Date(item.start))
+    return "$time · $title"
 }
 
 @Composable

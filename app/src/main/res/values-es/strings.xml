@@ -19,6 +19,7 @@
     <string name="search_field_label">Buscar  (p. ej. fútbol, laliga, deporte)</string>
     <string name="no_sports_channels">No se encontraron canales de deporte en este perfil.</string>
     <string name="no_results">Sin resultados para \"%1$s\".</string>
+    <string name="now_live">Ahora en directo</string>
     <string name="section_favorite_channels">Canales favoritos</string>
     <string name="section_recent">Recientes</string>
     <string name="section_favorite_folders">Carpetas favoritas</string>

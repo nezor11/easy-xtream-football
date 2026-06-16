@@ -19,10 +19,14 @@ import com.footballxtream.model.Quality
 import com.footballxtream.model.QualityMode
 import com.footballxtream.player.PlaybackSession
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -31,6 +35,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class ChannelRow(val titleRes: Int, val folders: List<ChannelFolder>)
+
+/** A favorite/recent channel with the programme airing on it right now (for the "live now" strip). */
+data class LiveNowItem(
+    val group: ChannelGroup,
+    val title: String,
+    val start: Long,
+    val end: Long,
+)
 
 sealed interface ChannelsUiState {
     data object Loading : ChannelsUiState
@@ -42,6 +54,8 @@ sealed interface ChannelsUiState {
         val recent: List<ChannelGroup> = emptyList(),
         /** Channels marked as favorite, alphabetical. Empty while searching. */
         val favoriteChannels: List<ChannelGroup> = emptyList(),
+        /** Favorites/recents with a programme on air right now ("Ahora en directo"). Empty while searching. */
+        val liveNow: List<LiveNowItem> = emptyList(),
         /** Total channels in the loaded list (unfiltered), shown as the animated count. */
         val totalChannels: Int = 0,
     ) : ChannelsUiState
@@ -78,11 +92,17 @@ class ChannelsViewModel(
     val favoriteChannelKeys: StateFlow<Set<String>> = settingsStore.favoriteChannelKeys
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
 
-    // Recents + channel favorites folded into one flow so the main combine stays within 5 sources.
+    // "Live now" programmes for the favorites/recents set, computed off the main combine (it needs
+    // async EPG lookups) and merged back in below.
+    private val liveNowFlow = MutableStateFlow<List<LiveNowItem>>(emptyList())
+
+    // Recents + channel favorites + live-now folded into one flow so the main combine stays within
+    // 5 sources.
     private val recentsAndFavorites = combine(
         settingsStore.recentChannelKeys,
         favoriteChannelKeys,
-    ) { recents, favorites -> recents to favorites }
+        liveNowFlow,
+    ) { recents, favorites, liveNow -> Triple(recents, favorites, liveNow) }
 
     val uiState: StateFlow<ChannelsUiState> =
         combine(
@@ -91,7 +111,7 @@ class ChannelsViewModel(
             settingsStore.qualityMode,
             query,
             recentsAndFavorites,
-        ) { loadState, favorites, mode, q, (recentKeys, favKeys) ->
+        ) { loadState, favorites, mode, q, (recentKeys, favKeys, liveNowItems) ->
             when (loadState) {
                 Load.Loading -> ChannelsUiState.Loading
                 is Load.Error -> ChannelsUiState.Error(loadState.messageRes)
@@ -110,6 +130,7 @@ class ChannelsViewModel(
                     } else {
                         emptyList()
                     },
+                    liveNow = if (q.isBlank()) liveNowItems else emptyList(),
                     totalChannels = loadState.folders.sumOf { it.channels.size },
                 )
             }
@@ -120,6 +141,48 @@ class ChannelsViewModel(
 
     init {
         refresh()
+        observeLiveNow()
+    }
+
+    /**
+     * Recomputes the "Ahora en directo" strip whenever the loaded channels or the favorites/recents
+     * set change. Only the favorites+recents subset is queried (Xtream needs one EPG call per channel,
+     * so polling all 722 is out of the question); [collectLatest] cancels an in-flight pass if the set
+     * changes again, and the repository caches each lookup so repeated channels stay cheap.
+     */
+    private fun observeLiveNow() {
+        viewModelScope.launch {
+            combine(
+                load,
+                settingsStore.recentChannelKeys,
+                favoriteChannelKeys,
+            ) { loadState, recents, favorites -> Triple(loadState, recents, favorites) }
+                .collectLatest { (loadState, recents, favorites) ->
+                    val folders = (loadState as? Load.Data)?.folders
+                    if (folders == null) {
+                        liveNowFlow.value = emptyList()
+                        return@collectLatest
+                    }
+                    val groups = (recents + favorites)
+                        .mapNotNull { findChannel(folders, it) }
+                        .distinctBy { it.key }
+                    liveNowFlow.value = computeLiveNow(groups)
+                }
+        }
+    }
+
+    private suspend fun computeLiveNow(groups: List<ChannelGroup>): List<LiveNowItem> {
+        if (groups.isEmpty()) return emptyList()
+        return groups.chunked(LIVE_NOW_CONCURRENCY).flatMap { chunk ->
+            coroutineScope {
+                chunk.map { group ->
+                    async(Dispatchers.IO) {
+                        repository.nowProgram(group)
+                            ?.let { LiveNowItem(group, it.title, it.start, it.end) }
+                    }
+                }.awaitAll()
+            }
+        }.filterNotNull()
     }
 
     fun refresh(forceRefresh: Boolean = false) {
@@ -266,6 +329,9 @@ class ChannelsViewModel(
     }
 
     companion object {
+        /** Max concurrent EPG lookups while building the "live now" strip. */
+        private const val LIVE_NOW_CONCURRENCY = 6
+
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val container = (this[APPLICATION_KEY] as FootballXtreamApp).container

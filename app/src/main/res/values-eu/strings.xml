@@ -18,6 +18,7 @@
     <string name="search_field_label">Bilatu  (adib. futbola, laliga, kirola)</string>
     <string name="no_sports_channels">Ez da kirol-kanalik aurkitu profil honetan.</string>
     <string name="no_results">Emaitzarik ez: \"%1$s\".</string>
+    <string name="now_live">Orain zuzenean</string>
     <string name="section_favorite_channels">Gogoko kanalak</string>
     <string name="section_recent">Azkenak</string>
     <string name="section_favorite_folders">Gogoko karpetak</string>

@@ -66,18 +66,27 @@ class ContentRepository(
     @Volatile private var m3uEpgBuiltAt: Long = 0L
     private val epgMutex = Mutex()
 
+    // "Live now" per-channel cache, so the channels screen can poll favorites/recents cheaply
+    // (Xtream costs one API call per channel). Keyed by ChannelGroup.key, cleared on rebind.
+    private data class CachedNow(val at: Long, val program: EpgProgram?)
+    private val nowCache = java.util.concurrent.ConcurrentHashMap<String, CachedNow>()
+    private fun clearNowCache() = nowCache.clear()
+
     // --- Restore a saved profile without a network round-trip ---
 
     fun bindXtream(profile: XtreamProfile) {
         binding = Binding.Xtream(profile, XtreamClient.create(profile.serverUrl))
+        clearNowCache()
     }
 
     fun bindM3u(url: String) {
         binding = Binding.M3u(url.trim())
+        clearNowCache()
     }
 
     fun bindDirect(url: String) {
         binding = Binding.Direct(url.trim())
+        clearNowCache()
     }
 
     /** Binds whichever source a saved profile points to and records its name for the header. */
@@ -182,6 +191,22 @@ class ContentRepository(
             is Binding.M3u -> withContext(Dispatchers.IO) { m3uEpg(group) }
             is Binding.Direct, null -> emptyList()
         }
+
+    /**
+     * The single programme airing right now on [group], or null when nothing is on or there's no
+     * guide. Unlike [epgFor] it never falls back to "the first listing": the "live now" strip should
+     * only surface a programme that is genuinely on air. Cached briefly so repeated polls of the
+     * favorites/recents set stay cheap.
+     */
+    suspend fun nowProgram(group: ChannelGroup): EpgProgram? {
+        val now = System.currentTimeMillis()
+        nowCache[group.key]?.let { if (now - it.at < NOW_TTL_MS) return it.program }
+        val epg = epgFor(group)
+        val program = epg.firstOrNull { it.nowFlag }
+            ?: epg.firstOrNull { it.start in 1..now && now < it.end }
+        nowCache[group.key] = CachedNow(now, program)
+        return program
+    }
 
     private suspend fun m3uEpg(group: ChannelGroup): List<EpgProgram> {
         val id = group.epgId ?: return emptyList()
@@ -305,6 +330,7 @@ class ContentRepository(
         const val CACHE_TTL_MS = 12L * 60 * 60 * 1000 // 12 h
         const val CACHE_VERSION = 17 // bump when parsing/filtering/grouping logic or cache shape changes
         const val EPG_TTL_MS = 2L * 60 * 60 * 1000 // 2 h — rebuild the XMLTV index at most this often
+        const val NOW_TTL_MS = 10L * 60 * 1000 // 10 min — how long a cached "live now" lookup is reused
     }
 }
 

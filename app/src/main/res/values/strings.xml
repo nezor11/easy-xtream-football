@@ -20,6 +20,7 @@
     <string name="search_field_label">Search  (e.g. football, laliga, sports)</string>
     <string name="no_sports_channels">No sports channels found in this profile.</string>
     <string name="no_results">No results for \"%1$s\".</string>
+    <string name="now_live">Live now</string>
     <string name="section_favorite_channels">Favorite channels</string>
     <string name="section_recent">Recent</string>
     <string name="section_favorite_folders">Favorite folders</string>
