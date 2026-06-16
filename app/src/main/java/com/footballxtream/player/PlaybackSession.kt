@@ -54,22 +54,26 @@ class PlaybackSession {
 
     fun previousFolder(): ChannelGroup? = stepFolder(-1)
 
-    /** Zaps back to the channel that was playing just before the current one (and remembers this). */
-    fun jumpToLast(): ChannelGroup? {
-        if (folders.isEmpty()) return null
-        val f = lastFolderIndex.coerceIn(0, folders.size - 1)
-        rememberCurrent()
-        folderIndex = f
-        channelIndex = lastChannelIndex.let {
-            val n = folders.getOrNull(f)?.channels?.size ?: 0
-            it.coerceIn(0, (n - 1).coerceAtLeast(0))
-        }
-        return current
-    }
-
-    private fun rememberCurrent() {
+    /**
+     * Records the current channel as the "last" one to zap back to. Called on manual zaps only (not
+     * on the automatic skip over dead channels), so the zap returns to the channel you chose, not to
+     * an unavailable one we skipped past.
+     */
+    fun markCurrentAsLast() {
         lastFolderIndex = folderIndex
         lastChannelIndex = channelIndex
+    }
+
+    /** Zaps back to the previously chosen channel (and remembers the current one, so it toggles). */
+    fun jumpToLast(): ChannelGroup? {
+        if (folders.isEmpty()) return null
+        val targetFolder = lastFolderIndex.coerceIn(0, folders.size - 1)
+        val targetChannel = lastChannelIndex
+        markCurrentAsLast()
+        folderIndex = targetFolder
+        val n = folders.getOrNull(targetFolder)?.channels?.size ?: 0
+        channelIndex = targetChannel.coerceIn(0, (n - 1).coerceAtLeast(0))
+        return current
     }
 
     private fun stepChannel(delta: Int): ChannelGroup? {
@@ -78,7 +82,6 @@ class PlaybackSession {
         // A folder with a single channel has nothing to cycle through, so a plain next/previous
         // steps to the adjacent folder instead of staying put on the same channel.
         if (n == 1) return stepFolder(delta)
-        rememberCurrent()
         channelIndex = (channelIndex + delta + n) % n
         return current
     }
@@ -86,7 +89,6 @@ class PlaybackSession {
     private fun stepFolder(delta: Int): ChannelGroup? {
         val n = folders.size
         if (n == 0) return null
-        rememberCurrent()
         folderIndex = (folderIndex + delta + n) % n
         channelIndex = 0
         return current

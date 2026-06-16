@@ -200,6 +200,7 @@ class PlayerViewModel(
         val jumpFolder = now - lastNextPressAt < DOUBLE_PRESS_MS
         lastNextPressAt = now
         val folderBefore = playbackSession.folderIndex
+        playbackSession.markCurrentAsLast()
         val group = (if (jumpFolder) playbackSession.nextFolder() else playbackSession.next()) ?: return
         lastDirection = 1
         autoSkipCount = 0 // a manual zap gets a fresh auto-skip budget
@@ -215,6 +216,7 @@ class PlayerViewModel(
         val jumpFolder = now - lastPrevPressAt < DOUBLE_PRESS_MS
         lastPrevPressAt = now
         val folderBefore = playbackSession.folderIndex
+        playbackSession.markCurrentAsLast()
         val group =
             (if (jumpFolder) playbackSession.previousFolder() else playbackSession.previous()) ?: return
         lastDirection = -1
