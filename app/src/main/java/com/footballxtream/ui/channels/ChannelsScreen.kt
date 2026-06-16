@@ -27,7 +27,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed as lazyItemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -223,6 +222,13 @@ private fun FolderGrid(
             return@Column
         }
 
+        // First content row that will render, to land the focus on it: favorites > recents > rows.
+        val firstSection = when {
+            content.favoriteChannels.isNotEmpty() -> 0
+            content.recent.isNotEmpty() -> 1
+            else -> 2
+        }
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 32.dp),
@@ -231,7 +237,7 @@ private fun FolderGrid(
             if (content.favoriteChannels.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.section_favorite_channels)) {
-                        WrappingRow(content.favoriteChannels) { group, cardModifier ->
+                        WrappingRow(content.favoriteChannels, autoFocus = firstSection == 0) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
                                 onClick = { onResume(group.key) },
@@ -246,7 +252,7 @@ private fun FolderGrid(
             if (content.recent.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.section_recent)) {
-                        WrappingRow(content.recent) { group, cardModifier ->
+                        WrappingRow(content.recent, autoFocus = firstSection == 1) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
                                 onClick = { onResume(group.key) },
@@ -258,9 +264,9 @@ private fun FolderGrid(
                     }
                 }
             }
-            items(content.rows) { row ->
+            lazyItemsIndexed(content.rows) { index, row ->
                 ChannelRowSection(title = stringResource(row.titleRes)) {
-                    WrappingRow(row.folders) { folder, cardModifier ->
+                    WrappingRow(row.folders, autoFocus = firstSection == 2 && index == 0) { folder, cardModifier ->
                         FolderCard(
                             folder = folder,
                             isFavorite = favoriteNames.contains(folder.name),
@@ -330,6 +336,7 @@ private fun ChannelRowSection(title: String, content: @Composable () -> Unit) {
 @Composable
 private fun <T> WrappingRow(
     items: List<T>,
+    autoFocus: Boolean = false,
     itemContent: @Composable (item: T, modifier: Modifier) -> Unit,
 ) {
     val listState = rememberLazyListState()
@@ -338,6 +345,11 @@ private fun <T> WrappingRow(
     val lastFocus = remember { FocusRequester() }
     var focusedIndex by remember { mutableStateOf(-1) }
     val lastIndex = items.lastIndex
+
+    // On the first content row, land the focus on its first card when the grid opens.
+    if (autoFocus) {
+        LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
+    }
 
     LazyRow(
         state = listState,

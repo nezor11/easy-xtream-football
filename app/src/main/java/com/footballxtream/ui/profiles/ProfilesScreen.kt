@@ -323,7 +323,8 @@ private fun TypeBadge(label: String) {
     )
 }
 
-/** Wide "Add profile" button below the profile cards. Filled green when focused, outlined otherwise. */
+/** Wide "Add profile" button below the cards. Muted by default so it doesn't compete with the
+ *  profiles; only turns green and prominent when focused (i.e. when you actually go to add one). */
 @Composable
 private fun AddProfileButton(
     focusable: Boolean,
@@ -335,21 +336,21 @@ private fun AddProfileButton(
     val shape = RoundedCornerShape(50)
     Box(
         modifier = modifier
-            .widthIn(max = 360.dp)
+            .widthIn(max = 300.dp)
             .fillMaxWidth()
             .clip(shape)
-            .background(if (focused) colors.primary else colors.surface)
-            .border(2.dp, colors.primary, shape)
+            .background(if (focused) colors.primary else Color.Transparent)
+            .border(1.dp, if (focused) colors.primary else colors.surfaceVariant, shape)
             .focusProperties { canFocus = focusable }
             .onFocusChanged { focused = it.isFocused }
             .clickable { onClick() }
-            .padding(vertical = 13.dp),
+            .padding(vertical = 11.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = "+  " + stringResource(R.string.add_profile),
-            style = MaterialTheme.typography.titleSmall,
-            color = if (focused) colors.onPrimary else colors.primary,
+            style = MaterialTheme.typography.bodySmall,
+            color = if (focused) colors.onPrimary else colors.onSurfaceVariant,
         )
     }
 }
