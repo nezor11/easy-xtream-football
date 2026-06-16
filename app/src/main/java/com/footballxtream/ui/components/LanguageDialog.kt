@@ -10,16 +10,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,7 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.Button
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.LocaleHelper
@@ -85,17 +82,26 @@ fun LanguageButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
-/** Full-screen picker: choose "Automatic (device)" or one of the shipped languages. */
+/**
+ * Language picker: "Automatic (device)" across the top, then the shipped languages in a 2-column
+ * grid. The active language is filled green with a check; the focused one gets a border. Picking
+ * one persists it and relaunches the app in that language.
+ */
 @Composable
 fun LanguageDialog(onDismiss: () -> Unit) {
     val colors = MaterialTheme.colorScheme
     val context = LocalContext.current
     val activity = context.findActivity()
     val current = LocaleHelper.persistedTag(context)
-    val firstFocus = remember { FocusRequester() }
+    val selectedFocus = remember { FocusRequester() }
+    val languages = remember { LocaleHelper.supportedTags.filter { it.isNotEmpty() } }
 
     BackHandler(enabled = true) { onDismiss() }
-    LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { runCatching { selectedFocus.requestFocus() } }
+
+    fun choose(tag: String) {
+        activity?.let { LocaleHelper.applyAndRestart(it, tag) }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize().background(Color(0xCC000000)),
@@ -103,13 +109,11 @@ fun LanguageDialog(onDismiss: () -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .widthIn(max = 420.dp)
+                .widthIn(max = 460.dp)
                 .fillMaxWidth()
-                .heightIn(max = 560.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .background(colors.surface)
-                .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Text(
@@ -117,22 +121,65 @@ fun LanguageDialog(onDismiss: () -> Unit) {
                 style = MaterialTheme.typography.titleLarge,
                 color = colors.onSurface,
             )
-            LocaleHelper.supportedTags.forEachIndexed { index, tag ->
-                val label = if (tag.isEmpty()) stringResource(R.string.language_system) else autonym(tag)
-                val selected = tag == current
-                Button(
-                    onClick = { activity?.let { LocaleHelper.applyAndRestart(it, tag) } },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .then(if (index == 0) Modifier.focusRequester(firstFocus) else Modifier),
-                ) {
-                    Text(
-                        text = (if (selected) "● " else "") + label,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                    )
+            // "Automatic (device)" spans the full width — it's the default mode.
+            LanguageOption(
+                label = stringResource(R.string.language_system),
+                selected = current.isEmpty(),
+                onClick = { choose("") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .then(if (current.isEmpty()) Modifier.focusRequester(selectedFocus) else Modifier),
+            )
+            // The shipped languages in a 2-column grid.
+            languages.chunked(2).forEach { pair ->
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    pair.forEach { tag ->
+                        LanguageOption(
+                            label = autonym(tag),
+                            selected = tag == current,
+                            onClick = { choose(tag) },
+                            modifier = Modifier
+                                .weight(1f)
+                                .then(if (tag == current) Modifier.focusRequester(selectedFocus) else Modifier),
+                        )
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun LanguageOption(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MaterialTheme.colorScheme
+    var focused by remember { mutableStateOf(false) }
+    val shape = RoundedCornerShape(10.dp)
+    val borderColor = when {
+        !focused -> Color.Transparent
+        selected -> colors.onPrimary
+        else -> colors.primary
+    }
+    Box(
+        modifier = modifier
+            .clip(shape)
+            .background(if (selected) colors.primary else colors.surfaceVariant)
+            .border(2.dp, borderColor, shape)
+            .onFocusChanged { focused = it.isFocused }
+            .clickable { onClick() }
+            .padding(vertical = 11.dp, horizontal = 12.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = if (selected) "✓  $label" else label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (selected) colors.onPrimary else colors.onSurface,
+            maxLines = 1,
+            textAlign = TextAlign.Center,
+        )
     }
 }
