@@ -84,8 +84,8 @@ class ContentRepository(
     fun bindProfile(profile: ProfileEntity) {
         activeProfileName = profile.name.takeIf { it.isNotBlank() }
         when {
-            profile.isDirect -> bindDirect(profile.m3uUrl)
-            profile.isM3u -> bindM3u(profile.m3uUrl)
+            profile.isDirect -> bindDirect(profile.m3uUrl.value)
+            profile.isM3u -> bindM3u(profile.m3uUrl.value)
             else -> bindXtream(profile.toXtreamProfile())
         }
     }

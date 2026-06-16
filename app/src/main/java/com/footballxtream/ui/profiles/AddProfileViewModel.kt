@@ -13,6 +13,7 @@ import com.footballxtream.data.ContentRepository
 import com.footballxtream.data.local.ProfileDao
 import com.footballxtream.data.local.ProfileEntity
 import com.footballxtream.data.local.ProfileType
+import com.footballxtream.data.local.Secret
 import com.footballxtream.model.XtreamProfile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -67,10 +68,10 @@ class AddProfileViewModel(
                 it.copy(
                     mode = p.type,
                     name = p.name,
-                    server = p.serverUrl,
-                    username = p.username,
-                    password = p.password,
-                    m3uUrl = p.m3uUrl,
+                    server = p.serverUrl.value,
+                    username = p.username.value,
+                    password = p.password.value,
+                    m3uUrl = p.m3uUrl.value,
                     isEditing = true,
                 )
             }
@@ -97,7 +98,7 @@ class AddProfileViewModel(
                 val name = current.name.ifBlank { defaultM3uName(url) }
                 repository.bindDirect(url)
                 repository.setActiveProfileName(name)
-                persist(ProfileEntity(name = name, type = ProfileType.DIRECT, m3uUrl = url))
+                persist(ProfileEntity(name = name, type = ProfileType.DIRECT, m3uUrl = Secret(url)))
                 onSaved()
             } else if (current.isM3u) {
                 val url = current.m3uUrl.trim()
@@ -105,7 +106,7 @@ class AddProfileViewModel(
                 repository.validateM3u(url)
                     .onSuccess {
                         repository.setActiveProfileName(name)
-                        persist(ProfileEntity(name = name, type = ProfileType.M3U, m3uUrl = url))
+                        persist(ProfileEntity(name = name, type = ProfileType.M3U, m3uUrl = Secret(url)))
                         onSaved()
                     }
                     .onFailure { fail(context.getString(R.string.error_m3u_load)) }
@@ -123,9 +124,9 @@ class AddProfileViewModel(
                             ProfileEntity(
                                 name = profile.name,
                                 type = ProfileType.XTREAM,
-                                serverUrl = profile.serverUrl,
-                                username = profile.username,
-                                password = profile.password,
+                                serverUrl = Secret(profile.serverUrl),
+                                username = Secret(profile.username),
+                                password = Secret(profile.password),
                             ),
                         )
                         onSaved()

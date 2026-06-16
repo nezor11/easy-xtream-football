@@ -3,6 +3,10 @@ package com.footballxtream
 import android.content.Context
 import androidx.room.Room
 import com.footballxtream.data.ContentRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import com.footballxtream.data.LogoRepository
 import com.footballxtream.data.local.ALL_MIGRATIONS
 import com.footballxtream.data.local.AppDatabase
@@ -35,4 +39,21 @@ class AppContainer(context: Context) {
     val repository: ContentRepository = ContentRepository(appContext.cacheDir, logoRepository)
     val playbackSession: PlaybackSession = PlaybackSession()
     val playerEngine: PlayerEngine = PlayerEngine(appContext, settingsStore)
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    init {
+        encryptExistingCredentials()
+    }
+
+    // One-time pass for profiles saved before encryption existed: reading decrypts (plain text
+    // passes through untouched), and re-saving writes them back through the encrypting converter,
+    // so any legacy plaintext credential becomes ciphertext at rest.
+    private fun encryptExistingCredentials() {
+        scope.launch {
+            if (settingsStore.credentialsEncrypted()) return@launch
+            runCatching { profileDao.allOnce().forEach { profileDao.update(it) } }
+            settingsStore.setCredentialsEncrypted()
+        }
+    }
 }

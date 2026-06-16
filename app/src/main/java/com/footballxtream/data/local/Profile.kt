@@ -6,30 +6,44 @@ import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.TypeConverter
 import androidx.room.Update
 import com.footballxtream.model.XtreamProfile
 import kotlinx.coroutines.flow.Flow
+
+/** A value encrypted at rest (see [Crypto]). Stored as ciphertext, exposed here as plain text. */
+data class Secret(val value: String)
+
+/** Encrypts on the way into the DB, decrypts on the way out (registered on [AppDatabase]). */
+class SecretConverter {
+    @TypeConverter
+    fun fromSecret(secret: Secret?): String = Crypto.encrypt(secret?.value.orEmpty())
+
+    @TypeConverter
+    fun toSecret(stored: String?): Secret = Secret(Crypto.decrypt(stored.orEmpty()))
+}
 
 @Entity(tableName = "profiles")
 data class ProfileEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
     val type: String = ProfileType.XTREAM,
-    // Xtream fields (blank for M3U profiles):
-    val serverUrl: String = "",
-    val username: String = "",
-    val password: String = "",
-    // M3U field (blank for Xtream profiles):
-    val m3uUrl: String = "",
+    // Sensitive fields, encrypted at rest via [SecretConverter]:
+    // Xtream (blank for M3U profiles):
+    val serverUrl: Secret = Secret(""),
+    val username: Secret = Secret(""),
+    val password: Secret = Secret(""),
+    // M3U URL (blank for Xtream profiles; may itself carry user/pass in the query):
+    val m3uUrl: Secret = Secret(""),
 ) {
     val isM3u: Boolean get() = type == ProfileType.M3U
     val isDirect: Boolean get() = type == ProfileType.DIRECT
 
     fun toXtreamProfile() = XtreamProfile(
         name = name,
-        serverUrl = serverUrl,
-        username = username,
-        password = password,
+        serverUrl = serverUrl.value,
+        username = username.value,
+        password = password.value,
     )
 }
 
@@ -49,6 +63,9 @@ interface ProfileDao {
 
     @Query("SELECT COUNT(*) FROM profiles")
     suspend fun count(): Int
+
+    @Query("SELECT * FROM profiles")
+    suspend fun allOnce(): List<ProfileEntity>
 
     @Query("SELECT * FROM profiles WHERE id = :id")
     suspend fun byId(id: Long): ProfileEntity?

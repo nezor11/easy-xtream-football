@@ -1,6 +1,7 @@
 package com.footballxtream.data.local
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
@@ -22,6 +23,7 @@ class SettingsStore(private val context: Context) {
         val FAVORITE_CHANNELS = stringPreferencesKey("favorite_channel_keys")
         val LAST_PROFILE_ID = longPreferencesKey("last_profile_id")
         val PLAYER_HINTS_SHOWN = intPreferencesKey("player_hints_shown")
+        val CREDENTIALS_ENCRYPTED = booleanPreferencesKey("credentials_encrypted")
     }
 
     val qualityMode: Flow<QualityMode> = context.settingsDataStore.data.map { prefs ->
@@ -68,6 +70,14 @@ class SettingsStore(private val context: Context) {
 
     suspend fun incrementPlayerHintsShown() {
         context.settingsDataStore.edit { it[Keys.PLAYER_HINTS_SHOWN] = (it[Keys.PLAYER_HINTS_SHOWN] ?: 0) + 1 }
+    }
+
+    /** Whether the one-time pass that encrypts pre-existing profile credentials has run. */
+    suspend fun credentialsEncrypted(): Boolean =
+        context.settingsDataStore.data.first()[Keys.CREDENTIALS_ENCRYPTED] ?: false
+
+    suspend fun setCredentialsEncrypted() {
+        context.settingsDataStore.edit { it[Keys.CREDENTIALS_ENCRYPTED] = true }
     }
 
     /** Id of the last profile the user entered, or null. Used to skip the picker on startup. */

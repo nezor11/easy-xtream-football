@@ -210,7 +210,7 @@ private fun ProfileActionMenu(
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             Text(
-                text = profile.name.ifBlank { profile.username },
+                text = profile.name.ifBlank { profile.username.value },
                 style = MaterialTheme.typography.titleLarge,
                 color = colors.onSurface,
                 maxLines = 1,
@@ -287,7 +287,7 @@ private fun ProfileCard(
                 verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 Text(
-                    text = profile.name.ifBlank { profile.username },
+                    text = profile.name.ifBlank { profile.username.value },
                     style = MaterialTheme.typography.titleSmall,
                     color = colors.onSurface,
                     maxLines = 1,
