@@ -24,6 +24,7 @@ android {
         targetSdk = 35
         versionCode = 4
         versionName = "0.1.3"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     // Split the FFmpeg native libs per ABI. Real Android TV / Fire TV / phone devices are ARM, so a
@@ -133,4 +134,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.runner)
 }
