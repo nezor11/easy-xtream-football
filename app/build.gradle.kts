@@ -53,6 +53,21 @@ android {
         }
     }
 
+    // "full" bundles the NextLib FFmpeg software decoders (AC-3/E-AC-3/DTS/MP2 audio, common on IPTV);
+    // "lite" drops them for a much smaller APK (~2.5 MB vs ~7.5 MB) — at the cost of silent audio on
+    // those codecs. The FFmpeg libs are added only to "full" (see dependencies).
+    flavorDimensions += "ffmpeg"
+    productFlavors {
+        create("full") {
+            dimension = "ffmpeg"
+            isDefault = true
+        }
+        create("lite") {
+            dimension = "ffmpeg"
+            versionNameSuffix = "-lite"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -115,8 +130,9 @@ dependencies {
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.datasource.okhttp)
     // FFmpeg software decoders (AC-3, E-AC-3, MP2, DTS…) so channels with Dolby
-    // audio are not silent on devices without a hardware Dolby decoder.
-    implementation(libs.nextlib.media3ext)
+    // audio are not silent on devices without a hardware Dolby decoder. Only in the "full" flavor;
+    // "lite" ships without it (see the per-flavor RenderersFactory in src/full and src/lite).
+    "fullImplementation"(libs.nextlib.media3ext)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.serialization)

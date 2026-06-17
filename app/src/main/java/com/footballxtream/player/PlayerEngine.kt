@@ -10,13 +10,11 @@ import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.TransferListener
 import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.DefaultLoadControl
-import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import com.footballxtream.data.local.SettingsStore
 import com.footballxtream.data.remote.XtreamClient
-import io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
@@ -77,16 +75,6 @@ class PlayerEngine(
         OkHttpDataSource.Factory(okHttpClient).also { it.setTransferListener(byteCounter) }
 
     /**
-     * Renderers backed by the NextLib FFmpeg extension. EXTENSION_RENDERER_MODE_ON keeps the
-     * device's hardware decoders first (e.g. AAC, H.264) and falls back to the software FFmpeg
-     * decoders only when no hardware one exists — which is the case for the AC-3 / E-AC-3 (Dolby)
-     * and MP2 audio that many IPTV channels use, that would otherwise be silent.
-     */
-    private fun renderersFactory(): DefaultRenderersFactory =
-        NextRenderersFactory(context)
-            .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
-
-    /**
      * Media-usage audio attributes with [handleAudioFocus] on, so ExoPlayer requests system audio
      * focus on play and ABANDONS it on pause/stop — otherwise the audio focus (and Cast/system audio
      * routing) stays held after the app is backgrounded. [setHandleAudioBecomingNoisy] also pauses
@@ -108,7 +96,7 @@ class PlayerEngine(
     val displayHeight: Int get() = displayMode?.physicalHeight ?: 1080
 
     fun build(): ExoPlayer =
-        ExoPlayer.Builder(context, renderersFactory())
+        ExoPlayer.Builder(context, mediaRenderersFactory(context))
             .setBandwidthMeter(bandwidthMeter)
             .setLoadControl(newLoadControl())
             .setMediaSourceFactory(DefaultMediaSourceFactory(httpDataSourceFactory))

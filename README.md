@@ -72,12 +72,13 @@ Builds with **Android Studio** (recommended — it ships JDK 17 and the SDK):
 From the command line (requires JDK 17 and the Android SDK with `local.properties`):
 
 ```bash
-./gradlew assembleDebug
+./gradlew assembleFullDebug   # full build; use assembleLiteDebug for the small one
 ```
 
-The APK is split **per ABI** to reduce its size (FFmpeg is heavy per architecture), so
-`app-arm64-v8a-debug.apk` and `app-armeabi-v7a-debug.apk` are produced (no universal APK). Most
-Android TV / Fire TV devices use **arm64-v8a**.
+Two **flavors**: `full` bundles the FFmpeg software decoders (~7.5 MB) for the AC-3/E-AC-3/DTS/MP2
+audio common on IPTV; `lite` drops them for a ~2.5 MB APK (channels using those codecs are then
+silent). Each is also split **per ABI** (no universal APK), e.g. `app-full-armeabi-v7a-release.apk`.
+Most Android TV / Fire TV devices use **arm64-v8a**.
 
 > minSdk 24 (Android 7.0). Very old Fire TV devices on Fire OS 5 (Android 5.1) are not supported.
 
