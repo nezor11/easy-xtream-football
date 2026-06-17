@@ -46,7 +46,7 @@ object XmltvEpg {
      * tvg-id suffix, e.g. "Rete8Sport.it" → it) come first, then broad "all sources" guides, then the
      * rest. Stable, so playlists with a single guide (or no country hints) are left untouched.
      */
-    private fun prioritize(urls: List<String>, neededIds: Set<String>): List<String> {
+    internal fun prioritize(urls: List<String>, neededIds: Set<String>): List<String> {
         val countries = neededIds.mapNotNullTo(HashSet()) { id ->
             id.substringAfterLast('.', "").lowercase()
                 .takeIf { it.length == 2 && it.all(Char::isLetter) }

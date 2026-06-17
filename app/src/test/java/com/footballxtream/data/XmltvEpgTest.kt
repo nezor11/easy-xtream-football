@@ -1,10 +1,44 @@
 package com.footballxtream.data
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.TimeZone
 
 class XmltvEpgTest {
+
+    @Test
+    fun prioritize_putsCountryFeedsFirstThenAllSources() {
+        val urls = listOf(
+            "https://x/epg_ripper_FR1.xml.gz",
+            "https://x/epg_ripper_ALL_SOURCES1.xml.gz",
+            "https://x/epg_ripper_IT1.xml.gz",
+            "https://x/epg_ripper_DE1.xml.gz",
+        )
+        // tvg-ids carry the country in the suffix; only Italy matches a feed here.
+        val result = XmltvEpg.prioritize(urls, setOf("Rete8Sport.it", "SkySport.es"))
+
+        assertTrue("IT feed first", result[0].contains("IT1"))
+        assertTrue("all-sources next", result[1].contains("ALL_SOURCES"))
+        // The unrelated feeds keep their original relative order after the prioritized ones.
+        assertEquals(listOf("FR1", "DE1"), result.drop(2).map { it.substringAfter("ripper_").substringBefore(".") })
+    }
+
+    @Test
+    fun prioritize_allSourcesBeatsUnrelatedWhenNoCountryFeed() {
+        val urls = listOf("https://x/epg_ripper_DE1.xml.gz", "https://x/epg_ripper_ALL_SOURCES1.xml.gz")
+        val result = XmltvEpg.prioritize(urls, setOf("Esport3.es"))
+
+        assertTrue(result[0].contains("ALL_SOURCES"))
+        assertTrue(result[1].contains("DE1"))
+    }
+
+    @Test
+    fun prioritize_withoutCountryHints_keepsOrderUnchanged() {
+        val urls = listOf("https://x/guide_b.xml", "https://x/guide_a.xml")
+        // No 2-letter country suffix in the ids → nothing to prioritize by.
+        assertEquals(urls, XmltvEpg.prioritize(urls, setOf("ChannelOne", "ChannelTwo")))
+    }
 
     @Test
     fun parseTime_withOffset() {
