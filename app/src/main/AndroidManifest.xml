@@ -13,9 +13,12 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+    <!-- allowBackup=false: this app stores IPTV credentials. Even though they're encrypted with a
+         non-exportable Android Keystore key, disabling backup keeps the credentials DB from being
+         pulled off the device via `adb backup` / auto-backup. Profiles are easily re-added. -->
     <application
         android:name=".FootballXtreamApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:banner="@drawable/tv_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
