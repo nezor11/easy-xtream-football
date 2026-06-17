@@ -118,7 +118,7 @@ class ContentRepository(
                 throw IOException("La URL no devuelve una lista M3U válida (inicio: ${firstLine.take(60)})")
             }
             binding = Binding.M3u(url.trim())
-        }.onFailure { Log.w(TAG, "validateM3u failed for $url", it) }
+        }.onFailure { Log.w(TAG, "validateM3u failed for ${redactUrl(url)}", it) }
     }
 
     // --- Load the sports channel groups for the active source ---

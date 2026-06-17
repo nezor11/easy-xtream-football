@@ -34,7 +34,7 @@ object XmltvEpg {
         for (url in prioritize(urls, neededIds).take(MAX_SOURCES)) {
             runCatching {
                 XtreamClient.withStream(url) { raw -> parse(unGzipIfNeeded(raw), neededIds, now, out) }
-            }.onFailure { Log.w(TAG, "XMLTV source failed: $url", it) }
+            }.onFailure { Log.w(TAG, "XMLTV source failed: ${redactUrl(url)}", it) }
         }
         return out.mapValues { (_, list) -> list.sortedBy { it.start } }
     }
