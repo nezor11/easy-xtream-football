@@ -22,20 +22,46 @@ object XmltvEpg {
 
     private const val TAG = "FXEpg"
     // EPG sources can list dozens of huge files (national guides). Cap how many we pull so a single
-    // guide request can never download the whole world.
-    private const val MAX_SOURCES = 6
+    // guide request can never download the whole world. We pull the most relevant ones first (see
+    // [prioritize]), so a handful is enough to cover the channels we actually carry.
+    private const val MAX_SOURCES = 8
 
     /** Programmes per channel id, sorted by start time, for the channels in [neededIds]. */
     fun index(urls: List<String>, neededIds: Set<String>): Map<String, List<EpgProgram>> {
         if (urls.isEmpty() || neededIds.isEmpty()) return emptyMap()
         val now = System.currentTimeMillis()
         val out = HashMap<String, MutableList<EpgProgram>>()
-        for (url in urls.take(MAX_SOURCES)) {
+        for (url in prioritize(urls, neededIds).take(MAX_SOURCES)) {
             runCatching {
                 XtreamClient.withStream(url) { raw -> parse(unGzipIfNeeded(raw), neededIds, now, out) }
             }.onFailure { Log.w(TAG, "XMLTV source failed: $url", it) }
         }
         return out.mapValues { (_, list) -> list.sortedBy { it.start } }
+    }
+
+    /**
+     * When a playlist declares many national guides (epgshare01 lists ~50), taking the first
+     * [MAX_SOURCES] blindly often grabs guides for countries we carry no channels from, leaving the
+     * relevant ones unfetched. Reorder so the guides that match our channels' countries (read from the
+     * tvg-id suffix, e.g. "Rete8Sport.it" → it) come first, then broad "all sources" guides, then the
+     * rest. Stable, so playlists with a single guide (or no country hints) are left untouched.
+     */
+    private fun prioritize(urls: List<String>, neededIds: Set<String>): List<String> {
+        val countries = neededIds.mapNotNullTo(HashSet()) { id ->
+            id.substringAfterLast('.', "").lowercase()
+                .takeIf { it.length == 2 && it.all(Char::isLetter) }
+        }
+        if (countries.isEmpty()) return urls
+        // Matches the country token in a feed file name: epgshare01's "…_IT1.xml.gz", "…_ES.xml", etc.
+        val countryFeed = Regex("[_/.](" + countries.joinToString("|") + ")\\d*[._]")
+        return urls.sortedBy { url ->
+            val u = url.lowercase()
+            when {
+                countryFeed.containsMatchIn(u) -> 0
+                "all_sources" in u -> 1
+                else -> 2
+            }
+        }
     }
 
     private fun unGzipIfNeeded(raw: InputStream): InputStream {
