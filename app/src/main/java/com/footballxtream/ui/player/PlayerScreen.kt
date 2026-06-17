@@ -64,6 +64,7 @@ fun PlayerScreen(
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val focusRequester = remember { FocusRequester() }
     // Timestamp of the OK key-down, to tell a short press (menu) from a long press (toggle favorite).
+    // 0L = idle (no press in progress); -1L = long-press already handled on key-down.
     val okDownAt = remember { LongArray(1) }
 
     // Back closes the options menu first; otherwise it leaves the player.
@@ -128,6 +129,11 @@ fun PlayerScreen(
                         }
                         isOk && event.type == KeyEventType.KeyUp -> {
                             when {
+                                // No key-down was recorded for this press (0L = idle): it belongs to
+                                // another gesture — typically the OK that just confirmed and closed the
+                                // menu, whose key-up only reaches this branch now that the menu is gone.
+                                // Ignore it so confirming a menu option never toggles the favorite.
+                                okDownAt[0] == 0L -> Unit
                                 okDownAt[0] == -1L -> Unit
                                 System.currentTimeMillis() - okDownAt[0] >= 450L ->
                                     viewModel.toggleCurrentChannelFavorite()
