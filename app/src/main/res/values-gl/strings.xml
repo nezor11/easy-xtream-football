@@ -84,6 +84,10 @@
     <string name="action_add">Engadir</string>
     <string name="add_profile">Engadir perfil</string>
 
+    <string name="settings_title">Axustes</string>
+    <string name="settings_clear_cache">Borrar a caché de canles e guía</string>
+    <string name="settings_cache_cleared">Caché borrada</string>
+    <string name="settings_open_source">Licenzas de código aberto</string>
     <string name="settings_language">Idioma</string>
     <string name="language_system">Automático (dispositivo)</string>
 </resources>

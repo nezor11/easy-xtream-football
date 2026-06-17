@@ -91,6 +91,11 @@
     <string name="add_profile">Add profile</string>
 
     <!-- Language selection -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_clear_cache">Clear channel &amp; guide cache</string>
+    <string name="settings_cache_cleared">Cache cleared</string>
+    <string name="settings_open_source">Open-source licenses</string>
+    <string name="settings_licenses_body">This app is GPL-3.0. It bundles FFmpeg (LGPLv3) via NextLib (GPL-3.0), with libvpx (BSD-3-Clause) and Mbed TLS (Apache-2.0). AndroidX, Media3/ExoPlayer, Jetpack Compose, Kotlin, OkHttp/Retrofit and Coil are Apache-2.0. Channel logos from the iptv-org database. Full text: THIRD_PARTY_LICENSES.md in the project repo.</string>
     <string name="settings_language">Language</string>
     <string name="language_system">Automatic (device)</string>
 </resources>

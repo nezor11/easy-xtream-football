@@ -90,6 +90,30 @@ fun LanguageButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
+/** Small gear button that opens the Settings screen; mirrors [LanguageButton] in the other corner. */
+@Composable
+fun SettingsButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val colors = MaterialTheme.colorScheme
+    var focused by remember { mutableStateOf(false) }
+    Box(
+        modifier = modifier
+            .size(44.dp)
+            .clip(CircleShape)
+            .background(colors.surfaceVariant)
+            .border(2.dp, if (focused) colors.primary else Color.Transparent, CircleShape)
+            .onFocusChanged { focused = it.isFocused }
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_settings),
+            contentDescription = stringResource(R.string.settings_title),
+            colorFilter = ColorFilter.tint(colors.onSurface),
+            modifier = Modifier.size(24.dp),
+        )
+    }
+}
+
 /**
  * Language picker: "Automatic (device)" across the top, then the shipped languages in a 2-column
  * grid. The active language is filled green with a check; the focused one gets a border. Picking

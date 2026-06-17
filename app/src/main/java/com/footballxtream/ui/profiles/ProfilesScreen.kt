@@ -57,6 +57,7 @@ import com.footballxtream.data.local.ProfileEntity
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.LanguageButton
 import com.footballxtream.ui.components.LanguageDialog
+import com.footballxtream.ui.components.SettingsButton
 import com.footballxtream.ui.components.findActivity
 
 @Composable
@@ -64,6 +65,7 @@ fun ProfilesScreen(
     onProfileSelected: () -> Unit,
     onAddProfile: () -> Unit,
     onEditProfile: (Long) -> Unit,
+    onOpenSettings: () -> Unit,
     viewModel: ProfilesViewModel = viewModel(factory = ProfilesViewModel.Factory),
 ) {
     val profiles by viewModel.profiles.collectAsStateWithLifecycle()
@@ -149,8 +151,12 @@ fun ProfilesScreen(
             )
         }
 
-        // Language picker: a discreet globe in the corner, hidden while another overlay is open.
+        // Corner controls: a Settings gear and the language globe, hidden while an overlay is open.
         if (menuProfile == null && !showLanguage) {
+            SettingsButton(
+                onClick = onOpenSettings,
+                modifier = Modifier.align(Alignment.TopStart).padding(24.dp),
+            )
             LanguageButton(
                 onClick = { showLanguage = true },
                 modifier = Modifier.align(Alignment.TopEnd).padding(24.dp),

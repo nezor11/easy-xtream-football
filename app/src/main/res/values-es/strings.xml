@@ -89,6 +89,10 @@
     <string name="add_profile">Añadir perfil</string>
 
     <!-- Selección de idioma -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_clear_cache">Borrar caché de canales y guía</string>
+    <string name="settings_cache_cleared">Caché borrada</string>
+    <string name="settings_open_source">Licencias de código abierto</string>
     <string name="settings_language">Idioma</string>
     <string name="language_system">Automático (dispositivo)</string>
 </resources>

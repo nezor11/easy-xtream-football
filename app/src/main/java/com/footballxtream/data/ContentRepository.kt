@@ -136,6 +136,20 @@ class ContentRepository(
         }
 
     /**
+     * Wipes the on-disk channel/playlist caches and the in-memory EPG indexes, so the next load
+     * re-fetches everything fresh. Logos (expensive to rebuild) are kept. For the Settings screen.
+     */
+    suspend fun clearCache() = withContext(Dispatchers.IO) {
+        cacheDir.listFiles { file ->
+            file.name.startsWith("groups_") || file.name.startsWith("m3u_")
+        }?.forEach { it.delete() }
+        m3uEpgIndex = null
+        m3uEpgBuiltKey = ""
+        m3uEpgBuiltAt = 0L
+        clearNowCache()
+    }
+
+    /**
      * Sports channel groups for an M3U source. The parsed+grouped result is cached on disk so repeat
      * loads skip both the 11 MB download and the parse of thousands of entries (near-instant).
      */

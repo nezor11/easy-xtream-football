@@ -80,6 +80,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true // expose VERSION_NAME to the in-app "About" screen
     }
 }
 

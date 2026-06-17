@@ -29,6 +29,7 @@ import com.footballxtream.ui.channels.ChannelsScreen
 import com.footballxtream.ui.player.PlayerScreen
 import com.footballxtream.ui.profiles.AddProfileScreen
 import com.footballxtream.ui.profiles.ProfilesScreen
+import com.footballxtream.ui.settings.SettingsScreen
 import com.footballxtream.ui.theme.FootballXtreamTheme
 
 object Routes {
@@ -37,6 +38,7 @@ object Routes {
     const val EDIT_PROFILE = "edit_profile"
     const val CHANNELS = "channels"
     const val PLAYER = "player"
+    const val SETTINGS = "settings"
 }
 
 class MainActivity : ComponentActivity() {
@@ -97,6 +99,7 @@ private fun AppNavigation(start: String, autoEnterChannels: Boolean = false) {
                 onProfileSelected = { navController.navigate(Routes.CHANNELS) },
                 onAddProfile = { navController.navigate(Routes.ADD_PROFILE) },
                 onEditProfile = { id -> navController.navigate("${Routes.EDIT_PROFILE}/$id") },
+                onOpenSettings = { navController.navigate(Routes.SETTINGS) },
             )
         }
 
@@ -131,6 +134,10 @@ private fun AppNavigation(start: String, autoEnterChannels: Boolean = false) {
 
         composable(Routes.PLAYER) {
             PlayerScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.SETTINGS) {
+            SettingsScreen(onBack = { navController.popBackStack() })
         }
     }
 }

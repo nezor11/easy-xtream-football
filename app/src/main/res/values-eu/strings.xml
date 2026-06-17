@@ -84,6 +84,10 @@
     <string name="action_add">Gehitu</string>
     <string name="add_profile">Gehitu profila</string>
 
+    <string name="settings_title">Ezarpenak</string>
+    <string name="settings_clear_cache">Garbitu kanalen eta gidaren cachea</string>
+    <string name="settings_cache_cleared">Cachea garbituta</string>
+    <string name="settings_open_source">Kode irekiko lizentziak</string>
     <string name="settings_language">Hizkuntza</string>
     <string name="language_system">Automatikoa (gailua)</string>
 </resources>

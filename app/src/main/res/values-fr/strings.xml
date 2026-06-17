@@ -84,6 +84,10 @@
     <string name="action_add">Ajouter</string>
     <string name="add_profile">Ajouter un profil</string>
 
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_clear_cache">Vider le cache des chaînes et du guide</string>
+    <string name="settings_cache_cleared">Cache vidé</string>
+    <string name="settings_open_source">Licences open source</string>
     <string name="settings_language">Langue</string>
     <string name="language_system">Automatique (appareil)</string>
 </resources>

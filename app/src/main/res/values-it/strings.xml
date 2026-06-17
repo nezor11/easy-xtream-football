@@ -84,6 +84,10 @@
     <string name="action_add">Aggiungi</string>
     <string name="add_profile">Aggiungi profilo</string>
 
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_clear_cache">Svuota la cache di canali e guida</string>
+    <string name="settings_cache_cleared">Cache svuotata</string>
+    <string name="settings_open_source">Licenze open source</string>
     <string name="settings_language">Lingua</string>
     <string name="language_system">Automatico (dispositivo)</string>
 </resources>

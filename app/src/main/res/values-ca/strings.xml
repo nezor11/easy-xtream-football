@@ -84,6 +84,10 @@
     <string name="action_add">Afegeix</string>
     <string name="add_profile">Afegeix un perfil</string>
 
+    <string name="settings_title">Configuració</string>
+    <string name="settings_clear_cache">Esborra la memòria cau de canals i guia</string>
+    <string name="settings_cache_cleared">Memòria cau esborrada</string>
+    <string name="settings_open_source">Llicències de codi obert</string>
     <string name="settings_language">Idioma</string>
     <string name="language_system">Automàtic (dispositiu)</string>
 </resources>
