@@ -42,7 +42,9 @@ android {
         // storeFile/storePassword/keyAlias/keyPassword to sign proper releases.
         if (keystorePropertiesFile.exists()) {
             create("release") {
-                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                // storeFile path in keystore.properties is relative to the repo root (e.g.
+                // "keystore/easy-xtream-release.jks").
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
                 storePassword = keystoreProperties.getProperty("storePassword")
                 keyAlias = keystoreProperties.getProperty("keyAlias")
                 keyPassword = keystoreProperties.getProperty("keyPassword")
