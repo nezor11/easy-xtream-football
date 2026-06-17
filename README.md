@@ -101,3 +101,8 @@ credentials they configure, the content they access, and for complying with appl
 ## License
 
 Distributed under **GPL-3.0**. See [LICENSE](LICENSE).
+
+This software uses libraries from the **[FFmpeg](https://ffmpeg.org) project** under the **LGPLv3**,
+bundled via **[NextLib](https://github.com/anilbeesetti/nextlib)** (GPL-3.0). Full third-party
+attribution — FFmpeg, libvpx, Mbed TLS and the rest of the stack — is in
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
