@@ -65,6 +65,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -355,6 +362,8 @@ private fun FolderGrid(
                                     reorder = reorder,
                                     canLeft = index > 0,
                                     canRight = index < content.favoriteChannels.lastIndex,
+                                    position = index + 1,
+                                    total = content.favoriteChannels.size,
                                     modifier = cardModifier
                                         .alpha(if (group.key == reorderGroup?.key) 1f else otherFavAlpha)
                                         .then(
@@ -427,11 +436,24 @@ private fun FavoriteReorderCard(
     reorder: Boolean,
     canLeft: Boolean,
     canRight: Boolean,
+    position: Int,
+    total: Int,
     modifier: Modifier,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
-    Box(contentAlignment = Alignment.Center) {
+    // While this card is the one being reordered, announce that state and its live position to a
+    // screen reader; the polite live region re-announces "position X of N" as ◀▶ slide it.
+    val reorderState = stringResource(R.string.reorder_a11y_position, position, total)
+    val a11y = if (selected && reorder) {
+        Modifier.semantics {
+            stateDescription = reorderState
+            liveRegion = LiveRegionMode.Polite
+        }
+    } else {
+        Modifier
+    }
+    Box(contentAlignment = Alignment.Center, modifier = a11y) {
         ChannelCard(
             group = group,
             onClick = onClick,
@@ -463,7 +485,10 @@ private fun BoxScope.ReorderArrow(glyph: String, align: Alignment) {
             .align(align)
             // Draw above the focused card (tv Card lifts its own z on focus, which would hide a sibling).
             .zIndex(2f)
-            .offset(x = outward),
+            .offset(x = outward)
+            // Decorative: the card's stateDescription already conveys the reorder action to a11y, so
+            // skip reading the bare "‹"/"›" glyphs.
+            .clearAndSetSemantics {},
     )
 }
 
@@ -495,6 +520,7 @@ private fun ReorderChip(label: String, onClick: () -> Unit) {
             .background(if (focused) colors.primary else colors.surfaceVariant)
             .onFocusChanged { focused = it.isFocused }
             .clickable { onClick() }
+            .semantics { role = Role.Button }
             .padding(horizontal = 18.dp, vertical = 9.dp),
     ) {
         Text(

@@ -85,6 +85,7 @@
     <string name="action_move_left">Mugitu ◀</string>
     <string name="action_move_right">Mugitu ▶</string>
     <string name="action_remove_favorite">Kendu gogokoetatik</string>
+    <string name="reorder_a11y_position">Berrordenatzen, %1$d. postua %2$d-tik</string>
     <string name="action_accept">Eginda</string>
     <string name="action_add">Gehitu</string>
     <string name="add_profile">Gehitu profila</string>

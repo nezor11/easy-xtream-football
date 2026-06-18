@@ -85,6 +85,7 @@
     <string name="action_move_left">Déplacer ◀</string>
     <string name="action_move_right">Déplacer ▶</string>
     <string name="action_remove_favorite">Retirer des favoris</string>
+    <string name="reorder_a11y_position">Réorganisation, position %1$d sur %2$d</string>
     <string name="action_accept">Terminé</string>
     <string name="action_add">Ajouter</string>
     <string name="add_profile">Ajouter un profil</string>

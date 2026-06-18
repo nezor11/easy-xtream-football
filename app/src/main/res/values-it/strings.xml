@@ -85,6 +85,7 @@
     <string name="action_move_left">Sposta ◀</string>
     <string name="action_move_right">Sposta ▶</string>
     <string name="action_remove_favorite">Rimuovi dai preferiti</string>
+    <string name="reorder_a11y_position">Riordino, posizione %1$d di %2$d</string>
     <string name="action_accept">Fatto</string>
     <string name="action_add">Aggiungi</string>
     <string name="add_profile">Aggiungi profilo</string>

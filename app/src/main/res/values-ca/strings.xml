@@ -85,6 +85,7 @@
     <string name="action_move_left">Mou ◀</string>
     <string name="action_move_right">Mou ▶</string>
     <string name="action_remove_favorite">Treu dels preferits</string>
+    <string name="reorder_a11y_position">Reordenant, posició %1$d de %2$d</string>
     <string name="action_accept">Fet</string>
     <string name="action_add">Afegeix</string>
     <string name="add_profile">Afegeix un perfil</string>
