@@ -68,7 +68,7 @@ class ContentRepository(
 
     // "Live now" per-channel cache, so the channels screen can poll favorites/recents cheaply
     // (Xtream costs one API call per channel). Keyed by ChannelGroup.key, cleared on rebind.
-    private data class CachedNow(val at: Long, val program: EpgProgram?)
+    private data class CachedNow(val expiresAt: Long, val program: EpgProgram?)
     private val nowCache = java.util.concurrent.ConcurrentHashMap<String, CachedNow>()
     private fun clearNowCache() = nowCache.clear()
 
@@ -214,17 +214,21 @@ class ContentRepository(
      */
     suspend fun nowProgram(group: ChannelGroup): EpgProgram? {
         val now = System.currentTimeMillis()
-        nowCache[group.key]?.let { if (now - it.at < NOW_TTL_MS) return it.program }
+        nowCache[group.key]?.let { if (now < it.expiresAt) return it.program }
         val epg = epgFor(group)
         val program = epg.firstOrNull { it.nowFlag }
             ?: epg.firstOrNull { it.start in 1..now && now < it.end }
-        nowCache[group.key] = CachedNow(now, program)
+        // A real guide is cached for the full TTL; an empty result (transient fetch failure or simply
+        // no guide) only briefly, so a server hiccup doesn't hide "live now" for the whole window.
+        val ttl = if (epg.isNotEmpty()) NOW_TTL_MS else NOW_EMPTY_TTL_MS
+        nowCache[group.key] = CachedNow(now + ttl, program)
         return program
     }
 
     private suspend fun m3uEpg(group: ChannelGroup): List<EpgProgram> {
         val id = group.epgId ?: return emptyList()
-        return ensureEpgIndex()?.get(id).orEmpty()
+        // Look up with the same normalization the index keys use (case/space-insensitive tvg-id).
+        return ensureEpgIndex()?.get(XmltvEpg.normId(id)).orEmpty()
     }
 
     /**
@@ -345,6 +349,7 @@ class ContentRepository(
         const val CACHE_VERSION = 17 // bump when parsing/filtering/grouping logic or cache shape changes
         const val EPG_TTL_MS = 2L * 60 * 60 * 1000 // 2 h — rebuild the XMLTV index at most this often
         const val NOW_TTL_MS = 10L * 60 * 1000 // 10 min — how long a cached "live now" lookup is reused
+        const val NOW_EMPTY_TTL_MS = 60L * 1000 // 1 min — empty/failed lookups expire fast, to recover
     }
 }
 

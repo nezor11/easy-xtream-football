@@ -26,18 +26,26 @@ object XmltvEpg {
     // [prioritize]), so a handful is enough to cover the channels we actually carry.
     private const val MAX_SOURCES = 8
 
-    /** Programmes per channel id, sorted by start time, for the channels in [neededIds]. */
+    /**
+     * Programmes per channel id (keyed by normalized id, see [normId]), sorted by start time, for the
+     * channels in [neededIds]. Ids are matched case/space-insensitively because providers often differ
+     * in the casing of the XMLTV `channel` vs the M3U `tvg-id` (look up with `normId(group.epgId)`).
+     */
     fun index(urls: List<String>, neededIds: Set<String>): Map<String, List<EpgProgram>> {
         if (urls.isEmpty() || neededIds.isEmpty()) return emptyMap()
         val now = System.currentTimeMillis()
+        val needed = neededIds.mapTo(HashSet()) { normId(it) }
         val out = HashMap<String, MutableList<EpgProgram>>()
         for (url in prioritize(urls, neededIds).take(MAX_SOURCES)) {
             runCatching {
-                XtreamClient.withStream(url) { raw -> parse(unGzipIfNeeded(raw), neededIds, now, out) }
+                XtreamClient.withStream(url) { raw -> parse(unGzipIfNeeded(raw), needed, now, out) }
             }.onFailure { Log.w(TAG, "XMLTV source failed: ${redactUrl(url)}", it) }
         }
         return out.mapValues { (_, list) -> list.sortedBy { it.start } }
     }
+
+    /** Normalizes a channel id for matching: trimmed and lower-cased. */
+    internal fun normId(id: String): String = id.trim().lowercase()
 
     /**
      * When a playlist declares many national guides (epgshare01 lists ~50), taking the first
@@ -96,7 +104,7 @@ object XmltvEpg {
             when (event) {
                 XmlPullParser.START_TAG -> when (parser.name) {
                     "programme" -> {
-                        channel = parser.getAttributeValue(null, "channel")
+                        channel = parser.getAttributeValue(null, "channel")?.let { normId(it) }
                         capture = channel != null && neededIds.contains(channel)
                         if (capture) {
                             start = parseTime(parser.getAttributeValue(null, "start"))
