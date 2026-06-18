@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -65,8 +66,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -331,6 +335,8 @@ private fun FolderGrid(
                                 autoFocus = firstSection == 1,
                                 refocusKey = refocusSignal,
                                 itemKey = { it.key },
+                                // Spread the cards apart in reorder mode so the side chevrons show.
+                                itemSpacing = if (reorder) 46.dp else 16.dp,
                             ) { group, cardModifier ->
                                 val index = content.favoriteChannels.indexOf(group)
                                 FavoriteReorderCard(
@@ -436,23 +442,19 @@ private fun FavoriteReorderCard(
 @Composable
 private fun BoxScope.ReorderArrow(glyph: String, align: Alignment) {
     val colors = MaterialTheme.colorScheme
-    Box(
+    // A thin chevron in the gap to the neighbour, set a touch off the card edge so it reads separate.
+    val outward = if (align == Alignment.CenterStart) (-18).dp else 18.dp
+    Text(
+        text = glyph,
+        color = colors.primary,
+        fontWeight = FontWeight.Bold,
+        fontSize = 30.sp,
         modifier = Modifier
             .align(align)
             // Draw above the focused card (tv Card lifts its own z on focus, which would hide a sibling).
             .zIndex(2f)
-            .padding(horizontal = 4.dp)
-            .size(34.dp)
-            .clip(RoundedCornerShape(50))
-            .background(colors.primary),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = glyph,
-            color = colors.onPrimary,
-            style = MaterialTheme.typography.headlineSmall,
-        )
-    }
+            .offset(x = outward),
+    )
 }
 
 /** Bottom bar shown while reordering: Accept (leave reorder mode) and Remove from favorites. */
@@ -574,6 +576,7 @@ private fun <T> WrappingRow(
     autoFocus: Boolean = false,
     refocusKey: Any = Unit,
     itemKey: ((T) -> Any)? = null,
+    itemSpacing: Dp = 16.dp,
     itemContent: @Composable (item: T, modifier: Modifier) -> Unit,
 ) {
     val listState = rememberLazyListState()
@@ -592,7 +595,7 @@ private fun <T> WrappingRow(
     LazyRow(
         state = listState,
         contentPadding = PaddingValues(horizontal = 48.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(itemSpacing),
         modifier = Modifier.onPreviewKeyEvent { event ->
             if (event.type != KeyEventType.KeyDown || items.size < 2) return@onPreviewKeyEvent false
             when (event.key) {

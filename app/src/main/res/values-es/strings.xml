@@ -86,7 +86,7 @@
     <string name="action_move_left">Mover ◀</string>
     <string name="action_move_right">Mover ▶</string>
     <string name="action_remove_favorite">Quitar de favoritos</string>
-    <string name="action_accept">Aceptar</string>
+    <string name="action_accept">Hecho</string>
     <string name="action_add">Añadir</string>
     <string name="add_profile">Añadir perfil</string>
 
