@@ -102,6 +102,10 @@ class PlayerViewModel(
     /** Watchdog that fires if the current channel never starts; drives the auto-skip. */
     private var failoverJob: Job? = null
 
+    /** Watchdog for a channel that already started but then gets stuck buffering for too long (e.g. the
+     * stream dies mid-session, or after returning from the background) — also drives the auto-skip. */
+    private var rebufferJob: Job? = null
+
     /** Consecutive channels auto-skipped because they were dead; reset on a successful start. */
     private var autoSkipCount = 0
 
@@ -129,6 +133,7 @@ class PlayerViewModel(
                     rebufferCount = 0
                     autoSkipCount = 0
                     failoverJob?.cancel()
+                    rebufferJob?.cancel()
                     // Record in "recent" only once the channel actually starts, so channels skipped
                     // past (dead ones, or the intermediate channel of a folder double-press) don't
                     // pollute the history.
@@ -141,6 +146,8 @@ class PlayerViewModel(
                         rebufferCount++
                         if (rebufferCount >= 3) downshift()
                     }
+                    // A started channel that keeps buffering for too long is treated as dead.
+                    if (hasStartedOnce && foreground) armRebufferWatchdog()
                 }
             }
         }
@@ -277,6 +284,7 @@ class PlayerViewModel(
     fun onBackground() {
         foreground = false
         failoverJob?.cancel() // don't let the watchdog auto-skip (and so restart audio) in the background
+        rebufferJob?.cancel() // ditto for the re-buffering watchdog (the stream often stalls when paused)
         player.playWhenReady = false
     }
 
@@ -513,6 +521,7 @@ class PlayerViewModel(
 
     private fun playUri(variant: ChannelVariant) {
         applyResolutionCap()
+        rebufferJob?.cancel() // a fresh load is back under the start watchdog until it reaches READY
         player.setMediaItem(MediaItem.fromUri(variant.channel.streamUrl))
         player.prepare()
         // Never auto-play (nor arm the failover watchdog) while backgrounded — that would revive audio.
@@ -546,6 +555,21 @@ class PlayerViewModel(
         }
     }
 
+    /**
+     * For a channel that already started: if it stays buffering for [REBUFFER_TIMEOUT_MS] without ever
+     * reaching READY again, the stream has died mid-session (common after the app returns from the
+     * background), so we treat it as dead and fail over. Re-armed on each buffering event; cancelled the
+     * moment playback resumes (READY) or we leave the channel. The timeout is generous so normal jitter
+     * and short reconnects don't trip it. Never fires while backgrounded (guarded at the arm site).
+     */
+    private fun armRebufferWatchdog() {
+        rebufferJob?.cancel()
+        rebufferJob = viewModelScope.launch {
+            delay(REBUFFER_TIMEOUT_MS)
+            if (foreground && _ui.value.isBuffering) handleChannelFailure()
+        }
+    }
+
     private fun downshift() {
         if (selectedEmission != null) return
         val group = currentGroup ?: return
@@ -562,6 +586,7 @@ class PlayerViewModel(
      */
     private fun handleChannelFailure(httpCode: Int? = null) {
         failoverJob?.cancel()
+        rebufferJob?.cancel()
         if (!foreground) return // never fail over / restart playback while backgrounded
         val group = currentGroup ?: return
         val lower = group.variants.firstOrNull { it.quality.rank < currentQuality.rank }
@@ -675,6 +700,7 @@ class PlayerViewModel(
 
     override fun onCleared() {
         failoverJob?.cancel()
+        rebufferJob?.cancel()
         noticeJob?.cancel()
         player.removeListener(listener)
         player.release()
@@ -685,6 +711,7 @@ class PlayerViewModel(
         private const val BANDWIDTH_PERSIST_EVERY = 10 // persist the estimate ~every 5 s
         private const val NOTICE_DURATION_MS = 2_500L
         private const val START_TIMEOUT_MS = 4_000L // a channel that hasn't started by now is dead
+        private const val REBUFFER_TIMEOUT_MS = 12_000L // a started channel stuck buffering this long is dead
         private const val MAX_AUTO_SKIPS = 12 // stop auto-skipping after this many dead channels in a row
         private const val DOUBLE_PRESS_MS = 350L // two laterals within this window jump folders
         private const val MAX_CONTROLS_HINTS = 3 // show the controls legend only this many times
