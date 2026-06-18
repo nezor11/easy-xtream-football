@@ -62,6 +62,8 @@ data class PlayerUiState(
     val showControlsHint: Boolean = false,
     /** Whether the channel currently playing is marked as a favorite. */
     val isFavorite: Boolean = false,
+    /** Whether the on-screen channel info (stats + now/next guide) is shown; toggled from the OK menu. */
+    val infoVisible: Boolean = true,
 )
 
 @OptIn(UnstableApi::class)
@@ -197,6 +199,12 @@ class PlayerViewModel(
                     }
                 }
             }
+            // Mirror the global "show channel info" preference into the overlay's visibility.
+            viewModelScope.launch {
+                settingsStore.channelInfoVisible.collect { visible ->
+                    _ui.update { it.copy(infoVisible = visible) }
+                }
+            }
         }
     }
 
@@ -300,7 +308,7 @@ class PlayerViewModel(
     // --- OK menu with sections: Quality / Audio / Subtitles / Guide (◀▶ switches section) ---
 
     /** Stable identity of each menu section, independent of its (translated) display label. */
-    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE }
+    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE, INFO }
 
     private var currentSection = MenuSection.QUALITY
 
@@ -311,6 +319,7 @@ class PlayerViewModel(
             MenuSection.AUDIO -> R.string.menu_section_audio
             MenuSection.SUBTITLES -> R.string.menu_section_subtitles
             MenuSection.GUIDE -> R.string.menu_section_guide
+            MenuSection.INFO -> R.string.menu_section_info
         },
     )
 
@@ -359,6 +368,7 @@ class PlayerViewModel(
             MenuSection.SUBTITLES -> subtitleMenuOptions()
             MenuSection.GUIDE -> guideMenuOptions()
             MenuSection.QUALITY -> qualityMenuOptions()
+            MenuSection.INFO -> infoMenuOptions()
         }
         menuApply = options.apply
         _ui.update {
@@ -454,6 +464,18 @@ class PlayerViewModel(
             .map { "${fmt.format(java.util.Date(it.start))}  ${it.title}" }
         // The now-playing programme is first and pre-selected; OK just closes (read-only).
         return MenuOptions(labels, 0) {}
+    }
+
+    /** Toggles the on-screen channel info (stats + now/next), persisted globally for every channel. */
+    private fun infoMenuOptions(): MenuOptions {
+        val labels = listOf(
+            context.getString(R.string.info_show),
+            context.getString(R.string.info_hide),
+        )
+        val selected = if (_ui.value.infoVisible) 0 else 1
+        return MenuOptions(labels, selected) { index ->
+            viewModelScope.launch { settingsStore.setChannelInfoVisible(index == 0) }
+        }
     }
 
     /** A readable label for an audio/text track: its name, else its language, else [fallback]. */

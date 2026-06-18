@@ -24,6 +24,16 @@ class SettingsStore(private val context: Context) {
         val LAST_PROFILE_ID = longPreferencesKey("last_profile_id")
         val PLAYER_HINTS_SHOWN = intPreferencesKey("player_hints_shown")
         val CREDENTIALS_ENCRYPTED = booleanPreferencesKey("credentials_encrypted")
+        val CHANNEL_INFO_VISIBLE = booleanPreferencesKey("channel_info_visible")
+    }
+
+    /** Whether the on-screen channel info (stats + now/next guide) is shown in the player. */
+    val channelInfoVisible: Flow<Boolean> = context.settingsDataStore.data.map { prefs ->
+        prefs[Keys.CHANNEL_INFO_VISIBLE] ?: true
+    }
+
+    suspend fun setChannelInfoVisible(visible: Boolean) {
+        context.settingsDataStore.edit { it[Keys.CHANNEL_INFO_VISIBLE] = visible }
     }
 
     val qualityMode: Flow<QualityMode> = context.settingsDataStore.data.map { prefs ->

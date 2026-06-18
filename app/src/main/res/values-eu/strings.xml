@@ -39,6 +39,9 @@
     <string name="menu_section_audio">Audioa</string>
     <string name="menu_section_subtitles">Azpidatziak</string>
     <string name="menu_section_guide">Gida</string>
+    <string name="menu_section_info">Informazioa</string>
+    <string name="info_show">Erakutsi</string>
+    <string name="info_hide">Ezkutatu</string>
     <string name="player_only_one_quality">Kalitate bakarra eskuragarri</string>
     <string name="audio_none">Audio-pistarik ez</string>
     <string name="audio_track_n">Audioa %1$d</string>

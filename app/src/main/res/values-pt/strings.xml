@@ -39,6 +39,9 @@
     <string name="menu_section_audio">Áudio</string>
     <string name="menu_section_subtitles">Legendas</string>
     <string name="menu_section_guide">Guia</string>
+    <string name="menu_section_info">Informação</string>
+    <string name="info_show">Mostrar</string>
+    <string name="info_hide">Ocultar</string>
     <string name="player_only_one_quality">Só há uma qualidade disponível</string>
     <string name="audio_none">Sem faixas de áudio</string>
     <string name="audio_track_n">Áudio %1$d</string>

@@ -172,17 +172,21 @@ fun PlayerScreen(
             modifier = Modifier.align(Alignment.BottomStart).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            StatsOverlay(
-                channelName = ui.channelName,
-                channelPosition = ui.channelPosition,
-                emissionLabel = ui.emissionLabel,
-                throughputMbps = ui.throughputMbps,
-                resolution = ui.resolution,
-                isBuffering = ui.isBuffering,
-                isFavorite = ui.isFavorite,
-            )
-            ui.nowProgram?.let { now ->
-                EpgOverlay(now = now, next = ui.nextProgram)
+            // The channel info (stats + now/next) can be hidden globally from the OK menu for a clean
+            // view; the OK menu itself stays available regardless.
+            if (ui.infoVisible) {
+                StatsOverlay(
+                    channelName = ui.channelName,
+                    channelPosition = ui.channelPosition,
+                    emissionLabel = ui.emissionLabel,
+                    throughputMbps = ui.throughputMbps,
+                    resolution = ui.resolution,
+                    isBuffering = ui.isBuffering,
+                    isFavorite = ui.isFavorite,
+                )
+                ui.nowProgram?.let { now ->
+                    EpgOverlay(now = now, next = ui.nextProgram)
+                }
             }
             if (ui.menuOpen) {
                 OptionsMenu(

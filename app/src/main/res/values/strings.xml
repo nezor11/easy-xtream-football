@@ -42,6 +42,9 @@
     <string name="menu_section_audio">Audio</string>
     <string name="menu_section_subtitles">Subtitles</string>
     <string name="menu_section_guide">Guide</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">Show</string>
+    <string name="info_hide">Hide</string>
     <string name="player_only_one_quality">Only one quality available</string>
     <string name="audio_none">No audio tracks</string>
     <string name="audio_track_n">Audio %1$d</string>
