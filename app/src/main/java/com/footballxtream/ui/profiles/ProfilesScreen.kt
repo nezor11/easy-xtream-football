@@ -100,10 +100,22 @@ fun ProfilesScreen(
             // Auto-focus the first profile on entry, so the remote works immediately without a
             // first "blind" press to grab focus.
             val firstFocus = remember { FocusRequester() }
-            // Only focus the first profile on entry — never the Add button, so it doesn't flash
-            // green while the profile list is still loading (it starts out momentarily empty).
+            val addFocus = remember { FocusRequester() }
+            // Tracks whether the list was ever populated, to tell "empty because still loading" (the
+            // flow starts out momentarily empty) apart from "empty because the last profile was just
+            // deleted from here".
+            var hadProfiles by remember { mutableStateOf(false) }
+            // Focus the first profile on entry. Never focus the Add button on the initial empty frame
+            // (it would flash green while loading) — but once we've had profiles and the list goes
+            // empty (last one deleted), move focus there so the remote isn't left with nothing focused.
             LaunchedEffect(profiles.isNotEmpty(), menuOpen) {
-                if (profiles.isNotEmpty() && !menuOpen) runCatching { firstFocus.requestFocus() }
+                if (menuOpen) return@LaunchedEffect
+                if (profiles.isNotEmpty()) {
+                    hadProfiles = true
+                    runCatching { firstFocus.requestFocus() }
+                } else if (hadProfiles) {
+                    runCatching { addFocus.requestFocus() }
+                }
             }
             // Horizontally scrollable so any number of profiles is reachable. The vertical content
             // padding leaves room for the focus zoom so the grown card isn't clipped.
@@ -126,6 +138,7 @@ fun ProfilesScreen(
             AddProfileButton(
                 focusable = !menuOpen,
                 onClick = onAddProfile,
+                modifier = Modifier.focusRequester(addFocus),
             )
             if (profiles.isNotEmpty()) {
                 Text(
