@@ -6,7 +6,9 @@ import com.footballxtream.model.ChannelVariant
 import com.footballxtream.model.LiveChannel
 import com.footballxtream.model.Quality
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class PlaybackSessionTest {
@@ -92,6 +94,55 @@ class PlaybackSessionTest {
         assertEquals(0, session.folderIndex)
         assertEquals(1, session.channelIndex) // last valid channel
         assertEquals("B", session.current?.displayName)
+    }
+
+    @Test
+    fun refreshFavorites_isANoOpUnlessItIsTheFavoritesList() {
+        val session = PlaybackSession().apply { start(listOf(folder("F", "A", "B", "C")), 0, 0) }
+
+        assertFalse(session.refreshFavorites(setOf("A"), "A"))
+        assertEquals(3, session.size) // untouched
+    }
+
+    @Test
+    fun refreshFavorites_dropsUnfavoritedAndKeepsTheCurrentChannel() {
+        // On C; unfavorite B and D → the list shrinks to [A, C] and stays on C.
+        val session = PlaybackSession().apply {
+            start(listOf(folder("F", "A", "B", "C", "D")), 0, 2, isFavoritesList = true)
+        }
+
+        assertTrue(session.refreshFavorites(setOf("A", "C"), "C"))
+        assertEquals(2, session.size)
+        assertEquals("C", session.current?.displayName)
+        assertEquals(1, session.channelIndex)
+    }
+
+    @Test
+    fun refreshFavorites_reAddingAChannelFromTheSnapshotBringsItBack() {
+        // Watching A; unfavorite it → [B, C], then re-favorite A → it returns and the index lands on it.
+        val session = PlaybackSession().apply {
+            start(listOf(folder("F", "A", "B", "C")), 0, 0, isFavoritesList = true)
+        }
+
+        assertTrue(session.refreshFavorites(setOf("B", "C"), "A"))
+        assertEquals(2, session.size)
+
+        assertTrue(session.refreshFavorites(setOf("A", "B", "C"), "A"))
+        assertEquals(3, session.size)
+        assertEquals("A", session.current?.displayName)
+        assertEquals(0, session.channelIndex)
+    }
+
+    @Test
+    fun refreshFavorites_whenCurrentRemoved_shiftsOntoTheNeighbour() {
+        // On B; unfavorite B → [A, C, D]; the index lands on C so ◀▶ continue through the rest.
+        val session = PlaybackSession().apply {
+            start(listOf(folder("F", "A", "B", "C", "D")), 0, 1, isFavoritesList = true)
+        }
+
+        assertTrue(session.refreshFavorites(setOf("A", "C", "D"), "B"))
+        assertEquals(3, session.size)
+        assertEquals("C", session.current?.displayName)
     }
 
     @Test

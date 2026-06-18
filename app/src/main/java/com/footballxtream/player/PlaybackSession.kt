@@ -26,6 +26,16 @@ class PlaybackSession {
     private var lastFolderIndex: Int = 0
     private var lastChannelIndex: Int = 0
 
+    // True when this session's single folder is the live "favorites" list, so it can be recomputed as
+    // the launch snapshot ∩ current favorites when the user (un)favorites a channel while watching.
+    @Volatile
+    var isFavoritesList: Boolean = false
+        private set
+
+    // The full favorites list captured at launch; the active list is this ∩ current favorites, so
+    // re-favoriting the channel you just removed brings it back (not only removals stick).
+    private var favoritesSnapshot: List<ChannelGroup> = emptyList()
+
     private val currentChannels: List<ChannelGroup>
         get() = folders.getOrNull(folderIndex)?.channels.orEmpty()
 
@@ -39,10 +49,34 @@ class PlaybackSession {
     val currentFolderName: String?
         get() = folders.getOrNull(folderIndex)?.name
 
-    fun start(folders: List<ChannelFolder>, folderIndex: Int, channelIndex: Int) {
+    fun start(
+        folders: List<ChannelFolder>,
+        folderIndex: Int,
+        channelIndex: Int,
+        isFavoritesList: Boolean = false,
+    ) {
         this.folders = folders
         this.folderIndex = folderIndex.coerceIn(0, (folders.size - 1).coerceAtLeast(0))
         this.channelIndex = channelIndex.coerceIn(0, (currentChannels.size - 1).coerceAtLeast(0))
+        this.isFavoritesList = isFavoritesList
+        this.favoritesSnapshot = if (isFavoritesList) currentChannels else emptyList()
+    }
+
+    /**
+     * For the favorites zap list only: rebuilds it as the launch snapshot filtered to the current
+     * favorites [keys] — so unfavoriting a channel shrinks the list and re-favoriting one that was in
+     * it brings it back. The index stays on [currentKey] (the playing channel) when present, otherwise
+     * clamps onto its old slot so ◀▶ continue through the rest. Returns true if the list changed.
+     */
+    fun refreshFavorites(keys: Set<String>, currentKey: String?): Boolean {
+        if (!isFavoritesList) return false
+        val folder = folders.getOrNull(folderIndex) ?: return false
+        val kept = favoritesSnapshot.filter { it.key in keys }
+        if (kept.isEmpty() || kept.map { it.key } == folder.channels.map { it.key }) return false
+        folders = folders.toMutableList().also { it[folderIndex] = folder.copy(channels = kept) }
+        channelIndex = kept.indexOfFirst { it.key == currentKey }
+            .let { if (it >= 0) it else channelIndex.coerceIn(0, kept.lastIndex) }
+        return true
     }
 
     fun next(): ChannelGroup? = stepChannel(1)

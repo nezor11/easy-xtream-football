@@ -87,7 +87,7 @@ class PlayerViewModel(
 
     /** Keys of favorite channels, kept in sync so the overlay star and toggle reflect the latest. */
     @Volatile
-    private var favoriteKeys: Set<String> = emptySet()
+    private var favoriteKeys: List<String> = emptyList()
 
     /** Full EPG of the current channel, for the "Guía" menu section (now + upcoming). */
     private var currentEpg: List<EpgProgram> = emptyList()
@@ -186,7 +186,15 @@ class PlayerViewModel(
             viewModelScope.launch {
                 settingsStore.favoriteChannelKeys.collect { keys ->
                     favoriteKeys = keys
-                    _ui.update { it.copy(isFavorite = currentGroup?.key in keys) }
+                    // When zapping the favorites list, recompute it so the X/Y count tracks (un)favoriting
+                    // the channel you're watching — both removing it and adding it back.
+                    playbackSession.refreshFavorites(keys.toSet(), currentGroup?.key)
+                    _ui.update {
+                        it.copy(
+                            isFavorite = currentGroup?.key in keys,
+                            channelPosition = "${playbackSession.channelIndex + 1}/${playbackSession.size}",
+                        )
+                    }
                 }
             }
         }

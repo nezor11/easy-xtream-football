@@ -8,12 +8,14 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -23,6 +25,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,18 +33,23 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed as lazyItemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -59,6 +67,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -127,38 +136,68 @@ fun ChannelsScreen(
                 onQueryChange = viewModel::setQuery,
                 onQualitySelected = viewModel::selectQuality,
                 onReload = viewModel::reload,
-                onResume = { key -> viewModel.resume(key, onPlay) },
+                onPlayList = { channels, index, isFavorites -> viewModel.playList(channels, index, isFavorites, onPlay) },
                 onFolderClick = { f ->
                     if (f.isSingle) viewModel.play(f, 0, onPlay) else viewModel.openFolder(f)
                 },
                 onFolderLongClick = viewModel::toggleFavorite,
                 onChannelLongClick = viewModel::toggleFavoriteChannel,
+                onMoveFavorite = { group, delta -> viewModel.moveFavorite(group.key, delta) },
             )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun FolderGrid(
     content: ChannelsUiState.Content,
     title: String,
     favoriteNames: Set<String>,
-    favoriteChannelKeys: Set<String>,
+    favoriteChannelKeys: List<String>,
     query: String,
     onQueryChange: (String) -> Unit,
     onQualitySelected: (QualityMode) -> Unit,
     onReload: () -> Unit,
-    onResume: (String) -> Unit,
+    onPlayList: (List<ChannelGroup>, Int, Boolean) -> Unit,
     onFolderClick: (ChannelFolder) -> Unit,
     onFolderLongClick: (ChannelFolder) -> Unit,
     onChannelLongClick: (ChannelGroup) -> Unit,
+    onMoveFavorite: (ChannelGroup, Int) -> Unit,
 ) {
+    // The favorite being reordered (long-press), or null. In reorder mode everything but the
+    // favorites row is dimmed, ◀▶ slide the selected card, and a bottom bar offers Accept / Remove.
+    var reorderGroup by remember { mutableStateOf<ChannelGroup?>(null) }
+    val reorder = reorderGroup != null
+    // Three dim levels: other rows go quite dark, the other favorites a little, the selected card
+    // stays full bright — so it's obvious which card you're moving.
+    val dimAlpha = if (reorder) 0.14f else 1f
+    val otherFavAlpha = if (reorder) 0.5f else 1f
+    // While reordering, only the favorites row is interactive; dim the rest and block its focus.
+    val gateOthers = if (reorder) Modifier.focusProperties { canFocus = false } else Modifier
+    // Bumped when reorder ends, so the favorites row grabs focus back.
+    var refocusSignal by remember { mutableIntStateOf(0) }
+    val selectedCardFocus = remember { FocusRequester() }
+    val selectedBiv = remember { BringIntoViewRequester() }
+
+    // Keep focus on the selected card as it slides and scroll it fully into view (re-grab on index
+    // change), so it never ends up clipped at a row edge. Back leaves reorder mode.
+    val selectedIndex = reorderGroup?.let { g -> content.favoriteChannels.indexOfFirst { it.key == g.key } } ?: -1
+    LaunchedEffect(reorderGroup, selectedIndex) {
+        if (reorderGroup != null && selectedIndex >= 0) {
+            runCatching { selectedCardFocus.requestFocus() }
+            runCatching { selectedBiv.bringIntoView() }
+        }
+    }
+    BackHandler(enabled = reorder) { reorderGroup = null; refocusSignal++ }
+
+  Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize().padding(top = 28.dp)) {
         // Filters (quality chips, search, reload) are tucked away and only shown on demand, to keep
         // the header clean and give the channels more room.
         var filtersOpen by remember { mutableStateOf(false) }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 48.dp, end = 48.dp, bottom = 2.dp),
+            modifier = Modifier.fillMaxWidth().padding(start = 48.dp, end = 48.dp, bottom = 2.dp).alpha(dimAlpha),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -173,6 +212,7 @@ private fun FolderGrid(
             FiltersChip(
                 selected = filtersOpen,
                 onClick = { filtersOpen = !filtersOpen },
+                modifier = gateOthers,
             )
         }
         // Count up from 0 to the real total, so the user gets a feel for how big the list is.
@@ -187,7 +227,7 @@ private fun FolderGrid(
             text = pluralStringResource(R.plurals.channels_count, animatedCount, animatedCount),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 48.dp, bottom = 14.dp),
+            modifier = Modifier.padding(start = 48.dp, bottom = 14.dp).alpha(dimAlpha),
         )
         val searchFocus = remember { FocusRequester() }
         var searchOpen by remember { mutableStateOf(query.isNotBlank()) }
@@ -255,12 +295,12 @@ private fun FolderGrid(
         ) {
             if (content.liveNow.isNotEmpty()) {
                 item {
-                    ChannelRowSection(title = stringResource(R.string.now_live)) {
-                        WrappingRow(content.liveNow, autoFocus = firstSection == 0) { item, cardModifier ->
+                    ChannelRowSection(title = stringResource(R.string.now_live), count = content.liveNow.size, modifier = Modifier.alpha(dimAlpha)) {
+                        WrappingRow(content.liveNow, autoFocus = firstSection == 0, refocusKey = refocusSignal) { item, cardModifier ->
                             LiveNowCard(
                                 item = item,
-                                onClick = { onResume(item.group.key) },
-                                modifier = cardModifier,
+                                onClick = { onPlayList(content.liveNow.map { it.group }, content.liveNow.indexOf(item), false) },
+                                modifier = cardModifier.then(gateOthers),
                             )
                         }
                     }
@@ -268,27 +308,64 @@ private fun FolderGrid(
             }
             if (content.favoriteChannels.isNotEmpty()) {
                 item {
-                    ChannelRowSection(title = stringResource(R.string.section_favorite_channels)) {
-                        WrappingRow(content.favoriteChannels, autoFocus = firstSection == 1) { group, cardModifier ->
-                            ChannelCard(
-                                group = group,
-                                onClick = { onResume(group.key) },
-                                modifier = cardModifier,
-                                isFavorite = true,
-                                onLongClick = { onChannelLongClick(group) },
-                            )
+                    ChannelRowSection(title = stringResource(R.string.section_favorite_channels), count = content.favoriteChannels.size) {
+                        // In reorder mode, ◀▶ slide the selected card (intercepted here, before the row's
+                        // own wrap-around handling) instead of moving focus between cards.
+                        Box(
+                            modifier = if (reorder) {
+                                Modifier.onPreviewKeyEvent { e ->
+                                    val g = reorderGroup
+                                    if (g == null || e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                                    when (e.key) {
+                                        Key.DirectionLeft -> { onMoveFavorite(g, -1); true }
+                                        Key.DirectionRight -> { onMoveFavorite(g, 1); true }
+                                        else -> false
+                                    }
+                                }
+                            } else {
+                                Modifier
+                            },
+                        ) {
+                            WrappingRow(
+                                content.favoriteChannels,
+                                autoFocus = firstSection == 1,
+                                refocusKey = refocusSignal,
+                                itemKey = { it.key },
+                            ) { group, cardModifier ->
+                                val index = content.favoriteChannels.indexOf(group)
+                                FavoriteReorderCard(
+                                    group = group,
+                                    selected = group.key == reorderGroup?.key,
+                                    reorder = reorder,
+                                    canLeft = index > 0,
+                                    canRight = index < content.favoriteChannels.lastIndex,
+                                    modifier = cardModifier
+                                        .alpha(if (group.key == reorderGroup?.key) 1f else otherFavAlpha)
+                                        .then(
+                                            if (group.key == reorderGroup?.key) {
+                                                Modifier.focusRequester(selectedCardFocus).bringIntoViewRequester(selectedBiv)
+                                            } else {
+                                                Modifier
+                                            },
+                                        ),
+                                    onClick = {
+                                        if (reorder) { reorderGroup = null; refocusSignal++ } else onPlayList(content.favoriteChannels, index, true)
+                                    },
+                                    onLongClick = { if (!reorder) reorderGroup = group },
+                                )
+                            }
                         }
                     }
                 }
             }
             if (content.recent.isNotEmpty()) {
                 item {
-                    ChannelRowSection(title = stringResource(R.string.section_recent)) {
-                        WrappingRow(content.recent, autoFocus = firstSection == 2) { group, cardModifier ->
+                    ChannelRowSection(title = stringResource(R.string.section_recent), count = content.recent.size, modifier = Modifier.alpha(dimAlpha)) {
+                        WrappingRow(content.recent, autoFocus = firstSection == 2, refocusKey = refocusSignal) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
-                                onClick = { onResume(group.key) },
-                                modifier = cardModifier,
+                                onClick = { onPlayList(content.recent, content.recent.indexOf(group), false) },
+                                modifier = cardModifier.then(gateOthers),
                                 isFavorite = favoriteChannelKeys.contains(group.key),
                                 onLongClick = { onChannelLongClick(group) },
                             )
@@ -297,19 +374,123 @@ private fun FolderGrid(
                 }
             }
             lazyItemsIndexed(content.rows) { index, row ->
-                ChannelRowSection(title = stringResource(row.titleRes)) {
-                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0) { folder, cardModifier ->
+                ChannelRowSection(title = stringResource(row.titleRes), count = row.folders.size, modifier = Modifier.alpha(dimAlpha)) {
+                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0, refocusKey = refocusSignal) { folder, cardModifier ->
                         FolderCard(
                             folder = folder,
                             isFavorite = favoriteNames.contains(folder.name),
                             onClick = { onFolderClick(folder) },
                             onLongClick = { onFolderLongClick(folder) },
-                            modifier = cardModifier,
+                            modifier = cardModifier.then(gateOthers),
                         )
                     }
                 }
             }
         }
+    }
+
+    // Reorder bottom bar: just Accept and Remove (the ◀▶ live next to the highlighted card).
+    if (reorder) {
+        ReorderBar(
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 28.dp),
+            onAccept = { reorderGroup = null; refocusSignal++ },
+            onRemove = { reorderGroup?.let { onChannelLongClick(it) }; reorderGroup = null; refocusSignal++ },
+        )
+    }
+  }
+}
+
+/**
+ * A favorite card in the favorites strip. In reorder mode the selected card stays highlighted and
+ * shows ◀ ▶ chevrons beside it (the remote's ◀▶ slide it), so the user can track it as it moves.
+ */
+@Composable
+private fun FavoriteReorderCard(
+    group: ChannelGroup,
+    selected: Boolean,
+    reorder: Boolean,
+    canLeft: Boolean,
+    canRight: Boolean,
+    modifier: Modifier,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+) {
+    Box(contentAlignment = Alignment.Center) {
+        ChannelCard(
+            group = group,
+            onClick = onClick,
+            modifier = modifier,
+            isFavorite = true,
+            highlighted = selected,
+            onLongClick = onLongClick,
+        )
+        if (selected && reorder) {
+            // Chevron badges on the card's side edges so they're always visible (not clipped by the
+            // row) and make clear ◀▶ slide it.
+            if (canLeft) ReorderArrow("‹", Alignment.CenterStart)
+            if (canRight) ReorderArrow("›", Alignment.CenterEnd)
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.ReorderArrow(glyph: String, align: Alignment) {
+    val colors = MaterialTheme.colorScheme
+    Box(
+        modifier = Modifier
+            .align(align)
+            // Draw above the focused card (tv Card lifts its own z on focus, which would hide a sibling).
+            .zIndex(2f)
+            .padding(horizontal = 4.dp)
+            .size(34.dp)
+            .clip(RoundedCornerShape(50))
+            .background(colors.primary),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = glyph,
+            color = colors.onPrimary,
+            style = MaterialTheme.typography.headlineSmall,
+        )
+    }
+}
+
+/** Bottom bar shown while reordering: Accept (leave reorder mode) and Remove from favorites. */
+@Composable
+private fun ReorderBar(modifier: Modifier, onAccept: () -> Unit, onRemove: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(50))
+            .background(colors.surface)
+            .border(1.dp, colors.primary.copy(alpha = 0.5f), RoundedCornerShape(50))
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        ReorderChip(stringResource(R.string.action_accept), onAccept)
+        ReorderChip(stringResource(R.string.action_remove_favorite), onRemove)
+    }
+}
+
+@Composable
+private fun ReorderChip(label: String, onClick: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    var focused by remember { mutableStateOf(false) }
+    val shape = RoundedCornerShape(50)
+    Box(
+        modifier = Modifier
+            .clip(shape)
+            .background(if (focused) colors.primary else colors.surfaceVariant)
+            .onFocusChanged { focused = it.isFocused }
+            .clickable { onClick() }
+            .padding(horizontal = 18.dp, vertical = 9.dp),
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = if (focused) colors.onPrimary else colors.onSurface,
+            maxLines = 1,
+        )
     }
 }
 
@@ -346,16 +527,38 @@ private fun LoadingSkeleton() {
     }
 }
 
-/** A titled section: the row label plus its horizontal strip of cards. */
+/** A titled section: the row label (with how many cards it holds) plus its horizontal strip of cards. */
 @Composable
-private fun ChannelRowSection(title: String, content: @Composable () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+private fun ChannelRowSection(
+    title: String,
+    count: Int? = null,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    val colors = MaterialTheme.colorScheme
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(
             modifier = Modifier.padding(start = 48.dp),
-        )
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                color = colors.onSurfaceVariant,
+            )
+            if (count != null) {
+                Text(
+                    text = count.toString(),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colors.primary,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(colors.primary.copy(alpha = 0.15f))
+                        .padding(horizontal = 9.dp, vertical = 2.dp),
+                )
+            }
+        }
         content()
     }
 }
@@ -369,6 +572,8 @@ private fun ChannelRowSection(title: String, content: @Composable () -> Unit) {
 private fun <T> WrappingRow(
     items: List<T>,
     autoFocus: Boolean = false,
+    refocusKey: Any = Unit,
+    itemKey: ((T) -> Any)? = null,
     itemContent: @Composable (item: T, modifier: Modifier) -> Unit,
 ) {
     val listState = rememberLazyListState()
@@ -378,9 +583,10 @@ private fun <T> WrappingRow(
     var focusedIndex by remember { mutableStateOf(-1) }
     val lastIndex = items.lastIndex
 
-    // On the first content row, land the focus on its first card when the grid opens.
+    // On the first content row, land focus on its first card when the grid opens — and again when
+    // [refocusKey] changes (e.g. after the long-press menu closes and focus was trapped in it).
     if (autoFocus) {
-        LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
+        LaunchedEffect(refocusKey) { runCatching { firstFocus.requestFocus() } }
     }
 
     LazyRow(
@@ -414,12 +620,16 @@ private fun <T> WrappingRow(
             }
         },
     ) {
-        lazyItemsIndexed(items) { index, item ->
+        lazyItemsIndexed(
+            items,
+            key = if (itemKey != null) { _, item -> itemKey(item) } else null,
+        ) { index, item ->
             val cardModifier = when (index) {
                 0 -> Modifier.focusRequester(firstFocus)
                 lastIndex -> Modifier.focusRequester(lastFocus)
                 else -> Modifier
             }.onFocusChanged { if (it.isFocused) focusedIndex = index }
+                .animateItem()
             itemContent(item, cardModifier)
         }
     }
@@ -428,7 +638,7 @@ private fun <T> WrappingRow(
 @Composable
 private fun FolderDetail(
     folder: ChannelFolder,
-    favoriteChannelKeys: Set<String>,
+    favoriteChannelKeys: List<String>,
     onChannelSelected: (Int) -> Unit,
     onChannelLongClick: (ChannelGroup) -> Unit,
 ) {
@@ -493,12 +703,12 @@ private fun Chip(label: String, selected: Boolean, onClick: () -> Unit) {
 
 /** The header's filters toggle: a funnel icon chip that shows/hides the quality/search/reload row. */
 @Composable
-private fun FiltersChip(selected: Boolean, onClick: () -> Unit) {
+private fun FiltersChip(selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colorScheme
     var focused by remember { mutableStateOf(false) }
     val shape = RoundedCornerShape(50)
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(shape)
             .background(if (selected) colors.primary else colors.surfaceVariant)
             .border(2.dp, if (focused) colors.onBackground else Color.Transparent, shape)
@@ -581,6 +791,7 @@ private fun ChannelCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isFavorite: Boolean = false,
+    highlighted: Boolean = false,
     onLongClick: (() -> Unit)? = null,
 ) {
     ImageCard(
@@ -594,6 +805,7 @@ private fun ChannelCard(
         modifier = modifier,
         countryCode = group.country,
         geoBlocked = group.geoBlocked,
+        highlighted = highlighted,
     )
 }
 
@@ -609,6 +821,7 @@ private fun ImageCard(
     modifier: Modifier = Modifier,
     countryCode: String? = null,
     geoBlocked: Boolean = false,
+    highlighted: Boolean = false,
 ) {
     val colors = MaterialTheme.colorScheme
     Card(
@@ -617,6 +830,12 @@ private fun ImageCard(
         modifier = modifier.width(148.dp),
         scale = CardDefaults.scale(focusedScale = 1.06f),
         border = CardDefaults.border(
+            // While being reordered, the card keeps a primary border so it's easy to track as it slides.
+            border = if (highlighted) {
+                Border(androidx.compose.foundation.BorderStroke(3.dp, colors.primary), shape = RoundedCornerShape(12.dp))
+            } else {
+                Border.None
+            },
             focusedBorder = Border(
                 border = androidx.compose.foundation.BorderStroke(3.dp, colors.primary),
                 shape = RoundedCornerShape(12.dp),

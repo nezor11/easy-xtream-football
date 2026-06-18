@@ -49,18 +49,35 @@ class SettingsStore(private val context: Context) {
         }
     }
 
-    /** Keys of channels marked as favorite (order-independent). */
-    val favoriteChannelKeys: Flow<Set<String>> = context.settingsDataStore.data.map { prefs ->
-        prefs[Keys.FAVORITE_CHANNELS].orEmpty().split('\n').filter { it.isNotBlank() }.toSet()
+    /** Keys of channels marked as favorite, in the user's chosen order (newest added last). */
+    val favoriteChannelKeys: Flow<List<String>> = context.settingsDataStore.data.map { prefs ->
+        prefs[Keys.FAVORITE_CHANNELS].orEmpty().split('\n').filter { it.isNotBlank() }
     }
 
-    /** Adds the channel to favorites, or removes it if already there. */
+    /** Adds the channel to the end of favorites, or removes it if already there. */
     suspend fun toggleFavoriteChannel(key: String) {
         context.settingsDataStore.edit { prefs ->
             val current = prefs[Keys.FAVORITE_CHANNELS].orEmpty()
-                .split('\n').filter { it.isNotBlank() }.toMutableSet()
-            if (!current.add(key)) current.remove(key)
+                .split('\n').filter { it.isNotBlank() }.toMutableList()
+            if (current.remove(key)) {
+                // already a favorite → unfavorite
+            } else {
+                current.add(key)
+            }
             prefs[Keys.FAVORITE_CHANNELS] = current.joinToString("\n")
+        }
+    }
+
+    /** Moves a favorite by [delta] positions (-1 left, +1 right); a no-op at the list edges. */
+    suspend fun moveFavoriteChannel(key: String, delta: Int) {
+        context.settingsDataStore.edit { prefs ->
+            val list = prefs[Keys.FAVORITE_CHANNELS].orEmpty()
+                .split('\n').filter { it.isNotBlank() }.toMutableList()
+            val i = list.indexOf(key)
+            val j = i + delta
+            if (i < 0 || j < 0 || j > list.lastIndex) return@edit
+            list[i] = list[j].also { list[j] = list[i] }
+            prefs[Keys.FAVORITE_CHANNELS] = list.joinToString("\n")
         }
     }
 

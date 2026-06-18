@@ -81,6 +81,10 @@
     <string name="action_edit">Modifica</string>
     <string name="action_delete">Elimina</string>
     <string name="action_cancel">Annulla</string>
+    <string name="action_move_left">Sposta ◀</string>
+    <string name="action_move_right">Sposta ▶</string>
+    <string name="action_remove_favorite">Rimuovi dai preferiti</string>
+    <string name="action_accept">Fatto</string>
     <string name="action_add">Aggiungi</string>
     <string name="add_profile">Aggiungi profilo</string>
 

@@ -89,8 +89,8 @@ class ChannelsViewModel(
         .map { entities -> entities.map { it.name }.toSet() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
 
-    val favoriteChannelKeys: StateFlow<Set<String>> = settingsStore.favoriteChannelKeys
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
+    val favoriteChannelKeys: StateFlow<List<String>> = settingsStore.favoriteChannelKeys
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     // "Live now" programmes for the favorites/recents set, computed off the main combine (it needs
     // async EPG lookups) and merged back in below.
@@ -124,9 +124,9 @@ class ChannelsViewModel(
                     } else {
                         emptyList()
                     },
+                    // Keep the user's chosen favorite order (no alphabetical sort).
                     favoriteChannels = if (q.isBlank()) {
                         favKeys.mapNotNull { findChannel(loadState.folders, it) }
-                            .sortedBy { it.displayName.lowercase() }
                     } else {
                         emptyList()
                     },
@@ -249,16 +249,21 @@ class ChannelsViewModel(
         onReady()
     }
 
-    /** Resumes a recent channel by [key] within its folder, so zapping context is preserved. */
-    fun resume(key: String, onReady: () -> Unit) {
-        val folders = (load.value as? Load.Data)?.folders ?: return
-        folders.forEach { folder ->
-            val index = folder.channels.indexOfFirst { it.key == key }
-            if (index >= 0) {
-                play(folder, index, onReady)
-                return
-            }
-        }
+    /**
+     * Plays [channels] as a self-contained zap context (the favorites / recents / "live now" strips),
+     * positioned at [index]. The whole list becomes the player's "folder", so ◀▶ cycles within it —
+     * just like opening a folder, but for the strip the user launched from.
+     */
+    fun playList(channels: List<ChannelGroup>, index: Int, isFavorites: Boolean, onReady: () -> Unit) {
+        if (index !in channels.indices) return
+        val folder = ChannelFolder(name = "", iconUrl = null, isFootball = false, channels = channels)
+        playbackSession.start(listOf(folder), folderIndex = 0, channelIndex = index, isFavoritesList = isFavorites)
+        onReady()
+    }
+
+    /** Moves a favorite channel by [delta] positions (-1 left, +1 right). */
+    fun moveFavorite(key: String, delta: Int) {
+        viewModelScope.launch { settingsStore.moveFavoriteChannel(key, delta) }
     }
 
     private fun findChannel(folders: List<ChannelFolder>, key: String?): ChannelGroup? {
