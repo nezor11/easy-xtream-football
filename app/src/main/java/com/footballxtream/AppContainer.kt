@@ -52,8 +52,10 @@ class AppContainer(context: Context) {
     private fun encryptExistingCredentials() {
         scope.launch {
             if (settingsStore.credentialsEncrypted()) return@launch
+            // Only mark the migration done if it actually succeeded, so a failed pass is retried next
+            // launch instead of leaving some profiles in plaintext forever.
             runCatching { profileDao.allOnce().forEach { profileDao.update(it) } }
-            settingsStore.setCredentialsEncrypted()
+                .onSuccess { settingsStore.setCredentialsEncrypted() }
         }
     }
 }

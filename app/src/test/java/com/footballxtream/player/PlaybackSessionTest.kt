@@ -134,15 +134,16 @@ class PlaybackSessionTest {
     }
 
     @Test
-    fun refreshFavorites_whenCurrentRemoved_shiftsOntoTheNeighbour() {
-        // On B; unfavorite B → [A, C, D]; the index lands on C so ◀▶ continue through the rest.
+    fun refreshFavorites_whenCurrentRemoved_nextLandsOnTheFollowingChannel() {
+        // On B; unfavorite B → [A, C, D]. Pressing next (◀) should land on C — the channel that
+        // followed B — not skip over it.
         val session = PlaybackSession().apply {
             start(listOf(folder("F", "A", "B", "C", "D")), 0, 1, isFavoritesList = true)
         }
 
         assertTrue(session.refreshFavorites(setOf("A", "C", "D"), "B"))
         assertEquals(3, session.size)
-        assertEquals("C", session.current?.displayName)
+        assertEquals("C", session.next()?.displayName)
     }
 
     @Test

@@ -74,8 +74,14 @@ class PlaybackSession {
         val kept = favoritesSnapshot.filter { it.key in keys }
         if (kept.isEmpty() || kept.map { it.key } == folder.channels.map { it.key }) return false
         folders = folders.toMutableList().also { it[folderIndex] = folder.copy(channels = kept) }
-        channelIndex = kept.indexOfFirst { it.key == currentKey }
-            .let { if (it >= 0) it else channelIndex.coerceIn(0, kept.lastIndex) }
+        val keptIndex = kept.indexOfFirst { it.key == currentKey }
+        channelIndex = if (keptIndex >= 0) {
+            keptIndex
+        } else {
+            // The playing channel was the one removed: sit just before its old slot so the next ◀
+            // lands on the channel that followed it, rather than skipping over it.
+            (channelIndex - 1).coerceIn(0, kept.lastIndex)
+        }
         return true
     }
 

@@ -40,7 +40,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -179,10 +178,12 @@ private fun FolderGrid(
     val otherFavAlpha = if (reorder) 0.5f else 1f
     // While reordering, only the favorites row is interactive; dim the rest and block its focus.
     val gateOthers = if (reorder) Modifier.focusProperties { canFocus = false } else Modifier
-    // Bumped when reorder ends, so the favorites row grabs focus back.
-    var refocusSignal by remember { mutableIntStateOf(0) }
     val selectedCardFocus = remember { FocusRequester() }
     val selectedBiv = remember { BringIntoViewRequester() }
+    // First card of the favorites row, so focus can return there when reorder ends (rather than
+    // jumping to whichever row happens to be first, e.g. "live now").
+    val favFirstFocus = remember { FocusRequester() }
+    val enteredReorder = remember { mutableStateOf(false) }
 
     // Keep focus on the selected card as it slides and scroll it fully into view (re-grab on index
     // change), so it never ends up clipped at a row edge. Back leaves reorder mode.
@@ -193,7 +194,16 @@ private fun FolderGrid(
             runCatching { selectedBiv.bringIntoView() }
         }
     }
-    BackHandler(enabled = reorder) { reorderGroup = null; refocusSignal++ }
+    // When reorder mode ends (after it began), send focus back to the favorites row.
+    LaunchedEffect(reorder) {
+        if (reorder) {
+            enteredReorder.value = true
+        } else if (enteredReorder.value) {
+            enteredReorder.value = false
+            runCatching { favFirstFocus.requestFocus() }
+        }
+    }
+    BackHandler(enabled = reorder) { reorderGroup = null }
 
   Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize().padding(top = 28.dp)) {
@@ -300,7 +310,7 @@ private fun FolderGrid(
             if (content.liveNow.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.now_live), count = content.liveNow.size, modifier = Modifier.alpha(dimAlpha)) {
-                        WrappingRow(content.liveNow, autoFocus = firstSection == 0, refocusKey = refocusSignal) { item, cardModifier ->
+                        WrappingRow(content.liveNow, autoFocus = firstSection == 0) { item, cardModifier ->
                             LiveNowCard(
                                 item = item,
                                 onClick = { onPlayList(content.liveNow.map { it.group }, content.liveNow.indexOf(item), false) },
@@ -333,7 +343,7 @@ private fun FolderGrid(
                             WrappingRow(
                                 content.favoriteChannels,
                                 autoFocus = firstSection == 1,
-                                refocusKey = refocusSignal,
+                                firstCardFocus = favFirstFocus,
                                 itemKey = { it.key },
                                 // Spread the cards apart in reorder mode so the side chevrons show.
                                 itemSpacing = if (reorder) 46.dp else 16.dp,
@@ -355,7 +365,7 @@ private fun FolderGrid(
                                             },
                                         ),
                                     onClick = {
-                                        if (reorder) { reorderGroup = null; refocusSignal++ } else onPlayList(content.favoriteChannels, index, true)
+                                        if (reorder) { reorderGroup = null } else onPlayList(content.favoriteChannels, index, true)
                                     },
                                     onLongClick = { if (!reorder) reorderGroup = group },
                                 )
@@ -367,7 +377,7 @@ private fun FolderGrid(
             if (content.recent.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.section_recent), count = content.recent.size, modifier = Modifier.alpha(dimAlpha)) {
-                        WrappingRow(content.recent, autoFocus = firstSection == 2, refocusKey = refocusSignal) { group, cardModifier ->
+                        WrappingRow(content.recent, autoFocus = firstSection == 2) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
                                 onClick = { onPlayList(content.recent, content.recent.indexOf(group), false) },
@@ -381,7 +391,7 @@ private fun FolderGrid(
             }
             lazyItemsIndexed(content.rows) { index, row ->
                 ChannelRowSection(title = stringResource(row.titleRes), count = row.folders.size, modifier = Modifier.alpha(dimAlpha)) {
-                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0, refocusKey = refocusSignal) { folder, cardModifier ->
+                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0) { folder, cardModifier ->
                         FolderCard(
                             folder = folder,
                             isFavorite = favoriteNames.contains(folder.name),
@@ -399,8 +409,8 @@ private fun FolderGrid(
     if (reorder) {
         ReorderBar(
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 28.dp),
-            onAccept = { reorderGroup = null; refocusSignal++ },
-            onRemove = { reorderGroup?.let { onChannelLongClick(it) }; reorderGroup = null; refocusSignal++ },
+            onAccept = { reorderGroup = null },
+            onRemove = { reorderGroup?.let { onChannelLongClick(it) }; reorderGroup = null },
         )
     }
   }
@@ -574,22 +584,24 @@ private fun ChannelRowSection(
 private fun <T> WrappingRow(
     items: List<T>,
     autoFocus: Boolean = false,
-    refocusKey: Any = Unit,
+    firstCardFocus: FocusRequester? = null,
     itemKey: ((T) -> Any)? = null,
     itemSpacing: Dp = 16.dp,
     itemContent: @Composable (item: T, modifier: Modifier) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
-    val firstFocus = remember { FocusRequester() }
+    // The caller can own the first card's requester (to refocus this row from outside, e.g. on reorder
+    // exit); otherwise the row keeps its own for wrap-around and the initial auto-focus.
+    val ownFirstFocus = remember { FocusRequester() }
+    val firstFocus = firstCardFocus ?: ownFirstFocus
     val lastFocus = remember { FocusRequester() }
     var focusedIndex by remember { mutableStateOf(-1) }
     val lastIndex = items.lastIndex
 
-    // On the first content row, land focus on its first card when the grid opens — and again when
-    // [refocusKey] changes (e.g. after the long-press menu closes and focus was trapped in it).
+    // On the first content row, land focus on its first card when the grid opens.
     if (autoFocus) {
-        LaunchedEffect(refocusKey) { runCatching { firstFocus.requestFocus() } }
+        LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
     }
 
     LazyRow(
