@@ -191,11 +191,12 @@ private fun ProfileActionMenu(
 ) {
     val colors = MaterialTheme.colorScheme
     val firstButton = remember { FocusRequester() }
-    // The long-press that opens this menu ends with a key-up (the OK release) that Compose would
-    // otherwise deliver to the freshly focused "Editar" button, triggering it instantly. That stray
-    // release is a KeyUp with no matching KeyDown inside the menu, so swallow select-key KeyUps
-    // until we've seen a real KeyDown here.
-    var sawKeyDown by remember { mutableStateOf(false) }
+    // This menu opens mid long-press (while OK is still held). Every OK event that belongs to that
+    // hold — the held-down repeats AND the eventual release — would otherwise reach the freshly
+    // focused "Editar" button as a complete press and fire it instantly. So until OK is released once
+    // (which arms the menu), swallow ALL select events so no button ever sees a full down→up; only a
+    // fresh, deliberate press after arming activates a choice. D-pad navigation is left untouched.
+    var armed by remember { mutableStateOf(false) }
 
     BackHandler(enabled = true) { onDismiss() }
     LaunchedEffect(Unit) { runCatching { firstButton.requestFocus() } }
@@ -209,12 +210,13 @@ private fun ProfileActionMenu(
                     event.key == Key.Enter ||
                     event.key == Key.NumPadEnter
                 when {
-                    event.type == KeyEventType.KeyDown -> {
-                        sawKeyDown = true
-                        false
+                    !isSelect -> false // let arrows move between Editar / Borrar / Cancelar
+                    armed -> false // released once: a genuine press now works normally
+                    event.type == KeyEventType.KeyUp -> {
+                        armed = true // the long-press release: swallow it and arm for the next press
+                        true
                     }
-                    event.type == KeyEventType.KeyUp && isSelect && !sawKeyDown -> true
-                    else -> false
+                    else -> true // swallow held-down OK (incl. auto-repeat) before the release
                 }
             },
         contentAlignment = Alignment.Center,
