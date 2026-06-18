@@ -185,6 +185,10 @@ class ContentRepository(
      */
     suspend fun enrichLogos(groups: List<ChannelGroup>): List<ChannelGroup> =
         withContext(Dispatchers.IO) {
+            // Skip the iptv-org logo DB (a ~17 MB cold-cache download + parse, kept in memory) entirely
+            // when every channel already carries a logo — the usual case for Xtream — so weak devices on
+            // slow links don't pay for data they'd never use.
+            if (groups.all { !it.iconUrl.isNullOrBlank() }) return@withContext groups
             logoRepository.ensureLoaded()
             groups.map { group ->
                 if (!group.iconUrl.isNullOrBlank()) {
