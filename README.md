@@ -90,7 +90,7 @@ Most Android TV / Fire TV devices use **arm64-v8a**.
 
 Done recently: a **Settings screen** (clear channel/guide cache, in-app open-source licenses), a
 **"Live now"** row (the programme on air on your favourites/recents) with **per-country EPG feed
-prioritisation**, previous-channel zap and a sleep timer, credentials encrypted at rest (AES-GCM with
+prioritisation**, previous-channel zap, credentials encrypted at rest (AES-GCM with
 an Android Keystore key), multi-language UI (English, Spanish, Catalan, Basque, Galician, Portuguese,
 French, Italian — follows the device language, with an in-app picker), Room migrations (no destructive
 wipe), EPG via XMLTV for M3U playlists, profile editing/renaming.

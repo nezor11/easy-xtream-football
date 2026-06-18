@@ -39,8 +39,6 @@
     <string name="menu_section_audio">Audio</string>
     <string name="menu_section_subtitles">Sous-titres</string>
     <string name="menu_section_guide">Guide</string>
-    <string name="menu_section_sleep">Veille</string>
-    <string name="sleep_off">Désactivé</string>
     <string name="player_only_one_quality">Une seule qualité disponible</string>
     <string name="audio_none">Aucune piste audio</string>
     <string name="audio_track_n">Audio %1$d</string>
