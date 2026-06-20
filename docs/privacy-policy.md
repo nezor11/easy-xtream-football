@@ -67,5 +67,5 @@ with a new "Last updated" date.
 
 ## Contact
 
-Questions about this policy: **martinezortiz@gmail.com**
+Questions about this policy: **contact@nezor.es**
 Source code: <https://github.com/nezor11/easy-xtream-football>
