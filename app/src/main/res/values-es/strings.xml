@@ -105,4 +105,7 @@
     <string name="support_title">¿Te gusta la app?</string>
     <string name="support_message">Esta app es gratuita y de código abierto. Si te resulta útil, puedes invitarme a un café, lo que quieras aportar. ¡Gracias de corazón! Escanea el código con tu móvil:</string>
     <string name="support_qr_desc">Código QR para donar en Ko-fi</string>
+    <string name="coffee_bug_text">¿Te gusta la app? Invítame a un café</string>
+    <string name="coffee_dismiss">No volver a mostrar el recordatorio</string>
+    <string name="coffee_reenable">Volver a mostrar el recordatorio</string>
 </resources>

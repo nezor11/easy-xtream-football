@@ -100,4 +100,7 @@
     <string name="support_title">L\'appli te plaît ?</string>
     <string name="support_message">Cette appli est gratuite et open source. Si elle t\'est utile, tu peux m\'offrir un café, ce que tu veux. Merci beaucoup ! Scanne le code avec ton téléphone :</string>
     <string name="support_qr_desc">Code QR pour faire un don sur Ko-fi</string>
+    <string name="coffee_bug_text">L\'appli te plaît ? Offre-moi un café</string>
+    <string name="coffee_dismiss">Ne plus afficher ce rappel</string>
+    <string name="coffee_reenable">Réafficher le rappel</string>
 </resources>

@@ -25,6 +25,7 @@ class SettingsStore(private val context: Context) {
         val PLAYER_HINTS_SHOWN = intPreferencesKey("player_hints_shown")
         val CREDENTIALS_ENCRYPTED = booleanPreferencesKey("credentials_encrypted")
         val CHANNEL_INFO_VISIBLE = booleanPreferencesKey("channel_info_visible")
+        val COFFEE_REMINDER_DISMISSED = booleanPreferencesKey("coffee_reminder_dismissed")
     }
 
     /** Whether the on-screen channel info (stats + now/next guide) is shown in the player. */
@@ -34,6 +35,15 @@ class SettingsStore(private val context: Context) {
 
     suspend fun setChannelInfoVisible(visible: Boolean) {
         context.settingsDataStore.edit { it[Keys.CHANNEL_INFO_VISIBLE] = visible }
+    }
+
+    /** Whether the user permanently silenced the Ko-fi donation reminder ("bug"). */
+    val coffeeReminderDismissed: Flow<Boolean> = context.settingsDataStore.data.map { prefs ->
+        prefs[Keys.COFFEE_REMINDER_DISMISSED] ?: false
+    }
+
+    suspend fun setCoffeeReminderDismissed(dismissed: Boolean) {
+        context.settingsDataStore.edit { it[Keys.COFFEE_REMINDER_DISMISSED] = dismissed }
     }
 
     val qualityMode: Flow<QualityMode> = context.settingsDataStore.data.map { prefs ->

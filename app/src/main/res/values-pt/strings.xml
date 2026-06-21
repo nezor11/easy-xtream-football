@@ -100,4 +100,7 @@
     <string name="support_title">Gostas da app?</string>
     <string name="support_message">Esta app é gratuita e de código aberto. Se te for útil, podes pagar-me um café, o que quiseres contribuir. Muito obrigado! Lê o código com o telemóvel:</string>
     <string name="support_qr_desc">Código QR para doar no Ko-fi</string>
+    <string name="coffee_bug_text">Gostas da app? Paga-me um café</string>
+    <string name="coffee_dismiss">Não mostrar mais o lembrete</string>
+    <string name="coffee_reenable">Mostrar o lembrete de novo</string>
 </resources>

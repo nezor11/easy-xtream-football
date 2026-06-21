@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -52,6 +53,7 @@ fun SettingsScreen(
     val context = LocalContext.current
     val clearFocus = remember { FocusRequester() }
     var showSupport by remember { mutableStateOf(false) }
+    val coffeeDismissed by viewModel.coffeeReminderDismissed.collectAsStateWithLifecycle()
 
     // Back closes the support overlay first; otherwise it leaves the screen.
     BackHandler(enabled = showSupport) { showSupport = false }
@@ -112,7 +114,11 @@ fun SettingsScreen(
         )
     }
         if (showSupport) {
-            SupportOverlay(onDismiss = { showSupport = false })
+            SupportOverlay(
+                reminderDismissed = coffeeDismissed,
+                onToggleReminder = { viewModel.setCoffeeReminderDismissed(!coffeeDismissed) },
+                onDismiss = { showSupport = false },
+            )
         }
     }
 }
@@ -120,8 +126,14 @@ fun SettingsScreen(
 /** "Buy me a coffee" panel: a QR to the Ko-fi page that the user scans with a phone (TVs have no
  *  browser), plus the handle as text. Dismissed with Back (handled by the caller). */
 @Composable
-private fun SupportOverlay(onDismiss: () -> Unit) {
+private fun SupportOverlay(
+    reminderDismissed: Boolean,
+    onToggleReminder: () -> Unit,
+    onDismiss: () -> Unit,
+) {
     val colors = MaterialTheme.colorScheme
+    val toggleFocus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { runCatching { toggleFocus.requestFocus() } }
     Box(
         modifier = Modifier.fillMaxSize().background(Color(0xCC000000)),
         contentAlignment = Alignment.Center,
@@ -159,6 +171,13 @@ private fun SupportOverlay(onDismiss: () -> Unit) {
                 text = stringResource(R.string.support_kofi_handle),
                 style = MaterialTheme.typography.titleMedium,
                 color = colors.primary,
+            )
+            SettingsAction(
+                label = stringResource(
+                    if (reminderDismissed) R.string.coffee_reenable else R.string.coffee_dismiss,
+                ),
+                modifier = Modifier.focusRequester(toggleFocus),
+                onClick = onToggleReminder,
             )
             Text(
                 text = stringResource(R.string.folder_back_hint),

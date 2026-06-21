@@ -64,6 +64,8 @@ data class PlayerUiState(
     val isFavorite: Boolean = false,
     /** Whether the on-screen channel info (stats + now/next guide) is shown; toggled from the OK menu. */
     val infoVisible: Boolean = true,
+    /** TV-style "bug" inviting a Ko-fi donation; slides in bottom-right once per app session. */
+    val showCoffeeBug: Boolean = false,
 )
 
 @OptIn(UnstableApi::class)
@@ -110,6 +112,13 @@ class PlayerViewModel(
 
     /** Consecutive channels auto-skipped because they were dead; reset on a successful start. */
     private var autoSkipCount = 0
+
+    /** Timer that pops the Ko-fi "bug" a few seconds into a freshly started channel. */
+    private var coffeeJob: Job? = null
+
+    /** Whether the user permanently silenced the Ko-fi reminder (honor-based; from settings). */
+    @Volatile
+    private var coffeeDismissed = false
 
     /** Direction of the last manual zap (+1 forward, -1 backward); auto-skip follows it. */
     private var lastDirection = 1
@@ -205,6 +214,13 @@ class PlayerViewModel(
                     _ui.update { it.copy(infoVisible = visible) }
                 }
             }
+            // Track whether the user permanently silenced the Ko-fi reminder.
+            viewModelScope.launch {
+                settingsStore.coffeeReminderDismissed.collect { dismissed ->
+                    coffeeDismissed = dismissed
+                    if (dismissed) _ui.update { it.copy(showCoffeeBug = false) }
+                }
+            }
         }
     }
 
@@ -293,6 +309,8 @@ class PlayerViewModel(
         foreground = false
         failoverJob?.cancel() // don't let the watchdog auto-skip (and so restart audio) in the background
         rebufferJob?.cancel() // ditto for the re-buffering watchdog (the stream often stalls when paused)
+        coffeeJob?.cancel()
+        _ui.update { it.copy(showCoffeeBug = false) }
         player.playWhenReady = false
     }
 
@@ -507,10 +525,35 @@ class PlayerViewModel(
                 nextProgram = null,
                 errorMessage = null,
                 isFavorite = group.key in favoriteKeys,
+                showCoffeeBug = false, // hide the bug while we switch channels
             )
         }
         playUri(variant)
         loadEpg(group)
+        armCoffeeBug()
+    }
+
+    /**
+     * Schedules the Ko-fi "bug" to slide in [COFFEE_DELAY_MS] into a freshly started channel — but at
+     * most once per app session, never if the user silenced it or hid the channel info, and only while
+     * the channel is actually playing in the foreground. Re-armed on each channel; a no-op once shown.
+     */
+    private fun armCoffeeBug() {
+        coffeeJob?.cancel()
+        if (coffeeShownThisSession || coffeeDismissed) return
+        coffeeJob = viewModelScope.launch {
+            delay(COFFEE_DELAY_MS)
+            val s = _ui.value
+            if (!foreground || coffeeShownThisSession || coffeeDismissed) return@launch
+            if (!hasStartedOnce || !s.infoVisible || s.menuOpen || s.errorMessage != null) return@launch
+            coffeeShownThisSession = true
+            _ui.update { it.copy(showCoffeeBug = true) }
+        }
+    }
+
+    /** Slides the Ko-fi bug away (any remote key dismisses it for this appearance). */
+    fun dismissCoffeeBug() {
+        if (_ui.value.showCoffeeBug) _ui.update { it.copy(showCoffeeBug = false) }
     }
 
     /** Toggles the playing channel as a favorite (long-press OK), with a brief on-screen notice. */
@@ -723,15 +766,22 @@ class PlayerViewModel(
     override fun onCleared() {
         failoverJob?.cancel()
         rebufferJob?.cancel()
+        coffeeJob?.cancel()
         noticeJob?.cancel()
         player.removeListener(listener)
         player.release()
     }
 
     companion object {
+        // Process-wide so the Ko-fi bug shows at most once per app session (survives leaving/re-entering
+        // the player within the same launch; resets when the process dies).
+        @Volatile
+        private var coffeeShownThisSession = false
+
         private const val POLL_INTERVAL_MS = 500L
         private const val BANDWIDTH_PERSIST_EVERY = 10 // persist the estimate ~every 5 s
         private const val NOTICE_DURATION_MS = 2_500L
+        private const val COFFEE_DELAY_MS = 10_000L // bug slides in this long into a freshly started channel
         private const val START_TIMEOUT_MS = 4_000L // a channel that hasn't started by now is dead
         private const val REBUFFER_TIMEOUT_MS = 12_000L // a started channel stuck buffering this long is dead
         private const val MAX_AUTO_SKIPS = 12 // stop auto-skipping after this many dead channels in a row

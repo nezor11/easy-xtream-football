@@ -6,7 +6,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.annotation.OptIn
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +17,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -93,6 +97,8 @@ fun PlayerScreen(
             .focusRequester(focusRequester)
             .focusable()
             .onKeyEvent { event ->
+                // Any key press slides the Ko-fi "bug" away; the key still does its normal job.
+                if (ui.showCoffeeBug && event.type == KeyEventType.KeyDown) viewModel.dismissCoffeeBug()
                 if (ui.menuOpen) {
                     if (event.type != KeyEventType.KeyDown) return@onKeyEvent false
                     when (event.key) {
@@ -241,6 +247,44 @@ fun PlayerScreen(
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0x99FFFFFF),
             )
+        }
+        // Ko-fi "bug": slides up from the bottom-right a few seconds into a channel; any key dismisses it.
+        AnimatedVisibility(
+            visible = ui.showCoffeeBug && !ui.menuOpen,
+            enter = slideInVertically { it } + fadeIn(),
+            exit = slideOutVertically { it } + fadeOut(),
+            modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
+        ) {
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color(0xF20A0E12))
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.qr_kofi),
+                    contentDescription = stringResource(R.string.support_qr_desc),
+                    modifier = Modifier
+                        .size(96.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(Color.White)
+                        .padding(5.dp),
+                )
+                Column(modifier = Modifier.width(170.dp)) {
+                    Text(
+                        text = stringResource(R.string.coffee_bug_text),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color(0xFFE6EAEE),
+                    )
+                    Text(
+                        text = stringResource(R.string.support_kofi_handle),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
         }
     }
 }

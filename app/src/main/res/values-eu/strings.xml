@@ -100,4 +100,7 @@
     <string name="support_title">Gustatzen zaizu aplikazioa?</string>
     <string name="support_message">Aplikazio hau doakoa eta kode irekikoa da. Erabilgarria bazaizu, kafe batera gonbida nazakezu, nahi duzun ekarpena. Mila esker bihotzez! Eskaneatu kodea zure mugikorrarekin:</string>
     <string name="support_qr_desc">Ko-fi-n dohaintza egiteko QR kodea</string>
+    <string name="coffee_bug_text">Gustuko duzu? Gonbida nazazu kafe batera</string>
+    <string name="coffee_dismiss">Ez erakutsi gogorarazpena berriro</string>
+    <string name="coffee_reenable">Erakutsi gogorarazpena berriro</string>
 </resources>

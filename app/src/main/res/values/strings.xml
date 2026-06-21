@@ -108,4 +108,7 @@
     <string name="support_message">This app is free and open source. If you find it useful, you can buy me a coffee — whatever you\'d like to give. Thank you so much! Scan the code with your phone:</string>
     <string name="support_qr_desc">QR code to donate on Ko-fi</string>
     <string name="support_kofi_handle" translatable="false">ko-fi.com/nezor</string>
+    <string name="coffee_bug_text">Enjoying the app? Buy me a coffee</string>
+    <string name="coffee_dismiss">Don\'t show this reminder again</string>
+    <string name="coffee_reenable">Show the reminder again</string>
 </resources>

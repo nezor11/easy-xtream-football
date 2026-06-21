@@ -100,4 +100,7 @@
     <string name="support_title">Ti piace l\'app?</string>
     <string name="support_message">Questa app è gratuita e open source. Se ti è utile, puoi offrirmi un caffè, quanto vuoi. Grazie di cuore! Inquadra il codice con il telefono:</string>
     <string name="support_qr_desc">Codice QR per donare su Ko-fi</string>
+    <string name="coffee_bug_text">Ti piace l\'app? Offrimi un caffè</string>
+    <string name="coffee_dismiss">Non mostrare più il promemoria</string>
+    <string name="coffee_reenable">Mostra di nuovo il promemoria</string>
 </resources>
