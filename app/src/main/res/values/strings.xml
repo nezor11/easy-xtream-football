@@ -103,4 +103,9 @@
     <string name="settings_licenses_body">This app is GPL-3.0. It bundles FFmpeg (LGPLv3) via NextLib (GPL-3.0), with libvpx (BSD-3-Clause) and Mbed TLS (Apache-2.0). AndroidX, Media3/ExoPlayer, Jetpack Compose, Kotlin, OkHttp/Retrofit and Coil are Apache-2.0. Channel logos from the iptv-org database. Full text: THIRD_PARTY_LICENSES.md in the project repo.</string>
     <string name="settings_language">Language</string>
     <string name="language_system">Automatic (device)</string>
+    <string name="support_entry">☕ Buy me a coffee</string>
+    <string name="support_title">Enjoying the app?</string>
+    <string name="support_message">This app is free and open source. If you find it useful, you can buy me a coffee — whatever you\'d like to give. Thank you so much! Scan the code with your phone:</string>
+    <string name="support_qr_desc">QR code to donate on Ko-fi</string>
+    <string name="support_kofi_handle" translatable="false">ko-fi.com/nezor</string>
 </resources>

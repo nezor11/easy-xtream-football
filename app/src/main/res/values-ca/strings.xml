@@ -96,4 +96,8 @@
     <string name="settings_open_source">Llicències de codi obert</string>
     <string name="settings_language">Idioma</string>
     <string name="language_system">Automàtic (dispositiu)</string>
+    <string name="support_entry">☕ Convida\'m a un cafè</string>
+    <string name="support_title">T\'agrada l\'app?</string>
+    <string name="support_message">Aquesta app és gratuïta i de codi obert. Si et resulta útil, em pots convidar a un cafè, el que vulguis aportar. Moltes gràcies! Escaneja el codi amb el mòbil:</string>
+    <string name="support_qr_desc">Codi QR per donar a Ko-fi</string>
 </resources>

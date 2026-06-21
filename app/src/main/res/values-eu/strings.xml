@@ -96,4 +96,8 @@
     <string name="settings_open_source">Kode irekiko lizentziak</string>
     <string name="settings_language">Hizkuntza</string>
     <string name="language_system">Automatikoa (gailua)</string>
+    <string name="support_entry">☕ Gonbida nazazu kafe batera</string>
+    <string name="support_title">Gustatzen zaizu aplikazioa?</string>
+    <string name="support_message">Aplikazio hau doakoa eta kode irekikoa da. Erabilgarria bazaizu, kafe batera gonbida nazakezu, nahi duzun ekarpena. Mila esker bihotzez! Eskaneatu kodea zure mugikorrarekin:</string>
+    <string name="support_qr_desc">Ko-fi-n dohaintza egiteko QR kodea</string>
 </resources>

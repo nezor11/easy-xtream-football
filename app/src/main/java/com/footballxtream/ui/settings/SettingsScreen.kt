@@ -27,6 +27,11 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.MaterialTheme
@@ -46,10 +51,14 @@ fun SettingsScreen(
     val colors = MaterialTheme.colorScheme
     val context = LocalContext.current
     val clearFocus = remember { FocusRequester() }
+    var showSupport by remember { mutableStateOf(false) }
 
-    BackHandler(onBack = onBack)
+    // Back closes the support overlay first; otherwise it leaves the screen.
+    BackHandler(enabled = showSupport) { showSupport = false }
+    BackHandler(enabled = !showSupport, onBack = onBack)
     LaunchedEffect(Unit) { runCatching { clearFocus.requestFocus() } }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,6 +87,11 @@ fun SettingsScreen(
             },
         )
 
+        SettingsAction(
+            label = stringResource(R.string.support_entry),
+            onClick = { showSupport = true },
+        )
+
         Text(
             text = stringResource(R.string.settings_open_source),
             style = MaterialTheme.typography.titleMedium,
@@ -96,6 +110,62 @@ fun SettingsScreen(
             color = colors.onSurfaceVariant,
             modifier = Modifier.padding(top = 8.dp),
         )
+    }
+        if (showSupport) {
+            SupportOverlay(onDismiss = { showSupport = false })
+        }
+    }
+}
+
+/** "Buy me a coffee" panel: a QR to the Ko-fi page that the user scans with a phone (TVs have no
+ *  browser), plus the handle as text. Dismissed with Back (handled by the caller). */
+@Composable
+private fun SupportOverlay(onDismiss: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color(0xCC000000)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(
+            modifier = Modifier
+                .widthIn(max = 560.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(colors.surface)
+                .padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.support_title),
+                style = MaterialTheme.typography.headlineSmall,
+                color = colors.onSurface,
+            )
+            Text(
+                text = stringResource(R.string.support_message),
+                style = MaterialTheme.typography.bodyMedium,
+                color = colors.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+            Image(
+                painter = painterResource(R.drawable.qr_kofi),
+                contentDescription = stringResource(R.string.support_qr_desc),
+                modifier = Modifier
+                    .size(220.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.White)
+                    .padding(10.dp),
+            )
+            Text(
+                text = stringResource(R.string.support_kofi_handle),
+                style = MaterialTheme.typography.titleMedium,
+                color = colors.primary,
+            )
+            Text(
+                text = stringResource(R.string.folder_back_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = colors.onSurfaceVariant,
+            )
+        }
     }
 }
 

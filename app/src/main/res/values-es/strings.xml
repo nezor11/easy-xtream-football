@@ -101,4 +101,8 @@
     <string name="settings_open_source">Licencias de código abierto</string>
     <string name="settings_language">Idioma</string>
     <string name="language_system">Automático (dispositivo)</string>
+    <string name="support_entry">☕ Invítame a un café</string>
+    <string name="support_title">¿Te gusta la app?</string>
+    <string name="support_message">Esta app es gratuita y de código abierto. Si te resulta útil, puedes invitarme a un café, lo que quieras aportar. ¡Gracias de corazón! Escanea el código con tu móvil:</string>
+    <string name="support_qr_desc">Código QR para donar en Ko-fi</string>
 </resources>

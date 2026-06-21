@@ -96,4 +96,8 @@
     <string name="settings_open_source">Licences open source</string>
     <string name="settings_language">Langue</string>
     <string name="language_system">Automatique (appareil)</string>
+    <string name="support_entry">☕ Offre-moi un café</string>
+    <string name="support_title">L\'appli te plaît ?</string>
+    <string name="support_message">Cette appli est gratuite et open source. Si elle t\'est utile, tu peux m\'offrir un café, ce que tu veux. Merci beaucoup ! Scanne le code avec ton téléphone :</string>
+    <string name="support_qr_desc">Code QR pour faire un don sur Ko-fi</string>
 </resources>
