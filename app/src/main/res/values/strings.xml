@@ -43,8 +43,8 @@
     <string name="menu_section_subtitles">Subtitles</string>
     <string name="menu_section_guide">Guide</string>
     <string name="menu_section_info">Info</string>
-    <string name="info_show">Show</string>
-    <string name="info_hide">Hide</string>
+    <string name="info_show">👁️ Show</string>
+    <string name="info_hide">🙈 Hide</string>
     <string name="player_only_one_quality">Only one quality available</string>
     <string name="audio_none">No audio tracks</string>
     <string name="audio_track_n">Audio %1$d</string>
@@ -103,7 +103,7 @@
     <string name="settings_licenses_body">This app is GPL-3.0. It bundles FFmpeg (LGPLv3) via NextLib (GPL-3.0), with libvpx (BSD-3-Clause) and Mbed TLS (Apache-2.0). AndroidX, Media3/ExoPlayer, Jetpack Compose, Kotlin, OkHttp/Retrofit and Coil are Apache-2.0. Channel logos from the iptv-org database. Full text: THIRD_PARTY_LICENSES.md in the project repo.</string>
     <string name="settings_language">Language</string>
     <string name="language_system">Automatic (device)</string>
-    <string name="support_entry">☕ Buy me a coffee</string>
+    <string name="support_entry">Buy me a coffee ☕</string>
     <string name="support_title">Enjoying the app?</string>
     <string name="support_message">This app is free and open source. If you find it useful, you can buy me a coffee — whatever you\'d like to give. Thank you so much! Scan the code with your phone:</string>
     <string name="support_qr_desc">QR code to donate on Ko-fi</string>
@@ -112,5 +112,5 @@
     <string name="coffee_dismiss">Don\'t show this reminder again</string>
     <string name="coffee_reenable">Show the reminder again</string>
     <string name="coffee_thanks">Thank you! Jorge ❤️</string>
-    <string name="coffee_disable_hint">You can turn this reminder off in Settings, on the home screen.</string>
+    <string name="coffee_disable_hint">You can turn this reminder off in Settings, on the home screen ⚙️</string>
 </resources>

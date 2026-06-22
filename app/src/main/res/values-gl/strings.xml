@@ -40,8 +40,8 @@
     <string name="menu_section_subtitles">Subtítulos</string>
     <string name="menu_section_guide">Guía</string>
     <string name="menu_section_info">Información</string>
-    <string name="info_show">Amosar</string>
-    <string name="info_hide">Ocultar</string>
+    <string name="info_show">👁️ Amosar</string>
+    <string name="info_hide">🙈 Ocultar</string>
     <string name="player_only_one_quality">Só hai unha calidade dispoñible</string>
     <string name="audio_none">Sen pistas de audio</string>
     <string name="audio_track_n">Audio %1$d</string>
@@ -96,7 +96,7 @@
     <string name="settings_open_source">Licenzas de código aberto</string>
     <string name="settings_language">Idioma</string>
     <string name="language_system">Automático (dispositivo)</string>
-    <string name="support_entry">☕ Convídame a un café</string>
+    <string name="support_entry">Convídame a un café ☕</string>
     <string name="support_title">Góstache a app?</string>
     <string name="support_message">Esta app é gratuíta e de código aberto. Se che resulta útil, podes convidarme a un café, o que queiras achegar. Grazas de corazón! Escanea o código co teu móbil:</string>
     <string name="support_qr_desc">Código QR para doar en Ko-fi</string>
@@ -104,5 +104,5 @@
     <string name="coffee_dismiss">Non amosar máis o recordatorio</string>
     <string name="coffee_reenable">Amosar de novo o recordatorio</string>
     <string name="coffee_thanks">Grazas! Jorge ❤️</string>
-    <string name="coffee_disable_hint">Podes desactivar este recordatorio en Axustes, na pantalla de inicio.</string>
+    <string name="coffee_disable_hint">Podes desactivar este recordatorio en Axustes, na pantalla de inicio ⚙️</string>
 </resources>

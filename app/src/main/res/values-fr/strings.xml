@@ -40,8 +40,8 @@
     <string name="menu_section_subtitles">Sous-titres</string>
     <string name="menu_section_guide">Guide</string>
     <string name="menu_section_info">Infos</string>
-    <string name="info_show">Afficher</string>
-    <string name="info_hide">Masquer</string>
+    <string name="info_show">👁️ Afficher</string>
+    <string name="info_hide">🙈 Masquer</string>
     <string name="player_only_one_quality">Une seule qualité disponible</string>
     <string name="audio_none">Aucune piste audio</string>
     <string name="audio_track_n">Audio %1$d</string>
@@ -96,7 +96,7 @@
     <string name="settings_open_source">Licences open source</string>
     <string name="settings_language">Langue</string>
     <string name="language_system">Automatique (appareil)</string>
-    <string name="support_entry">☕ Offre-moi un café</string>
+    <string name="support_entry">Offre-moi un café ☕</string>
     <string name="support_title">L\'appli te plaît ?</string>
     <string name="support_message">Cette appli est gratuite et open source. Si elle t\'est utile, tu peux m\'offrir un café, ce que tu veux. Merci beaucoup ! Scanne le code avec ton téléphone :</string>
     <string name="support_qr_desc">Code QR pour faire un don sur Ko-fi</string>
@@ -104,5 +104,5 @@
     <string name="coffee_dismiss">Ne plus afficher ce rappel</string>
     <string name="coffee_reenable">Réafficher le rappel</string>
     <string name="coffee_thanks">Merci ! Jorge ❤️</string>
-    <string name="coffee_disable_hint">Tu peux désactiver ce rappel dans les Réglages, sur l\'écran d\'accueil.</string>
+    <string name="coffee_disable_hint">Tu peux désactiver ce rappel dans les Réglages, sur l\'écran d\'accueil ⚙️</string>
 </resources>

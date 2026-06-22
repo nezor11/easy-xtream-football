@@ -180,8 +180,9 @@ fun PlayerScreen(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             // The channel info (stats + now/next) can be hidden globally from the OK menu for a clean
-            // view; the OK menu itself stays available regardless.
-            if (ui.infoVisible) {
+            // view; the OK menu itself stays available regardless. On a zap it's briefly revealed even
+            // when hidden ([infoFlash]) so you always see what channel you landed on.
+            if (ui.infoVisible || ui.infoFlash) {
                 StatsOverlay(
                     channelName = ui.channelName,
                     channelPosition = ui.channelPosition,

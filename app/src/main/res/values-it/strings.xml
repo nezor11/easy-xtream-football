@@ -40,8 +40,8 @@
     <string name="menu_section_subtitles">Sottotitoli</string>
     <string name="menu_section_guide">Guida</string>
     <string name="menu_section_info">Info</string>
-    <string name="info_show">Mostra</string>
-    <string name="info_hide">Nascondi</string>
+    <string name="info_show">👁️ Mostra</string>
+    <string name="info_hide">🙈 Nascondi</string>
     <string name="player_only_one_quality">Una sola qualità disponibile</string>
     <string name="audio_none">Nessuna traccia audio</string>
     <string name="audio_track_n">Audio %1$d</string>
@@ -96,7 +96,7 @@
     <string name="settings_open_source">Licenze open source</string>
     <string name="settings_language">Lingua</string>
     <string name="language_system">Automatico (dispositivo)</string>
-    <string name="support_entry">☕ Offrimi un caffè</string>
+    <string name="support_entry">Offrimi un caffè ☕</string>
     <string name="support_title">Ti piace l\'app?</string>
     <string name="support_message">Questa app è gratuita e open source. Se ti è utile, puoi offrirmi un caffè, quanto vuoi. Grazie di cuore! Inquadra il codice con il telefono:</string>
     <string name="support_qr_desc">Codice QR per donare su Ko-fi</string>
@@ -104,5 +104,5 @@
     <string name="coffee_dismiss">Non mostrare più il promemoria</string>
     <string name="coffee_reenable">Mostra di nuovo il promemoria</string>
     <string name="coffee_thanks">Grazie! Jorge ❤️</string>
-    <string name="coffee_disable_hint">Puoi disattivare questo promemoria nelle Impostazioni, nella schermata iniziale.</string>
+    <string name="coffee_disable_hint">Puoi disattivare questo promemoria nelle Impostazioni, nella schermata iniziale ⚙️</string>
 </resources>

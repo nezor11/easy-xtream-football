@@ -66,6 +66,8 @@ data class PlayerUiState(
     val isFavorite: Boolean = false,
     /** Whether the on-screen channel info (stats + now/next guide) is shown; toggled from the OK menu. */
     val infoVisible: Boolean = true,
+    /** Transient reveal of the channel info on a zap, even when [infoVisible] is off (auto-hides). */
+    val infoFlash: Boolean = false,
     /** TV-style "bug" inviting a Ko-fi donation; slides in bottom-right once per app session. */
     val showCoffeeBug: Boolean = false,
 )
@@ -117,6 +119,9 @@ class PlayerViewModel(
 
     /** Timer that pops the Ko-fi "bug" a few seconds into a freshly started channel. */
     private var coffeeJob: Job? = null
+
+    /** Timer that hides the transient channel-info reveal shown on each zap. */
+    private var infoFlashJob: Job? = null
 
     /** Whether the user permanently silenced the Ko-fi reminder (honor-based; from settings). */
     @Volatile
@@ -539,12 +544,14 @@ class PlayerViewModel(
         playUri(variant)
         loadEpg(group)
         armCoffeeBug()
+        flashInfo()
     }
 
     /**
-     * Schedules the Ko-fi "bug" to slide in [COFFEE_DELAY_MS] into a freshly started channel — but at
-     * most once per app session, never if the user silenced it or hid the channel info, and only while
-     * the channel is actually playing in the foreground. Re-armed on each channel; a no-op once shown.
+     * Schedules the Ko-fi "bug" to slide in [COFFEE_DELAY_MS] into a freshly started channel, then
+     * auto-hide [COFFEE_VISIBLE_MS] later. Re-armed on each channel. Shows regardless of the "show
+     * channel info" setting; skipped only if the user silenced the reminder, while a menu/error is up,
+     * or in the background.
      */
     private fun armCoffeeBug() {
         coffeeJob?.cancel()
@@ -553,11 +560,21 @@ class PlayerViewModel(
             delay(COFFEE_DELAY_MS)
             val s = _ui.value
             if (!foreground || coffeeDismissed) return@launch
-            if (!hasStartedOnce || !s.infoVisible || s.menuOpen || s.errorMessage != null) return@launch
+            if (!hasStartedOnce || s.menuOpen || s.errorMessage != null) return@launch
             _ui.update { it.copy(showCoffeeBug = true) }
             // Auto-hide after a while if the user doesn't touch anything (slides back down).
             delay(COFFEE_VISIBLE_MS)
             _ui.update { it.copy(showCoffeeBug = false) }
+        }
+    }
+
+    /** On each zap, briefly reveal the channel info (even if the user hid it), then auto-hide it. */
+    private fun flashInfo() {
+        infoFlashJob?.cancel()
+        _ui.update { it.copy(infoFlash = true) }
+        infoFlashJob = viewModelScope.launch {
+            delay(INFO_FLASH_MS)
+            _ui.update { it.copy(infoFlash = false) }
         }
     }
 
@@ -780,6 +797,7 @@ class PlayerViewModel(
         failoverJob?.cancel()
         rebufferJob?.cancel()
         coffeeJob?.cancel()
+        infoFlashJob?.cancel()
         noticeJob?.cancel()
         player.removeListener(listener)
         player.release()
@@ -789,8 +807,9 @@ class PlayerViewModel(
         private const val POLL_INTERVAL_MS = 500L
         private const val BANDWIDTH_PERSIST_EVERY = 10 // persist the estimate ~every 5 s
         private const val NOTICE_DURATION_MS = 2_500L
-        private const val COFFEE_DELAY_MS = 10_000L // bug slides in this long into a freshly started channel
+        private const val COFFEE_DELAY_MS = 30_000L // bug slides in this long into a freshly started channel
         private const val COFFEE_VISIBLE_MS = 30_000L // and auto-hides this long after, if untouched
+        private const val INFO_FLASH_MS = 5_000L // how long the channel info stays after a zap when hidden
         private const val START_TIMEOUT_MS = 4_000L // a channel that hasn't started by now is dead
         private const val REBUFFER_TIMEOUT_MS = 12_000L // a started channel stuck buffering this long is dead
         private const val MAX_AUTO_SKIPS = 12 // stop auto-skipping after this many dead channels in a row
