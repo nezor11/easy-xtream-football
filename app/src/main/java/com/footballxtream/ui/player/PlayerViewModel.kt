@@ -51,6 +51,8 @@ data class PlayerUiState(
     val menuSection: String = "",
     val menuOptions: List<String> = emptyList(),
     val menuSelectedIndex: Int = 0,
+    /** True when the open OK-menu section is "Café": the screen shows the Ko-fi QR instead of a list. */
+    val menuCoffee: Boolean = false,
     /** "Now / next" programme titles from EPG (Xtream API or M3U's XMLTV), null when unavailable. */
     val nowProgram: String? = null,
     val nextProgram: String? = null,
@@ -326,7 +328,7 @@ class PlayerViewModel(
     // --- OK menu with sections: Quality / Audio / Subtitles / Guide (◀▶ switches section) ---
 
     /** Stable identity of each menu section, independent of its (translated) display label. */
-    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE, INFO }
+    private enum class MenuSection { QUALITY, AUDIO, SUBTITLES, GUIDE, INFO, COFFEE }
 
     private var currentSection = MenuSection.QUALITY
 
@@ -338,6 +340,7 @@ class PlayerViewModel(
             MenuSection.SUBTITLES -> R.string.menu_section_subtitles
             MenuSection.GUIDE -> R.string.menu_section_guide
             MenuSection.INFO -> R.string.menu_section_info
+            MenuSection.COFFEE -> R.string.support_entry
         },
     )
 
@@ -387,6 +390,7 @@ class PlayerViewModel(
             MenuSection.GUIDE -> guideMenuOptions()
             MenuSection.QUALITY -> qualityMenuOptions()
             MenuSection.INFO -> infoMenuOptions()
+            MenuSection.COFFEE -> coffeeMenuOptions()
         }
         menuApply = options.apply
         _ui.update {
@@ -395,9 +399,13 @@ class PlayerViewModel(
                 menuSection = sectionLabel(section),
                 menuOptions = options.labels,
                 menuSelectedIndex = options.selected,
+                menuCoffee = section == MenuSection.COFFEE,
             )
         }
     }
+
+    /** The "Café" OK-menu section has no list — the screen renders the Ko-fi QR for this section. */
+    private fun coffeeMenuOptions(): MenuOptions = MenuOptions(emptyList(), 0) {}
 
     private fun qualityMenuOptions(): MenuOptions {
         val group = currentGroup
@@ -540,20 +548,25 @@ class PlayerViewModel(
      */
     private fun armCoffeeBug() {
         coffeeJob?.cancel()
-        if (coffeeShownThisSession || coffeeDismissed) return
+        if (coffeeDismissed) return
         coffeeJob = viewModelScope.launch {
             delay(COFFEE_DELAY_MS)
             val s = _ui.value
-            if (!foreground || coffeeShownThisSession || coffeeDismissed) return@launch
+            if (!foreground || coffeeDismissed) return@launch
             if (!hasStartedOnce || !s.infoVisible || s.menuOpen || s.errorMessage != null) return@launch
-            coffeeShownThisSession = true
             _ui.update { it.copy(showCoffeeBug = true) }
+            // Auto-hide after a while if the user doesn't touch anything (slides back down).
+            delay(COFFEE_VISIBLE_MS)
+            _ui.update { it.copy(showCoffeeBug = false) }
         }
     }
 
     /** Slides the Ko-fi bug away (any remote key dismisses it for this appearance). */
     fun dismissCoffeeBug() {
-        if (_ui.value.showCoffeeBug) _ui.update { it.copy(showCoffeeBug = false) }
+        if (_ui.value.showCoffeeBug) {
+            coffeeJob?.cancel()
+            _ui.update { it.copy(showCoffeeBug = false) }
+        }
     }
 
     /** Toggles the playing channel as a favorite (long-press OK), with a brief on-screen notice. */
@@ -773,15 +786,11 @@ class PlayerViewModel(
     }
 
     companion object {
-        // Process-wide so the Ko-fi bug shows at most once per app session (survives leaving/re-entering
-        // the player within the same launch; resets when the process dies).
-        @Volatile
-        private var coffeeShownThisSession = false
-
         private const val POLL_INTERVAL_MS = 500L
         private const val BANDWIDTH_PERSIST_EVERY = 10 // persist the estimate ~every 5 s
         private const val NOTICE_DURATION_MS = 2_500L
         private const val COFFEE_DELAY_MS = 10_000L // bug slides in this long into a freshly started channel
+        private const val COFFEE_VISIBLE_MS = 30_000L // and auto-hides this long after, if untouched
         private const val START_TIMEOUT_MS = 4_000L // a channel that hasn't started by now is dead
         private const val REBUFFER_TIMEOUT_MS = 12_000L // a started channel stuck buffering this long is dead
         private const val MAX_AUTO_SKIPS = 12 // stop auto-skipping after this many dead channels in a row

@@ -103,4 +103,6 @@
     <string name="coffee_bug_text">L\'appli te plaît ? Offre-moi un café</string>
     <string name="coffee_dismiss">Ne plus afficher ce rappel</string>
     <string name="coffee_reenable">Réafficher le rappel</string>
+    <string name="coffee_thanks">Merci ! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Tu peux désactiver ce rappel dans les Réglages, sur l\'écran d\'accueil.</string>
 </resources>

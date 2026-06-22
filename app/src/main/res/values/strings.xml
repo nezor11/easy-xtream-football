@@ -111,4 +111,6 @@
     <string name="coffee_bug_text">Enjoying the app? Buy me a coffee</string>
     <string name="coffee_dismiss">Don\'t show this reminder again</string>
     <string name="coffee_reenable">Show the reminder again</string>
+    <string name="coffee_thanks">Thank you! Jorge ❤️</string>
+    <string name="coffee_disable_hint">You can turn this reminder off in Settings, on the home screen.</string>
 </resources>

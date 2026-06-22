@@ -108,4 +108,6 @@
     <string name="coffee_bug_text">¿Te gusta la app? Invítame a un café</string>
     <string name="coffee_dismiss">No volver a mostrar el recordatorio</string>
     <string name="coffee_reenable">Volver a mostrar el recordatorio</string>
+    <string name="coffee_thanks">¡Gracias! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Puedes desactivar este recordatorio en Ajustes, en la pantalla de inicio.</string>
 </resources>

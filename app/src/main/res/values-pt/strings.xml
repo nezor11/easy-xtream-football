@@ -103,4 +103,6 @@
     <string name="coffee_bug_text">Gostas da app? Paga-me um café</string>
     <string name="coffee_dismiss">Não mostrar mais o lembrete</string>
     <string name="coffee_reenable">Mostrar o lembrete de novo</string>
+    <string name="coffee_thanks">Obrigado! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Podes desativar este lembrete nas Definições, no ecrã inicial.</string>
 </resources>

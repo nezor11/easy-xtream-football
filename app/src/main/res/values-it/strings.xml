@@ -103,4 +103,6 @@
     <string name="coffee_bug_text">Ti piace l\'app? Offrimi un caffè</string>
     <string name="coffee_dismiss">Non mostrare più il promemoria</string>
     <string name="coffee_reenable">Mostra di nuovo il promemoria</string>
+    <string name="coffee_thanks">Grazie! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Puoi disattivare questo promemoria nelle Impostazioni, nella schermata iniziale.</string>
 </resources>

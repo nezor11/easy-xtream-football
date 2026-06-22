@@ -5,6 +5,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.annotation.OptIn
@@ -195,11 +196,15 @@ fun PlayerScreen(
                 }
             }
             if (ui.menuOpen) {
-                OptionsMenu(
-                    section = ui.menuSection,
-                    options = ui.menuOptions,
-                    selectedIndex = ui.menuSelectedIndex,
-                )
+                if (ui.menuCoffee) {
+                    CoffeeMenuPanel(section = ui.menuSection)
+                } else {
+                    OptionsMenu(
+                        section = ui.menuSection,
+                        options = ui.menuOptions,
+                        selectedIndex = ui.menuSelectedIndex,
+                    )
+                }
             }
         }
 
@@ -248,43 +253,15 @@ fun PlayerScreen(
                 color = Color(0x99FFFFFF),
             )
         }
-        // Ko-fi "bug": slides up from the bottom-right a few seconds into a channel; any key dismisses it.
+        // Ko-fi "bug": one shared card (same module) used both for the timed reminder and the OK-menu
+        // "Café" section. Slides up from the bottom-right; any key dismisses it (sliding back down).
         AnimatedVisibility(
-            visible = ui.showCoffeeBug && !ui.menuOpen,
-            enter = slideInVertically { it } + fadeIn(),
-            exit = slideOutVertically { it } + fadeOut(),
+            visible = (ui.showCoffeeBug && !ui.menuOpen) || (ui.menuOpen && ui.menuCoffee),
+            enter = slideInVertically(animationSpec = tween(450)) { it } + fadeIn(tween(450)),
+            exit = slideOutVertically(animationSpec = tween(350)) { it } + fadeOut(tween(350)),
             modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
         ) {
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xF20A0E12))
-                    .padding(10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.qr_kofi),
-                    contentDescription = stringResource(R.string.support_qr_desc),
-                    modifier = Modifier
-                        .size(96.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(Color.White)
-                        .padding(5.dp),
-                )
-                Column(modifier = Modifier.width(170.dp)) {
-                    Text(
-                        text = stringResource(R.string.coffee_bug_text),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = Color(0xFFE6EAEE),
-                    )
-                    Text(
-                        text = stringResource(R.string.support_kofi_handle),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
-            }
+            CoffeeCard()
         }
     }
 }
@@ -394,6 +371,79 @@ private fun OptionsMenu(
                 color = if (selected) colors.primary else Color(0xFFE6EAEE),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+/** The "Café" OK-menu section's bottom-left panel: same card format as the other sections, but it only
+ *  carries the section header and how to turn the reminder off — the QR rides in the shared [CoffeeCard]
+ *  that slides in bottom-right (see the AnimatedVisibility in the player). */
+@Composable
+private fun CoffeeMenuPanel(section: String, modifier: Modifier = Modifier) {
+    val colors = MaterialTheme.colorScheme
+    Column(
+        modifier = modifier
+            .width(280.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0xE60A0E12))
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(
+            text = "‹ $section ›",
+            style = MaterialTheme.typography.labelMedium,
+            color = colors.primary,
+            modifier = Modifier.padding(bottom = 4.dp),
+        )
+        Text(
+            text = stringResource(R.string.coffee_disable_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = Color(0xCCE6EAEE),
+        )
+    }
+}
+
+/** Shared Ko-fi card (QR + invite + thanks) used by both the timed reminder "bug" and the OK-menu
+ *  "Café" section, so they look and animate identically. */
+@Composable
+private fun CoffeeCard(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color(0xE60A0E12)) // same opacity as the OK menu
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Image(
+            painter = painterResource(R.drawable.qr_kofi),
+            contentDescription = stringResource(R.string.support_qr_desc),
+            modifier = Modifier
+                .size(96.dp)
+                .clip(RoundedCornerShape(6.dp))
+                .background(Color.White)
+                .padding(5.dp),
+        )
+        Column(
+            modifier = Modifier.width(160.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.support_title),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = stringResource(R.string.support_entry),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = stringResource(R.string.coffee_thanks),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }
