@@ -15,7 +15,7 @@
     <string name="action_search">🔍 Buscar</string>
     <string name="action_reload">↻ Recargar</string>
     <string name="action_filters">Filtros</string>
-    <string name="search_field_label">Buscar  (p. ex. fútbol, laliga, deporte)</string>
+    <string name="search_field_label">Buscar  (p. ex. fútbol, baloncesto, tenis)</string>
     <string name="no_sports_channels">Non se atoparon canles de deporte neste perfil.</string>
     <string name="no_results">Sen resultados para \"%1$s\".</string>
     <string name="now_live">Agora en directo</string>

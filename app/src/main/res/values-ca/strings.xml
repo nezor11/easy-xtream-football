@@ -15,7 +15,7 @@
     <string name="action_search">🔍 Cerca</string>
     <string name="action_reload">↻ Recarrega</string>
     <string name="action_filters">Filtres</string>
-    <string name="search_field_label">Cerca  (p. ex. futbol, laliga, esport)</string>
+    <string name="search_field_label">Cerca  (p. ex. futbol, bàsquet, tennis)</string>
     <string name="no_sports_channels">No s\'ha trobat cap canal d\'esport en aquest perfil.</string>
     <string name="no_results">Cap resultat per a \"%1$s\".</string>
     <string name="now_live">Ara en directe</string>

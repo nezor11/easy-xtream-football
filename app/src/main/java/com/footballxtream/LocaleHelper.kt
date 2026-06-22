@@ -39,8 +39,10 @@ object LocaleHelper {
 
     /** Persists [tag] and relaunches the app so every context picks up the new language. */
     fun applyAndRestart(activity: Activity, tag: String) {
+        // commit() (synchronous), not apply(): we kill the process right after, and an async apply()
+        // would be lost before it reaches disk — leaving the language unchanged on relaunch.
         activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
-            .putString(KEY, tag).apply()
+            .putString(KEY, tag).commit()
         val intent = activity.packageManager.getLaunchIntentForPackage(activity.packageName)
         intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         activity.startActivity(intent)

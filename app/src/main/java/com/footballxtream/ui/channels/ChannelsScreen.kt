@@ -251,18 +251,22 @@ private fun FolderGrid(
             modifier = Modifier.padding(start = 48.dp, bottom = 14.dp).alpha(dimAlpha),
         )
         val searchFocus = remember { FocusRequester() }
+        val filtersFocus = remember { FocusRequester() }
         var searchOpen by remember { mutableStateOf(query.isNotBlank()) }
 
         if (filtersOpen) {
+            // Move focus onto the filters when they open (unless the search field is taking it).
+            LaunchedEffect(Unit) { if (!searchOpen) runCatching { filtersFocus.requestFocus() } }
             Row(
                 modifier = Modifier.fillMaxWidth().padding(start = 48.dp, bottom = 14.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                QualityMode.entries.forEach { mode ->
+                QualityMode.entries.forEachIndexed { index, mode ->
                     Chip(
                         label = mode.label,
                         selected = mode == content.qualityMode,
                         onClick = { onQualitySelected(mode) },
+                        modifier = if (index == 0) Modifier.focusRequester(filtersFocus) else Modifier,
                     )
                 }
                 Chip(
@@ -317,7 +321,7 @@ private fun FolderGrid(
             if (content.liveNow.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.now_live), count = content.liveNow.size, modifier = Modifier.alpha(dimAlpha)) {
-                        WrappingRow(content.liveNow, autoFocus = firstSection == 0) { item, cardModifier ->
+                        WrappingRow(content.liveNow, autoFocus = firstSection == 0 && query.isBlank()) { item, cardModifier ->
                             LiveNowCard(
                                 item = item,
                                 onClick = { onPlayList(content.liveNow.map { it.group }, content.liveNow.indexOf(item), false) },
@@ -349,7 +353,7 @@ private fun FolderGrid(
                         ) {
                             WrappingRow(
                                 content.favoriteChannels,
-                                autoFocus = firstSection == 1,
+                                autoFocus = firstSection == 1 && query.isBlank(),
                                 firstCardFocus = favFirstFocus,
                                 itemKey = { it.key },
                                 // Spread the cards apart in reorder mode so the side chevrons show.
@@ -386,7 +390,7 @@ private fun FolderGrid(
             if (content.recent.isNotEmpty()) {
                 item {
                     ChannelRowSection(title = stringResource(R.string.section_recent), count = content.recent.size, modifier = Modifier.alpha(dimAlpha)) {
-                        WrappingRow(content.recent, autoFocus = firstSection == 2) { group, cardModifier ->
+                        WrappingRow(content.recent, autoFocus = firstSection == 2 && query.isBlank()) { group, cardModifier ->
                             ChannelCard(
                                 group = group,
                                 onClick = { onPlayList(content.recent, content.recent.indexOf(group), false) },
@@ -400,7 +404,7 @@ private fun FolderGrid(
             }
             lazyItemsIndexed(content.rows) { index, row ->
                 ChannelRowSection(title = stringResource(row.titleRes), count = row.folders.size, modifier = Modifier.alpha(dimAlpha)) {
-                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0) { folder, cardModifier ->
+                    WrappingRow(row.folders, autoFocus = firstSection == 3 && index == 0 && query.isBlank()) { folder, cardModifier ->
                         FolderCard(
                             folder = folder,
                             isFavorite = favoriteNames.contains(folder.name),
@@ -721,12 +725,12 @@ private fun FolderDetail(
 }
 
 @Composable
-private fun Chip(label: String, selected: Boolean, onClick: () -> Unit) {
+private fun Chip(label: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colorScheme
     var focused by remember { mutableStateOf(false) }
     val shape = RoundedCornerShape(50)
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(shape)
             .background(if (selected) colors.primary else colors.surfaceVariant)
             .border(2.dp, if (focused) colors.onBackground else Color.Transparent, shape)
