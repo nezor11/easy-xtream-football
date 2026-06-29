@@ -1,5 +1,6 @@
 package com.footballxtream.data.local
 
+import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
@@ -43,6 +44,9 @@ internal object Crypto {
     /** Returns "enc:"+base64(iv|ciphertext); empty stays empty; on any failure, returns [plain]. */
     fun encrypt(plain: String): String {
         if (plain.isEmpty()) return plain
+        // The Keystore AES/GCM key spec needs API 23+. On older devices, store as legacy plaintext
+        // (decrypt() passes it through) rather than crashing.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return plain
         return try {
             val cipher = Cipher.getInstance(TRANSFORM).apply { init(Cipher.ENCRYPT_MODE, key()) }
             val out = cipher.iv + cipher.doFinal(plain.toByteArray(Charsets.UTF_8))
@@ -55,6 +59,7 @@ internal object Crypto {
     /** Inverse of [encrypt]. Plain text (no tag) is returned as-is; an undecryptable value -> "". */
     fun decrypt(stored: String): String {
         if (!stored.startsWith(PREFIX)) return stored
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return stored // no Keystore before API 23
         return try {
             val data = Base64.decode(stored.removePrefix(PREFIX), Base64.NO_WRAP)
             val iv = data.copyOfRange(0, IV_LEN)

@@ -13,6 +13,9 @@ local.properties
 captures/
 .cxx/
 
+# Config local de herramientas (Claude Code, etc.)
+.claude/
+
 # Keystores / secrets
 *.jks
 *.keystore

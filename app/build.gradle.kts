@@ -20,9 +20,9 @@ android {
 
     defaultConfig {
         applicationId = "com.footballxtream"
-        minSdk = 24
+        minSdk = 21
         targetSdk = 35
-        versionCode = 4
+        versionCode = 6
         versionName = "0.1.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

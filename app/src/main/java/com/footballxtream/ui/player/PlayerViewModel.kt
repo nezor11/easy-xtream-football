@@ -810,7 +810,7 @@ class PlayerViewModel(
         private const val COFFEE_DELAY_MS = 30_000L // bug slides in this long into a freshly started channel
         private const val COFFEE_VISIBLE_MS = 30_000L // and auto-hides this long after, if untouched
         private const val INFO_FLASH_MS = 5_000L // how long the channel info stays after a zap when hidden
-        private const val START_TIMEOUT_MS = 4_000L // a channel that hasn't started by now is dead
+        private const val START_TIMEOUT_MS = 10_000L // start window: generous so slow networks/old TV boxes aren't skipped
         private const val REBUFFER_TIMEOUT_MS = 12_000L // a started channel stuck buffering this long is dead
         private const val MAX_AUTO_SKIPS = 12 // stop auto-skipping after this many dead channels in a row
         private const val DOUBLE_PRESS_MS = 350L // two laterals within this window jump folders
