@@ -44,19 +44,21 @@ class PlayerEngine(
     // which matters on low-RAM TV boxes — while still absorbing the jitter typical of Xtream streams.
     private fun newLoadControl(): DefaultLoadControl = DefaultLoadControl.Builder()
         .setBufferDurationsMs(
-            /* minBufferMs = */ 15_000,
-            /* maxBufferMs = */ 30_000,
-            /* bufferForPlaybackMs = */ 2_500,
-            /* bufferForPlaybackAfterRebufferMs = */ 5_000,
+            /* minBufferMs = */ 20_000,
+            /* maxBufferMs = */ 50_000,
+            // Build a bigger cushion before (re)starting so bursty/jittery links (e.g. 4G) coast through
+            // dips instead of stalling. Slightly slower to start, but far steadier on unstable networks.
+            /* bufferForPlaybackMs = */ 4_000,
+            /* bufferForPlaybackAfterRebufferMs = */ 10_000,
         )
         .build()
 
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .followRedirects(true)
         .followSslRedirects(true)
-        // Tight timeouts so a dead host surfaces an error fast and the player can fail over,
-        // instead of sitting on a hung connection for the better part of a minute.
-        .connectTimeout(4, TimeUnit.SECONDS)
+        // Timeouts loose enough to survive a slow/weak network (a marginal Wi-Fi link needs more than a
+        // few seconds to connect), but still bounded so a truly dead host fails over instead of hanging.
+        .connectTimeout(8, TimeUnit.SECONDS)
         .readTimeout(12, TimeUnit.SECONDS)
         .addInterceptor { chain ->
             chain.proceed(
