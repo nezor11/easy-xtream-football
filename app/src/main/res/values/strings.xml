@@ -56,6 +56,7 @@
     <string name="player_blocked_no_access">Blocked in your region or no access (%1$d)%2$s</string>
     <string name="player_channel_from"> · channel from %1$s</string>
     <string name="player_no_channel">No channel available</string>
+    <string name="player_low_bandwidth">Slow connection (~%1$s Mbps) · not enough bandwidth for live TV — it\'s your network, not the app.</string>
 
     <!-- Add / edit profile -->
     <string name="add_edit_profile">Edit profile</string>
