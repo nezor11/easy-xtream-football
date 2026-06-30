@@ -53,6 +53,7 @@
     <string name="player_blocked_no_access">Zure eskualdean blokeatuta edo sarbiderik gabe (%1$d)%2$s</string>
     <string name="player_channel_from"> · kanala: %1$s</string>
     <string name="player_no_channel">Ez dago kanalik eskuragarri</string>
+    <string name="player_low_bandwidth">Konexio motela (~%1$s Mbps) · banda-zabalera nahikoa ez zuzeneko emisiorako — zure sarea da, ez aplikazioa.</string>
 
     <string name="add_edit_profile">Editatu profila</string>
     <string name="add_connect_list">Konektatu zure zerrenda</string>

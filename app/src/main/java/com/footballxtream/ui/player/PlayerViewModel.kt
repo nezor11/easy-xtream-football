@@ -142,6 +142,11 @@ class PlayerViewModel(
     private var lastBytesTransferred = 0L
     private var smoothedThroughputMbps = 0.0
 
+    /** Byte counter and clock captured when the current load attempt began, so a failure can tell a
+     * dead channel (no data) apart from a connection too slow to sustain even the lowest quality. */
+    private var attemptStartBytes = 0L
+    private var attemptStartAt = 0L
+
     private val listener = object : Player.Listener {
         override fun onPlaybackStateChanged(state: Int) {
             _ui.update { it.copy(isBuffering = state == Player.STATE_BUFFERING) }
@@ -619,6 +624,9 @@ class PlayerViewModel(
         rebufferJob?.cancel() // a fresh load is back under the start watchdog until it reaches READY
         player.setMediaItem(MediaItem.fromUri(variant.channel.streamUrl))
         player.prepare()
+        // Snapshot the byte counter/clock so a failure can measure how fast data actually flowed in.
+        attemptStartBytes = playerEngine.bytesTransferred()
+        attemptStartAt = System.currentTimeMillis()
         // Never auto-play (nor arm the failover watchdog) while backgrounded — that would revive audio.
         player.playWhenReady = foreground
         if (foreground) armStartWatchdog() else failoverJob?.cancel()
@@ -674,6 +682,16 @@ class PlayerViewModel(
         playUri(group.variantFor(lower.quality) ?: group.bestVariant())
     }
 
+    /** Bytes pulled off the network since the current load attempt began. */
+    private fun attemptPulledBytes(): Long =
+        (playerEngine.bytesTransferred() - attemptStartBytes).coerceAtLeast(0L)
+
+    /** Average download rate (Mbps) over the current attempt; 0 if no time has elapsed yet. */
+    private fun attemptDownloadMbps(): Double {
+        val elapsed = System.currentTimeMillis() - attemptStartAt
+        return if (elapsed <= 0L) 0.0 else attemptPulledBytes() * 8.0 / elapsed / 1000.0
+    }
+
     /**
      * A channel failed to play. First try a lower-quality variant of the same channel; if the channel
      * has no variant left it's dead, so auto-skip to the next channel (forward), up to one full lap of
@@ -691,6 +709,25 @@ class PlayerViewModel(
             _ui.update { it.copy(isBuffering = true, errorMessage = null) }
             playUri(group.variantFor(lower.quality) ?: group.bestVariant())
             return
+        }
+        // Bandwidth diagnosis: data was flowing but too slowly to sustain even the lowest quality, so the
+        // bottleneck is the connection, not a dead channel. Tell the user it's their bandwidth instead of
+        // blaming the channel and skipping the whole list (every channel would fail the same way). Only
+        // when there's no HTTP error (a 4xx is a real block, and ~no data means dead/unreachable).
+        if (httpCode == null && attemptPulledBytes() >= MIN_BANDWIDTH_PROBE_BYTES) {
+            val rate = attemptDownloadMbps()
+            if (rate < LOW_BANDWIDTH_MBPS) {
+                _ui.update {
+                    it.copy(
+                        isBuffering = false,
+                        errorMessage = context.getString(
+                            R.string.player_low_bandwidth,
+                            String.format(java.util.Locale.US, "%.1f", rate),
+                        ),
+                    )
+                }
+                return
+            }
         }
         // 403/401/451 means geo/IP-blocked or no access, not just a dead stream — say so.
         val blocked = httpCode == 403 || httpCode == 401 || httpCode == 451
@@ -813,6 +850,8 @@ class PlayerViewModel(
         private const val START_TIMEOUT_MS = 10_000L // start window: generous so slow networks/old TV boxes aren't skipped
         private const val REBUFFER_TIMEOUT_MS = 12_000L // a started channel stuck buffering this long is dead
         private const val MAX_AUTO_SKIPS = 12 // stop auto-skipping after this many dead channels in a row
+        private const val LOW_BANDWIDTH_MBPS = 1.5 // below this, live IPTV can't sustain even the lowest quality
+        private const val MIN_BANDWIDTH_PROBE_BYTES = 80_000L // need at least this much data to trust the rate
         private const val DOUBLE_PRESS_MS = 350L // two laterals within this window jump folders
         private const val MAX_CONTROLS_HINTS = 3 // show the controls legend only this many times
         private const val CONTROLS_HINT_MS = 6_000L // how long the legend stays before fading out

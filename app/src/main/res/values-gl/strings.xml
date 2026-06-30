@@ -53,6 +53,7 @@
     <string name="player_blocked_no_access">Bloqueado na túa rexión ou sen acceso (%1$d)%2$s</string>
     <string name="player_channel_from"> · canle de %1$s</string>
     <string name="player_no_channel">Ningunha canle dispoñible</string>
+    <string name="player_low_bandwidth">Conexión lenta (~%1$s Mbps) · largura de banda insuficiente para a emisión en directo — é a túa rede, non a app.</string>
 
     <string name="add_edit_profile">Editar perfil</string>
     <string name="add_connect_list">Conecta a túa lista</string>
