@@ -6,9 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -41,6 +44,7 @@ import com.footballxtream.data.local.ProfileType
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.TvTextField
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AddProfileScreen(
     onSaved: () -> Unit,
@@ -58,8 +62,9 @@ fun AddProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 48.dp, vertical = 40.dp),
+            .padding(horizontal = 20.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
     ) {
@@ -83,7 +88,10 @@ fun AddProfileScreen(
                 color = colors.onSurface,
             )
 
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
                 ModeChip(stringResource(R.string.profile_type_xtream), state.mode == ProfileType.XTREAM) {
                     viewModel.onModeChange(ProfileType.XTREAM)
                 }
@@ -167,23 +175,17 @@ fun AddProfileScreen(
                 )
             }
 
-            Button(
-                onClick = { viewModel.save(onSaved) },
+            PrimaryButton(
+                label = stringResource(
+                    when {
+                        state.isConnecting -> R.string.btn_connecting
+                        state.isEditing -> R.string.btn_save_changes
+                        else -> R.string.btn_save_enter
+                    },
+                ),
                 enabled = state.canSubmit,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(
-                        when {
-                            state.isConnecting -> R.string.btn_connecting
-                            state.isEditing -> R.string.btn_save_changes
-                            else -> R.string.btn_save_enter
-                        },
-                    ),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
+                onClick = { viewModel.save(onSaved) },
+            )
         }
     }
 }
@@ -211,6 +213,35 @@ private fun ModeChip(label: String, selected: Boolean, onClick: () -> Unit) {
             text = label,
             style = MaterialTheme.typography.labelLarge,
             color = if (selected) colors.onPrimary else colors.onSurface,
+        )
+    }
+}
+
+/**
+ * Full-width primary action. Uses a plain [clickable] (not the tv.material3 Button) so it responds to
+ * BOTH touch (phone) and the D-pad "select" (TV) — the tv.material3 Button only reacted to the remote.
+ * Shows a solid brand fill when enabled (so it doesn't look disabled on touch) and a focus ring on TV.
+ */
+@Composable
+private fun PrimaryButton(label: String, enabled: Boolean, onClick: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    var focused by remember { mutableStateOf(false) }
+    val shape = RoundedCornerShape(12.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(shape)
+            .background(if (enabled) colors.primary else colors.surfaceVariant)
+            .then(if (focused && enabled) Modifier.border(3.dp, colors.onPrimary, shape) else Modifier)
+            .onFocusChanged { focused = it.isFocused }
+            .clickable(enabled = enabled) { onClick() }
+            .padding(vertical = 16.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = if (enabled) colors.onPrimary else colors.onSurfaceVariant,
         )
     }
 }

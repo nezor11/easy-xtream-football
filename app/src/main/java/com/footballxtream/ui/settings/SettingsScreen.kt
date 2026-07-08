@@ -1,5 +1,7 @@
 package com.footballxtream.ui.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -132,6 +134,7 @@ private fun SupportOverlay(
     onDismiss: () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
+    val context = LocalContext.current
     val toggleFocus = remember { FocusRequester() }
     LaunchedEffect(Unit) { runCatching { toggleFocus.requestFocus() } }
     Box(
@@ -164,6 +167,19 @@ private fun SupportOverlay(
                 modifier = Modifier
                     .size(220.dp)
                     .clip(RoundedCornerShape(12.dp))
+                    // On a phone, scanning your own screen makes no sense — tapping the QR opens Ko-fi
+                    // directly. On TV (no browser) the runCatching just swallows it, so scanning stays
+                    // the way to donate.
+                    .clickable {
+                        runCatching {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://" + context.getString(R.string.support_kofi_handle)),
+                                ),
+                            )
+                        }
+                    }
                     .background(Color.White)
                     .padding(10.dp),
             )

@@ -3,6 +3,7 @@ package com.footballxtream.ui.channels
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -13,6 +14,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -48,6 +50,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
@@ -218,7 +221,7 @@ private fun FolderGrid(
         // the header clean and give the channels more room.
         var filtersOpen by remember { mutableStateOf(false) }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 48.dp, end = 48.dp, bottom = 2.dp).alpha(dimAlpha),
+            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, bottom = 2.dp).alpha(dimAlpha),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -248,7 +251,7 @@ private fun FolderGrid(
             text = pluralStringResource(R.plurals.channels_count, animatedCount, animatedCount),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 48.dp, bottom = 14.dp).alpha(dimAlpha),
+            modifier = Modifier.padding(start = 20.dp, bottom = 14.dp).alpha(dimAlpha),
         )
         val searchFocus = remember { FocusRequester() }
         val filtersFocus = remember { FocusRequester() }
@@ -258,7 +261,7 @@ private fun FolderGrid(
             // Move focus onto the filters when they open (unless the search field is taking it).
             LaunchedEffect(Unit) { if (!searchOpen) runCatching { filtersFocus.requestFocus() } }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(start = 48.dp, bottom = 14.dp),
+                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, bottom = 14.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 QualityMode.entries.forEachIndexed { index, mode ->
@@ -286,7 +289,7 @@ private fun FolderGrid(
                     value = query,
                     onValueChange = onQueryChange,
                     label = stringResource(R.string.search_field_label),
-                    modifier = Modifier.padding(start = 48.dp, bottom = 18.dp).width(520.dp),
+                    modifier = Modifier.padding(start = 20.dp, bottom = 18.dp).width(520.dp),
                     focusRequester = searchFocus,
                 )
             }
@@ -300,7 +303,7 @@ private fun FolderGrid(
                     stringResource(R.string.no_results, query)
                 },
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = 48.dp, top = 24.dp),
+                modifier = Modifier.padding(start = 20.dp, top = 24.dp),
             )
             return@Column
         }
@@ -580,7 +583,7 @@ private fun ChannelRowSection(
     val colors = MaterialTheme.colorScheme
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(
-            modifier = Modifier.padding(start = 48.dp),
+            modifier = Modifier.padding(start = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -636,7 +639,7 @@ private fun <T> WrappingRow(
 
     LazyRow(
         state = listState,
-        contentPadding = PaddingValues(horizontal = 48.dp, vertical = 12.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(itemSpacing),
         modifier = Modifier.onPreviewKeyEvent { event ->
             if (event.type != KeyEventType.KeyDown || items.size < 2) return@onPreviewKeyEvent false
@@ -696,18 +699,18 @@ private fun FolderDetail(
             text = folder.name,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(start = 48.dp, bottom = 4.dp),
+            modifier = Modifier.padding(start = 20.dp, bottom = 4.dp),
         )
         Text(
             text = stringResource(R.string.folder_back_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(start = 48.dp, bottom = 16.dp),
+            modifier = Modifier.padding(start = 20.dp, bottom = 16.dp),
         )
         LazyVerticalGrid(
             columns = GridCells.Adaptive(156.dp),
             // Vertical padding so the focus zoom on the top/bottom rows is not clipped.
-            contentPadding = PaddingValues(horizontal = 48.dp, vertical = 12.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -854,6 +857,7 @@ private fun ChannelCard(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ImageCard(
     title: String,
@@ -869,23 +873,23 @@ private fun ImageCard(
     highlighted: Boolean = false,
 ) {
     val colors = MaterialTheme.colorScheme
-    Card(
-        onClick = onClick,
-        onLongClick = onLongClick,
-        modifier = modifier.width(148.dp),
-        scale = CardDefaults.scale(focusedScale = 1.06f),
-        border = CardDefaults.border(
-            // While being reordered, the card keeps a primary border so it's easy to track as it slides.
-            border = if (highlighted) {
-                Border(androidx.compose.foundation.BorderStroke(3.dp, colors.primary), shape = RoundedCornerShape(12.dp))
-            } else {
-                Border.None
-            },
-            focusedBorder = Border(
-                border = androidx.compose.foundation.BorderStroke(3.dp, colors.primary),
-                shape = RoundedCornerShape(12.dp),
-            ),
-        ),
+    var focused by remember { mutableStateOf(false) }
+    // Focus zoom for the D-pad (TV). On touch there's no focus, so it just stays at 1x.
+    val cardScale by animateFloatAsState(if (focused) 1.06f else 1f, label = "cardScale")
+    val shape = RoundedCornerShape(12.dp)
+    // Plain combinedClickable (not the tv.material3 Card) so cards react to BOTH touch (phone) and the
+    // D-pad select (TV) — the tv Card only reacted to the remote. Focus scale + border kept for TV.
+    Column(
+        modifier = modifier
+            .width(148.dp)
+            .scale(cardScale)
+            .clip(shape)
+            .background(colors.surface)
+            .then(
+                if (focused || highlighted) Modifier.border(3.dp, colors.primary, shape) else Modifier,
+            )
+            .onFocusChanged { focused = it.isFocused }
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick),
     ) {
         Box(
             modifier = Modifier.fillMaxWidth().height(84.dp).background(colors.surfaceVariant),
