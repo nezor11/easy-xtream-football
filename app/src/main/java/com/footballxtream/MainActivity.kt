@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -69,7 +70,10 @@ private fun AppRoot() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            // Keep content clear of the phone's status/navigation bars (TV has none, so this is a no-op
+            // there). The background is applied first, so it still fills edge-to-edge behind the bars.
+            .systemBarsPadding(),
         contentAlignment = Alignment.Center,
     ) {
         when (startState) {

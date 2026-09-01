@@ -1,9 +1,12 @@
 package com.footballxtream.ui.profiles
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
@@ -89,7 +93,7 @@ fun ProfilesScreen(
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(48.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(40.dp),
         ) {
@@ -121,8 +125,8 @@ fun ProfilesScreen(
             // padding leaves room for the focus zoom so the grown card isn't clipped.
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(28.dp),
-                contentPadding = PaddingValues(horizontal = 48.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterHorizontally),
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
             ) {
                 itemsIndexed(profiles) { index, profile ->
                     ProfileCard(
@@ -283,6 +287,7 @@ private fun CardAvatar(letter: String) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ProfileCard(
     profile: ProfileEntity,
@@ -292,11 +297,20 @@ private fun ProfileCard(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
-    Card(
-        onClick = onClick,
-        onLongClick = onLongClick,
-        modifier = modifier.width(CardWidth).focusProperties { canFocus = focusable },
-        scale = CardDefaults.scale(focusedScale = 1.06f),
+    var focused by remember { mutableStateOf(false) }
+    val cardScale by animateFloatAsState(if (focused) 1.06f else 1f, label = "profileScale")
+    val shape = RoundedCornerShape(12.dp)
+    // Plain combinedClickable (not the tv.material3 Card) so it reacts to BOTH touch and the D-pad.
+    Column(
+        modifier = modifier
+            .width(CardWidth)
+            .scale(cardScale)
+            .clip(shape)
+            .background(colors.surface)
+            .then(if (focused) Modifier.border(3.dp, colors.primary, shape) else Modifier)
+            .focusProperties { canFocus = focusable }
+            .onFocusChanged { focused = it.isFocused }
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick),
     ) {
         CardAvatar(letter = profile.name.take(1).uppercase().ifBlank { "?" })
         Box(
@@ -361,7 +375,7 @@ private fun AddProfileButton(
             .widthIn(max = 300.dp)
             .fillMaxWidth()
             .clip(shape)
-            .background(if (focused) colors.primary else Color.Transparent)
+            .background(if (focused) colors.primary else colors.surfaceVariant)
             .border(1.dp, if (focused) colors.primary else colors.surfaceVariant, shape)
             .focusProperties { canFocus = focusable }
             .onFocusChanged { focused = it.isFocused }

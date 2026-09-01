@@ -1,5 +1,7 @@
 package com.footballxtream.ui.player
 
+import android.content.Intent
+import android.net.Uri
 import android.view.ViewGroup
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -11,6 +13,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.annotation.OptIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -409,6 +413,7 @@ private fun CoffeeMenuPanel(section: String, modifier: Modifier = Modifier) {
  *  "Café" section, so they look and animate identically. */
 @Composable
 private fun CoffeeCard(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
@@ -423,6 +428,17 @@ private fun CoffeeCard(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .size(96.dp)
                 .clip(RoundedCornerShape(6.dp))
+                // Tapping the QR opens Ko-fi directly (handy on a phone; harmless on TV — no browser).
+                .clickable {
+                    runCatching {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://" + context.getString(R.string.support_kofi_handle)),
+                            ),
+                        )
+                    }
+                }
                 .background(Color.White)
                 .padding(5.dp),
         )

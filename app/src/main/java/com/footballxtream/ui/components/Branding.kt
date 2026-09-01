@@ -7,7 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -26,17 +30,25 @@ fun BrandHeader(
     val colors = MaterialTheme.colorScheme
     val wordmarkStyle =
         if (compact) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.displaySmall
+    // One Text (not three in a Row) so it wraps at word boundaries and stays centred on a narrow phone
+    // ("Easy Xtream" / "Football") instead of breaking mid-word.
+    val wordmark = buildAnnotatedString {
+        withStyle(SpanStyle(color = colors.onBackground)) { append("Easy ") }
+        withStyle(SpanStyle(color = colors.primary)) { append("Xtream") }
+        withStyle(SpanStyle(color = colors.onBackground)) { append(" Football") }
+    }
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Row {
-            Text(text = "Easy ", style = wordmarkStyle, fontWeight = FontWeight.Bold, color = colors.onBackground)
-            Text(text = "Xtream", style = wordmarkStyle, fontWeight = FontWeight.Bold, color = colors.primary)
-            Text(text = " Football", style = wordmarkStyle, fontWeight = FontWeight.Bold, color = colors.onBackground)
-        }
+        Text(
+            text = wordmark,
+            style = wordmarkStyle,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+        )
         if (!compact) {
             Text(
                 text = stringResource(R.string.brand_tagline),
