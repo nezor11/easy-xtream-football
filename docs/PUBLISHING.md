@@ -49,4 +49,5 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
   reciente). El Fire Stick 2ª gen (Fire OS 5 / Android 5.1, API 22) **no es compatible** (< minSdk 24).
 - (Opcional) Subir **símbolos de depuración nativos** para mejores informes de fallos.
-- Microsite (`easy-xtream-football-web`): pendiente de subir a GitHub + desplegar en Vercel.
+- ✅ Microsite (`easy-xtream-football-web`) subido a GitHub y desplegado en Vercel:
+  https://easy-xtream-football-web.vercel.app (auto-deploy en cada push).
