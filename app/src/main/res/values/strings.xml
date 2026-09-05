@@ -75,12 +75,17 @@
     <string name="field_server_url">Server URL</string>
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
     <string name="helper_server">E.g.: http://mydomain.com:8080</string>
     <string name="btn_connecting">Connecting…</string>
     <string name="btn_save_changes">Save changes</string>
     <string name="btn_save_enter">Save and enter</string>
     <string name="error_m3u_load">Couldn\'t load the M3U playlist. Check the URL.</string>
-    <string name="error_xtream_connect">Couldn\'t connect. Check the server, username and password.</string>
+    <string name="error_xtream_auth">The server rejected the username or password.</string>
+    <string name="error_xtream_unreachable">Can\'t reach the server (%1$s). Check the URL or try another host from your provider.</string>
+    <string name="error_xtream_http">The server answered HTTP %1$d. Check the URL (host and port only, without /player_api.php).</string>
+    <string name="error_xtream_bad_response">Unexpected reply from the server. Check that the URL is an Xtream panel.</string>
     <string name="default_m3u_name">M3U list</string>
 
     <!-- Profiles picker -->

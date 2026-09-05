@@ -71,12 +71,17 @@
     <string name="field_server_url">Zerbitzariaren URLa</string>
     <string name="field_username">Erabiltzailea</string>
     <string name="field_password">Pasahitza</string>
+    <string name="show_password">Erakutsi pasahitza</string>
+    <string name="hide_password">Ezkutatu pasahitza</string>
     <string name="helper_server">Adib.: http://niredomeinua.com:8080</string>
     <string name="btn_connecting">Konektatzen…</string>
     <string name="btn_save_changes">Gorde aldaketak</string>
     <string name="btn_save_enter">Gorde eta sartu</string>
     <string name="error_m3u_load">Ezin izan da M3U zerrenda kargatu. Egiaztatu URLa.</string>
-    <string name="error_xtream_connect">Ezin izan da konektatu. Egiaztatu zerbitzaria, erabiltzailea eta pasahitza.</string>
+    <string name="error_xtream_auth">Zerbitzariak erabiltzailea edo pasahitza baztertu du.</string>
+    <string name="error_xtream_unreachable">Ezin da zerbitzarira iritsi (%1$s). Egiaztatu URLa edo probatu hornitzailearen beste host bat.</string>
+    <string name="error_xtream_http">Zerbitzariak HTTP %1$d erantzun du. Egiaztatu URLa (host eta ataka soilik, /player_api.php gabe).</string>
+    <string name="error_xtream_bad_response">Zerbitzariaren erantzun ustekabekoa. Egiaztatu URLa Xtream panel bat dela.</string>
     <string name="default_m3u_name">M3U zerrenda</string>
 
     <string name="profiles_longpress_hint">Eduki sakatuta profila editatzeko edo ezabatzeko</string>

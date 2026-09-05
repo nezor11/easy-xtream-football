@@ -39,7 +39,12 @@ object XtreamClient {
             .build()
     }
 
-    /** Ensures a scheme is present and the URL ends with a single trailing slash. */
+    /**
+     * Ensures a scheme is present and the URL ends with a single trailing slash. Users often paste
+     * a full API or playlist URL (…/player_api.php?username=…, …/get.php?…), which would make the
+     * client request "player_api.php/player_api.php" (404): the query and a trailing .php script
+     * are dropped so only the panel base remains.
+     */
     fun normalizeBaseUrl(raw: String): String {
         var url = raw.trim()
         if (url.isEmpty()) return url
@@ -47,6 +52,10 @@ object XtreamClient {
             !url.startsWith("https://", ignoreCase = true)
         ) {
             url = "http://$url"
+        }
+        url = url.substringBefore('?').substringBefore('#').trimEnd('/')
+        if (url.substringAfterLast('/').endsWith(".php", ignoreCase = true)) {
+            url = url.substringBeforeLast('/')
         }
         return url.trimEnd('/') + "/"
     }

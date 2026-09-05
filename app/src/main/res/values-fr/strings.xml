@@ -71,12 +71,17 @@
     <string name="field_server_url">URL du serveur</string>
     <string name="field_username">Identifiant</string>
     <string name="field_password">Mot de passe</string>
+    <string name="show_password">Afficher le mot de passe</string>
+    <string name="hide_password">Masquer le mot de passe</string>
     <string name="helper_server">Ex. : http://mondomaine.com:8080</string>
     <string name="btn_connecting">Connexion…</string>
     <string name="btn_save_changes">Enregistrer les modifications</string>
     <string name="btn_save_enter">Enregistrer et entrer</string>
     <string name="error_m3u_load">Impossible de charger la liste M3U. Vérifie l\'URL.</string>
-    <string name="error_xtream_connect">Connexion impossible. Vérifie le serveur, l\'identifiant et le mot de passe.</string>
+    <string name="error_xtream_auth">Le serveur a refusé l\'identifiant ou le mot de passe.</string>
+    <string name="error_xtream_unreachable">Serveur injoignable (%1$s). Vérifie l\'URL ou essaie un autre hôte de ton fournisseur.</string>
+    <string name="error_xtream_http">Le serveur a répondu HTTP %1$d. Vérifie l\'URL (hôte et port seulement, sans /player_api.php).</string>
+    <string name="error_xtream_bad_response">Réponse inattendue du serveur. Vérifie que l\'URL est un panneau Xtream.</string>
     <string name="default_m3u_name">Liste M3U</string>
 
     <string name="profiles_longpress_hint">Maintiens un profil appuyé pour le modifier ou le supprimer</string>

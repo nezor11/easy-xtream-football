@@ -150,15 +150,26 @@ fun AddProfileScreen(
                     onValueChange = viewModel::onUsernameChange,
                     label = stringResource(R.string.field_username),
                     modifier = fieldModifier,
+                    // Password input type = no keyboard suggestions/learning for the username
+                    // either (a TV keyboard "accepting" a suggestion silently rewrites the login).
+                    keyboardType = KeyboardType.Password,
                 )
                 TvTextField(
                     value = state.password,
                     onValueChange = viewModel::onPasswordChange,
                     label = stringResource(R.string.field_password),
                     modifier = fieldModifier,
-                    isPassword = true,
+                    isPassword = !state.showPassword,
                     keyboardType = KeyboardType.Password,
                 )
+                ModeChip(
+                    stringResource(
+                        if (state.showPassword) R.string.hide_password else R.string.show_password,
+                    ),
+                    selected = false,
+                ) {
+                    viewModel.onTogglePassword()
+                }
                 TvTextField(
                     value = state.name,
                     onValueChange = viewModel::onNameChange,

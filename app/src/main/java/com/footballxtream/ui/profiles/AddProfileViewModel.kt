@@ -1,6 +1,8 @@
 package com.footballxtream.ui.profiles
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -10,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.footballxtream.FootballXtreamApp
 import com.footballxtream.R
 import com.footballxtream.data.ContentRepository
+import com.footballxtream.data.XtreamAuthException
 import com.footballxtream.data.local.ProfileDao
 import com.footballxtream.data.local.ProfileEntity
 import com.footballxtream.data.local.ProfileType
@@ -20,6 +23,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import javax.net.ssl.SSLException
 
 data class AddProfileUiState(
     val mode: String = ProfileType.XTREAM,
@@ -28,6 +37,8 @@ data class AddProfileUiState(
     val username: String = "",
     val password: String = "",
     val m3uUrl: String = "",
+    /** Password shown in clear text (default on TV: typing blind with a remote is error-prone). */
+    val showPassword: Boolean = false,
     val isConnecting: Boolean = false,
     val error: String? = null,
     val isEditing: Boolean = false,
@@ -52,7 +63,11 @@ class AddProfileViewModel(
     private val context: Context,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AddProfileUiState())
+    private val _state = MutableStateFlow(
+        AddProfileUiState(
+            showPassword = context.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK),
+        ),
+    )
     val state: StateFlow<AddProfileUiState> = _state.asStateFlow()
 
     // Non-null when editing an existing profile; drives update-in-place instead of insert.
@@ -84,6 +99,7 @@ class AddProfileViewModel(
     fun onUsernameChange(value: String) = _state.update { it.copy(username = value, error = null) }
     fun onPasswordChange(value: String) = _state.update { it.copy(password = value, error = null) }
     fun onM3uUrlChange(value: String) = _state.update { it.copy(m3uUrl = value, error = null) }
+    fun onTogglePassword() = _state.update { it.copy(showPassword = !it.showPassword) }
 
     fun save(onSaved: () -> Unit) {
         val current = _state.value
@@ -111,11 +127,14 @@ class AddProfileViewModel(
                     }
                     .onFailure { fail(context.getString(R.string.error_m3u_load)) }
             } else {
+                // Trim everything: a TV keyboard easily leaves a trailing space when accepting a
+                // suggestion, and many panels reject "user " even when "user" is valid.
+                val username = current.username.trim()
                 val profile = XtreamProfile(
-                    name = current.name.ifBlank { current.username },
-                    serverUrl = current.server,
-                    username = current.username,
-                    password = current.password,
+                    name = current.name.trim().ifBlank { username },
+                    serverUrl = current.server.trim(),
+                    username = username,
+                    password = current.password.trim(),
                 )
                 repository.validateXtream(profile)
                     .onSuccess {
@@ -131,7 +150,10 @@ class AddProfileViewModel(
                         )
                         onSaved()
                     }
-                    .onFailure { fail(context.getString(R.string.error_xtream_connect)) }
+                    .onFailure {
+                        Log.w(TAG, "validateXtream failed: ${it.javaClass.simpleName}: ${it.message}")
+                        fail(describeXtreamError(it))
+                    }
             }
         }
     }
@@ -159,11 +181,31 @@ class AddProfileViewModel(
         if (id != null) profileDao.update(entity.copy(id = id)) else profileDao.upsert(entity)
     }
 
+    /**
+     * Tells the user WHICH part failed. Before, every failure (host blocked in their country,
+     * https on an http port, pasted /player_api.php, wrong password) showed the same generic
+     * "check server, username and password", which is impossible to act on from a remote.
+     */
+    private fun describeXtreamError(e: Throwable): String = when (e) {
+        is XtreamAuthException -> context.getString(R.string.error_xtream_auth)
+        is HttpException -> context.getString(R.string.error_xtream_http, e.code())
+        is UnknownHostException -> context.getString(R.string.error_xtream_unreachable, "DNS")
+        is SocketTimeoutException -> context.getString(R.string.error_xtream_unreachable, "timeout")
+        is SSLException -> context.getString(R.string.error_xtream_unreachable, "TLS")
+        is ConnectException -> context.getString(R.string.error_xtream_unreachable, "TCP")
+        is IOException -> context.getString(R.string.error_xtream_unreachable, e.javaClass.simpleName)
+        // Retrofit rejects a malformed base URL (e.g. a space in the host) with this.
+        is IllegalArgumentException -> context.getString(R.string.error_xtream_unreachable, "URL")
+        else -> context.getString(R.string.error_xtream_bad_response)
+    }
+
     private fun fail(message: String) {
         _state.update { it.copy(isConnecting = false, error = message) }
     }
 
     companion object {
+        private const val TAG = "AddProfileViewModel"
+
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val app = this[APPLICATION_KEY] as FootballXtreamApp

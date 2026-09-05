@@ -71,12 +71,17 @@
     <string name="field_server_url">URL del servidor</string>
     <string name="field_username">Usuari</string>
     <string name="field_password">Contrasenya</string>
+    <string name="show_password">Mostra la contrasenya</string>
+    <string name="hide_password">Amaga la contrasenya</string>
     <string name="helper_server">Ex.: http://elmeudomini.com:8080</string>
     <string name="btn_connecting">Connectant…</string>
     <string name="btn_save_changes">Desa els canvis</string>
     <string name="btn_save_enter">Desa i entra</string>
     <string name="error_m3u_load">No s\'ha pogut carregar la llista M3U. Comprova la URL.</string>
-    <string name="error_xtream_connect">No s\'ha pogut connectar. Comprova el servidor, l\'usuari i la contrasenya.</string>
+    <string name="error_xtream_auth">El servidor ha rebutjat l\'usuari o la contrasenya.</string>
+    <string name="error_xtream_unreachable">No s\'arriba al servidor (%1$s). Comprova la URL o prova un altre host del teu proveïdor.</string>
+    <string name="error_xtream_http">El servidor ha respost HTTP %1$d. Comprova la URL (només host i port, sense /player_api.php).</string>
+    <string name="error_xtream_bad_response">Resposta inesperada del servidor. Comprova que la URL és un panell Xtream.</string>
     <string name="default_m3u_name">Llista M3U</string>
 
     <string name="profiles_longpress_hint">Mantén premut un perfil per editar-lo o eliminar-lo</string>
