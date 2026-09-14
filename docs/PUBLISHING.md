@@ -48,8 +48,9 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
 - Al abrir el proyecto en cualquier máquina, pedir a Claude que lea este archivo antes de tocar Play.
 
 ## Estado a 2026-09-14 (máquina sin clave)
-- Han pasado los 7 días desde la solicitud de producción (2026-09-06): **falta comprobar la respuesta de Google**
-  (correo a contact@nezor.es y/o aviso en Play Console → Panel / Bandeja de entrada).
+- ✅ **Acceso a producción CONCEDIDO** (visto en el Panel de Play Console el 2026-09-14: "Tu aplicación tiene
+  acceso a producción en Google Play"). El canal Producción aparece como *Inactivo* hasta que se cree la
+  primera versión. También se pueden abrir pruebas abiertas.
 - `origin/main` incluye 0.1.6 (`a2281da`) y la card del portafolio (`b0c021c`). Working tree limpio.
 - Sigue pendiente, en la máquina con la clave: firmar y subir 0.1.6 a Prueba cerrada, y guardar copia de la clave
   fuera de ambas máquinas. Anotar aquí el resultado y hacer commit + push.
@@ -61,8 +62,9 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
      grupos de "closed testing" en Telegram/Discord).
 2. **Enviar la versión de Prueba cerrada a revisión** (solo con visto bueno explícito).
 3. **Mantener la prueba ≥ 14 días con ≥ 12 testers** (requisito de cuentas personales nuevas).
-4. ✅ **Acceso a Producción solicitado** el 2026-09-06 (prueba cerrada activa desde 2026-08-18 con
-   0.1.3 → 0.1.4 → 0.1.5). Google responde por correo al propietario en ≤ 7 días.
+4. ✅ **Acceso a Producción concedido** (solicitado 2026-09-06, aprobado antes del 2026-09-14).
+   Pasos en Play Console: Prueba y lanzamiento → Producción → Países y regiones (Todo el mundo) →
+   Crear versión (añadir bundle desde la biblioteca o subir el nuevo) → notas de versión → Revisar → Enviar a revisión.
 5. **(TV)** Subir banner TV + capturas TV en la ficha cuando aparezca la sección Android TV.
 6. **Producción** → enviar a revisión → publicada. 🎉
 
