@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-06-23.
+Última actualización: 2026-09-14.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -46,6 +46,13 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   correo de Google (≤ 7 días). Si aprueban: Producción → nueva versión (promocionar 0.1.5 o subir 0.1.6) →
   países → enviar a revisión. Si rechazan: corregir el motivo del correo y reenviar.
 - Al abrir el proyecto en cualquier máquina, pedir a Claude que lea este archivo antes de tocar Play.
+
+## Estado a 2026-09-14 (máquina sin clave)
+- Han pasado los 7 días desde la solicitud de producción (2026-09-06): **falta comprobar la respuesta de Google**
+  (correo a contact@nezor.es y/o aviso en Play Console → Panel / Bandeja de entrada).
+- `origin/main` incluye 0.1.6 (`a2281da`) y la card del portafolio (`b0c021c`). Working tree limpio.
+- Sigue pendiente, en la máquina con la clave: firmar y subir 0.1.6 a Prueba cerrada, y guardar copia de la clave
+  fuera de ambas máquinas. Anotar aquí el resultado y hacer commit + push.
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
