@@ -48,9 +48,14 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
 - Al abrir el proyecto en cualquier máquina, pedir a Claude que lea este archivo antes de tocar Play.
 
 ## Estado a 2026-09-14 (máquina sin clave)
-- ✅ **Acceso a producción CONCEDIDO** (visto en el Panel de Play Console el 2026-09-14: "Tu aplicación tiene
-  acceso a producción en Google Play"). El canal Producción aparece como *Inactivo* hasta que se cree la
-  primera versión. También se pueden abrir pruebas abiertas.
+- ✅ **Acceso a producción CONCEDIDO** (visto en el Panel de Play Console el 2026-09-14). También se pueden
+  abrir pruebas abiertas.
+- ✅ **Primera versión de Producción ENVIADA A REVISIÓN el 2026-09-14**: bundle 6 (0.1.5) promocionado desde
+  Prueba cerrada Alpha, lanzamiento completo, 177 países/regiones (176 + resto del mundo), publicación
+  gestionada desactivada. Canal Producción: *Activo · En revisión*. Google avisa de hasta 7 días.
+  Cuando se apruebe se publicará sola en https://play.google.com/store/apps/details?id=com.footballxtream
+- Tras la aprobación: subir **0.1.6 firmada** (máquina con la clave) como actualización de Producción
+  (arregla el login con el mando en TV) y sustituir `{{PLAY_URL}}` en `docs/portfolio-card.md` y en la landing.
 - `origin/main` incluye 0.1.6 (`a2281da`) y la card del portafolio (`b0c021c`). Working tree limpio.
 - Sigue pendiente, en la máquina con la clave: firmar y subir 0.1.6 a Prueba cerrada, y guardar copia de la clave
   fuera de ambas máquinas. Anotar aquí el resultado y hacer commit + push.
@@ -66,7 +71,8 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
    Pasos en Play Console: Prueba y lanzamiento → Producción → Países y regiones (Todo el mundo) →
    Crear versión (añadir bundle desde la biblioteca o subir el nuevo) → notas de versión → Revisar → Enviar a revisión.
 5. **(TV)** Subir banner TV + capturas TV en la ficha cuando aparezca la sección Android TV.
-6. **Producción** → enviar a revisión → publicada. 🎉
+6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → ⏳ esperando aprobación → publicada. 🎉
+7. **Actualización 0.1.6** firmada a Producción en cuanto la 0.1.5 esté publicada.
 
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
