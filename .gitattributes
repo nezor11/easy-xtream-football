@@ -1,0 +1,11 @@
+# Normaliza finales de linea entre Linux y Windows.
+* text=auto
+gradlew text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+# Binarios
+*.png binary
+*.jpg binary
+*.webp binary
+*.jar binary
+*.jks binary
