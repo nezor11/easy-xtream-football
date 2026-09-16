@@ -72,6 +72,18 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   interna desde junio. No afecta al envío de producción. Desaparecerá al publicarse en producción una versión que
   cumpla (la 0.1.5). Opcional: retirar 0.1.3 de Prueba interna para dejarlo limpio; no es necesario.
 - **Si el 2026-09-21 sigue "En revisión"**, contactar con el soporte de Play Console desde *Ayuda*.
+- **Ficha: materiales de Android TV GUARDADOS pero NO ENVIADOS (2026-09-16, por navegador):**
+  - La ficha no tenía sección Android TV. En *Ajustes avanzados → Factores de forma* solo estaba Android XR; se
+    añadió **Android TV** (queda en configuración, **sin habilitar**: falta "Habilitar Android TV y aceptar la
+    política de reseñas"). Se quita con *Eliminar* en esa pantalla si no se quiere.
+  - En la ficha principal: **Banner de TV 1/1** (`tv-banner-1280x720.png`) y **capturas de TV 4/8** (las de la
+    biblioteca del 23 de junio, 01→04, 1920×1080). Guardado sin errores y verificado tras recargar.
+  - En *Resumen de publicación* figuran **2 cambios sin enviar**. Al pulsar "Enviar" la consola avisa: *"¿Quieres
+    reiniciar tu revisión? Tienes una revisión en curso desde el 14 de septiembre; se cancelará y se reiniciará"*.
+    **Cancelado: no enviar nada hasta que la 0.1.5 esté aprobada.** Los cambios quedan guardados.
+  - Actividad de envíos: solo el nº 6. No hay nº 7.
+  - **Plan:** tras la aprobación de 0.1.5 → subir **0.1.6 firmada** (arregla el login con el mando, que es justo lo
+    que prueba la revisión de TV) → habilitar Android TV y aceptar la política → enviar todo junto a revisión.
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
