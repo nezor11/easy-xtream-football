@@ -72,6 +72,10 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   interna desde junio. No afecta al envío de producción. Desaparecerá al publicarse en producción una versión que
   cumpla (la 0.1.5). Opcional: retirar 0.1.3 de Prueba interna para dejarlo limpio; no es necesario.
 - **Si el 2026-09-21 sigue "En revisión"**, contactar con el soporte de Play Console desde *Ayuda*.
+- **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
+  - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
+  - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
+    enlace en el footer; lint y build OK. Al mezclar en `main`, Vercel despliega solo.
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
