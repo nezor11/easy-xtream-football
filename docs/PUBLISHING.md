@@ -116,6 +116,17 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   Dos mejoras opcionales antes de la revisión de TV: (1) márgenes de overscan (Google recomienda 48 dp laterales /
   27 dp arriba-abajo; Canales, Perfiles, Alta de perfil y los overlays del reproductor usan 20 dp), (2) teclas
   multimedia del mando (Play/Pause, Stop, Canal +/-) sin gestionar en el reproductor.
+- **0.1.6 probada en el Chromecast con Google TV (2026-09-16, adb por red, IP 192.168.1.82):**
+  - ✅ Login con el mando: el teclado NO se abre al enfocar un campo, solo al pulsar OK; ya no se cuela ninguna
+    letra; Atrás cierra el teclado conservando el texto; arriba/abajo cambian de campo sin abrir el teclado.
+  - ✅ Login real con cuenta Xtream: 712 canales cargados. El Chromecast queda con 0.1.6 (build debug de esta
+    máquina) y el perfil restaurado.
+  - ✅ Reproductor: reproduce, menú OK y overlay de info correctos. Foco inicial visible en cada pantalla.
+  - ⚠️ **Bug de UX a corregir antes de la revisión de TV:** al fallar el login (p. ej. DNS) el mensaje de error se
+    muestra encima del botón, pero el foco salta al campo URL y la pantalla sube, de modo que **el error queda
+    fuera de la vista**. Causa probable: el botón se deshabilita mientras conecta y pierde el foco. Además el
+    error se pinta en verde (color primario) en vez de en un color de error.
+  - ℹ️ Overscan confirmado: en Canales el título queda a 20 dp del borde izquierdo (40 px en 1080p).
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
