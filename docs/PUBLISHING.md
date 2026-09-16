@@ -127,6 +127,11 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
     fuera de la vista**. Causa probable: el botón se deshabilita mientras conecta y pierde el foco. Además el
     error se pinta en verde (color primario) en vez de en un color de error.
   - ℹ️ Overscan confirmado: en Canales el título queda a 20 dp del borde izquierdo (40 px en 1080p).
+  - ✅ **Corregido en `main` el 2026-09-17** (entra en 0.1.6, aún sin firmar): error de login visible (el botón
+    ya no pierde el foco) y en color de error; área segura de overscan en TV (`Modifier.tvSafeArea()`, 48 dp
+    laterales) en Canales, Perfiles, Alta de perfil y overlays del reproductor; teclas multimedia del mando en
+    el reproductor (Play/Pause con indicador, Stop sale, Canal +/-). Compila y pasa los 59 tests.
+    **Pendiente: probarlo en el Chromecast** (no estaba encendido al terminar).
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
