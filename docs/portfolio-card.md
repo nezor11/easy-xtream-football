@@ -2,12 +2,8 @@
 
 Material para copiar en Sanity (slider "Portfolio"). Sigue la misma estructura que la card
 **Easy Xtream Football Web** (`slide-easy-xtream-football-web`), que ya describe la landing;
-esta describe la **app Android**. Cuando la app esté publicada, sustituir el marcador
-`{{PLAY_URL}}` por la URL definitiva de Play Store, que será:
-
-`https://play.google.com/store/apps/details?id=com.footballxtream`
-
-(el paquete `com.footballxtream` es permanente, así que la URL no cambiará).
+esta describe la **app Android**. La URL de Play Store es definitiva (el paquete `com.footballxtream`
+es permanente): https://play.google.com/store/apps/details?id=com.footballxtream
 
 ---
 
@@ -24,7 +20,7 @@ esta describe la **app Android**. Cuando la app esté publicada, sustituir el ma
 | `type` | `fresh` |
 | `workDate` | `2026-09-01T12:00:00.000Z` (el primer commit es del 2026-06-15) |
 | `backgroundColor` | `#0A0E12` (el mismo que la card de la landing) |
-| `infoUrl` | `https://github.com/nezor11/easy-xtream-football` hasta publicar → luego `{{PLAY_URL}}` |
+| `infoUrl` | `https://play.google.com/store/apps/details?id=com.footballxtream` |
 | `icons` | `GitHubIcon`, `GitBranchIcon`. No existen iconos de Kotlin, Android ni Jetpack Compose en la web: conviene añadir `KotlinIcon`, `AndroidIcon` y `JetpackComposeIcon` al set y usarlos aquí |
 | `slideImage` (300×350) | recorte vertical de `docs/store-assets/feature-1024x500.png` o del icono `icon-512.png` sobre fondo `#0A0E12` |
 | `images` (1440×900) | recortes de `docs/store-assets/screenshots/01-channels.png` (canales), `02-profiles.png` (perfiles) y `04-add-profile.png` (alta de perfil) |
@@ -45,7 +41,7 @@ Written in **Kotlin with Jetpack Compose for TV** (MVVM, Room and DataStore for 
 
 Localised in eight languages following the device language (English, Spanish, Catalan, Basque, Galician, Portuguese, French and Italian), shipped in two flavours (a *full* build with the FFmpeg decoders and a 2.5 MB *lite* one) split per ABI, released under GPL-3.0 and distributed through Google Play. It has a companion [landing page](https://easy-xtream-football-web.vercel.app) that shares the same vector emblem as the launcher icon.
 
-Available on [Google Play]({{PLAY_URL}}).
+Available on [Google Play](https://play.google.com/store/apps/details?id=com.footballxtream).
 
 > La última línea se añade solo cuando la app esté publicada; hasta entonces se omite.
 
@@ -59,6 +55,6 @@ Escrita en **Kotlin con Jetpack Compose for TV** (MVVM, Room y DataStore para pe
 
 Traducida a ocho idiomas siguiendo el idioma del dispositivo (inglés, español, catalán, euskera, gallego, portugués, francés e italiano), publicada en dos variantes (una *full* con los decodificadores de FFmpeg y una *lite* de 2,5 MB) separadas por ABI, bajo licencia GPL-3.0 y distribuida a través de Google Play. Tiene una [landing](https://easy-xtream-football-web.vercel.app) propia que comparte el mismo emblema vectorial que el icono de la app.
 
-Disponible en [Google Play]({{PLAY_URL}}).
+Disponible en [Google Play](https://play.google.com/store/apps/details?id=com.footballxtream).
 
 > Igual que en inglés: esta última línea se añade cuando la app esté publicada.
