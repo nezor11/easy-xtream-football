@@ -84,6 +84,9 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   - Actividad de envíos: solo el nº 6. No hay nº 7.
   - **Plan:** tras la aprobación de 0.1.5 → subir **0.1.6 firmada** (arregla el login con el mando, que es justo lo
     que prueba la revisión de TV) → habilitar Android TV y aceptar la política → enviar todo junto a revisión.
+    Al habilitar Android TV la consola pregunta cómo gestionar los lanzamientos de TV: elegir **"usar el mismo
+    canal y artefactos que la app móvil"** (un solo bundle sirve para móvil y TV; mismos testers y países), no
+    canales separados.
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
