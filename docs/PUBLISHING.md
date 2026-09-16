@@ -87,6 +87,30 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
     Al habilitar Android TV la consola pregunta cómo gestionar los lanzamientos de TV: elegir **"usar el mismo
     canal y artefactos que la app móvil"** (un solo bundle sirve para móvil y TV; mismos testers y países), no
     canales separados.
+- **0.1.6 verificada en esta máquina (2026-09-16):** `gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease`
+  → BUILD SUCCESSFUL, 59 tests unitarios OK. El `.aab` sale con `CN=Android Debug` (aquí no hay clave), como se
+  esperaba. En la máquina con la clave solo falta firmar y subir.
+- **Notas de versión de 0.1.6** (copiar en Play al crear la versión; máx. 500 caracteres por idioma):
+  - es-ES:
+    ```
+    <es-ES>
+    • Android TV: el teclado ya no se abre al enfocar un campo con el mando; solo al pulsar OK. Se acabó el login que fallaba sin motivo.
+    • Errores de conexión Xtream claros (credenciales, DNS, tiempo de espera, TLS, HTTP).
+    • Usuario y contraseña sin autocorrección ni sugerencias del teclado.
+    • En TV la contraseña se muestra por defecto, con opción de ocultarla.
+    • La URL del servidor se limpia sola (query y /player_api.php).
+    </es-ES>
+    ```
+  - en-US:
+    ```
+    <en-US>
+    • Android TV: the keyboard no longer opens when focusing a field with the remote; only on OK. No more logins failing for no reason.
+    • Clear Xtream connection errors (credentials, DNS, timeout, TLS, HTTP).
+    • Username and password without keyboard autocorrect or suggestions.
+    • On TV the password is shown by default, with an option to hide it.
+    • The server URL is cleaned up automatically (query and /player_api.php).
+    </en-US>
+    ```
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
