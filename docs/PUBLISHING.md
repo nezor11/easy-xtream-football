@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-14.
+Última actualización: 2026-09-16.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -59,6 +59,19 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
 - `origin/main` incluye 0.1.6 (`a2281da`) y la card del portafolio (`b0c021c`). Working tree limpio.
 - Sigue pendiente, en la máquina con la clave: firmar y subir 0.1.6 a Prueba cerrada, y guardar copia de la clave
   fuera de ambas máquinas. Anotar aquí el resultado y hacer commit + push.
+
+## Revisión del estado a 2026-09-16 (máquina sin clave)
+- ⏳ **0.1.5 sigue "En revisión"**: en *Actividad de envíos* figura el envío nº 6 (Producción, bundle 6 / 0.1.5)
+  enviado el 2026-09-14 a las 20:44. Menos de dos días; Google avisa de hasta 7 días y el primer lanzamiento en
+  producción de una cuenta personal suele tardar más que las actualizaciones. **Nada que hacer mientras dure.**
+- Comprobado y correcto: publicación gestionada desactivada (se publica sola en los 177 países al aprobarse),
+  *Contenido de la aplicación* al día sin declaraciones pendientes, centro de notificaciones vacío (ni rechazo ni
+  petición de información), bundle 6 con **SDK objetivo 36** (cumple el requisito de API vigente).
+- Aviso en *Estado según las políticas* ("la app debe estar orientada a Android 16 / API 36; las actualizaciones
+  con este problema se rechazarán"): afecta **solo al bundle 4 (0.1.3, SDK objetivo 35)**, aún activo en Prueba
+  interna desde junio. No afecta al envío de producción. Desaparecerá al publicarse en producción una versión que
+  cumpla (la 0.1.5). Opcional: retirar 0.1.3 de Prueba interna para dejarlo limpio; no es necesario.
+- **Si el 2026-09-21 sigue "En revisión"**, contactar con el soporte de Play Console desde *Ayuda*.
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
