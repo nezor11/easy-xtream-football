@@ -43,6 +43,7 @@ import com.footballxtream.R
 import com.footballxtream.data.local.ProfileType
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.TvTextField
+import com.footballxtream.ui.components.tvSafeArea
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -62,6 +63,7 @@ fun AddProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .tvSafeArea()
             .imePadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp, vertical = 24.dp),
@@ -181,7 +183,7 @@ fun AddProfileScreen(
             if (state.error != null) {
                 Text(
                     text = state.error.orEmpty(),
-                    color = colors.primary,
+                    color = colors.error,
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
@@ -232,6 +234,9 @@ private fun ModeChip(label: String, selected: Boolean, onClick: () -> Unit) {
  * Full-width primary action. Uses a plain [clickable] (not the tv.material3 Button) so it responds to
  * BOTH touch (phone) and the D-pad "select" (TV) — the tv.material3 Button only reacted to the remote.
  * Shows a solid brand fill when enabled (so it doesn't look disabled on touch) and a focus ring on TV.
+ * The clickable stays enabled while "Connecting…" (the click is just ignored): a disabled clickable is
+ * not focusable, so the D-pad focus would jump back to the first field and the scroll would follow it,
+ * leaving the error message shown above the button out of view.
  */
 @Composable
 private fun PrimaryButton(label: String, enabled: Boolean, onClick: () -> Unit) {
@@ -245,7 +250,7 @@ private fun PrimaryButton(label: String, enabled: Boolean, onClick: () -> Unit) 
             .background(if (enabled) colors.primary else colors.surfaceVariant)
             .then(if (focused && enabled) Modifier.border(3.dp, colors.onPrimary, shape) else Modifier)
             .onFocusChanged { focused = it.isFocused }
-            .clickable(enabled = enabled) { onClick() }
+            .clickable { if (enabled) onClick() }
             .padding(vertical = 16.dp),
         contentAlignment = Alignment.Center,
     ) {

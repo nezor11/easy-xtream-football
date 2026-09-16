@@ -63,6 +63,7 @@ import com.footballxtream.ui.components.LanguageButton
 import com.footballxtream.ui.components.LanguageDialog
 import com.footballxtream.ui.components.SettingsButton
 import com.footballxtream.ui.components.findActivity
+import com.footballxtream.ui.components.tvSafeArea
 
 @Composable
 fun ProfilesScreen(
@@ -91,7 +92,7 @@ fun ProfilesScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize().tvSafeArea(), contentAlignment = Alignment.Center) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

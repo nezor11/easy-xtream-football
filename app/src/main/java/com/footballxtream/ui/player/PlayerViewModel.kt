@@ -60,6 +60,8 @@ data class PlayerUiState(
     val errorMessage: String? = null,
     /** Transient toast-like message (e.g. "only one quality"), auto-cleared after a moment. */
     val notice: String? = null,
+    /** Playback deliberately paused with the remote's Play/Pause key (live: resumes at the live edge). */
+    val paused: Boolean = false,
     /** Whether to show the on-screen controls legend (only the first few times). */
     val showControlsHint: Boolean = false,
     /** Whether the channel currently playing is marked as a favorite. */
@@ -137,6 +139,8 @@ class PlayerViewModel(
     /** False while the app is backgrounded: nothing may start playback or fail over then. */
     @Volatile
     private var foreground = true
+    /** Set by the Play/Pause media key; cleared on every zap and when coming back to the foreground. */
+    private var userPaused = false
 
     /** Bytes seen at the previous stats tick, to derive the instantaneous download rate. */
     private var lastBytesTransferred = 0L
@@ -314,6 +318,29 @@ class PlayerViewModel(
         }
     }
 
+    // --- Play/Pause from the remote's media keys ---
+
+    fun togglePlayPause() = setPaused(!userPaused)
+
+    /**
+     * A live stream can't seek, so pausing just stops playback; resuming reloads from the live edge
+     * (ExoPlayer rejoins the HLS/TS stream). The watchdogs are parked while paused, since a stalled
+     * stream is expected then and must not trigger a re-buffer step or an auto-skip.
+     */
+    fun setPaused(paused: Boolean) {
+        if (!canPlay || paused == userPaused) return
+        userPaused = paused
+        if (paused) {
+            failoverJob?.cancel()
+            rebufferJob?.cancel()
+            player.playWhenReady = false
+        } else {
+            player.playWhenReady = true
+            if (!hasStartedOnce) armStartWatchdog()
+        }
+        _ui.update { it.copy(paused = paused) }
+    }
+
     // --- Lifecycle: stop the audio (and release system audio focus) when backgrounded ---
 
     /** App left the foreground (Home, another app): pause so audio stops and focus is released. */
@@ -329,6 +356,8 @@ class PlayerViewModel(
     /** App returned to the foreground: resume live playback. */
     fun onForeground() {
         foreground = true
+        userPaused = false
+        _ui.update { it.copy(paused = false) }
         if (canPlay) {
             player.playWhenReady = true
             if (!hasStartedOnce) armStartWatchdog()
@@ -621,6 +650,11 @@ class PlayerViewModel(
 
     private fun playUri(variant: ChannelVariant) {
         applyResolutionCap()
+        // A zap always plays: a Play/Pause pause never carries over to the next channel.
+        if (userPaused) {
+            userPaused = false
+            _ui.update { it.copy(paused = false) }
+        }
         rebufferJob?.cancel() // a fresh load is back under the start watchdog until it reaches READY
         player.setMediaItem(MediaItem.fromUri(variant.channel.streamUrl))
         player.prepare()

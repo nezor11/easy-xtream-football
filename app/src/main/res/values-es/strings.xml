@@ -34,6 +34,7 @@
     <string name="menu_nav_hint">▲▼ elegir · ◀▶ sección · OK confirmar</string>
     <string name="controls_legend">OK: menú  ·  OK largo: ★  ·  ▲▼: calidad  ·  ◀▶: canal (×2 carpeta)</string>
     <string name="added_to_favorites">★ Añadido a favoritos</string>
+    <string name="player_paused">⏸ Pausado</string>
     <string name="removed_from_favorites">Quitado de favoritos</string>
     <string name="epg_now">Ahora: %1$s</string>
     <string name="epg_next_suffix">   ·   Luego: %1$s</string>

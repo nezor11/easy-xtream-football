@@ -97,6 +97,7 @@ import com.footballxtream.model.ChannelGroup
 import com.footballxtream.model.Quality
 import com.footballxtream.model.QualityMode
 import com.footballxtream.ui.components.TvTextField
+import com.footballxtream.ui.components.tvSafeArea
 
 @Composable
 fun ChannelsScreen(
@@ -215,7 +216,7 @@ private fun FolderGrid(
     }
     BackHandler(enabled = reorder) { reorderGroup = null }
 
-  Box(modifier = Modifier.fillMaxSize()) {
+  Box(modifier = Modifier.fillMaxSize().tvSafeArea()) {
     Column(modifier = Modifier.fillMaxSize().padding(top = 28.dp)) {
         // Filters (quality chips, search, reload) are tucked away and only shown on demand, to keep
         // the header clean and give the channels more room.

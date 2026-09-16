@@ -32,6 +32,7 @@
     <string name="menu_nav_hint">▲▼ elixir · ◀▶ sección · OK confirmar</string>
     <string name="controls_legend">OK: menú  ·  OK longo: ★  ·  ▲▼: calidade  ·  ◀▶: canle (×2 cartafol)</string>
     <string name="added_to_favorites">★ Engadido a favoritos</string>
+    <string name="player_paused">⏸ En pausa</string>
     <string name="removed_from_favorites">Quitado de favoritos</string>
     <string name="epg_now">Agora: %1$s</string>
     <string name="epg_next_suffix">   ·   Despois: %1$s</string>

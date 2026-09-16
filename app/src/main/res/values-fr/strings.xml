@@ -32,6 +32,7 @@
     <string name="menu_nav_hint">▲▼ choisir · ◀▶ section · OK confirmer</string>
     <string name="controls_legend">OK : menu  ·  OK long : ★  ·  ▲▼ : qualité  ·  ◀▶ : chaîne (×2 dossier)</string>
     <string name="added_to_favorites">★ Ajouté aux favoris</string>
+    <string name="player_paused">⏸ En pause</string>
     <string name="removed_from_favorites">Retiré des favoris</string>
     <string name="epg_now">Maintenant : %1$s</string>
     <string name="epg_next_suffix">   ·   Ensuite : %1$s</string>

@@ -32,6 +32,7 @@
     <string name="menu_nav_hint">▲▼ aukeratu · ◀▶ atala · OK berretsi</string>
     <string name="controls_legend">OK: menua  ·  OK luze: ★  ·  ▲▼: kalitatea  ·  ◀▶: kanala (×2 karpeta)</string>
     <string name="added_to_favorites">★ Gogokoetara gehituta</string>
+    <string name="player_paused">⏸ Pausatuta</string>
     <string name="removed_from_favorites">Gogokoetatik kenduta</string>
     <string name="epg_now">Orain: %1$s</string>
     <string name="epg_next_suffix">   ·   Gero: %1$s</string>

@@ -17,6 +17,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,6 +57,7 @@ import androidx.media3.ui.PlayerView
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.R
+import com.footballxtream.ui.components.isTv
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -95,6 +97,9 @@ fun PlayerScreen(
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
+    // Overlays sit 20 dp from the edges on a phone; on TV they stay inside the overscan-safe area.
+    val overlayPadding = if (isTv()) PaddingValues(horizontal = 48.dp, vertical = 28.dp) else PaddingValues(20.dp)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -104,6 +109,19 @@ fun PlayerScreen(
             .onKeyEvent { event ->
                 // Any key press slides the Ko-fi "bug" away; the key still does its normal job.
                 if (ui.showCoffeeBug && event.type == KeyEventType.KeyDown) viewModel.dismissCoffeeBug()
+                // Media keys of TV remotes work whether or not the OK menu is open. Stop leaves the
+                // player; the channel keys zap only while the menu is closed (▲▼ drive the menu there).
+                if (event.type == KeyEventType.KeyDown) {
+                    when (event.key) {
+                        Key.MediaPlayPause -> { viewModel.togglePlayPause(); return@onKeyEvent true }
+                        Key.MediaPlay -> { viewModel.setPaused(false); return@onKeyEvent true }
+                        Key.MediaPause -> { viewModel.setPaused(true); return@onKeyEvent true }
+                        Key.MediaStop -> { onBack(); return@onKeyEvent true }
+                        Key.ChannelUp -> if (!ui.menuOpen) { viewModel.nextChannel(); return@onKeyEvent true }
+                        Key.ChannelDown -> if (!ui.menuOpen) { viewModel.previousChannel(); return@onKeyEvent true }
+                        else -> Unit
+                    }
+                }
                 if (ui.menuOpen) {
                     if (event.type != KeyEventType.KeyDown) return@onKeyEvent false
                     when (event.key) {
@@ -180,7 +198,7 @@ fun PlayerScreen(
         )
 
         Column(
-            modifier = Modifier.align(Alignment.BottomStart).padding(20.dp),
+            modifier = Modifier.align(Alignment.BottomStart).padding(overlayPadding),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             // The channel info (stats + now/next) can be hidden globally from the OK menu for a clean
@@ -222,6 +240,19 @@ fun PlayerScreen(
             )
         }
 
+        if (ui.paused) {
+            Text(
+                text = stringResource(R.string.player_paused),
+                style = MaterialTheme.typography.titleMedium,
+                color = Color(0xFFE6EAEE),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xE60A0E12))
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+        }
+
         ui.notice?.let { msg ->
             Text(
                 text = msg,
@@ -242,7 +273,7 @@ fun PlayerScreen(
                 text = stringResource(R.string.menu_nav_hint),
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0x99FFFFFF),
-                modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
+                modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
             )
         }
         // Controls legend: only the first few times — fades in, stays a few seconds, fades out.
@@ -250,7 +281,7 @@ fun PlayerScreen(
             visible = ui.showControlsHint && !ui.menuOpen,
             enter = fadeIn() + slideInVertically { it / 2 },
             exit = fadeOut(),
-            modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
+            modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
         ) {
             Text(
                 text = stringResource(R.string.controls_legend),
@@ -264,7 +295,7 @@ fun PlayerScreen(
             visible = (ui.showCoffeeBug && !ui.menuOpen) || (ui.menuOpen && ui.menuCoffee),
             enter = slideInVertically(animationSpec = tween(450)) { it } + fadeIn(tween(450)),
             exit = slideOutVertically(animationSpec = tween(350)) { it } + fadeOut(tween(350)),
-            modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp),
+            modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
         ) {
             CoffeeCard()
         }

@@ -32,6 +32,7 @@
     <string name="menu_nav_hint">▲▼ triar · ◀▶ secció · OK confirmar</string>
     <string name="controls_legend">OK: menú  ·  OK llarg: ★  ·  ▲▼: qualitat  ·  ◀▶: canal (×2 carpeta)</string>
     <string name="added_to_favorites">★ Afegit a preferits</string>
+    <string name="player_paused">⏸ En pausa</string>
     <string name="removed_from_favorites">Tret de preferits</string>
     <string name="epg_now">Ara: %1$s</string>
     <string name="epg_next_suffix">   ·   Després: %1$s</string>
