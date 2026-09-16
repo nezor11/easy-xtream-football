@@ -111,6 +111,11 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
     • The server URL is cleaned up automatically (query and /player_api.php).
     </en-US>
     ```
+- **Repaso de calidad Android TV sobre el código (2026-09-16):** manifest, banner (640×360 nodpi), foco inicial en
+  cada pantalla, indicador de foco, Back, pausa en segundo plano, audio focus y enlaces externos protegidos: OK.
+  Dos mejoras opcionales antes de la revisión de TV: (1) márgenes de overscan (Google recomienda 48 dp laterales /
+  27 dp arriba-abajo; Canales, Perfiles, Alta de perfil y los overlays del reproductor usan 20 dp), (2) teclas
+  multimedia del mando (Play/Pause, Stop, Canal +/-) sin gestionar en el reproductor.
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
