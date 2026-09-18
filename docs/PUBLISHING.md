@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-16.
+Última actualización: 2026-09-18.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -136,6 +136,14 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
     enlace en el footer; lint y build OK. Al mezclar en `main`, Vercel despliega solo.
+
+## Revisión del estado a 2026-09-18
+- ⏳ **0.1.5 sigue en revisión** (Resumen de publicación → *Cambios en revisión*: Producción 6 (0.1.5), lanzamiento
+  completo, 176 países + resto del mundo). Sin rechazo ni petición de información.
+- *Cambios sin enviar*: capturas de TV, banner de TV y factor de forma Android TV. **No enviar** hasta la aprobación
+  (reiniciaría la revisión).
+- Prueba abierta vacía (no se creó ninguna versión; no hace falta, el acceso a producción ya está concedido).
+- Si el 2026-09-21 sigue en revisión → soporte de Play Console.
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
