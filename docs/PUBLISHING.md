@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-18.
+Última actualización: 2026-09-20.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -144,6 +144,14 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   (reiniciaría la revisión).
 - Prueba abierta vacía (no se creó ninguna versión; no hace falta, el acceso a producción ya está concedido).
 - Si el 2026-09-21 sigue en revisión → soporte de Play Console.
+
+## Revisión del estado a 2026-09-20
+- ⏳ **Sin cambios**: 0.1.5 sigue en revisión (Producción 6 (0.1.5), lanzamiento completo, 176 países + resto del
+  mundo). Sin rechazo ni petición de información. Van 6 días desde el envío (2026-09-14).
+- *Cambios sin enviar* siguen sin enviar (capturas de TV, banner de TV, factor de forma Android TV): correcto,
+  enviarlos ahora reiniciaría la revisión.
+- Última publicación efectiva: 2026-09-07. Publicación gestionada desactivada.
+- ➡️ **Mañana 2026-09-21: si sigue en revisión, abrir incidencia en soporte de Play Console.**
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
