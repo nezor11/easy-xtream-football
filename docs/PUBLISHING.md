@@ -170,6 +170,18 @@ Ojo: este dispositivo es **armeabi-v7a**, la APK arm64 da `INSTALL_FAILED_NO_MAT
   en cada pantalla, sin crashes en logcat.
 - **Conclusión: 0.1.6 está lista para firmar y subir** en cuanto se apruebe la 0.1.5.
 
+### Prueba de esfuerzo con lista M3U grande (Chromecast, 2026-09-20)
+Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.033 entradas**, 82% VOD/series).
+- ✅ **La app aguanta**: sin crash, sin ANR y sin OutOfMemory en logcat.
+- ✅ **El filtro de deporte funciona también en M3U**: de 51.033 entradas deja **715 canales** de directo,
+  prácticamente los mismos 712 que da la API Xtream.
+- 📈 **Memoria**: pico de ~235 MB PSS durante el parseo (a los ~28 s), estabilizado en ~147 MB. Tarda ~45 s
+  en total en un Chromecast con Google TV.
+- ⚠️ Cosmético: con M3U faltan bastantes logos (el `tvg-logo` no siempre está), y los favoritos guardados con
+  el perfil Xtream no se mapean del todo (39 → 34) porque los identificadores de canal difieren entre ambos.
+- ℹ️ Del proveedor: de los 3 hosts M3U solo responde uno; otro ya es un **dominio aparcado con publicidad**.
+  Igual que en Xtream, los hosts son espejos de una sola cuenta con **1 conexión simultánea**.
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
