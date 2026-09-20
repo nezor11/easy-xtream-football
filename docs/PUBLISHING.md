@@ -131,7 +131,7 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
     ya no pierde el foco) y en color de error; área segura de overscan en TV (`Modifier.tvSafeArea()`, 48 dp
     laterales) en Canales, Perfiles, Alta de perfil y overlays del reproductor; teclas multimedia del mando en
     el reproductor (Play/Pause con indicador, Stop sale, Canal +/-). Compila y pasa los 59 tests.
-    **Pendiente: probarlo en el Chromecast** (no estaba encendido al terminar).
+    ✅ **Probado en el Chromecast el 2026-09-20** (ver más abajo).
 - **Ramas preparadas (NO mezclar hasta que la app esté publicada)**, hechas el 2026-09-16:
   - `feature/play-url` (este repo): `docs/portfolio-card.md` con la URL definitiva de Play en vez de `{{PLAY_URL}}`.
   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero y
@@ -152,6 +152,23 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
   enviarlos ahora reiniciaría la revisión.
 - Última publicación efectiva: 2026-09-07. Publicación gestionada desactivada.
 - ➡️ **Mañana 2026-09-21: si sigue en revisión, abrir incidencia en soporte de Play Console.**
+
+### Correcciones de TV verificadas en el Chromecast (2026-09-20)
+Chromecast con Google TV (`sabrina`, 1920x1080, densidad 320 → 1 dp = 2 px), adb por *depuración
+inalámbrica* (`adb pair` con código; el puerto cambia en cada reinicio del dispositivo).
+APK debug `full/armeabi-v7a` de 0.1.6 **con** el commit `59632a4` (la instalada era del 16, anterior al fix).
+Ojo: este dispositivo es **armeabi-v7a**, la APK arm64 da `INSTALL_FAILED_NO_MATCHING_ABIS`.
+- ✅ **Área segura de overscan**: en Canales el título arranca en x = 96 px = **48 dp** (antes 40 px / 20 dp).
+  Perfiles y los overlays del reproductor también dentro del área segura.
+- ✅ **Error de login visible y en color de error**: con una URL inexistente sale
+  *"No se llega al servidor (DNS). Revisa la URL o prueba otro host de tu proveedor."* en **rojo**, a la vista,
+  y **el botón conserva el foco** (la pantalla ya no se desplaza dejando el error fuera de cuadro).
+  Queda cerrado el bug de UX del 2026-09-16.
+- ✅ **Teclas multimedia del mando**: Play/Pause pausa y reanuda con indicador "Pausado"; Canal + pasa de
+  1/39 a 2/39 y Canal − vuelve a 1/39, reproduciendo en ambos; Stop sale del reproductor a Canales.
+- ✅ Sin regresiones: perfil conservado, 712 canales, teclado que solo se abre con OK, foco inicial visible
+  en cada pantalla, sin crashes en logcat.
+- **Conclusión: 0.1.6 está lista para firmar y subir** en cuanto se apruebe la 0.1.5.
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
