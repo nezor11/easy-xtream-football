@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-20.
+Última actualización: 2026-09-21.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -182,6 +182,34 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 - ℹ️ Del proveedor: de los 3 hosts M3U solo responde uno; otro ya es un **dominio aparcado con publicidad**.
   Igual que en Xtream, los hosts son espejos de una sola cuenta con **1 conexión simultánea**.
 
+## 🎉 PUBLICADA EN PRODUCCIÓN — 2026-09-21
+- ✅ **Envío nº 6 (Producción, bundle 6 / 0.1.5) APROBADO Y PUBLICADO el 2026-09-21 a las 9:50** (enviado el
+  2026-09-14 a las 20:44 → **7 días de revisión**). Estado en *Resumen de publicación*: **Publicada**,
+  lanzamiento completo, 176 países/regiones + resto del mundo.
+- ✅ **Ficha viva y comprobada** (HTTP 200, muestra "Easy Xtream Football" y la versión **0.1.5**):
+  https://play.google.com/store/apps/details?id=com.footballxtream
+- ⚠️ En *Producción* aparece el botón **"Iniciar lanzamiento completo"** y **3 cambios sin enviar**
+  (capturas de TV, banner de TV y el factor de forma Android TV guardados el 2026-09-16 + los países).
+  Ya **no hay revisión en curso**, así que enviarlos ya no cancela nada. Ver el plan de abajo.
+- ❌ Ya **no** hace falta abrir incidencia en el soporte de Play Console.
+
+### Siguientes pasos (en este orden)
+1. **En la máquina con la clave de subida** (`keystore.properties` + `keystore/easy-xtream-release.jks`;
+   esta máquina NO la tiene): `git pull` → `gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` →
+   comprobar que el `.aab` **no** va firmado con `CN=Android Debug` → crear versión de **Producción** con el
+   bundle 7 (0.1.6) y las notas de versión de más abajo.
+2. **Habilitar Android TV** en *Ficha → Ajustes avanzados → Factores de forma* y aceptar la política de
+   reseñas. Cuando pregunte cómo gestionar los lanzamientos de TV, elegir **"usar el mismo canal y artefactos
+   que la app móvil"** (un solo bundle para móvil y TV), no canales separados.
+3. **Enviar todo junto a revisión**: 0.1.6 + banner de TV + capturas de TV + factor de forma Android TV.
+   La 0.1.6 arregla justo lo que mira la revisión de TV (login con el mando, overscan, teclas multimedia).
+4. **Mezclar las ramas preparadas**, que ya se pueden tocar porque la app está publicada:
+   - `feature/play-url` (este repo): la URL de Play en `docs/portfolio-card.md`.
+   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero
+     y enlace en el footer. Al mezclar en `main`, Vercel despliega solo.
+5. Opcional: retirar el bundle 4 (0.1.3, SDK objetivo 35) de **Prueba interna** para que desaparezca el aviso
+   de *Estado según las políticas* sobre la API 36.
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
@@ -193,8 +221,9 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
    Pasos en Play Console: Prueba y lanzamiento → Producción → Países y regiones (Todo el mundo) →
    Crear versión (añadir bundle desde la biblioteca o subir el nuevo) → notas de versión → Revisar → Enviar a revisión.
 5. **(TV)** Subir banner TV + capturas TV en la ficha cuando aparezca la sección Android TV.
-6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → ⏳ esperando aprobación → publicada. 🎉
-7. **Actualización 0.1.6** firmada a Producción en cuanto la 0.1.5 esté publicada.
+6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → **PUBLICADA el 2026-09-21**. 🎉
+7. ⏳ **Actualización 0.1.6** firmada a Producción, junto con el factor de forma y los materiales de
+   Android TV (solo se puede hacer en la máquina con la clave de subida).
 
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
