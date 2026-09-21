@@ -188,9 +188,19 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   lanzamiento completo, 176 países/regiones + resto del mundo.
 - ✅ **Ficha viva y comprobada** (HTTP 200, muestra "Easy Xtream Football" y la versión **0.1.5**):
   https://play.google.com/store/apps/details?id=com.footballxtream
-- ⚠️ En *Producción* aparece el botón **"Iniciar lanzamiento completo"** y **3 cambios sin enviar**
-  (capturas de TV, banner de TV y el factor de forma Android TV guardados el 2026-09-16 + los países).
-  Ya **no hay revisión en curso**, así que enviarlos ya no cancela nada. Ver el plan de abajo.
+- ✅ **Lanzamiento completo al 100%, comprobado en la consola el 2026-09-21** (*Producción → Versiones*):
+  la versión 6 (0.1.5) figura como **"Disponible en Google Play"**, 1 código de versión, publicada el
+  21 sept a las 9:50, **177 países** y **22.215 dispositivos compatibles**. **No hay porcentaje de
+  despliegue por fases**: el "Iniciar lanzamiento completo" que se ve en el resumen es la *descripción de
+  uno de los 3 cambios que se enviaron* en el envío nº 6, no un botón pendiente de pulsar. Primeras
+  **2 descargas**.
+- ⏳ **Quedan 3 cambios sin enviar** (los materiales de Android TV guardados el 2026-09-16). La consola ya
+  dice *"Tus cambios ya se pueden enviar a revisión"*, sin el aviso de reiniciar la revisión: al no haber
+  revisión en curso, enviarlos ya no cancela nada. Aun así, **esperar y enviarlos junto con la 0.1.6**
+  (ver el plan de abajo), para que la revisión de TV vea ya los arreglos del mando.
+- ℹ️ **Acceso a la consola desde la máquina sin clave:** en el Chrome de esta máquina la cuenta `u/0` es
+  `martinezortiz@gmail.com` y la consola redirige a *crear cuenta de desarrollador*. La cuenta de
+  desarrollador (`contact@nezor.es`) es **`u/1`**: usar URLs con `/console/u/1/...`.
 - ❌ Ya **no** hace falta abrir incidencia en el soporte de Play Console.
 - ✉️ **IARC Live Rating Notice** recibido el 2026-09-21 a las 9:51 (un minuto después de publicarse): la
   clasificación por edades generada por el cuestionario ya está activa. **No requiere ninguna acción.**
