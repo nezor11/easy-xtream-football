@@ -43,8 +43,6 @@ Localised in eight languages following the device language (English, Spanish, Ca
 
 Available on [Google Play](https://play.google.com/store/apps/details?id=com.footballxtream).
 
-> La última línea se añade solo cuando la app esté publicada; hasta entonces se omite.
-
 ---
 
 ## slideDesc — Español
@@ -56,5 +54,3 @@ Escrita en **Kotlin con Jetpack Compose for TV** (MVVM, Room y DataStore para pe
 Traducida a ocho idiomas siguiendo el idioma del dispositivo (inglés, español, catalán, euskera, gallego, portugués, francés e italiano), publicada en dos variantes (una *full* con los decodificadores de FFmpeg y una *lite* de 2,5 MB) separadas por ABI, bajo licencia GPL-3.0 y distribuida a través de Google Play. Tiene una [landing](https://easy-xtream-football-web.vercel.app) propia que comparte el mismo emblema vectorial que el icono de la app.
 
 Disponible en [Google Play](https://play.google.com/store/apps/details?id=com.footballxtream).
-
-> Igual que en inglés: esta última línea se añade cuando la app esté publicada.
