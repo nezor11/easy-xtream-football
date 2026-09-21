@@ -192,6 +192,15 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   (capturas de TV, banner de TV y el factor de forma Android TV guardados el 2026-09-16 + los países).
   Ya **no hay revisión en curso**, así que enviarlos ya no cancela nada. Ver el plan de abajo.
 - ❌ Ya **no** hace falta abrir incidencia en el soporte de Play Console.
+- ✉️ **IARC Live Rating Notice** recibido el 2026-09-21 a las 9:51 (un minuto después de publicarse): la
+  clasificación por edades generada por el cuestionario ya está activa. **No requiere ninguna acción.**
+  - El **Global Rating ID** está en ese correo (de `noreply@globalratings.com`, asunto *IARC Live Rating
+    Notice: Easy Xtream Football*). No se copia aquí a propósito: este `docs/` es público en GitHub y ese
+    identificador es lo que sirve para reclamar la clasificación en otra tienda.
+  - Solo hace falta **si algún día se publica en otra tienda con licencia IARC** (Amazon Appstore, Galaxy
+    Store…): se pega el ID durante el alta y se reutiliza la clasificación.
+  - Solo habría que **rehacer el cuestionario** si un cambio alterase las respuestas (anuncios, compras,
+    contenido generado por usuarios…). La **0.1.6 no cambia ninguna**: son arreglos de TV.
 
 ### Siguientes pasos (en este orden)
 1. **En la máquina con la clave de subida** (`keystore.properties` + `keystore/easy-xtream-release.jks`;
