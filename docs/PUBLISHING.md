@@ -212,7 +212,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   - Solo habría que **rehacer el cuestionario** si un cambio alterase las respuestas (anuncios, compras,
     contenido generado por usuarios…). La **0.1.6 no cambia ninguna**: son arreglos de TV.
 
-### Siguientes pasos (en este orden)
+### Siguientes pasos (en este orden) — pasos 1-3 HECHOS el 2026-09-21, ver la sección de la 0.1.6 más abajo
 1. **En la máquina con la clave de subida** (`keystore.properties` + `keystore/easy-xtream-release.jks`;
    esta máquina NO la tiene): `git pull` → `gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` →
    comprobar que el `.aab` **no** va firmado con `CN=Android Debug` → crear versión de **Producción** con el
@@ -233,6 +233,31 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 5. Opcional: retirar el bundle 4 (0.1.3, SDK objetivo 35) de **Prueba interna** para que desaparezca el aviso
    de *Estado según las políticas* sobre la API 36.
 
+## 0.1.6 ENVIADA A REVISIÓN — 2026-09-21 (máquina con la clave)
+- ✅ **Compilada y firmada en la máquina con la clave**: `git pull` →
+  `gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` → BUILD SUCCESSFUL, **59 tests, 0 fallos**.
+  Firma comprobada con `keytool -printcert -jarfile`: `Owner: CN=Jorge Mtnez, OU=IT, O=nezor, L=Valencia,
+  ST=Valencia, C=ES` (certificado de subida, **no** `CN=Android Debug`). AAB de 16 MB.
+- ✅ **Versión de Producción creada**: bundle **7 (0.1.6)**, targetSDK 36, minAPI 24. Notas de versión en
+  es-ES (424 car.) y en-US (416 car.). Lanzamiento completo al 100 %, 177 países, publicación gestionada
+  desactivada (se publica sola al aprobarse). El bundle 6 (0.1.5) queda desactivado al reemplazarlo.
+  Tamaño: 4,83 MB descarga nueva / 2,15 MB actualización. Mismos dispositivos compatibles que la 0.1.5.
+- ✅ **Android TV habilitado** en *Ajustes avanzados → Factores de forma*: estado **Activo**, con **"mismo canal y
+  artefactos que la app móvil"**. La activación se aplicó directamente: no pasa por la cola de revisión (la fila
+  desapareció del resumen al enviar; comprobado después que sigue *Activo*).
+- ✅ **Enviado a revisión el 2026-09-21** en un solo envío, **3 elementos en revisión**: Producción 7 (0.1.6),
+  capturas de pantalla de Android TV (es-ES) y banner de TV (es-ES). Mensaje: *"Tus cambios están en proceso
+  de revisión."*
+- ℹ️ La subida del `.aab` se hace a mano con el selector de archivos: la subida directa del addon de Chrome
+  tiene un tope de 10 MB y el bundle pesa 16 MB.
+- ℹ️ Advertencia no bloqueante ignorada a propósito: *código nativo sin símbolos de depuración*. Las libs de
+  FFmpeg (NextLib) y androidx vienen ya sin símbolos desde su autor; con `ndk.debugSymbolLevel` la extracción
+  sale vacía (comprobado el 2026-09-02). No hay nada que subir.
+- ⏳ **Esperar el correo de Google.** Referencia: la 0.1.5 tardó 7 días; con la revisión de TV puede tardar más.
+  Si rechazan la parte de TV, la 0.1.5 publicada sigue viva: corregir el motivo y reenviar.
+- ⚠️ **Sigue pendiente: copia de la clave de subida** (`keystore.properties` + `keystore/easy-xtream-release.jks`)
+  y sus contraseñas **fuera de ambas máquinas**. Es el único punto del proyecto sin red de seguridad.
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
@@ -245,8 +270,9 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
    Crear versión (añadir bundle desde la biblioteca o subir el nuevo) → notas de versión → Revisar → Enviar a revisión.
 5. **(TV)** Subir banner TV + capturas TV en la ficha cuando aparezca la sección Android TV.
 6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → **PUBLICADA el 2026-09-21**. 🎉
-7. ⏳ **Actualización 0.1.6** firmada a Producción, junto con el factor de forma y los materiales de
-   Android TV (solo se puede hacer en la máquina con la clave de subida).
+7. ✅ **Actualización 0.1.6** firmada y **enviada a revisión el 2026-09-21**, junto con los materiales de
+   Android TV; factor de forma Android TV ya activo. ⏳ Esperando aprobación de Google.
+8. ⚠️ **Copia de la clave de subida y contraseñas fuera de ambas máquinas** (pendiente).
 
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
