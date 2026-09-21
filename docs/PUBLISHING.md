@@ -212,10 +212,14 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
    que la app móvil"** (un solo bundle para móvil y TV), no canales separados.
 3. **Enviar todo junto a revisión**: 0.1.6 + banner de TV + capturas de TV + factor de forma Android TV.
    La 0.1.6 arregla justo lo que mira la revisión de TV (login con el mando, overscan, teclas multimedia).
-4. **Mezclar las ramas preparadas**, que ya se pueden tocar porque la app está publicada:
-   - `feature/play-url` (este repo): la URL de Play en `docs/portfolio-card.md`.
-   - `feature/play-store-link` (repo `easy-xtream-football-web`): botón "Descargar en Google Play" en el hero
-     y enlace en el footer. Al mezclar en `main`, Vercel despliega solo.
+4. ✅ **Ramas preparadas MEZCLADAS el 2026-09-21** (ambas borradas en local y en `origin`):
+   - `feature/play-url` (este repo, merge `f7389bc`): la URL de Play en `docs/portfolio-card.md`; ya no queda
+     ningún `{{PLAY_URL}}`. En `8af12cb` se quitaron además las notas de "solo cuando la app esté publicada",
+     que ya no aplican: la card se puede copiar tal cual en Sanity.
+   - `feature/play-store-link` (repo `easy-xtream-football-web`, merge `857f0c2`): CTA "Descargar en Google
+     Play" / "Get it on Google Play" en el hero (GitHub pasa a botón secundario) y enlace en el footer.
+     `next lint` sin avisos y `next build` OK antes de subir. **Desplegado en Vercel y verificado en vivo**
+     en https://easy-xtream-football-web.vercel.app/es y `/en`.
 5. Opcional: retirar el bundle 4 (0.1.3, SDK objetivo 35) de **Prueba interna** para que desaparezca el aviso
    de *Estado según las políticas* sobre la API 36.
 
