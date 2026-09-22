@@ -421,6 +421,14 @@ class PlayerViewModel(
         _ui.update { it.copy(menuOpen = false) }
     }
 
+    /** Applies the option at [index] straight away (a tapped option on a touch screen). */
+    fun selectMenuOption(index: Int) {
+        val ui = _ui.value
+        if (!ui.menuOpen || index !in ui.menuOptions.indices) return
+        _ui.update { it.copy(menuSelectedIndex = index) }
+        confirmMenuSelection()
+    }
+
     private fun showSection(section: MenuSection) {
         currentSection = section
         val options = when (section) {

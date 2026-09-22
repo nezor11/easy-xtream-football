@@ -14,6 +14,10 @@ import androidx.annotation.OptIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import kotlin.math.abs
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,10 +25,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -197,6 +203,38 @@ fun PlayerScreen(
             },
         )
 
+        // Touch controls (phones/tablets), on a layer above the video so the PlayerView never sees
+        // them: they mirror the remote — a tap is OK (open/close the menu), a horizontal swipe is
+        // ◀▶ (channel, or menu section while the menu is open) and a vertical swipe is ▲▼ (quality).
+        // The overlays drawn later sit on top, so their own taps (menu options, QR) still win.
+        val swipeThreshold = with(LocalDensity.current) { 64.dp.toPx() }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(ui.menuOpen) {
+                    detectTapGestures { if (ui.menuOpen) viewModel.closeMenu() else viewModel.openMenu() }
+                }
+                .pointerInput(ui.menuOpen) {
+                    var dx = 0f
+                    var dy = 0f
+                    detectDragGestures(
+                        onDragStart = { dx = 0f; dy = 0f },
+                        onDrag = { change, amount -> change.consume(); dx += amount.x; dy += amount.y },
+                        onDragEnd = {
+                            when {
+                                abs(dx) >= swipeThreshold && abs(dx) > abs(dy) * 1.5f -> when {
+                                    ui.menuOpen -> viewModel.moveMenuSection(if (dx < 0) 1 else -1)
+                                    dx < 0 -> viewModel.nextChannel()
+                                    else -> viewModel.previousChannel()
+                                }
+                                abs(dy) >= swipeThreshold && abs(dy) > abs(dx) * 1.5f && !ui.menuOpen ->
+                                    viewModel.stepQuality(if (dy < 0) -1 else 1)
+                            }
+                        },
+                    )
+                },
+        )
+
         Column(
             modifier = Modifier.align(Alignment.BottomStart).padding(overlayPadding),
             verticalArrangement = Arrangement.spacedBy(6.dp),
@@ -226,6 +264,7 @@ fun PlayerScreen(
                         section = ui.menuSection,
                         options = ui.menuOptions,
                         selectedIndex = ui.menuSelectedIndex,
+                        onSelect = viewModel::selectMenuOption,
                     )
                 }
             }
@@ -270,7 +309,7 @@ fun PlayerScreen(
         // While the menu is open, show its navigation hint.
         if (ui.menuOpen) {
             Text(
-                text = stringResource(R.string.menu_nav_hint),
+                text = stringResource(if (isTv()) R.string.menu_nav_hint else R.string.menu_nav_hint_touch),
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0x99FFFFFF),
                 modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
@@ -284,7 +323,7 @@ fun PlayerScreen(
             modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
         ) {
             Text(
-                text = stringResource(R.string.controls_legend),
+                text = stringResource(if (isTv()) R.string.controls_legend else R.string.controls_legend_touch),
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0x99FFFFFF),
             )
@@ -381,6 +420,7 @@ private fun OptionsMenu(
     section: String,
     options: List<String>,
     selectedIndex: Int,
+    onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -407,6 +447,8 @@ private fun OptionsMenu(
                 color = if (selected) colors.primary else Color(0xFFE6EAEE),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                // Tappable on touch screens; a full-width row so the target isn't just the text.
+                modifier = Modifier.fillMaxWidth().clickable { onSelect(index) }.padding(vertical = 2.dp),
             )
         }
     }

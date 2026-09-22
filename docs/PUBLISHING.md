@@ -300,7 +300,13 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 
 ## 0.1.7 PREPARADA — 2026-09-22 (máquina Linux, ya con la clave)
 - `versionCode` **8** · `versionName` **0.1.7**. Lleva los 4 arreglos del 2026-09-22 (favoritos entre perfiles,
-  pulsación larga de OK en canales y perfiles, logos). Todo probado en el Chromecast con la build debug.
+  pulsación larga de OK en canales y perfiles, logos), probados en el Chromecast, **y el trabajo de móvil del
+  mismo día**, probado en el Xiaomi del usuario (Android 16, arm64): gestos en el reproductor (deslizar ◀▶
+  canal / ▲▼ calidad, toque = menú, opciones del menú tocables), chevrones ‹ › tocables para reordenar
+  favoritos, y botón propio `AppButton` (dedo + mando) en vez del `Button` de tv.material3, que en móvil dejaba
+  pasar el toque a lo que hubiera debajo (menú de perfil → abría el perfil en vez de editarlo).
+  Ojo: en ese Xiaomi (HyperOS) `adb shell input` está bloqueado (`INJECT_EVENTS`); las pruebas táctiles las
+  hace el usuario a mano y se verifican con `screencap`.
 - **Decisión pendiente: cuándo subirla.** La 0.1.6 sigue en revisión; crear otra versión de Producción la
   sustituye y reinicia la revisión. Nota: la 0.1.5 publicada (aprobada por Google) ya llevaba el fallo de la
   pulsación larga, así que no es motivo de rechazo conocido. Opción prudente: esperar el veredicto de la 0.1.6
@@ -311,6 +317,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Los favoritos se conservan al cambiar entre el perfil Xtream y la lista M3U del mismo proveedor.
   • Android TV: vuelve a funcionar mantener pulsado OK sobre un canal, una carpeta o un perfil (reordenar favoritos, menús, editar perfil).
   • Muchos más logos de canal, también en listas M3U que no los traen.
+  • Móvil: en el reproductor, desliza ◀▶ para cambiar de canal y ▲▼ para la calidad; toca para el menú. Los menús de perfil y de reordenar favoritos ya responden al dedo.
   </es-ES>
   ```
   ```
@@ -318,6 +325,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Favorites carry over between the Xtream profile and the M3U playlist of the same provider.
   • Android TV: holding OK on a channel, folder or profile works again (reorder favorites, menus, edit profile).
   • Many more channel logos, also for M3U playlists that ship none.
+  • Phone: in the player, swipe ◀▶ to change channel and ▲▼ for quality; tap for the menu. The profile and favorites-reorder menus now respond to touch.
   </en-US>
   ```
 

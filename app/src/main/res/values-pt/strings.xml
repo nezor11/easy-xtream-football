@@ -31,6 +31,8 @@
     <string name="player_error_with_hint">%1$s  ·  ◀▶ para mudar de canal</string>
     <string name="menu_nav_hint">▲▼ escolher · ◀▶ secção · OK confirmar</string>
     <string name="controls_legend">OK: menu  ·  OK longo: ★  ·  ▲▼: qualidade  ·  ◀▶: canal (×2 pasta)</string>
+    <string name="controls_legend_touch">Toca: menu  ·  desliza ▲▼: qualidade  ·  desliza ◀▶: canal</string>
+    <string name="menu_nav_hint_touch">toca: escolher  ·  desliza ◀▶: secção</string>
     <string name="added_to_favorites">★ Adicionado aos favoritos</string>
     <string name="player_paused">⏸ Em pausa</string>
     <string name="removed_from_favorites">Removido dos favoritos</string>

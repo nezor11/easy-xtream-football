@@ -84,7 +84,6 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.Border
-import androidx.tv.material3.Button
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
@@ -95,6 +94,8 @@ import com.footballxtream.model.ChannelFolder
 import com.footballxtream.model.ChannelGroup
 import com.footballxtream.model.Quality
 import com.footballxtream.model.QualityMode
+import com.footballxtream.ui.components.AppButton
+import com.footballxtream.ui.components.isTv
 import com.footballxtream.ui.components.remoteCombinedClickable
 import com.footballxtream.ui.components.TvTextField
 import com.footballxtream.ui.components.tvSafeArea
@@ -136,7 +137,7 @@ fun ChannelsScreen(
                     stringResource((state as ChannelsUiState.Error).messageRes),
                     color = MaterialTheme.colorScheme.onBackground,
                 )
-                Button(onClick = viewModel::reload) { Text(stringResource(R.string.action_retry)) }
+                AppButton(text = stringResource(R.string.action_retry), onClick = viewModel::reload)
             }
 
             state is ChannelsUiState.Content -> FolderGrid(
@@ -360,8 +361,9 @@ private fun FolderGrid(
                                 autoFocus = firstSection == 1 && query.isBlank(),
                                 firstCardFocus = favFirstFocus,
                                 itemKey = { it.key },
-                                // Spread the cards apart in reorder mode so the side chevrons show.
-                                itemSpacing = if (reorder) 46.dp else 16.dp,
+                                // Spread the cards apart in reorder mode so the side chevrons show; on a
+                                // touch screen wider still, so the finger-sized chevrons get some air.
+                                itemSpacing = if (reorder) (if (isTv()) 46.dp else 72.dp) else 16.dp,
                             ) { group, cardModifier ->
                                 val index = content.favoriteChannels.indexOf(group)
                                 FavoriteReorderCard(
@@ -385,6 +387,7 @@ private fun FolderGrid(
                                         if (reorder) { reorderGroup = null } else onPlayList(content.favoriteChannels, index, true)
                                     },
                                     onLongClick = { if (!reorder) reorderGroup = group },
+                                    onMove = { delta -> onMoveFavorite(group, delta) },
                                 )
                             }
                         }
@@ -449,6 +452,7 @@ private fun FavoriteReorderCard(
     modifier: Modifier,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
+    onMove: (Int) -> Unit,
 ) {
     // While this card is the one being reordered, announce that state and its live position to a
     // screen reader; the polite live region re-announces "position X of N" as ◀▶ slide it.
@@ -473,31 +477,40 @@ private fun FavoriteReorderCard(
         if (selected && reorder) {
             // Chevron badges on the card's side edges so they're always visible (not clipped by the
             // row) and make clear ◀▶ slide it.
-            if (canLeft) ReorderArrow("‹", Alignment.CenterStart)
-            if (canRight) ReorderArrow("›", Alignment.CenterEnd)
+            if (canLeft) ReorderArrow("‹", Alignment.CenterStart) { onMove(-1) }
+            if (canRight) ReorderArrow("›", Alignment.CenterEnd) { onMove(1) }
         }
     }
 }
 
 @Composable
-private fun BoxScope.ReorderArrow(glyph: String, align: Alignment) {
+private fun BoxScope.ReorderArrow(glyph: String, align: Alignment, onClick: () -> Unit) {
     val colors = MaterialTheme.colorScheme
     // A thin chevron in the gap to the neighbour, set a touch off the card edge so it reads separate.
-    val outward = if (align == Alignment.CenterStart) (-18).dp else 18.dp
-    Text(
-        text = glyph,
-        color = colors.primary,
-        fontWeight = FontWeight.Bold,
-        fontSize = 30.sp,
+    // On a touch screen the chevron is the way to slide the card (the remote uses ◀▶), so it gets a
+    // finger-sized tap target around the glyph.
+    val gap = if (isTv()) 18.dp else 30.dp
+    val outward = if (align == Alignment.CenterStart) -gap else gap
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = Modifier
             .align(align)
             // Draw above the focused card (tv Card lifts its own z on focus, which would hide a sibling).
             .zIndex(2f)
             .offset(x = outward)
+            .size(48.dp)
             // Decorative: the card's stateDescription already conveys the reorder action to a11y, so
             // skip reading the bare "‹"/"›" glyphs.
-            .clearAndSetSemantics {},
-    )
+            .clearAndSetSemantics {}
+            .clickable(onClick = onClick),
+    ) {
+        Text(
+            text = glyph,
+            color = colors.primary,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+        )
+    }
 }
 
 /** Bottom bar shown while reordering: Accept (leave reorder mode) and Remove from favorites. */

@@ -34,6 +34,8 @@
     <string name="player_error_with_hint">%1$s  ·  ◀▶ to change channel</string>
     <string name="menu_nav_hint">▲▼ choose · ◀▶ section · OK confirm</string>
     <string name="controls_legend">OK: menu  ·  hold OK: ★  ·  ▲▼: quality  ·  ◀▶: channel (×2 folder)</string>
+    <string name="controls_legend_touch">Tap: menu  ·  swipe ▲▼: quality  ·  swipe ◀▶: channel</string>
+    <string name="menu_nav_hint_touch">tap: choose  ·  swipe ◀▶: section</string>
     <string name="added_to_favorites">★ Added to favorites</string>
     <string name="player_paused">⏸ Paused</string>
     <string name="removed_from_favorites">Removed from favorites</string>

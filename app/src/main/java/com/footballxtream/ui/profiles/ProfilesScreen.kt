@@ -4,6 +4,9 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import com.footballxtream.ui.components.AppButton
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -49,7 +52,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.tv.material3.Button
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
@@ -198,9 +200,11 @@ private fun ProfileActionMenu(
     val firstButton = remember { FocusRequester() }
     // This menu opens mid long-press (while OK is still held). Every OK event that belongs to that
     // hold — the held-down repeats AND the eventual release — would otherwise reach the freshly
-    // focused "Editar" button as a complete press and fire it instantly. So until OK is released once
-    // (which arms the menu), swallow ALL select events so no button ever sees a full down→up; only a
-    // fresh, deliberate press after arming activates a choice. D-pad navigation is left untouched.
+    // focused "Editar" button and fire it. So until a *fresh* OK press arrives (a key-down with no
+    // repeat count, which arms the menu), swallow every select event; that fresh press and its
+    // release then work normally. Arming on the fresh press rather than on the hold's release is
+    // deliberate: the release may never reach this menu (the card that opened it consumes it, or
+    // focus hasn't moved here yet), which used to leave the first real press dead.
     var armed by remember { mutableStateOf(false) }
 
     BackHandler(enabled = true) { onDismiss() }
@@ -210,18 +214,21 @@ private fun ProfileActionMenu(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xCC000000))
+            // A tap on the dimmed backdrop closes the menu — and, just as important, is consumed
+            // here rather than falling through to the profile cards underneath.
+            .pointerInput(Unit) { detectTapGestures { onDismiss() } }
             .onPreviewKeyEvent { event ->
                 val isSelect = event.key == Key.DirectionCenter ||
                     event.key == Key.Enter ||
                     event.key == Key.NumPadEnter
                 when {
                     !isSelect -> false // let arrows move between Editar / Borrar / Cancelar
-                    armed -> false // released once: a genuine press now works normally
-                    event.type == KeyEventType.KeyUp -> {
-                        armed = true // the long-press release: swallow it and arm for the next press
-                        true
+                    armed -> false // a genuine press: works normally
+                    event.type == KeyEventType.KeyDown && event.nativeKeyEvent.repeatCount == 0 -> {
+                        armed = true // a fresh press after the hold: let it (and its release) through
+                        false
                     }
-                    else -> true // swallow held-down OK (incl. auto-repeat) before the release
+                    else -> true // swallow the hold's auto-repeats and its release
                 }
             },
         contentAlignment = Alignment.Center,
@@ -242,18 +249,13 @@ private fun ProfileActionMenu(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Button(
+            AppButton(
+                text = stringResource(R.string.action_edit),
                 onClick = onEdit,
                 modifier = Modifier.fillMaxWidth().focusRequester(firstButton),
-            ) {
-                Text(text = stringResource(R.string.action_edit), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-            }
-            Button(onClick = onDelete, modifier = Modifier.fillMaxWidth()) {
-                Text(text = stringResource(R.string.action_delete), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-            }
-            Button(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) {
-                Text(text = stringResource(R.string.action_cancel), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-            }
+            )
+            AppButton(text = stringResource(R.string.action_delete), onClick = onDelete, modifier = Modifier.fillMaxWidth())
+            AppButton(text = stringResource(R.string.action_cancel), onClick = onDismiss, modifier = Modifier.fillMaxWidth())
         }
     }
 }

@@ -31,6 +31,8 @@
     <string name="player_error_with_hint">%1$s  ·  ◀▶ pour changer de chaîne</string>
     <string name="menu_nav_hint">▲▼ choisir · ◀▶ section · OK confirmer</string>
     <string name="controls_legend">OK : menu  ·  OK long : ★  ·  ▲▼ : qualité  ·  ◀▶ : chaîne (×2 dossier)</string>
+    <string name="controls_legend_touch">Toucher : menu  ·  glisser ▲▼ : qualité  ·  glisser ◀▶ : chaîne</string>
+    <string name="menu_nav_hint_touch">toucher : choisir  ·  glisser ◀▶ : section</string>
     <string name="added_to_favorites">★ Ajouté aux favoris</string>
     <string name="player_paused">⏸ En pause</string>
     <string name="removed_from_favorites">Retiré des favoris</string>

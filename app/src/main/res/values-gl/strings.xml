@@ -31,6 +31,8 @@
     <string name="player_error_with_hint">%1$s  ·  ◀▶ para cambiar de canle</string>
     <string name="menu_nav_hint">▲▼ elixir · ◀▶ sección · OK confirmar</string>
     <string name="controls_legend">OK: menú  ·  OK longo: ★  ·  ▲▼: calidade  ·  ◀▶: canle (×2 cartafol)</string>
+    <string name="controls_legend_touch">Toca: menú  ·  desliza ▲▼: calidade  ·  desliza ◀▶: canle</string>
+    <string name="menu_nav_hint_touch">toca: escoller  ·  desliza ◀▶: sección</string>
     <string name="added_to_favorites">★ Engadido a favoritos</string>
     <string name="player_paused">⏸ En pausa</string>
     <string name="removed_from_favorites">Quitado de favoritos</string>

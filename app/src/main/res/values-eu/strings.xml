@@ -31,6 +31,8 @@
     <string name="player_error_with_hint">%1$s  ·  ◀▶ kanalez aldatzeko</string>
     <string name="menu_nav_hint">▲▼ aukeratu · ◀▶ atala · OK berretsi</string>
     <string name="controls_legend">OK: menua  ·  OK luze: ★  ·  ▲▼: kalitatea  ·  ◀▶: kanala (×2 karpeta)</string>
+    <string name="controls_legend_touch">Ukitu: menua  ·  lerratu ▲▼: kalitatea  ·  lerratu ◀▶: kanala</string>
+    <string name="menu_nav_hint_touch">ukitu: aukeratu  ·  lerratu ◀▶: atala</string>
     <string name="added_to_favorites">★ Gogokoetara gehituta</string>
     <string name="player_paused">⏸ Pausatuta</string>
     <string name="removed_from_favorites">Gogokoetatik kenduta</string>
