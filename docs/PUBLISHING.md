@@ -255,8 +255,13 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   sale vacía (comprobado el 2026-09-02). No hay nada que subir.
 - ⏳ **Esperar el correo de Google.** Referencia: la 0.1.5 tardó 7 días; con la revisión de TV puede tardar más.
   Si rechazan la parte de TV, la 0.1.5 publicada sigue viva: corregir el motivo y reenviar.
-- ⚠️ **Sigue pendiente: copia de la clave de subida** (`keystore.properties` + `keystore/easy-xtream-release.jks`)
-  y sus contraseñas **fuera de ambas máquinas**. Es el único punto del proyecto sin red de seguridad.
+- ✅ **Copia de la clave de subida HECHA el 2026-09-22**: los dos ficheros (`keystore.properties` +
+  `keystore/easy-xtream-release.jks`) van en un archivo **7-Zip cifrado con cabeceras cifradas** (`-mhe=on`,
+  sin contraseña no se listan ni los nombres) en un **USB offline** (el del live de Fedora, que sigue arrancando).
+  La contraseña del `.7z` es distinta de las del keystore y **no está ni en el USB ni en ningún repo**.
+  Para llevar la clave a otra máquina: copiar el `.7z` del USB y, en la raíz del repo, `7z x clave-easy-xtream.7z`
+  (deja los dos ficheros en su ruta; en Linux hace falta `p7zip`). Después comprobar la firma con
+  `keytool -printcert -jarfile` → debe salir `CN=Jorge Mtnez`, no `CN=Android Debug`.
 
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
@@ -272,7 +277,8 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → **PUBLICADA el 2026-09-21**. 🎉
 7. ✅ **Actualización 0.1.6** firmada y **enviada a revisión el 2026-09-21**, junto con los materiales de
    Android TV; factor de forma Android TV ya activo. ⏳ Esperando aprobación de Google.
-8. ⚠️ **Copia de la clave de subida y contraseñas fuera de ambas máquinas** (pendiente).
+8. ✅ **Copia de la clave de subida fuera de ambas máquinas** (2026-09-22, `.7z` cifrado en USB offline).
+   ⏳ Falta solo llevarla a la máquina Linux desde ese USB si se quiere firmar también allí.
 
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
