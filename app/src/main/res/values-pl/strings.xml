@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Tylko sport na żywo</string>
+    <string name="app_loading">Ładowanie…</string>
+    <string name="press_back_to_exit">Naciśnij Wstecz ponownie, aby wyjść</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Sport na żywo</string>
+    <string name="live_sports_of">Sport na żywo: %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d kanał</item>
+        <item quantity="few">%1$d kanały</item>
+        <item quantity="many">%1$d kanałów</item>
+        <item quantity="other">%1$d kanału</item>
+    </plurals>
+    <string name="error_load_channels">Nie udało się wczytać kanałów.</string>
+    <string name="action_retry">Spróbuj ponownie</string>
+    <string name="action_search">🔍 Szukaj</string>
+    <string name="action_reload">↻ Odśwież</string>
+    <string name="action_filters">Filtry</string>
+    <string name="search_field_label">Szukaj  (np. piłka nożna, koszykówka, tenis)</string>
+    <string name="no_sports_channels">W tym profilu nie znaleziono kanałów sportowych.</string>
+    <string name="no_results">Brak wyników dla \"%1$s\".</string>
+    <string name="now_live">Teraz na żywo</string>
+    <string name="section_favorite_channels">Ulubione kanały</string>
+    <string name="section_recent">Ostatnio oglądane</string>
+    <string name="section_favorite_folders">Ulubione foldery</string>
+    <string name="section_football">Piłka nożna</string>
+    <string name="section_more_sports">Inne sporty</string>
+    <string name="loading_channels">Wczytywanie kanałów…</string>
+    <string name="folder_back_hint">Wstecz, aby wrócić</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ zmień kanał</string>
+    <string name="menu_nav_hint">▲▼ wybierz · ◀▶ sekcja · OK zatwierdź</string>
+    <string name="controls_legend">OK: menu  ·  przytrzymaj OK: ★  ·  ▲▼: jakość  ·  ◀▶: kanał (×2 folder)</string>
+    <string name="controls_legend_touch">Dotknij: menu  ·  przesuń ▲▼: jakość  ·  przesuń ◀▶: kanał</string>
+    <string name="menu_nav_hint_touch">dotknij: wybierz  ·  przesuń ◀▶: sekcja</string>
+    <string name="added_to_favorites">★ Dodano do ulubionych</string>
+    <string name="player_paused">⏸ Wstrzymano</string>
+    <string name="removed_from_favorites">Usunięto z ulubionych</string>
+    <string name="epg_now">Teraz: %1$s</string>
+    <string name="epg_next_suffix">   ·   Następnie: %1$s</string>
+    <string name="menu_section_quality">Jakość</string>
+    <string name="menu_section_audio">Dźwięk</string>
+    <string name="menu_section_subtitles">Napisy</string>
+    <string name="menu_section_guide">Program</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Pokaż</string>
+    <string name="info_hide">🙈 Ukryj</string>
+    <string name="player_only_one_quality">Dostępna tylko jedna jakość</string>
+    <string name="audio_none">Brak ścieżek dźwiękowych</string>
+    <string name="audio_track_n">Dźwięk %1$d</string>
+    <string name="subtitles_off">Wył.</string>
+    <string name="subtitle_track_n">Napisy %1$d</string>
+    <string name="guide_none">Program niedostępny</string>
+    <string name="player_blocked_skipping">Zablokowany w Twoim regionie (%1$d) · pomijanie…</string>
+    <string name="player_skipping_unavailable">Pomijanie niedostępnego kanału…</string>
+    <string name="player_blocked_no_access">Zablokowany w Twoim regionie lub brak dostępu (%1$d)%2$s</string>
+    <string name="player_channel_from"> · kanał z: %1$s</string>
+    <string name="player_no_channel">Brak dostępnego kanału</string>
+    <string name="player_low_bandwidth">Wolne połączenie (~%1$s Mb/s) · za mało przepustowości na telewizję na żywo — to Twoja sieć, nie aplikacja.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Edytuj profil</string>
+    <string name="add_connect_list">Połącz swoją listę</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Lista M3U</string>
+    <string name="profile_type_direct">Link bezpośredni</string>
+    <string name="add_desc_direct">Wklej adres URL strumienia (HLS .m3u8 lub DASH .mpd). Odtwarzany jest bez zmian, bez filtra sportowego.</string>
+    <string name="add_desc_m3u">Wklej adres URL swojej playlisty (.m3u / m3u_plus). Najbardziej zgodna opcja, jeśli dostawca blokuje API.</string>
+    <string name="add_desc_xtream">Połącz się, podając adres serwera, nazwę użytkownika i hasło.</string>
+    <string name="field_stream_url">Adres URL strumienia (HLS/DASH)</string>
+    <string name="field_m3u_url">Adres URL playlisty M3U</string>
+    <string name="helper_direct">Np.: https://serwer/stream.m3u8  ·  https://serwer/manifest.mpd</string>
+    <string name="helper_m3u">Np.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Nazwa profilu (opcjonalnie)</string>
+    <string name="field_server_url">Adres URL serwera</string>
+    <string name="field_username">Nazwa użytkownika</string>
+    <string name="field_password">Hasło</string>
+    <string name="show_password">Pokaż hasło</string>
+    <string name="hide_password">Ukryj hasło</string>
+    <string name="helper_server">Np.: http://mojadomena.com:8080</string>
+    <string name="btn_connecting">Łączenie…</string>
+    <string name="btn_save_changes">Zapisz zmiany</string>
+    <string name="btn_save_enter">Zapisz i wejdź</string>
+    <string name="error_m3u_load">Nie udało się wczytać playlisty M3U. Sprawdź adres URL.</string>
+    <string name="error_xtream_auth">Serwer odrzucił nazwę użytkownika lub hasło.</string>
+    <string name="error_xtream_unreachable">Brak połączenia z serwerem (%1$s). Sprawdź adres URL lub wypróbuj inny host od dostawcy.</string>
+    <string name="error_xtream_http">Serwer odpowiedział HTTP %1$d. Sprawdź adres URL (tylko host i port, bez /player_api.php).</string>
+    <string name="error_xtream_bad_response">Nieoczekiwana odpowiedź serwera. Sprawdź, czy adres URL to panel Xtream.</string>
+    <string name="default_m3u_name">Lista M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Przytrzymaj profil, aby go edytować lub usunąć</string>
+    <string name="action_edit">Edytuj</string>
+    <string name="action_delete">Usuń</string>
+    <string name="action_cancel">Anuluj</string>
+    <string name="action_move_left">◀ Przesuń</string>
+    <string name="action_move_right">Przesuń ▶</string>
+    <string name="action_remove_favorite">Usuń z ulubionych</string>
+    <string name="reorder_a11y_position">Zmiana kolejności, pozycja %1$d z %2$d</string>
+    <string name="action_accept">Gotowe</string>
+    <string name="action_add">Dodaj</string>
+    <string name="add_profile">Dodaj profil</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_clear_cache">Wyczyść pamięć podręczną kanałów i programu</string>
+    <string name="settings_cache_cleared">Pamięć podręczna wyczyszczona</string>
+    <string name="settings_open_source">Licencje open source</string>
+    <string name="settings_language">Język</string>
+    <string name="language_system">Automatycznie (urządzenie)</string>
+    <string name="support_entry">Postaw mi kawę ☕</string>
+    <string name="support_title">Podoba Ci się aplikacja?</string>
+    <string name="support_message">Ta aplikacja jest darmowa i open source. Jeśli jest dla Ciebie przydatna, możesz postawić mi kawę — ile tylko chcesz. Bardzo dziękuję! Zeskanuj kod telefonem:</string>
+    <string name="support_qr_desc">Kod QR do wpłaty na Ko-fi</string>
+    <string name="coffee_bug_text">Podoba Ci się aplikacja? Postaw mi kawę</string>
+    <string name="coffee_dismiss">Nie pokazuj więcej tego przypomnienia</string>
+    <string name="coffee_reenable">Pokaż przypomnienie ponownie</string>
+    <string name="coffee_thanks">Dziękuję! Jorge ❤️</string>
+    <string name="coffee_disable_hint">To przypomnienie możesz wyłączyć w Ustawieniach na ekranie głównym ⚙️</string>
+</resources>

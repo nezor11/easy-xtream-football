@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Sadece canlı spor</string>
+    <string name="app_loading">Yükleniyor…</string>
+    <string name="press_back_to_exit">Çıkmak için tekrar Geri\'ye basın</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Canlı spor</string>
+    <string name="live_sports_of">%1$s canlı spor</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d kanal</item>
+        <item quantity="other">%1$d kanal</item>
+    </plurals>
+    <string name="error_load_channels">Kanallar yüklenemedi.</string>
+    <string name="action_retry">Tekrar dene</string>
+    <string name="action_search">🔍 Ara</string>
+    <string name="action_reload">↻ Yenile</string>
+    <string name="action_filters">Filtreler</string>
+    <string name="search_field_label">Ara  (örn. futbol, basketbol, tenis)</string>
+    <string name="no_sports_channels">Bu profilde spor kanalı bulunamadı.</string>
+    <string name="no_results">\"%1$s\" için sonuç yok.</string>
+    <string name="now_live">Şu an canlı</string>
+    <string name="section_favorite_channels">Favori kanallar</string>
+    <string name="section_recent">Son izlenenler</string>
+    <string name="section_favorite_folders">Favori klasörler</string>
+    <string name="section_football">Futbol</string>
+    <string name="section_more_sports">Diğer sporlar</string>
+    <string name="loading_channels">Kanallar yükleniyor…</string>
+    <string name="folder_back_hint">Geri dönmek için Geri</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Otomatik</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ kanal değiştir</string>
+    <string name="menu_nav_hint">▲▼ seç · ◀▶ bölüm · OK onayla</string>
+    <string name="controls_legend">OK: menü  ·  OK basılı tut: ★  ·  ▲▼: kalite  ·  ◀▶: kanal (×2 klasör)</string>
+    <string name="controls_legend_touch">Dokun: menü  ·  kaydır ▲▼: kalite  ·  kaydır ◀▶: kanal</string>
+    <string name="menu_nav_hint_touch">dokun: seç  ·  kaydır ◀▶: bölüm</string>
+    <string name="added_to_favorites">★ Favorilere eklendi</string>
+    <string name="player_paused">⏸ Duraklatıldı</string>
+    <string name="removed_from_favorites">Favorilerden kaldırıldı</string>
+    <string name="epg_now">Şimdi: %1$s</string>
+    <string name="epg_next_suffix">   ·   Sonraki: %1$s</string>
+    <string name="menu_section_quality">Kalite</string>
+    <string name="menu_section_audio">Ses</string>
+    <string name="menu_section_subtitles">Altyazılar</string>
+    <string name="menu_section_guide">Rehber</string>
+    <string name="menu_section_info">Bilgi</string>
+    <string name="info_show">👁️ Göster</string>
+    <string name="info_hide">🙈 Gizle</string>
+    <string name="player_only_one_quality">Yalnızca bir kalite mevcut</string>
+    <string name="audio_none">Ses parçası yok</string>
+    <string name="audio_track_n">Ses %1$d</string>
+    <string name="subtitles_off">Kapalı</string>
+    <string name="subtitle_track_n">Altyazı %1$d</string>
+    <string name="guide_none">Rehber mevcut değil</string>
+    <string name="player_blocked_skipping">Bölgenizde engelli (%1$d) · atlanıyor…</string>
+    <string name="player_skipping_unavailable">Kullanılamayan kanal atlanıyor…</string>
+    <string name="player_blocked_no_access">Bölgenizde engelli veya erişim yok (%1$d)%2$s</string>
+    <string name="player_channel_from"> · %1$s kanalı</string>
+    <string name="player_no_channel">Kullanılabilir kanal yok</string>
+    <string name="player_low_bandwidth">Yavaş bağlantı (~%1$s Mbps) · canlı TV için bant genişliği yetersiz — sorun uygulamada değil, ağınızda.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Profili düzenle</string>
+    <string name="add_connect_list">Listeni bağla</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U listesi</string>
+    <string name="profile_type_direct">Doğrudan bağlantı</string>
+    <string name="add_desc_direct">Bir yayın URL\'si yapıştır (HLS .m3u8 veya DASH .mpd). Spor filtresi olmadan olduğu gibi oynatılır.</string>
+    <string name="add_desc_m3u">Oynatma listenin URL\'sini yapıştır (.m3u / m3u_plus). Sağlayıcın API\'yi engelliyorsa en uyumlu seçenek.</string>
+    <string name="add_desc_xtream">Sunucu adresi, kullanıcı adın ve şifrenle bağlan.</string>
+    <string name="field_stream_url">Yayın URL\'si (HLS/DASH)</string>
+    <string name="field_m3u_url">M3U listesi URL\'si</string>
+    <string name="helper_direct">Örn.: https://sunucu/stream.m3u8  ·  https://sunucu/manifest.mpd</string>
+    <string name="helper_m3u">Örn.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Profil adı (isteğe bağlı)</string>
+    <string name="field_server_url">Sunucu URL\'si</string>
+    <string name="field_username">Kullanıcı adı</string>
+    <string name="field_password">Şifre</string>
+    <string name="show_password">Şifreyi göster</string>
+    <string name="hide_password">Şifreyi gizle</string>
+    <string name="helper_server">Örn.: http://alanadim.com:8080</string>
+    <string name="btn_connecting">Bağlanıyor…</string>
+    <string name="btn_save_changes">Değişiklikleri kaydet</string>
+    <string name="btn_save_enter">Kaydet ve gir</string>
+    <string name="error_m3u_load">M3U listesi yüklenemedi. URL\'yi kontrol et.</string>
+    <string name="error_xtream_auth">Sunucu kullanıcı adını veya şifreyi reddetti.</string>
+    <string name="error_xtream_unreachable">Sunucuya ulaşılamıyor (%1$s). URL\'yi kontrol et veya sağlayıcının başka bir sunucusunu dene.</string>
+    <string name="error_xtream_http">Sunucu HTTP %1$d yanıtı verdi. URL\'yi kontrol et (yalnızca host ve port, /player_api.php olmadan).</string>
+    <string name="error_xtream_bad_response">Sunucudan beklenmeyen yanıt. URL\'nin bir Xtream paneli olduğundan emin ol.</string>
+    <string name="default_m3u_name">M3U listesi</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Düzenlemek veya silmek için bir profili basılı tut</string>
+    <string name="action_edit">Düzenle</string>
+    <string name="action_delete">Sil</string>
+    <string name="action_cancel">İptal</string>
+    <string name="action_move_left">◀ Taşı</string>
+    <string name="action_move_right">Taşı ▶</string>
+    <string name="action_remove_favorite">Favorilerden kaldır</string>
+    <string name="reorder_a11y_position">Sıralanıyor, %2$d içinde %1$d. konum</string>
+    <string name="action_accept">Tamam</string>
+    <string name="action_add">Ekle</string>
+    <string name="add_profile">Profil ekle</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_clear_cache">Kanal ve rehber önbelleğini temizle</string>
+    <string name="settings_cache_cleared">Önbellek temizlendi</string>
+    <string name="settings_open_source">Açık kaynak lisansları</string>
+    <string name="settings_language">Dil</string>
+    <string name="language_system">Otomatik (cihaz)</string>
+    <string name="support_entry">Bana bir kahve ısmarla ☕</string>
+    <string name="support_title">Uygulamayı beğendin mi?</string>
+    <string name="support_message">Bu uygulama ücretsiz ve açık kaynaklıdır. Faydalı bulduysan bana bir kahve ısmarlayabilirsin — dilediğin kadar. Çok teşekkürler! Kodu telefonunla tara:</string>
+    <string name="support_qr_desc">Ko-fi\'de bağış için QR kodu</string>
+    <string name="coffee_bug_text">Uygulamayı beğendin mi? Bana bir kahve ısmarla</string>
+    <string name="coffee_dismiss">Bu hatırlatmayı bir daha gösterme</string>
+    <string name="coffee_reenable">Hatırlatmayı tekrar göster</string>
+    <string name="coffee_thanks">Teşekkürler! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Bu hatırlatmayı ana ekrandaki Ayarlar\'dan kapatabilirsin ⚙️</string>
+</resources>

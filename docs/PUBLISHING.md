@@ -307,6 +307,12 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   pasar el toque a lo que hubiera debajo (menú de perfil → abría el perfil en vez de editarlo).
   Ojo: en ese Xiaomi (HyperOS) `adb shell input` está bloqueado (`INJECT_EVENTS`); las pruebas táctiles las
   hace el usuario a mano y se verifican con `screencap`.
+- **4 idiomas nuevos (2026-09-22): alemán, turco, polaco y árabe** → 12 en total. 105 cadenas cada uno
+  (`values-de/-tr/-pl/-ar`), plurales completos según el lint, `LocaleHelper.supportedTags`, autónimos en el
+  selector y columnas en `translations.csv`. **Árabe verificado en RTL** en el móvil (perfiles, parrilla,
+  reproductor): Compose invierte los layouts solo gracias a `supportsRtl`. Los tres LTR no necesitan revisión
+  visual. Al publicar la 0.1.7: subir en Play la ficha con "12 idiomas" (`docs/store-listing.md` ya lo dice) y
+  mezclar la rama `feature/12-languages` del repo web (landing y README).
 - **Decisión pendiente: cuándo subirla.** La 0.1.6 sigue en revisión; crear otra versión de Producción la
   sustituye y reinicia la revisión. Nota: la 0.1.5 publicada (aprobada por Google) ya llevaba el fallo de la
   pulsación larga, así que no es motivo de rechazo conocido. Opción prudente: esperar el veredicto de la 0.1.6
@@ -317,7 +323,8 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Los favoritos se conservan al cambiar entre el perfil Xtream y la lista M3U del mismo proveedor.
   • Android TV: vuelve a funcionar mantener pulsado OK sobre un canal, una carpeta o un perfil (reordenar favoritos, menús, editar perfil).
   • Muchos más logos de canal, también en listas M3U que no los traen.
-  • Móvil: en el reproductor, desliza ◀▶ para cambiar de canal y ▲▼ para la calidad; toca para el menú. Los menús de perfil y de reordenar favoritos ya responden al dedo.
+  • Móvil: desliza ◀▶ para cambiar de canal y ▲▼ para la calidad; toca para el menú. Los menús de perfil y de favoritos ya responden al dedo.
+  • Nuevos idiomas: alemán, turco, polaco y árabe.
   </es-ES>
   ```
   ```
@@ -326,6 +333,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Android TV: holding OK on a channel, folder or profile works again (reorder favorites, menus, edit profile).
   • Many more channel logos, also for M3U playlists that ship none.
   • Phone: in the player, swipe ◀▶ to change channel and ▲▼ for quality; tap for the menu. The profile and favorites-reorder menus now respond to touch.
+  • New languages: German, Turkish, Polish and Arabic.
   </en-US>
   ```
 

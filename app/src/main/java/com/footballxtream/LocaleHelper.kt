@@ -21,7 +21,7 @@ object LocaleHelper {
     private const val KEY = "lang_tag"
 
     /** BCP-47 tags shipped with the app; "" = follow the device. Order drives the picker. */
-    val supportedTags = listOf("", "en", "es", "ca", "eu", "gl", "pt", "fr", "it")
+    val supportedTags = listOf("", "en", "es", "ca", "eu", "gl", "pt", "fr", "it", "de", "tr", "pl", "ar")
 
     fun persistedTag(context: Context): String =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "").orEmpty()

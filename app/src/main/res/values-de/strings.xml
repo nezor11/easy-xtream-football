@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Nur Live-Sport</string>
+    <string name="app_loading">Wird geladen…</string>
+    <string name="press_back_to_exit">Zum Beenden erneut Zurück drücken</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Live-Sport</string>
+    <string name="live_sports_of">Live-Sport von %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d Kanal</item>
+        <item quantity="other">%1$d Kanäle</item>
+    </plurals>
+    <string name="error_load_channels">Die Sender konnten nicht geladen werden.</string>
+    <string name="action_retry">Erneut versuchen</string>
+    <string name="action_search">🔍 Suchen</string>
+    <string name="action_reload">↻ Neu laden</string>
+    <string name="action_filters">Filter</string>
+    <string name="search_field_label">Suchen  (z. B. Fußball, Basketball, Tennis)</string>
+    <string name="no_sports_channels">In diesem Profil wurden keine Sportsender gefunden.</string>
+    <string name="no_results">Keine Ergebnisse für \"%1$s\".</string>
+    <string name="now_live">Jetzt live</string>
+    <string name="section_favorite_channels">Lieblingssender</string>
+    <string name="section_recent">Zuletzt gesehen</string>
+    <string name="section_favorite_folders">Lieblingsordner</string>
+    <string name="section_football">Fußball</string>
+    <string name="section_more_sports">Weitere Sportarten</string>
+    <string name="loading_channels">Sender werden geladen…</string>
+    <string name="folder_back_hint">Zurück zum Verlassen</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ Sender wechseln</string>
+    <string name="menu_nav_hint">▲▼ wählen · ◀▶ Bereich · OK bestätigen</string>
+    <string name="controls_legend">OK: Menü  ·  OK halten: ★  ·  ▲▼: Qualität  ·  ◀▶: Sender (×2 Ordner)</string>
+    <string name="controls_legend_touch">Tippen: Menü  ·  Wischen ▲▼: Qualität  ·  Wischen ◀▶: Sender</string>
+    <string name="menu_nav_hint_touch">Tippen: wählen  ·  Wischen ◀▶: Bereich</string>
+    <string name="added_to_favorites">★ Zu Favoriten hinzugefügt</string>
+    <string name="player_paused">⏸ Pausiert</string>
+    <string name="removed_from_favorites">Aus Favoriten entfernt</string>
+    <string name="epg_now">Jetzt: %1$s</string>
+    <string name="epg_next_suffix">   ·   Danach: %1$s</string>
+    <string name="menu_section_quality">Qualität</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Untertitel</string>
+    <string name="menu_section_guide">Programm</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Anzeigen</string>
+    <string name="info_hide">🙈 Ausblenden</string>
+    <string name="player_only_one_quality">Nur eine Qualität verfügbar</string>
+    <string name="audio_none">Keine Tonspuren</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Aus</string>
+    <string name="subtitle_track_n">Untertitel %1$d</string>
+    <string name="guide_none">Kein Programm verfügbar</string>
+    <string name="player_blocked_skipping">In deiner Region gesperrt (%1$d) · wird übersprungen…</string>
+    <string name="player_skipping_unavailable">Nicht verfügbarer Sender wird übersprungen…</string>
+    <string name="player_blocked_no_access">In deiner Region gesperrt oder kein Zugriff (%1$d)%2$s</string>
+    <string name="player_channel_from"> · Sender aus %1$s</string>
+    <string name="player_no_channel">Kein Sender verfügbar</string>
+    <string name="player_low_bandwidth">Langsame Verbindung (~%1$s Mbit/s) · zu wenig Bandbreite für Live-TV — das liegt an deinem Netz, nicht an der App.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Profil bearbeiten</string>
+    <string name="add_connect_list">Liste verbinden</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U-Liste</string>
+    <string name="profile_type_direct">Direktlink</string>
+    <string name="add_desc_direct">Füge eine Stream-URL ein (HLS .m3u8 oder DASH .mpd). Sie wird unverändert abgespielt, ohne Sportfilter.</string>
+    <string name="add_desc_m3u">Füge die URL deiner Playlist ein (.m3u / m3u_plus). Die kompatibelste Option, wenn dein Anbieter die API sperrt.</string>
+    <string name="add_desc_xtream">Verbinde dich mit der Serveradresse, deinem Benutzernamen und deinem Passwort.</string>
+    <string name="field_stream_url">Stream-URL (HLS/DASH)</string>
+    <string name="field_m3u_url">URL der M3U-Playlist</string>
+    <string name="helper_direct">z. B.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">z. B.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Profilname (optional)</string>
+    <string name="field_server_url">Server-URL</string>
+    <string name="field_username">Benutzername</string>
+    <string name="field_password">Passwort</string>
+    <string name="show_password">Passwort anzeigen</string>
+    <string name="hide_password">Passwort verbergen</string>
+    <string name="helper_server">z. B.: http://meinedomain.com:8080</string>
+    <string name="btn_connecting">Verbinden…</string>
+    <string name="btn_save_changes">Änderungen speichern</string>
+    <string name="btn_save_enter">Speichern und öffnen</string>
+    <string name="error_m3u_load">Die M3U-Playlist konnte nicht geladen werden. Prüfe die URL.</string>
+    <string name="error_xtream_auth">Der Server hat Benutzername oder Passwort abgelehnt.</string>
+    <string name="error_xtream_unreachable">Der Server ist nicht erreichbar (%1$s). Prüfe die URL oder versuche einen anderen Host deines Anbieters.</string>
+    <string name="error_xtream_http">Der Server hat mit HTTP %1$d geantwortet. Prüfe die URL (nur Host und Port, ohne /player_api.php).</string>
+    <string name="error_xtream_bad_response">Unerwartete Antwort vom Server. Prüfe, ob die URL ein Xtream-Panel ist.</string>
+    <string name="default_m3u_name">M3U-Liste</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Halte ein Profil gedrückt, um es zu bearbeiten oder zu löschen</string>
+    <string name="action_edit">Bearbeiten</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_move_left">◀ Verschieben</string>
+    <string name="action_move_right">Verschieben ▶</string>
+    <string name="action_remove_favorite">Aus Favoriten entfernen</string>
+    <string name="reorder_a11y_position">Neu anordnen, Position %1$d von %2$d</string>
+    <string name="action_accept">Fertig</string>
+    <string name="action_add">Hinzufügen</string>
+    <string name="add_profile">Profil hinzufügen</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_clear_cache">Sender- &amp; Programm-Cache leeren</string>
+    <string name="settings_cache_cleared">Cache geleert</string>
+    <string name="settings_open_source">Open-Source-Lizenzen</string>
+    <string name="settings_language">Sprache</string>
+    <string name="language_system">Automatisch (Gerät)</string>
+    <string name="support_entry">Spendier mir einen Kaffee ☕</string>
+    <string name="support_title">Gefällt dir die App?</string>
+    <string name="support_message">Diese App ist kostenlos und Open Source. Wenn sie dir nützt, kannst du mir einen Kaffee spendieren — so viel du magst. Vielen Dank! Scanne den Code mit deinem Handy:</string>
+    <string name="support_qr_desc">QR-Code zum Spenden auf Ko-fi</string>
+    <string name="coffee_bug_text">Gefällt dir die App? Spendier mir einen Kaffee</string>
+    <string name="coffee_dismiss">Diese Erinnerung nicht mehr anzeigen</string>
+    <string name="coffee_reenable">Erinnerung wieder anzeigen</string>
+    <string name="coffee_thanks">Danke! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Diese Erinnerung kannst du in den Einstellungen auf dem Startbildschirm ausschalten ⚙️</string>
+</resources>

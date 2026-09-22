@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">رياضة مباشرة فقط</string>
+    <string name="app_loading">جارٍ التحميل…</string>
+    <string name="press_back_to_exit">اضغط رجوع مرة أخرى للخروج</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">رياضة مباشرة</string>
+    <string name="live_sports_of">رياضة مباشرة من %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="zero">لا قنوات</item>
+        <item quantity="one">قناة واحدة</item>
+        <item quantity="two">قناتان</item>
+        <item quantity="few">%1$d قنوات</item>
+        <item quantity="many">%1$d قناة</item>
+        <item quantity="other">%1$d قناة</item>
+    </plurals>
+    <string name="error_load_channels">تعذّر تحميل القنوات.</string>
+    <string name="action_retry">إعادة المحاولة</string>
+    <string name="action_search">🔍 بحث</string>
+    <string name="action_reload">↻ إعادة التحميل</string>
+    <string name="action_filters">عوامل التصفية</string>
+    <string name="search_field_label">بحث  (مثل: كرة القدم، كرة السلة، التنس)</string>
+    <string name="no_sports_channels">لم يُعثر على قنوات رياضية في هذا الملف الشخصي.</string>
+    <string name="no_results">لا نتائج لـ \"%1$s\".</string>
+    <string name="now_live">مباشر الآن</string>
+    <string name="section_favorite_channels">القنوات المفضلة</string>
+    <string name="section_recent">الأخيرة</string>
+    <string name="section_favorite_folders">المجلدات المفضلة</string>
+    <string name="section_football">كرة القدم</string>
+    <string name="section_more_sports">رياضات أخرى</string>
+    <string name="loading_channels">جارٍ تحميل القنوات…</string>
+    <string name="folder_back_hint">رجوع للعودة</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">تلقائي</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ لتغيير القناة</string>
+    <string name="menu_nav_hint">▲▼ اختيار · ◀▶ القسم · OK تأكيد</string>
+    <string name="controls_legend">OK: القائمة  ·  إطالة الضغط على OK: ★  ·  ▲▼: الجودة  ·  ◀▶: القناة (×2 المجلد)</string>
+    <string name="controls_legend_touch">نقرة: القائمة  ·  تمرير ▲▼: الجودة  ·  تمرير ◀▶: القناة</string>
+    <string name="menu_nav_hint_touch">نقرة: اختيار  ·  تمرير ◀▶: القسم</string>
+    <string name="added_to_favorites">★ أُضيفت إلى المفضلة</string>
+    <string name="player_paused">⏸ متوقف مؤقتًا</string>
+    <string name="removed_from_favorites">أُزيلت من المفضلة</string>
+    <string name="epg_now">الآن: %1$s</string>
+    <string name="epg_next_suffix">   ·   التالي: %1$s</string>
+    <string name="menu_section_quality">الجودة</string>
+    <string name="menu_section_audio">الصوت</string>
+    <string name="menu_section_subtitles">الترجمة</string>
+    <string name="menu_section_guide">الدليل</string>
+    <string name="menu_section_info">معلومات</string>
+    <string name="info_show">👁️ إظهار</string>
+    <string name="info_hide">🙈 إخفاء</string>
+    <string name="player_only_one_quality">جودة واحدة فقط متاحة</string>
+    <string name="audio_none">لا مسارات صوتية</string>
+    <string name="audio_track_n">الصوت %1$d</string>
+    <string name="subtitles_off">إيقاف</string>
+    <string name="subtitle_track_n">الترجمة %1$d</string>
+    <string name="guide_none">لا يتوفر دليل</string>
+    <string name="player_blocked_skipping">محظورة في منطقتك (%1$d) · جارٍ التخطي…</string>
+    <string name="player_skipping_unavailable">جارٍ تخطي قناة غير متاحة…</string>
+    <string name="player_blocked_no_access">محظورة في منطقتك أو لا يمكن الوصول إليها (%1$d)%2$s</string>
+    <string name="player_channel_from"> · قناة من %1$s</string>
+    <string name="player_no_channel">لا توجد قناة متاحة</string>
+    <string name="player_low_bandwidth">اتصال بطيء (~%1$s ميغابت/ث) · النطاق الترددي لا يكفي للبث المباشر — المشكلة في شبكتك وليس في التطبيق.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">تعديل الملف الشخصي</string>
+    <string name="add_connect_list">اربط قائمتك</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">قائمة M3U</string>
+    <string name="profile_type_direct">رابط مباشر</string>
+    <string name="add_desc_direct">الصق رابط البث (HLS .m3u8 أو DASH .mpd). يُشغَّل كما هو، دون تصفية رياضية.</string>
+    <string name="add_desc_m3u">الصق رابط قائمة التشغيل (.m3u / m3u_plus). الخيار الأكثر توافقًا إذا كان مزوّدك يحظر الـ API.</string>
+    <string name="add_desc_xtream">اتصل باستخدام عنوان الخادم واسم المستخدم وكلمة المرور.</string>
+    <string name="field_stream_url">رابط البث (HLS/DASH)</string>
+    <string name="field_m3u_url">رابط قائمة M3U</string>
+    <string name="helper_direct">مثال: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">مثال: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">اسم الملف الشخصي (اختياري)</string>
+    <string name="field_server_url">رابط الخادم</string>
+    <string name="field_username">اسم المستخدم</string>
+    <string name="field_password">كلمة المرور</string>
+    <string name="show_password">إظهار كلمة المرور</string>
+    <string name="hide_password">إخفاء كلمة المرور</string>
+    <string name="helper_server">مثال: http://mydomain.com:8080</string>
+    <string name="btn_connecting">جارٍ الاتصال…</string>
+    <string name="btn_save_changes">حفظ التغييرات</string>
+    <string name="btn_save_enter">حفظ ودخول</string>
+    <string name="error_m3u_load">تعذّر تحميل قائمة M3U. تحقق من الرابط.</string>
+    <string name="error_xtream_auth">رفض الخادم اسم المستخدم أو كلمة المرور.</string>
+    <string name="error_xtream_unreachable">تعذّر الوصول إلى الخادم (%1$s). تحقق من الرابط أو جرّب مضيفًا آخر من مزوّدك.</string>
+    <string name="error_xtream_http">أجاب الخادم بـ HTTP %1$d. تحقق من الرابط (المضيف والمنفذ فقط، دون /player_api.php).</string>
+    <string name="error_xtream_bad_response">رد غير متوقع من الخادم. تأكد من أن الرابط هو لوحة Xtream.</string>
+    <string name="default_m3u_name">قائمة M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">اضغط مطولًا على ملف شخصي لتعديله أو حذفه</string>
+    <string name="action_edit">تعديل</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_move_left">◀ نقل</string>
+    <string name="action_move_right">نقل ▶</string>
+    <string name="action_remove_favorite">إزالة من المفضلة</string>
+    <string name="reorder_a11y_position">إعادة الترتيب، الموضع %1$d من %2$d</string>
+    <string name="action_accept">تم</string>
+    <string name="action_add">إضافة</string>
+    <string name="add_profile">إضافة ملف شخصي</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_clear_cache">مسح ذاكرة القنوات والدليل المؤقتة</string>
+    <string name="settings_cache_cleared">تم مسح الذاكرة المؤقتة</string>
+    <string name="settings_open_source">تراخيص المصدر المفتوح</string>
+    <string name="settings_language">اللغة</string>
+    <string name="language_system">تلقائي (الجهاز)</string>
+    <string name="support_entry">اشترِ لي قهوة ☕</string>
+    <string name="support_title">هل يعجبك التطبيق؟</string>
+    <string name="support_message">هذا التطبيق مجاني ومفتوح المصدر. إذا وجدته مفيدًا، يمكنك أن تشتري لي قهوة — بالقدر الذي تريد. شكرًا جزيلًا! امسح الرمز بهاتفك:</string>
+    <string name="support_qr_desc">رمز QR للتبرع على Ko-fi</string>
+    <string name="coffee_bug_text">هل يعجبك التطبيق؟ اشترِ لي قهوة</string>
+    <string name="coffee_dismiss">عدم إظهار هذا التذكير مجددًا</string>
+    <string name="coffee_reenable">إظهار التذكير مجددًا</string>
+    <string name="coffee_thanks">شكرًا! Jorge ❤️</string>
+    <string name="coffee_disable_hint">يمكنك إيقاف هذا التذكير من الإعدادات في الشاشة الرئيسية ⚙️</string>
+</resources>
