@@ -198,6 +198,9 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   teclas de selección ella misma (primera repetición = pulsación larga; soltar sin ella = clic). Verificado
   en el Chromecast: larga → modo reordenar con ‹ › y barra Hecho/Quitar; ◀▶ mueven la tarjeta; corta →
   reproductor. **La 0.1.6 enviada a revisión lleva este fallo**; no bloquea nada, va en la siguiente.
+  El mismo fallo afectaba a la **pantalla de perfiles** (mantener OK para editar/eliminar): corregido con el
+  mismo modificador compartido (`Modifier.remoteCombinedClickable`, en `ui/components/RemoteClick.kt`) y
+  verificado en el Chromecast (larga → menú Editar/Eliminar/Cancelar; corta → abre el perfil).
 - ℹ️ Del proveedor: de los 3 hosts M3U solo responde uno; otro ya es un **dominio aparcado con publicidad**.
   Igual que en Xtream, los hosts son espejos de una sola cuenta con **1 conexión simultánea**.
 

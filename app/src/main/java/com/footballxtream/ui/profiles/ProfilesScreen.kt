@@ -6,7 +6,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,6 +57,7 @@ import androidx.tv.material3.Text
 import android.widget.Toast
 import com.footballxtream.R
 import com.footballxtream.data.local.ProfileEntity
+import com.footballxtream.ui.components.remoteCombinedClickable
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.LanguageButton
 import com.footballxtream.ui.components.LanguageDialog
@@ -311,7 +311,7 @@ private fun ProfileCard(
             .then(if (focused) Modifier.border(3.dp, colors.primary, shape) else Modifier)
             .focusProperties { canFocus = focusable }
             .onFocusChanged { focused = it.isFocused }
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick),
+            .remoteCombinedClickable(onClick = onClick, onLongClick = onLongClick),
     ) {
         CardAvatar(letter = profile.name.take(1).uppercase().ifBlank { "?" })
         Box(

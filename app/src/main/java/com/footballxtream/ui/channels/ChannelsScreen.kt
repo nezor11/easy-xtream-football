@@ -14,7 +14,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -96,6 +95,7 @@ import com.footballxtream.model.ChannelFolder
 import com.footballxtream.model.ChannelGroup
 import com.footballxtream.model.Quality
 import com.footballxtream.model.QualityMode
+import com.footballxtream.ui.components.remoteCombinedClickable
 import com.footballxtream.ui.components.TvTextField
 import com.footballxtream.ui.components.tvSafeArea
 
@@ -878,8 +878,6 @@ private fun ImageCard(
     // Focus zoom for the D-pad (TV). On touch there's no focus, so it just stays at 1x.
     val cardScale by animateFloatAsState(if (focused) 1.06f else 1f, label = "cardScale")
     val shape = RoundedCornerShape(12.dp)
-    // Whether the current OK/Enter press already fired onLongClick (so its release doesn't click).
-    var longPressFired by remember { mutableStateOf(false) }
     // Plain combinedClickable (not the tv.material3 Card) so cards react to BOTH touch (phone) and the
     // D-pad select (TV) — the tv Card only reacted to the remote. Focus scale + border kept for TV.
     Column(
@@ -892,34 +890,7 @@ private fun ImageCard(
                 if (focused || highlighted) Modifier.border(3.dp, colors.primary, shape) else Modifier,
             )
             .onFocusChanged { focused = it.isFocused }
-            // Remote long press. combinedClickable only detects a long press from touch: a held OK
-            // reaches it as key repeats and it clicks on release, which silently lost every
-            // long-press action on TV (reorder favorites, channel/folder menus) when the tv Card
-            // went. So the select keys are handled here: the first repeat is the long press, and
-            // a release that didn't long-press is the click. Touch still goes through
-            // combinedClickable untouched.
-            .onPreviewKeyEvent { e ->
-                val select = e.key == Key.DirectionCenter || e.key == Key.Enter || e.key == Key.NumPadEnter
-                if (!select) return@onPreviewKeyEvent false
-                when (e.type) {
-                    KeyEventType.KeyDown -> {
-                        if (e.nativeKeyEvent.repeatCount == 0) {
-                            longPressFired = false
-                        } else if (!longPressFired && onLongClick != null) {
-                            longPressFired = true
-                            onLongClick()
-                        }
-                        true
-                    }
-                    KeyEventType.KeyUp -> {
-                        if (!longPressFired) onClick()
-                        longPressFired = false
-                        true
-                    }
-                    else -> false
-                }
-            }
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick),
+            .remoteCombinedClickable(onClick = onClick, onLongClick = onLongClick),
     ) {
         Box(
             modifier = Modifier.fillMaxWidth().height(84.dp).background(colors.surfaceVariant),
