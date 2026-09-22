@@ -185,6 +185,13 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   formas (solo como frase completa) y `CACHE_VERSION` pasa a 18. Verificado en el Chromecast con las cachés
   reales: M3U pasa de 34 a **39/39 favoritos**, 715 grupos antes y después (ninguna fusión indebida), claves
   comunes Xtream/M3U 620 → 630, y Xtream idéntico (712 claves iguales una a una). 4 tests nuevos, 63 en total.
+- ✅ **Regresión de TV corregida en `main` el 2026-09-22** (entra en 0.1.7): la **pulsación larga de OK en las
+  tarjetas** (reordenar favoritos, menús de canal y carpeta) había dejado de funcionar en TV desde el soporte
+  táctil (`414450f`), que cambió la `Card` de tv.material3 por un `combinedClickable` de Foundation, que solo
+  detecta la pulsación larga con el dedo: con el mando abría el reproductor. Ahora la tarjeta trata las
+  teclas de selección ella misma (primera repetición = pulsación larga; soltar sin ella = clic). Verificado
+  en el Chromecast: larga → modo reordenar con ‹ › y barra Hecho/Quitar; ◀▶ mueven la tarjeta; corta →
+  reproductor. **La 0.1.6 enviada a revisión lleva este fallo**; no bloquea nada, va en la siguiente.
 - ℹ️ Del proveedor: de los 3 hosts M3U solo responde uno; otro ya es un **dominio aparcado con publicidad**.
   Igual que en Xtream, los hosts son espejos de una sola cuenta con **1 conexión simultánea**.
 
