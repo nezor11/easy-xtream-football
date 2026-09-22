@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Μόνο ζωντανός αθλητισμός</string>
+    <string name="app_loading">Φόρτωση…</string>
+    <string name="press_back_to_exit">Πάτησε ξανά Πίσω για έξοδο</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Ζωντανός αθλητισμός</string>
+    <string name="live_sports_of">Ζωντανός αθλητισμός από %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d κανάλι</item>
+        <item quantity="other">%1$d κανάλια</item>
+    </plurals>
+    <string name="error_load_channels">Δεν ήταν δυνατή η φόρτωση των καναλιών.</string>
+    <string name="action_retry">Δοκιμή ξανά</string>
+    <string name="action_search">🔍 Αναζήτηση</string>
+    <string name="action_reload">↻ Ανανέωση</string>
+    <string name="action_filters">Φίλτρα</string>
+    <string name="search_field_label">Αναζήτηση  (π.χ. ποδόσφαιρο, μπάσκετ, τένις)</string>
+    <string name="no_sports_channels">Δεν βρέθηκαν αθλητικά κανάλια σε αυτό το προφίλ.</string>
+    <string name="no_results">Κανένα αποτέλεσμα για \"%1$s\".</string>
+    <string name="now_live">Ζωντανά τώρα</string>
+    <string name="section_favorite_channels">Αγαπημένα κανάλια</string>
+    <string name="section_recent">Πρόσφατα</string>
+    <string name="section_favorite_folders">Αγαπημένοι φάκελοι</string>
+    <string name="section_football">Ποδόσφαιρο</string>
+    <string name="section_more_sports">Άλλα αθλήματα</string>
+    <string name="loading_channels">Φόρτωση καναλιών…</string>
+    <string name="folder_back_hint">Πίσω για επιστροφή</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Αυτόματο</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ αλλαγή καναλιού</string>
+    <string name="menu_nav_hint">▲▼ επιλογή · ◀▶ ενότητα · OK επιβεβαίωση</string>
+    <string name="controls_legend">OK: μενού  ·  παρατεταμένο OK: ★  ·  ▲▼: ποιότητα  ·  ◀▶: κανάλι (×2 φάκελος)</string>
+    <string name="controls_legend_touch">Πάτημα: μενού  ·  σύρσιμο ▲▼: ποιότητα  ·  σύρσιμο ◀▶: κανάλι</string>
+    <string name="menu_nav_hint_touch">πάτημα: επιλογή  ·  σύρσιμο ◀▶: ενότητα</string>
+    <string name="added_to_favorites">★ Προστέθηκε στα αγαπημένα</string>
+    <string name="player_paused">⏸ Σε παύση</string>
+    <string name="removed_from_favorites">Αφαιρέθηκε από τα αγαπημένα</string>
+    <string name="epg_now">Τώρα: %1$s</string>
+    <string name="epg_next_suffix">   ·   Επόμενο: %1$s</string>
+    <string name="menu_section_quality">Ποιότητα</string>
+    <string name="menu_section_audio">Ήχος</string>
+    <string name="menu_section_subtitles">Υπότιτλοι</string>
+    <string name="menu_section_guide">Οδηγός</string>
+    <string name="menu_section_info">Πληροφορίες</string>
+    <string name="info_show">👁️ Εμφάνιση</string>
+    <string name="info_hide">🙈 Απόκρυψη</string>
+    <string name="player_only_one_quality">Μόνο μία ποιότητα διαθέσιμη</string>
+    <string name="audio_none">Χωρίς κομμάτια ήχου</string>
+    <string name="audio_track_n">Ήχος %1$d</string>
+    <string name="subtitles_off">Ανενεργοί</string>
+    <string name="subtitle_track_n">Υπότιτλοι %1$d</string>
+    <string name="guide_none">Δεν υπάρχει οδηγός</string>
+    <string name="player_blocked_skipping">Αποκλεισμένο στην περιοχή σου (%1$d) · παράλειψη…</string>
+    <string name="player_skipping_unavailable">Παράλειψη μη διαθέσιμου καναλιού…</string>
+    <string name="player_blocked_no_access">Αποκλεισμένο στην περιοχή σου ή χωρίς πρόσβαση (%1$d)%2$s</string>
+    <string name="player_channel_from"> · κανάλι από %1$s</string>
+    <string name="player_no_channel">Κανένα διαθέσιμο κανάλι</string>
+    <string name="player_low_bandwidth">Αργή σύνδεση (~%1$s Mbps) · ανεπαρκές εύρος ζώνης για ζωντανή τηλεόραση — φταίει το δίκτυό σου, όχι η εφαρμογή.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Επεξεργασία προφίλ</string>
+    <string name="add_connect_list">Σύνδεσε τη λίστα σου</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Λίστα M3U</string>
+    <string name="profile_type_direct">Απευθείας σύνδεσμος</string>
+    <string name="add_desc_direct">Επικόλλησε ένα URL ροής (HLS .m3u8 ή DASH .mpd). Αναπαράγεται ως έχει, χωρίς αθλητικό φίλτρο.</string>
+    <string name="add_desc_m3u">Επικόλλησε το URL της λίστας σου (.m3u / m3u_plus). Η πιο συμβατή επιλογή αν ο πάροχος μπλοκάρει το API.</string>
+    <string name="add_desc_xtream">Συνδέσου με τη διεύθυνση του διακομιστή, το όνομα χρήστη και τον κωδικό σου.</string>
+    <string name="field_stream_url">URL ροής (HLS/DASH)</string>
+    <string name="field_m3u_url">URL λίστας M3U</string>
+    <string name="helper_direct">π.χ.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">π.χ.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Όνομα προφίλ (προαιρετικό)</string>
+    <string name="field_server_url">URL διακομιστή</string>
+    <string name="field_username">Όνομα χρήστη</string>
+    <string name="field_password">Κωδικός</string>
+    <string name="show_password">Εμφάνιση κωδικού</string>
+    <string name="hide_password">Απόκρυψη κωδικού</string>
+    <string name="helper_server">π.χ.: http://mydomain.com:8080</string>
+    <string name="btn_connecting">Σύνδεση…</string>
+    <string name="btn_save_changes">Αποθήκευση αλλαγών</string>
+    <string name="btn_save_enter">Αποθήκευση και είσοδος</string>
+    <string name="error_m3u_load">Δεν ήταν δυνατή η φόρτωση της λίστας M3U. Έλεγξε το URL.</string>
+    <string name="error_xtream_auth">Ο διακομιστής απέρριψε το όνομα χρήστη ή τον κωδικό.</string>
+    <string name="error_xtream_unreachable">Ο διακομιστής δεν είναι προσβάσιμος (%1$s). Έλεγξε το URL ή δοκίμασε άλλον host του παρόχου σου.</string>
+    <string name="error_xtream_http">Ο διακομιστής απάντησε HTTP %1$d. Έλεγξε το URL (μόνο host και θύρα, χωρίς /player_api.php).</string>
+    <string name="error_xtream_bad_response">Απροσδόκητη απάντηση από τον διακομιστή. Έλεγξε ότι το URL είναι πίνακας Xtream.</string>
+    <string name="default_m3u_name">Λίστα M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Κράτησε πατημένο ένα προφίλ για επεξεργασία ή διαγραφή</string>
+    <string name="action_edit">Επεξεργασία</string>
+    <string name="action_delete">Διαγραφή</string>
+    <string name="action_cancel">Ακύρωση</string>
+    <string name="action_move_left">◀ Μετακίνηση</string>
+    <string name="action_move_right">Μετακίνηση ▶</string>
+    <string name="action_remove_favorite">Αφαίρεση από τα αγαπημένα</string>
+    <string name="reorder_a11y_position">Αναδιάταξη, θέση %1$d από %2$d</string>
+    <string name="action_accept">Τέλος</string>
+    <string name="action_add">Προσθήκη</string>
+    <string name="add_profile">Προσθήκη προφίλ</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Ρυθμίσεις</string>
+    <string name="settings_clear_cache">Εκκαθάριση cache καναλιών &amp; οδηγού</string>
+    <string name="settings_cache_cleared">Η cache εκκαθαρίστηκε</string>
+    <string name="settings_open_source">Άδειες ανοιχτού κώδικα</string>
+    <string name="settings_language">Γλώσσα</string>
+    <string name="language_system">Αυτόματα (συσκευή)</string>
+    <string name="support_entry">Κέρασέ με έναν καφέ ☕</string>
+    <string name="support_title">Σου αρέσει η εφαρμογή;</string>
+    <string name="support_message">Η εφαρμογή είναι δωρεάν και ανοιχτού κώδικα. Αν σου είναι χρήσιμη, μπορείς να με κεράσεις έναν καφέ — όσο θέλεις. Ευχαριστώ πολύ! Σάρωσε τον κωδικό με το κινητό σου:</string>
+    <string name="support_qr_desc">Κωδικός QR για δωρεά στο Ko-fi</string>
+    <string name="coffee_bug_text">Σου αρέσει η εφαρμογή; Κέρασέ με έναν καφέ</string>
+    <string name="coffee_dismiss">Να μην εμφανιστεί ξανά αυτή η υπενθύμιση</string>
+    <string name="coffee_reenable">Εμφάνιση της υπενθύμισης ξανά</string>
+    <string name="coffee_thanks">Ευχαριστώ! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Μπορείς να απενεργοποιήσεις την υπενθύμιση στις Ρυθμίσεις, στην αρχική οθόνη ⚙️</string>
+</resources>

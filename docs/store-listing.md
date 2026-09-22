@@ -35,7 +35,7 @@ Características principales:
   audio por software (AC-3/E-AC-3/DTS) mediante FFmpeg.
 • Tus credenciales se guardan cifradas en tu dispositivo. Sin anuncios, sin seguimiento
   y sin cuentas: nada se envía al desarrollador.
-• Disponible en 12 idiomas.
+• Disponible en 18 idiomas.
 • Aplicación de código abierto.
 
 Easy Xtream Football es una herramienta neutral: su funcionamiento y el contenido que
@@ -66,7 +66,7 @@ Key features:
   (AC-3/E-AC-3/DTS) via FFmpeg.
 • Your credentials are stored encrypted on your device. No ads, no tracking, no accounts:
   nothing is sent to the developer.
-• Available in 12 languages.
+• Available in 18 languages.
 • Open-source application.
 
 Easy Xtream Football is a neutral tool: what it shows and how it behaves depend entirely

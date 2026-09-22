@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Chỉ thể thao trực tiếp</string>
+    <string name="app_loading">Đang tải…</string>
+    <string name="press_back_to_exit">Nhấn Quay lại lần nữa để thoát</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Thể thao trực tiếp</string>
+    <string name="live_sports_of">Thể thao trực tiếp từ %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="other">%1$d kênh</item>
+    </plurals>
+    <string name="error_load_channels">Không tải được danh sách kênh.</string>
+    <string name="action_retry">Thử lại</string>
+    <string name="action_search">🔍 Tìm kiếm</string>
+    <string name="action_reload">↻ Tải lại</string>
+    <string name="action_filters">Bộ lọc</string>
+    <string name="search_field_label">Tìm kiếm  (vd: bóng đá, bóng rổ, quần vợt)</string>
+    <string name="no_sports_channels">Không tìm thấy kênh thể thao nào trong hồ sơ này.</string>
+    <string name="no_results">Không có kết quả cho \"%1$s\".</string>
+    <string name="now_live">Đang phát trực tiếp</string>
+    <string name="section_favorite_channels">Kênh yêu thích</string>
+    <string name="section_recent">Gần đây</string>
+    <string name="section_favorite_folders">Thư mục yêu thích</string>
+    <string name="section_football">Bóng đá</string>
+    <string name="section_more_sports">Thể thao khác</string>
+    <string name="loading_channels">Đang tải kênh…</string>
+    <string name="folder_back_hint">Quay lại để trở về</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Tự động</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ đổi kênh</string>
+    <string name="menu_nav_hint">▲▼ chọn · ◀▶ mục · OK xác nhận</string>
+    <string name="controls_legend">OK: menu  ·  giữ OK: ★  ·  ▲▼: chất lượng  ·  ◀▶: kênh (×2 thư mục)</string>
+    <string name="controls_legend_touch">Chạm: menu  ·  vuốt ▲▼: chất lượng  ·  vuốt ◀▶: kênh</string>
+    <string name="menu_nav_hint_touch">chạm: chọn  ·  vuốt ◀▶: mục</string>
+    <string name="added_to_favorites">★ Đã thêm vào yêu thích</string>
+    <string name="player_paused">⏸ Đã tạm dừng</string>
+    <string name="removed_from_favorites">Đã xóa khỏi yêu thích</string>
+    <string name="epg_now">Đang phát: %1$s</string>
+    <string name="epg_next_suffix">   ·   Tiếp theo: %1$s</string>
+    <string name="menu_section_quality">Chất lượng</string>
+    <string name="menu_section_audio">Âm thanh</string>
+    <string name="menu_section_subtitles">Phụ đề</string>
+    <string name="menu_section_guide">Lịch phát sóng</string>
+    <string name="menu_section_info">Thông tin</string>
+    <string name="info_show">👁️ Hiện</string>
+    <string name="info_hide">🙈 Ẩn</string>
+    <string name="player_only_one_quality">Chỉ có một mức chất lượng</string>
+    <string name="audio_none">Không có luồng âm thanh</string>
+    <string name="audio_track_n">Âm thanh %1$d</string>
+    <string name="subtitles_off">Tắt</string>
+    <string name="subtitle_track_n">Phụ đề %1$d</string>
+    <string name="guide_none">Không có lịch phát sóng</string>
+    <string name="player_blocked_skipping">Bị chặn ở khu vực của bạn (%1$d) · đang bỏ qua…</string>
+    <string name="player_skipping_unavailable">Đang bỏ qua kênh không khả dụng…</string>
+    <string name="player_blocked_no_access">Bị chặn ở khu vực của bạn hoặc không có quyền truy cập (%1$d)%2$s</string>
+    <string name="player_channel_from"> · kênh từ %1$s</string>
+    <string name="player_no_channel">Không có kênh khả dụng</string>
+    <string name="player_low_bandwidth">Kết nối chậm (~%1$s Mbps) · không đủ băng thông cho truyền hình trực tiếp — do mạng của bạn, không phải ứng dụng.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Sửa hồ sơ</string>
+    <string name="add_connect_list">Kết nối danh sách của bạn</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Danh sách M3U</string>
+    <string name="profile_type_direct">Liên kết trực tiếp</string>
+    <string name="add_desc_direct">Dán URL luồng phát (HLS .m3u8 hoặc DASH .mpd). Phát nguyên trạng, không lọc thể thao.</string>
+    <string name="add_desc_m3u">Dán URL danh sách phát của bạn (.m3u / m3u_plus). Lựa chọn tương thích nhất nếu nhà cung cấp chặn API.</string>
+    <string name="add_desc_xtream">Kết nối bằng địa chỉ máy chủ, tên người dùng và mật khẩu của bạn.</string>
+    <string name="field_stream_url">URL luồng phát (HLS/DASH)</string>
+    <string name="field_m3u_url">URL danh sách phát M3U</string>
+    <string name="helper_direct">Vd: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">Vd: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Tên hồ sơ (tùy chọn)</string>
+    <string name="field_server_url">URL máy chủ</string>
+    <string name="field_username">Tên người dùng</string>
+    <string name="field_password">Mật khẩu</string>
+    <string name="show_password">Hiện mật khẩu</string>
+    <string name="hide_password">Ẩn mật khẩu</string>
+    <string name="helper_server">Vd: http://mydomain.com:8080</string>
+    <string name="btn_connecting">Đang kết nối…</string>
+    <string name="btn_save_changes">Lưu thay đổi</string>
+    <string name="btn_save_enter">Lưu và vào</string>
+    <string name="error_m3u_load">Không tải được danh sách phát M3U. Kiểm tra lại URL.</string>
+    <string name="error_xtream_auth">Máy chủ từ chối tên người dùng hoặc mật khẩu.</string>
+    <string name="error_xtream_unreachable">Không kết nối được máy chủ (%1$s). Kiểm tra URL hoặc thử máy chủ khác của nhà cung cấp.</string>
+    <string name="error_xtream_http">Máy chủ trả về HTTP %1$d. Kiểm tra URL (chỉ host và cổng, không có /player_api.php).</string>
+    <string name="error_xtream_bad_response">Phản hồi không mong đợi từ máy chủ. Kiểm tra URL có phải là bảng Xtream không.</string>
+    <string name="default_m3u_name">Danh sách M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Nhấn giữ một hồ sơ để sửa hoặc xóa</string>
+    <string name="action_edit">Sửa</string>
+    <string name="action_delete">Xóa</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_move_left">◀ Di chuyển</string>
+    <string name="action_move_right">Di chuyển ▶</string>
+    <string name="action_remove_favorite">Xóa khỏi yêu thích</string>
+    <string name="reorder_a11y_position">Đang sắp xếp, vị trí %1$d trên %2$d</string>
+    <string name="action_accept">Xong</string>
+    <string name="action_add">Thêm</string>
+    <string name="add_profile">Thêm hồ sơ</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_clear_cache">Xóa bộ nhớ đệm kênh &amp; lịch phát sóng</string>
+    <string name="settings_cache_cleared">Đã xóa bộ nhớ đệm</string>
+    <string name="settings_open_source">Giấy phép mã nguồn mở</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="language_system">Tự động (thiết bị)</string>
+    <string name="support_entry">Mời tôi một ly cà phê ☕</string>
+    <string name="support_title">Bạn thích ứng dụng chứ?</string>
+    <string name="support_message">Ứng dụng này miễn phí và mã nguồn mở. Nếu thấy hữu ích, bạn có thể mời tôi một ly cà phê — tùy tâm. Cảm ơn bạn rất nhiều! Quét mã bằng điện thoại:</string>
+    <string name="support_qr_desc">Mã QR để ủng hộ trên Ko-fi</string>
+    <string name="coffee_bug_text">Bạn thích ứng dụng chứ? Mời tôi một ly cà phê</string>
+    <string name="coffee_dismiss">Không hiện lời nhắc này nữa</string>
+    <string name="coffee_reenable">Hiện lại lời nhắc</string>
+    <string name="coffee_thanks">Cảm ơn! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Bạn có thể tắt lời nhắc này trong Cài đặt, ở màn hình chính ⚙️</string>
+</resources>

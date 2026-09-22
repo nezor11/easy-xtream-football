@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Hanya olahraga langsung</string>
+    <string name="app_loading">Memuat…</string>
+    <string name="press_back_to_exit">Tekan Kembali sekali lagi untuk keluar</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Olahraga langsung</string>
+    <string name="live_sports_of">Olahraga langsung dari %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="other">%1$d saluran</item>
+    </plurals>
+    <string name="error_load_channels">Tidak dapat memuat saluran.</string>
+    <string name="action_retry">Coba lagi</string>
+    <string name="action_search">🔍 Cari</string>
+    <string name="action_reload">↻ Muat ulang</string>
+    <string name="action_filters">Filter</string>
+    <string name="search_field_label">Cari  (mis. sepak bola, basket, tenis)</string>
+    <string name="no_sports_channels">Tidak ada saluran olahraga di profil ini.</string>
+    <string name="no_results">Tidak ada hasil untuk \"%1$s\".</string>
+    <string name="now_live">Sedang langsung</string>
+    <string name="section_favorite_channels">Saluran favorit</string>
+    <string name="section_recent">Terbaru</string>
+    <string name="section_favorite_folders">Folder favorit</string>
+    <string name="section_football">Sepak bola</string>
+    <string name="section_more_sports">Olahraga lainnya</string>
+    <string name="loading_channels">Memuat saluran…</string>
+    <string name="folder_back_hint">Kembali untuk keluar</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Otomatis</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ ganti saluran</string>
+    <string name="menu_nav_hint">▲▼ pilih · ◀▶ bagian · OK konfirmasi</string>
+    <string name="controls_legend">OK: menu  ·  tahan OK: ★  ·  ▲▼: kualitas  ·  ◀▶: saluran (×2 folder)</string>
+    <string name="controls_legend_touch">Ketuk: menu  ·  geser ▲▼: kualitas  ·  geser ◀▶: saluran</string>
+    <string name="menu_nav_hint_touch">ketuk: pilih  ·  geser ◀▶: bagian</string>
+    <string name="added_to_favorites">★ Ditambahkan ke favorit</string>
+    <string name="player_paused">⏸ Dijeda</string>
+    <string name="removed_from_favorites">Dihapus dari favorit</string>
+    <string name="epg_now">Sekarang: %1$s</string>
+    <string name="epg_next_suffix">   ·   Berikutnya: %1$s</string>
+    <string name="menu_section_quality">Kualitas</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Subtitel</string>
+    <string name="menu_section_guide">Panduan</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Tampilkan</string>
+    <string name="info_hide">🙈 Sembunyikan</string>
+    <string name="player_only_one_quality">Hanya satu kualitas tersedia</string>
+    <string name="audio_none">Tidak ada trek audio</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Mati</string>
+    <string name="subtitle_track_n">Subtitel %1$d</string>
+    <string name="guide_none">Panduan tidak tersedia</string>
+    <string name="player_blocked_skipping">Diblokir di wilayah Anda (%1$d) · melewati…</string>
+    <string name="player_skipping_unavailable">Melewati saluran yang tidak tersedia…</string>
+    <string name="player_blocked_no_access">Diblokir di wilayah Anda atau tidak ada akses (%1$d)%2$s</string>
+    <string name="player_channel_from"> · saluran dari %1$s</string>
+    <string name="player_no_channel">Tidak ada saluran tersedia</string>
+    <string name="player_low_bandwidth">Koneksi lambat (~%1$s Mbps) · bandwidth tidak cukup untuk TV langsung — ini jaringan Anda, bukan aplikasinya.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Edit profil</string>
+    <string name="add_connect_list">Hubungkan daftar Anda</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Daftar M3U</string>
+    <string name="profile_type_direct">Tautan langsung</string>
+    <string name="add_desc_direct">Tempel URL stream (HLS .m3u8 atau DASH .mpd). Diputar apa adanya, tanpa filter olahraga.</string>
+    <string name="add_desc_m3u">Tempel URL playlist Anda (.m3u / m3u_plus). Pilihan paling kompatibel jika penyedia memblokir API.</string>
+    <string name="add_desc_xtream">Hubungkan dengan alamat server, nama pengguna, dan kata sandi Anda.</string>
+    <string name="field_stream_url">URL stream (HLS/DASH)</string>
+    <string name="field_m3u_url">URL playlist M3U</string>
+    <string name="helper_direct">Mis.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">Mis.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Nama profil (opsional)</string>
+    <string name="field_server_url">URL server</string>
+    <string name="field_username">Nama pengguna</string>
+    <string name="field_password">Kata sandi</string>
+    <string name="show_password">Tampilkan kata sandi</string>
+    <string name="hide_password">Sembunyikan kata sandi</string>
+    <string name="helper_server">Mis.: http://domainsaya.com:8080</string>
+    <string name="btn_connecting">Menghubungkan…</string>
+    <string name="btn_save_changes">Simpan perubahan</string>
+    <string name="btn_save_enter">Simpan dan masuk</string>
+    <string name="error_m3u_load">Tidak dapat memuat playlist M3U. Periksa URL-nya.</string>
+    <string name="error_xtream_auth">Server menolak nama pengguna atau kata sandi.</string>
+    <string name="error_xtream_unreachable">Server tidak dapat dijangkau (%1$s). Periksa URL atau coba host lain dari penyedia Anda.</string>
+    <string name="error_xtream_http">Server menjawab HTTP %1$d. Periksa URL (hanya host dan port, tanpa /player_api.php).</string>
+    <string name="error_xtream_bad_response">Balasan tak terduga dari server. Pastikan URL-nya adalah panel Xtream.</string>
+    <string name="default_m3u_name">Daftar M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Tekan lama profil untuk mengedit atau menghapusnya</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Hapus</string>
+    <string name="action_cancel">Batal</string>
+    <string name="action_move_left">◀ Pindah</string>
+    <string name="action_move_right">Pindah ▶</string>
+    <string name="action_remove_favorite">Hapus dari favorit</string>
+    <string name="reorder_a11y_position">Mengurutkan, posisi %1$d dari %2$d</string>
+    <string name="action_accept">Selesai</string>
+    <string name="action_add">Tambah</string>
+    <string name="add_profile">Tambah profil</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_clear_cache">Hapus cache saluran &amp; panduan</string>
+    <string name="settings_cache_cleared">Cache dihapus</string>
+    <string name="settings_open_source">Lisensi sumber terbuka</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="language_system">Otomatis (perangkat)</string>
+    <string name="support_entry">Traktir saya kopi ☕</string>
+    <string name="support_title">Suka aplikasi ini?</string>
+    <string name="support_message">Aplikasi ini gratis dan sumber terbuka. Jika bermanfaat, Anda bisa mentraktir saya kopi — seikhlasnya. Terima kasih banyak! Pindai kodenya dengan ponsel Anda:</string>
+    <string name="support_qr_desc">Kode QR untuk donasi di Ko-fi</string>
+    <string name="coffee_bug_text">Suka aplikasi ini? Traktir saya kopi</string>
+    <string name="coffee_dismiss">Jangan tampilkan pengingat ini lagi</string>
+    <string name="coffee_reenable">Tampilkan pengingat lagi</string>
+    <string name="coffee_thanks">Terima kasih! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Pengingat ini bisa dimatikan di Pengaturan, di layar utama ⚙️</string>
+</resources>

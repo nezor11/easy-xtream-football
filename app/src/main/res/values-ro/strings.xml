@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Doar sport în direct</string>
+    <string name="app_loading">Se încarcă…</string>
+    <string name="press_back_to_exit">Apasă din nou Înapoi pentru a ieși</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Sport în direct</string>
+    <string name="live_sports_of">Sport în direct de la %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d canal</item>
+        <item quantity="few">%1$d canale</item>
+        <item quantity="other">%1$d de canale</item>
+    </plurals>
+    <string name="error_load_channels">Canalele nu au putut fi încărcate.</string>
+    <string name="action_retry">Reîncearcă</string>
+    <string name="action_search">🔍 Caută</string>
+    <string name="action_reload">↻ Reîncarcă</string>
+    <string name="action_filters">Filtre</string>
+    <string name="search_field_label">Caută  (ex. fotbal, baschet, tenis)</string>
+    <string name="no_sports_channels">Nu s-au găsit canale de sport în acest profil.</string>
+    <string name="no_results">Niciun rezultat pentru \"%1$s\".</string>
+    <string name="now_live">Acum în direct</string>
+    <string name="section_favorite_channels">Canale favorite</string>
+    <string name="section_recent">Recente</string>
+    <string name="section_favorite_folders">Dosare favorite</string>
+    <string name="section_football">Fotbal</string>
+    <string name="section_more_sports">Alte sporturi</string>
+    <string name="loading_channels">Se încarcă canalele…</string>
+    <string name="folder_back_hint">Înapoi pentru a reveni</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ schimbă canalul</string>
+    <string name="menu_nav_hint">▲▼ alege · ◀▶ secțiune · OK confirmă</string>
+    <string name="controls_legend">OK: meniu  ·  ține OK: ★  ·  ▲▼: calitate  ·  ◀▶: canal (×2 dosar)</string>
+    <string name="controls_legend_touch">Atinge: meniu  ·  glisează ▲▼: calitate  ·  glisează ◀▶: canal</string>
+    <string name="menu_nav_hint_touch">atinge: alege  ·  glisează ◀▶: secțiune</string>
+    <string name="added_to_favorites">★ Adăugat la favorite</string>
+    <string name="player_paused">⏸ În pauză</string>
+    <string name="removed_from_favorites">Eliminat din favorite</string>
+    <string name="epg_now">Acum: %1$s</string>
+    <string name="epg_next_suffix">   ·   Urmează: %1$s</string>
+    <string name="menu_section_quality">Calitate</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Subtitrări</string>
+    <string name="menu_section_guide">Ghid</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Afișează</string>
+    <string name="info_hide">🙈 Ascunde</string>
+    <string name="player_only_one_quality">O singură calitate disponibilă</string>
+    <string name="audio_none">Nicio pistă audio</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Oprit</string>
+    <string name="subtitle_track_n">Subtitrare %1$d</string>
+    <string name="guide_none">Ghid indisponibil</string>
+    <string name="player_blocked_skipping">Blocat în regiunea ta (%1$d) · se omite…</string>
+    <string name="player_skipping_unavailable">Se omite canalul indisponibil…</string>
+    <string name="player_blocked_no_access">Blocat în regiunea ta sau fără acces (%1$d)%2$s</string>
+    <string name="player_channel_from"> · canal din %1$s</string>
+    <string name="player_no_channel">Niciun canal disponibil</string>
+    <string name="player_low_bandwidth">Conexiune lentă (~%1$s Mbps) · lățime de bandă insuficientă pentru TV în direct — e rețeaua ta, nu aplicația.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Editează profilul</string>
+    <string name="add_connect_list">Conectează-ți lista</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Listă M3U</string>
+    <string name="profile_type_direct">Link direct</string>
+    <string name="add_desc_direct">Lipește un URL de stream (HLS .m3u8 sau DASH .mpd). Se redă ca atare, fără filtru de sport.</string>
+    <string name="add_desc_m3u">Lipește URL-ul playlistului tău (.m3u / m3u_plus). Cea mai compatibilă opțiune dacă furnizorul blochează API-ul.</string>
+    <string name="add_desc_xtream">Conectează-te cu adresa serverului, numele de utilizator și parola.</string>
+    <string name="field_stream_url">URL stream (HLS/DASH)</string>
+    <string name="field_m3u_url">URL playlist M3U</string>
+    <string name="helper_direct">Ex.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">Ex.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Numele profilului (opțional)</string>
+    <string name="field_server_url">URL server</string>
+    <string name="field_username">Nume de utilizator</string>
+    <string name="field_password">Parolă</string>
+    <string name="show_password">Arată parola</string>
+    <string name="hide_password">Ascunde parola</string>
+    <string name="helper_server">Ex.: http://domeniulmeu.com:8080</string>
+    <string name="btn_connecting">Se conectează…</string>
+    <string name="btn_save_changes">Salvează modificările</string>
+    <string name="btn_save_enter">Salvează și intră</string>
+    <string name="error_m3u_load">Playlistul M3U nu a putut fi încărcat. Verifică URL-ul.</string>
+    <string name="error_xtream_auth">Serverul a respins numele de utilizator sau parola.</string>
+    <string name="error_xtream_unreachable">Serverul nu poate fi accesat (%1$s). Verifică URL-ul sau încearcă alt host de la furnizor.</string>
+    <string name="error_xtream_http">Serverul a răspuns HTTP %1$d. Verifică URL-ul (doar host și port, fără /player_api.php).</string>
+    <string name="error_xtream_bad_response">Răspuns neașteptat de la server. Verifică dacă URL-ul este un panou Xtream.</string>
+    <string name="default_m3u_name">Listă M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Ține apăsat un profil pentru a-l edita sau șterge</string>
+    <string name="action_edit">Editează</string>
+    <string name="action_delete">Șterge</string>
+    <string name="action_cancel">Anulează</string>
+    <string name="action_move_left">◀ Mută</string>
+    <string name="action_move_right">Mută ▶</string>
+    <string name="action_remove_favorite">Elimină din favorite</string>
+    <string name="reorder_a11y_position">Reordonare, poziția %1$d din %2$d</string>
+    <string name="action_accept">Gata</string>
+    <string name="action_add">Adaugă</string>
+    <string name="add_profile">Adaugă profil</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Setări</string>
+    <string name="settings_clear_cache">Golește cache-ul de canale &amp; ghid</string>
+    <string name="settings_cache_cleared">Cache golit</string>
+    <string name="settings_open_source">Licențe open source</string>
+    <string name="settings_language">Limbă</string>
+    <string name="language_system">Automat (dispozitiv)</string>
+    <string name="support_entry">Dă-mi o cafea ☕</string>
+    <string name="support_title">Îți place aplicația?</string>
+    <string name="support_message">Aplicația e gratuită și open source. Dacă ți-e utilă, îmi poți face cinste cu o cafea — cât vrei tu. Mulțumesc mult! Scanează codul cu telefonul:</string>
+    <string name="support_qr_desc">Cod QR pentru donații pe Ko-fi</string>
+    <string name="coffee_bug_text">Îți place aplicația? Dă-mi o cafea</string>
+    <string name="coffee_dismiss">Nu mai arăta acest memento</string>
+    <string name="coffee_reenable">Arată memento-ul din nou</string>
+    <string name="coffee_thanks">Mulțumesc! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Poți opri acest memento din Setări, pe ecranul principal ⚙️</string>
+</resources>

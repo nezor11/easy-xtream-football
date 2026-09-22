@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Samo sport uživo</string>
+    <string name="app_loading">Učitavanje…</string>
+    <string name="press_back_to_exit">Pritisni Nazad još jednom za izlaz</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Sport uživo</string>
+    <string name="live_sports_of">Sport uživo: %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d kanal</item>
+        <item quantity="few">%1$d kanala</item>
+        <item quantity="other">%1$d kanala</item>
+    </plurals>
+    <string name="error_load_channels">Kanali nisu mogli da se učitaju.</string>
+    <string name="action_retry">Pokušaj ponovo</string>
+    <string name="action_search">🔍 Pretraži</string>
+    <string name="action_reload">↻ Osveži</string>
+    <string name="action_filters">Filteri</string>
+    <string name="search_field_label">Pretraži  (npr. fudbal, košarka, tenis)</string>
+    <string name="no_sports_channels">U ovom profilu nema sportskih kanala.</string>
+    <string name="no_results">Nema rezultata za \"%1$s\".</string>
+    <string name="now_live">Sada uživo</string>
+    <string name="section_favorite_channels">Omiljeni kanali</string>
+    <string name="section_recent">Nedavno</string>
+    <string name="section_favorite_folders">Omiljene fascikle</string>
+    <string name="section_football">Fudbal</string>
+    <string name="section_more_sports">Ostali sportovi</string>
+    <string name="loading_channels">Učitavanje kanala…</string>
+    <string name="folder_back_hint">Nazad za povratak</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ promeni kanal</string>
+    <string name="menu_nav_hint">▲▼ izaberi · ◀▶ odeljak · OK potvrdi</string>
+    <string name="controls_legend">OK: meni  ·  drži OK: ★  ·  ▲▼: kvalitet  ·  ◀▶: kanal (×2 fascikla)</string>
+    <string name="controls_legend_touch">Dodir: meni  ·  prevuci ▲▼: kvalitet  ·  prevuci ◀▶: kanal</string>
+    <string name="menu_nav_hint_touch">dodir: izaberi  ·  prevuci ◀▶: odeljak</string>
+    <string name="added_to_favorites">★ Dodato u omiljene</string>
+    <string name="player_paused">⏸ Pauzirano</string>
+    <string name="removed_from_favorites">Uklonjeno iz omiljenih</string>
+    <string name="epg_now">Sada: %1$s</string>
+    <string name="epg_next_suffix">   ·   Sledeće: %1$s</string>
+    <string name="menu_section_quality">Kvalitet</string>
+    <string name="menu_section_audio">Zvuk</string>
+    <string name="menu_section_subtitles">Titlovi</string>
+    <string name="menu_section_guide">Vodič</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Prikaži</string>
+    <string name="info_hide">🙈 Sakrij</string>
+    <string name="player_only_one_quality">Dostupan je samo jedan kvalitet</string>
+    <string name="audio_none">Nema zvučnih zapisa</string>
+    <string name="audio_track_n">Zvuk %1$d</string>
+    <string name="subtitles_off">Isključeno</string>
+    <string name="subtitle_track_n">Titl %1$d</string>
+    <string name="guide_none">Vodič nije dostupan</string>
+    <string name="player_blocked_skipping">Blokirano u tvom regionu (%1$d) · preskačem…</string>
+    <string name="player_skipping_unavailable">Preskačem nedostupan kanal…</string>
+    <string name="player_blocked_no_access">Blokirano u tvom regionu ili nema pristupa (%1$d)%2$s</string>
+    <string name="player_channel_from"> · kanal iz: %1$s</string>
+    <string name="player_no_channel">Nema dostupnog kanala</string>
+    <string name="player_low_bandwidth">Spora veza (~%1$s Mbps) · premalo protoka za TV uživo — problem je u tvojoj mreži, ne u aplikaciji.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Izmeni profil</string>
+    <string name="add_connect_list">Poveži svoju listu</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U lista</string>
+    <string name="profile_type_direct">Direktan link</string>
+    <string name="add_desc_direct">Nalepi URL strima (HLS .m3u8 ili DASH .mpd). Reprodukuje se takav kakav je, bez sportskog filtera.</string>
+    <string name="add_desc_m3u">Nalepi URL svoje liste (.m3u / m3u_plus). Najkompatibilnija opcija ako provajder blokira API.</string>
+    <string name="add_desc_xtream">Poveži se adresom servera, korisničkim imenom i lozinkom.</string>
+    <string name="field_stream_url">URL strima (HLS/DASH)</string>
+    <string name="field_m3u_url">URL M3U liste</string>
+    <string name="helper_direct">Npr.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">Npr.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Naziv profila (opciono)</string>
+    <string name="field_server_url">URL servera</string>
+    <string name="field_username">Korisničko ime</string>
+    <string name="field_password">Lozinka</string>
+    <string name="show_password">Prikaži lozinku</string>
+    <string name="hide_password">Sakrij lozinku</string>
+    <string name="helper_server">Npr.: http://mojdomen.com:8080</string>
+    <string name="btn_connecting">Povezivanje…</string>
+    <string name="btn_save_changes">Sačuvaj izmene</string>
+    <string name="btn_save_enter">Sačuvaj i uđi</string>
+    <string name="error_m3u_load">M3U lista nije mogla da se učita. Proveri URL.</string>
+    <string name="error_xtream_auth">Server je odbio korisničko ime ili lozinku.</string>
+    <string name="error_xtream_unreachable">Server nije dostupan (%1$s). Proveri URL ili probaj drugi host svog provajdera.</string>
+    <string name="error_xtream_http">Server je odgovorio HTTP %1$d. Proveri URL (samo host i port, bez /player_api.php).</string>
+    <string name="error_xtream_bad_response">Neočekivan odgovor servera. Proveri da li je URL Xtream panel.</string>
+    <string name="default_m3u_name">M3U lista</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Drži pritisnut profil da ga izmeniš ili obrišeš</string>
+    <string name="action_edit">Izmeni</string>
+    <string name="action_delete">Obriši</string>
+    <string name="action_cancel">Otkaži</string>
+    <string name="action_move_left">◀ Pomeri</string>
+    <string name="action_move_right">Pomeri ▶</string>
+    <string name="action_remove_favorite">Ukloni iz omiljenih</string>
+    <string name="reorder_a11y_position">Promena redosleda, pozicija %1$d od %2$d</string>
+    <string name="action_accept">Gotovo</string>
+    <string name="action_add">Dodaj</string>
+    <string name="add_profile">Dodaj profil</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Podešavanja</string>
+    <string name="settings_clear_cache">Obriši keš kanala i vodiča</string>
+    <string name="settings_cache_cleared">Keš obrisan</string>
+    <string name="settings_open_source">Licence otvorenog koda</string>
+    <string name="settings_language">Jezik</string>
+    <string name="language_system">Automatski (uređaj)</string>
+    <string name="support_entry">Časti me kafom ☕</string>
+    <string name="support_title">Sviđa ti se aplikacija?</string>
+    <string name="support_message">Aplikacija je besplatna i otvorenog koda. Ako ti je korisna, možeš da me počastiš kafom — koliko god želiš. Hvala puno! Skeniraj kod telefonom:</string>
+    <string name="support_qr_desc">QR kod za donaciju na Ko-fi</string>
+    <string name="coffee_bug_text">Sviđa ti se aplikacija? Časti me kafom</string>
+    <string name="coffee_dismiss">Ne prikazuj više ovaj podsetnik</string>
+    <string name="coffee_reenable">Ponovo prikaži podsetnik</string>
+    <string name="coffee_thanks">Hvala! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Ovaj podsetnik možeš da isključiš u Podešavanjima na početnom ekranu ⚙️</string>
+</resources>

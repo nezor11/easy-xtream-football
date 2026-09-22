@@ -57,6 +57,12 @@ private fun autonym(tag: String): String = when (tag) {
     "tr" -> "Türkçe"
     "pl" -> "Polski"
     "ar" -> "العربية"
+    "id" -> "Bahasa Indonesia"
+    "vi" -> "Tiếng Việt"
+    "ro" -> "Română"
+    "el" -> "Ελληνικά"
+    "hr" -> "Hrvatski"
+    "sr-Latn" -> "Srpski"
     else -> tag
 }
 
