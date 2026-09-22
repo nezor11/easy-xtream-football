@@ -298,6 +298,29 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   ST=Valencia, C=ES`, válida hasta 2053-11-03, `SHA256: E9:9B:9E:F2:...:F8:F9`. **No** es `CN=Android Debug`.
 - Entorno de esta máquina: SDK Platform 36 y **JDK 25** (no hace falta el 17, compila igual).
 
+## 0.1.7 PREPARADA — 2026-09-22 (máquina Linux, ya con la clave)
+- `versionCode` **8** · `versionName` **0.1.7**. Lleva los 4 arreglos del 2026-09-22 (favoritos entre perfiles,
+  pulsación larga de OK en canales y perfiles, logos). Todo probado en el Chromecast con la build debug.
+- **Decisión pendiente: cuándo subirla.** La 0.1.6 sigue en revisión; crear otra versión de Producción la
+  sustituye y reinicia la revisión. Nota: la 0.1.5 publicada (aprobada por Google) ya llevaba el fallo de la
+  pulsación larga, así que no es motivo de rechazo conocido. Opción prudente: esperar el veredicto de la 0.1.6
+  y subir la 0.1.7 justo después como actualización.
+- **Notas de versión de 0.1.7** (máx. 500 caracteres por idioma):
+  ```
+  <es-ES>
+  • Los favoritos se conservan al cambiar entre el perfil Xtream y la lista M3U del mismo proveedor.
+  • Android TV: vuelve a funcionar mantener pulsado OK sobre un canal, una carpeta o un perfil (reordenar favoritos, menús, editar perfil).
+  • Muchos más logos de canal, también en listas M3U que no los traen.
+  </es-ES>
+  ```
+  ```
+  <en-US>
+  • Favorites carry over between the Xtream profile and the M3U playlist of the same provider.
+  • Android TV: holding OK on a channel, folder or profile works again (reorder favorites, menus, edit profile).
+  • Many more channel logos, also for M3U playlists that ship none.
+  </en-US>
+  ```
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
