@@ -263,6 +263,19 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   (deja los dos ficheros en su ruta; en Linux hace falta `p7zip`). Después comprobar la firma con
   `keytool -printcert -jarfile` → debe salir `CN=Jorge Mtnez`, no `CN=Android Debug`.
 
+### Clave de subida restaurada en la máquina Linux (2026-09-22)
+- `7z x /run/media/jmtnez/FEDORA-WS-L/clave-easy-xtream.7z -o<raíz del repo>` deja `keystore.properties` y
+  `keystore/easy-xtream-release.jks` en su ruta. **Hay que hacerlo en una terminal real** (aquí, Ptyxis): el
+  prompt de contraseña de 7-Zip no funciona a través del `!` de Claude Code, se corta con *"Break signaled"*.
+  No hace falta editar nada: la ruta de `storeFile` es relativa y vale igual viniendo de Windows.
+- Comprobado: Git ignora los dos ficheros (`*.jks` y `keystore.properties` en `.gitignore`) y el árbol
+  sigue limpio.
+- `gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` → BUILD SUCCESSFUL, **59 tests, 0 fallos**
+  (relanzados con `--rerun`, no de la caché). AAB de 16.431.622 bytes.
+- **Firma verificada, idéntica a la del Windows:** `Owner: CN=Jorge Mtnez, OU=IT, O=nezor, L=Valencia,
+  ST=Valencia, C=ES`, válida hasta 2053-11-03, `SHA256: E9:9B:9E:F2:...:F8:F9`. **No** es `CN=Android Debug`.
+- Entorno de esta máquina: SDK Platform 36 y **JDK 25** (no hace falta el 17, compila igual).
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
@@ -278,7 +291,8 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 7. ✅ **Actualización 0.1.6** firmada y **enviada a revisión el 2026-09-21**, junto con los materiales de
    Android TV; factor de forma Android TV ya activo. ⏳ Esperando aprobación de Google.
 8. ✅ **Copia de la clave de subida fuera de ambas máquinas** (2026-09-22, `.7z` cifrado en USB offline).
-   ⏳ Falta solo llevarla a la máquina Linux desde ese USB si se quiere firmar también allí.
+   ✅ **Clave restaurada también en la máquina Linux el 2026-09-22** (ver abajo): ya se puede firmar desde
+   cualquiera de las dos.
 
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
