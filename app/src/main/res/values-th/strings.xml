@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">เฉพาะกีฬาสด</string>
+    <string name="app_loading">กำลังโหลด…</string>
+    <string name="press_back_to_exit">กดย้อนกลับอีกครั้งเพื่อออก</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">กีฬาสด</string>
+    <string name="live_sports_of">กีฬาสดจาก %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="other">%1$d ช่อง</item>
+    </plurals>
+    <string name="error_load_channels">โหลดช่องไม่สำเร็จ</string>
+    <string name="action_retry">ลองอีกครั้ง</string>
+    <string name="action_search">🔍 ค้นหา</string>
+    <string name="action_reload">↻ โหลดใหม่</string>
+    <string name="action_filters">ตัวกรอง</string>
+    <string name="search_field_label">ค้นหา  (เช่น ฟุตบอล บาสเกตบอล เทนนิส)</string>
+    <string name="no_sports_channels">ไม่พบช่องกีฬาในโปรไฟล์นี้</string>
+    <string name="no_results">ไม่พบผลลัพธ์สำหรับ \"%1$s\"</string>
+    <string name="now_live">กำลังถ่ายทอดสด</string>
+    <string name="section_favorite_channels">ช่องโปรด</string>
+    <string name="section_recent">ล่าสุด</string>
+    <string name="section_favorite_folders">โฟลเดอร์โปรด</string>
+    <string name="section_football">ฟุตบอล</string>
+    <string name="section_more_sports">กีฬาอื่น ๆ</string>
+    <string name="loading_channels">กำลังโหลดช่อง…</string>
+    <string name="folder_back_hint">กดย้อนกลับเพื่อออก</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">อัตโนมัติ</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ เปลี่ยนช่อง</string>
+    <string name="menu_nav_hint">▲▼ เลือก · ◀▶ หมวด · OK ยืนยัน</string>
+    <string name="controls_legend">OK: เมนู  ·  กด OK ค้าง: ★  ·  ▲▼: คุณภาพ  ·  ◀▶: ช่อง (×2 โฟลเดอร์)</string>
+    <string name="controls_legend_touch">แตะ: เมนู  ·  ปัด ▲▼: คุณภาพ  ·  ปัด ◀▶: ช่อง</string>
+    <string name="menu_nav_hint_touch">แตะ: เลือก  ·  ปัด ◀▶: หมวด</string>
+    <string name="added_to_favorites">★ เพิ่มในรายการโปรดแล้ว</string>
+    <string name="player_paused">⏸ หยุดชั่วคราว</string>
+    <string name="removed_from_favorites">นำออกจากรายการโปรดแล้ว</string>
+    <string name="epg_now">ตอนนี้: %1$s</string>
+    <string name="epg_next_suffix">   ·   ถัดไป: %1$s</string>
+    <string name="menu_section_quality">คุณภาพ</string>
+    <string name="menu_section_audio">เสียง</string>
+    <string name="menu_section_subtitles">คำบรรยาย</string>
+    <string name="menu_section_guide">ผังรายการ</string>
+    <string name="menu_section_info">ข้อมูล</string>
+    <string name="info_show">👁️ แสดง</string>
+    <string name="info_hide">🙈 ซ่อน</string>
+    <string name="player_only_one_quality">มีคุณภาพเดียวเท่านั้น</string>
+    <string name="audio_none">ไม่มีแทร็กเสียง</string>
+    <string name="audio_track_n">เสียง %1$d</string>
+    <string name="subtitles_off">ปิด</string>
+    <string name="subtitle_track_n">คำบรรยาย %1$d</string>
+    <string name="guide_none">ไม่มีผังรายการ</string>
+    <string name="player_blocked_skipping">ถูกบล็อกในภูมิภาคของคุณ (%1$d) · กำลังข้าม…</string>
+    <string name="player_skipping_unavailable">กำลังข้ามช่องที่ใช้ไม่ได้…</string>
+    <string name="player_blocked_no_access">ถูกบล็อกในภูมิภาคของคุณหรือไม่มีสิทธิ์เข้าถึง (%1$d)%2$s</string>
+    <string name="player_channel_from"> · ช่องจาก %1$s</string>
+    <string name="player_no_channel">ไม่มีช่องที่ใช้ได้</string>
+    <string name="player_low_bandwidth">การเชื่อมต่อช้า (~%1$s Mbps) · แบนด์วิดท์ไม่พอสำหรับทีวีสด — เป็นที่เครือข่ายของคุณ ไม่ใช่แอป</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">แก้ไขโปรไฟล์</string>
+    <string name="add_connect_list">เชื่อมต่อรายการของคุณ</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">รายการ M3U</string>
+    <string name="profile_type_direct">ลิงก์โดยตรง</string>
+    <string name="add_desc_direct">วาง URL ของสตรีม (HLS .m3u8 หรือ DASH .mpd) จะเล่นตามที่เป็น โดยไม่กรองกีฬา</string>
+    <string name="add_desc_m3u">วาง URL เพลย์ลิสต์ของคุณ (.m3u / m3u_plus) ตัวเลือกที่เข้ากันได้ดีที่สุดหากผู้ให้บริการบล็อก API</string>
+    <string name="add_desc_xtream">เชื่อมต่อด้วยที่อยู่เซิร์ฟเวอร์ ชื่อผู้ใช้ และรหัสผ่านของคุณ</string>
+    <string name="field_stream_url">URL สตรีม (HLS/DASH)</string>
+    <string name="field_m3u_url">URL เพลย์ลิสต์ M3U</string>
+    <string name="helper_direct">เช่น https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">เช่น http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">ชื่อโปรไฟล์ (ไม่บังคับ)</string>
+    <string name="field_server_url">URL เซิร์ฟเวอร์</string>
+    <string name="field_username">ชื่อผู้ใช้</string>
+    <string name="field_password">รหัสผ่าน</string>
+    <string name="show_password">แสดงรหัสผ่าน</string>
+    <string name="hide_password">ซ่อนรหัสผ่าน</string>
+    <string name="helper_server">เช่น http://mydomain.com:8080</string>
+    <string name="btn_connecting">กำลังเชื่อมต่อ…</string>
+    <string name="btn_save_changes">บันทึกการเปลี่ยนแปลง</string>
+    <string name="btn_save_enter">บันทึกและเข้าใช้</string>
+    <string name="error_m3u_load">โหลดเพลย์ลิสต์ M3U ไม่สำเร็จ ตรวจสอบ URL</string>
+    <string name="error_xtream_auth">เซิร์ฟเวอร์ปฏิเสธชื่อผู้ใช้หรือรหัสผ่าน</string>
+    <string name="error_xtream_unreachable">เข้าถึงเซิร์ฟเวอร์ไม่ได้ (%1$s) ตรวจสอบ URL หรือลองโฮสต์อื่นของผู้ให้บริการ</string>
+    <string name="error_xtream_http">เซิร์ฟเวอร์ตอบกลับ HTTP %1$d ตรวจสอบ URL (เฉพาะโฮสต์และพอร์ต ไม่มี /player_api.php)</string>
+    <string name="error_xtream_bad_response">การตอบกลับจากเซิร์ฟเวอร์ผิดปกติ ตรวจสอบว่า URL เป็นแผง Xtream</string>
+    <string name="default_m3u_name">รายการ M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">กดโปรไฟล์ค้างไว้เพื่อแก้ไขหรือลบ</string>
+    <string name="action_edit">แก้ไข</string>
+    <string name="action_delete">ลบ</string>
+    <string name="action_cancel">ยกเลิก</string>
+    <string name="action_move_left">◀ ย้าย</string>
+    <string name="action_move_right">ย้าย ▶</string>
+    <string name="action_remove_favorite">นำออกจากรายการโปรด</string>
+    <string name="reorder_a11y_position">กำลังจัดเรียง ตำแหน่ง %1$d จาก %2$d</string>
+    <string name="action_accept">เสร็จสิ้น</string>
+    <string name="action_add">เพิ่ม</string>
+    <string name="add_profile">เพิ่มโปรไฟล์</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">การตั้งค่า</string>
+    <string name="settings_clear_cache">ล้างแคชช่องและผังรายการ</string>
+    <string name="settings_cache_cleared">ล้างแคชแล้ว</string>
+    <string name="settings_open_source">สัญญาอนุญาตโอเพนซอร์ส</string>
+    <string name="settings_language">ภาษา</string>
+    <string name="language_system">อัตโนมัติ (อุปกรณ์)</string>
+    <string name="support_entry">เลี้ยงกาแฟฉันสักแก้ว ☕</string>
+    <string name="support_title">ชอบแอปนี้ไหม</string>
+    <string name="support_message">แอปนี้ฟรีและเป็นโอเพนซอร์ส หากคุณเห็นว่ามีประโยชน์ เลี้ยงกาแฟฉันสักแก้วได้ — ตามใจคุณ ขอบคุณมาก! สแกนรหัสด้วยโทรศัพท์ของคุณ:</string>
+    <string name="support_qr_desc">รหัส QR สำหรับบริจาคบน Ko-fi</string>
+    <string name="coffee_bug_text">ชอบแอปนี้ไหม เลี้ยงกาแฟฉันสักแก้ว</string>
+    <string name="coffee_dismiss">ไม่ต้องแสดงการเตือนนี้อีก</string>
+    <string name="coffee_reenable">แสดงการเตือนอีกครั้ง</string>
+    <string name="coffee_thanks">ขอบคุณ! Jorge ❤️</string>
+    <string name="coffee_disable_hint">ปิดการเตือนนี้ได้ในการตั้งค่าที่หน้าจอหลัก ⚙️</string>
+</resources>

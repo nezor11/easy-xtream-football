@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Только спорт в прямом эфире</string>
+    <string name="app_loading">Загрузка…</string>
+    <string name="press_back_to_exit">Нажмите «Назад» ещё раз, чтобы выйти</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Спорт в прямом эфире</string>
+    <string name="live_sports_of">Спорт в прямом эфире: %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d канал</item>
+        <item quantity="few">%1$d канала</item>
+        <item quantity="many">%1$d каналов</item>
+        <item quantity="other">%1$d канала</item>
+    </plurals>
+    <string name="error_load_channels">Не удалось загрузить каналы.</string>
+    <string name="action_retry">Повторить</string>
+    <string name="action_search">🔍 Поиск</string>
+    <string name="action_reload">↻ Обновить</string>
+    <string name="action_filters">Фильтры</string>
+    <string name="search_field_label">Поиск  (напр. футбол, баскетбол, теннис)</string>
+    <string name="no_sports_channels">В этом профиле нет спортивных каналов.</string>
+    <string name="no_results">Ничего не найдено по запросу «%1$s».</string>
+    <string name="now_live">Сейчас в эфире</string>
+    <string name="section_favorite_channels">Избранные каналы</string>
+    <string name="section_recent">Недавние</string>
+    <string name="section_favorite_folders">Избранные папки</string>
+    <string name="section_football">Футбол</string>
+    <string name="section_more_sports">Другие виды спорта</string>
+    <string name="loading_channels">Загрузка каналов…</string>
+    <string name="folder_back_hint">«Назад» — вернуться</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Авто</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ сменить канал</string>
+    <string name="menu_nav_hint">▲▼ выбор · ◀▶ раздел · OK подтвердить</string>
+    <string name="controls_legend">OK: меню  ·  удерживать OK: ★  ·  ▲▼: качество  ·  ◀▶: канал (×2 папка)</string>
+    <string name="controls_legend_touch">Касание: меню  ·  свайп ▲▼: качество  ·  свайп ◀▶: канал</string>
+    <string name="menu_nav_hint_touch">касание: выбор  ·  свайп ◀▶: раздел</string>
+    <string name="added_to_favorites">★ Добавлено в избранное</string>
+    <string name="player_paused">⏸ Пауза</string>
+    <string name="removed_from_favorites">Удалено из избранного</string>
+    <string name="epg_now">Сейчас: %1$s</string>
+    <string name="epg_next_suffix">   ·   Далее: %1$s</string>
+    <string name="menu_section_quality">Качество</string>
+    <string name="menu_section_audio">Звук</string>
+    <string name="menu_section_subtitles">Субтитры</string>
+    <string name="menu_section_guide">Программа</string>
+    <string name="menu_section_info">Инфо</string>
+    <string name="info_show">👁️ Показать</string>
+    <string name="info_hide">🙈 Скрыть</string>
+    <string name="player_only_one_quality">Доступно только одно качество</string>
+    <string name="audio_none">Нет звуковых дорожек</string>
+    <string name="audio_track_n">Звук %1$d</string>
+    <string name="subtitles_off">Выкл.</string>
+    <string name="subtitle_track_n">Субтитры %1$d</string>
+    <string name="guide_none">Программа недоступна</string>
+    <string name="player_blocked_skipping">Заблокировано в вашем регионе (%1$d) · пропуск…</string>
+    <string name="player_skipping_unavailable">Пропуск недоступного канала…</string>
+    <string name="player_blocked_no_access">Заблокировано в вашем регионе или нет доступа (%1$d)%2$s</string>
+    <string name="player_channel_from"> · канал из %1$s</string>
+    <string name="player_no_channel">Нет доступных каналов</string>
+    <string name="player_low_bandwidth">Медленное соединение (~%1$s Мбит/с) · пропускной способности не хватает для прямого эфира — дело в вашей сети, а не в приложении.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Редактировать профиль</string>
+    <string name="add_connect_list">Подключите свой список</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Список M3U</string>
+    <string name="profile_type_direct">Прямая ссылка</string>
+    <string name="add_desc_direct">Вставьте URL потока (HLS .m3u8 или DASH .mpd). Воспроизводится как есть, без спортивного фильтра.</string>
+    <string name="add_desc_m3u">Вставьте URL вашего плейлиста (.m3u / m3u_plus). Самый совместимый вариант, если провайдер блокирует API.</string>
+    <string name="add_desc_xtream">Подключитесь, указав адрес сервера, имя пользователя и пароль.</string>
+    <string name="field_stream_url">URL потока (HLS/DASH)</string>
+    <string name="field_m3u_url">URL плейлиста M3U</string>
+    <string name="helper_direct">Напр.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">Напр.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Название профиля (необязательно)</string>
+    <string name="field_server_url">URL сервера</string>
+    <string name="field_username">Имя пользователя</string>
+    <string name="field_password">Пароль</string>
+    <string name="show_password">Показать пароль</string>
+    <string name="hide_password">Скрыть пароль</string>
+    <string name="helper_server">Напр.: http://mydomain.com:8080</string>
+    <string name="btn_connecting">Подключение…</string>
+    <string name="btn_save_changes">Сохранить изменения</string>
+    <string name="btn_save_enter">Сохранить и войти</string>
+    <string name="error_m3u_load">Не удалось загрузить плейлист M3U. Проверьте URL.</string>
+    <string name="error_xtream_auth">Сервер отклонил имя пользователя или пароль.</string>
+    <string name="error_xtream_unreachable">Сервер недоступен (%1$s). Проверьте URL или попробуйте другой хост провайдера.</string>
+    <string name="error_xtream_http">Сервер ответил HTTP %1$d. Проверьте URL (только хост и порт, без /player_api.php).</string>
+    <string name="error_xtream_bad_response">Неожиданный ответ сервера. Проверьте, что URL — это панель Xtream.</string>
+    <string name="default_m3u_name">Список M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Удерживайте профиль, чтобы изменить или удалить его</string>
+    <string name="action_edit">Изменить</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_move_left">◀ Переместить</string>
+    <string name="action_move_right">Переместить ▶</string>
+    <string name="action_remove_favorite">Удалить из избранного</string>
+    <string name="reorder_a11y_position">Изменение порядка, позиция %1$d из %2$d</string>
+    <string name="action_accept">Готово</string>
+    <string name="action_add">Добавить</string>
+    <string name="add_profile">Добавить профиль</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_clear_cache">Очистить кеш каналов и программы</string>
+    <string name="settings_cache_cleared">Кеш очищен</string>
+    <string name="settings_open_source">Лицензии открытого ПО</string>
+    <string name="settings_language">Язык</string>
+    <string name="language_system">Автоматически (устройство)</string>
+    <string name="support_entry">Угостить меня кофе ☕</string>
+    <string name="support_title">Нравится приложение?</string>
+    <string name="support_message">Приложение бесплатное и с открытым исходным кодом. Если оно вам полезно, можете угостить меня кофе — на любую сумму. Большое спасибо! Отсканируйте код телефоном:</string>
+    <string name="support_qr_desc">QR-код для пожертвования на Ko-fi</string>
+    <string name="coffee_bug_text">Нравится приложение? Угостите меня кофе</string>
+    <string name="coffee_dismiss">Больше не показывать это напоминание</string>
+    <string name="coffee_reenable">Показывать напоминание снова</string>
+    <string name="coffee_thanks">Спасибо! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Отключить это напоминание можно в настройках на главном экране ⚙️</string>
+</resources>

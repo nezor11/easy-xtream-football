@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">सिर्फ़ लाइव खेल</string>
+    <string name="app_loading">लोड हो रहा है…</string>
+    <string name="press_back_to_exit">बाहर निकलने के लिए फिर से बैक दबाएँ</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">लाइव खेल</string>
+    <string name="live_sports_of">%1$s के लाइव खेल</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d चैनल</item>
+        <item quantity="other">%1$d चैनल</item>
+    </plurals>
+    <string name="error_load_channels">चैनल लोड नहीं हो सके।</string>
+    <string name="action_retry">फिर कोशिश करें</string>
+    <string name="action_search">🔍 खोजें</string>
+    <string name="action_reload">↻ फिर से लोड करें</string>
+    <string name="action_filters">फ़िल्टर</string>
+    <string name="search_field_label">खोजें  (जैसे फ़ुटबॉल, बास्केटबॉल, टेनिस)</string>
+    <string name="no_sports_channels">इस प्रोफ़ाइल में कोई खेल चैनल नहीं मिला।</string>
+    <string name="no_results">\"%1$s\" के लिए कोई नतीजा नहीं।</string>
+    <string name="now_live">अभी लाइव</string>
+    <string name="section_favorite_channels">पसंदीदा चैनल</string>
+    <string name="section_recent">हाल के</string>
+    <string name="section_favorite_folders">पसंदीदा फ़ोल्डर</string>
+    <string name="section_football">फ़ुटबॉल</string>
+    <string name="section_more_sports">अन्य खेल</string>
+    <string name="loading_channels">चैनल लोड हो रहे हैं…</string>
+    <string name="folder_back_hint">लौटने के लिए बैक दबाएँ</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">ऑटो</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ चैनल बदलें</string>
+    <string name="menu_nav_hint">▲▼ चुनें · ◀▶ सेक्शन · OK पुष्टि करें</string>
+    <string name="controls_legend">OK: मेनू  ·  OK दबाए रखें: ★  ·  ▲▼: क्वालिटी  ·  ◀▶: चैनल (×2 फ़ोल्डर)</string>
+    <string name="controls_legend_touch">टैप: मेनू  ·  स्वाइप ▲▼: क्वालिटी  ·  स्वाइप ◀▶: चैनल</string>
+    <string name="menu_nav_hint_touch">टैप: चुनें  ·  स्वाइप ◀▶: सेक्शन</string>
+    <string name="added_to_favorites">★ पसंदीदा में जोड़ा गया</string>
+    <string name="player_paused">⏸ रुका हुआ</string>
+    <string name="removed_from_favorites">पसंदीदा से हटाया गया</string>
+    <string name="epg_now">अभी: %1$s</string>
+    <string name="epg_next_suffix">   ·   आगे: %1$s</string>
+    <string name="menu_section_quality">क्वालिटी</string>
+    <string name="menu_section_audio">ऑडियो</string>
+    <string name="menu_section_subtitles">सबटाइटल</string>
+    <string name="menu_section_guide">गाइड</string>
+    <string name="menu_section_info">जानकारी</string>
+    <string name="info_show">👁️ दिखाएँ</string>
+    <string name="info_hide">🙈 छिपाएँ</string>
+    <string name="player_only_one_quality">सिर्फ़ एक क्वालिटी उपलब्ध है</string>
+    <string name="audio_none">कोई ऑडियो ट्रैक नहीं</string>
+    <string name="audio_track_n">ऑडियो %1$d</string>
+    <string name="subtitles_off">बंद</string>
+    <string name="subtitle_track_n">सबटाइटल %1$d</string>
+    <string name="guide_none">गाइड उपलब्ध नहीं</string>
+    <string name="player_blocked_skipping">आपके क्षेत्र में ब्लॉक है (%1$d) · छोड़ा जा रहा है…</string>
+    <string name="player_skipping_unavailable">अनुपलब्ध चैनल छोड़ा जा रहा है…</string>
+    <string name="player_blocked_no_access">आपके क्षेत्र में ब्लॉक है या एक्सेस नहीं है (%1$d)%2$s</string>
+    <string name="player_channel_from"> · %1$s का चैनल</string>
+    <string name="player_no_channel">कोई चैनल उपलब्ध नहीं</string>
+    <string name="player_low_bandwidth">धीमा कनेक्शन (~%1$s Mbps) · लाइव टीवी के लिए बैंडविड्थ काफ़ी नहीं — समस्या आपके नेटवर्क में है, ऐप में नहीं।</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">प्रोफ़ाइल संपादित करें</string>
+    <string name="add_connect_list">अपनी सूची जोड़ें</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U सूची</string>
+    <string name="profile_type_direct">सीधा लिंक</string>
+    <string name="add_desc_direct">स्ट्रीम का URL पेस्ट करें (HLS .m3u8 या DASH .mpd)। यह जैसा है वैसा ही चलेगा, बिना खेल फ़िल्टर के।</string>
+    <string name="add_desc_m3u">अपनी प्लेलिस्ट का URL पेस्ट करें (.m3u / m3u_plus)। अगर प्रोवाइडर API ब्लॉक करता है तो यह सबसे अनुकूल विकल्प है।</string>
+    <string name="add_desc_xtream">सर्वर का पता, अपना यूज़रनेम और पासवर्ड डालकर कनेक्ट करें।</string>
+    <string name="field_stream_url">स्ट्रीम URL (HLS/DASH)</string>
+    <string name="field_m3u_url">M3U प्लेलिस्ट URL</string>
+    <string name="helper_direct">जैसे: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">जैसे: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">प्रोफ़ाइल का नाम (वैकल्पिक)</string>
+    <string name="field_server_url">सर्वर URL</string>
+    <string name="field_username">यूज़रनेम</string>
+    <string name="field_password">पासवर्ड</string>
+    <string name="show_password">पासवर्ड दिखाएँ</string>
+    <string name="hide_password">पासवर्ड छिपाएँ</string>
+    <string name="helper_server">जैसे: http://mydomain.com:8080</string>
+    <string name="btn_connecting">कनेक्ट हो रहा है…</string>
+    <string name="btn_save_changes">बदलाव सहेजें</string>
+    <string name="btn_save_enter">सहेजें और खोलें</string>
+    <string name="error_m3u_load">M3U प्लेलिस्ट लोड नहीं हो सकी। URL जाँचें।</string>
+    <string name="error_xtream_auth">सर्वर ने यूज़रनेम या पासवर्ड अस्वीकार कर दिया।</string>
+    <string name="error_xtream_unreachable">सर्वर तक नहीं पहुँचा जा सका (%1$s)। URL जाँचें या प्रोवाइडर का कोई और होस्ट आज़माएँ।</string>
+    <string name="error_xtream_http">सर्वर ने HTTP %1$d जवाब दिया। URL जाँचें (सिर्फ़ होस्ट और पोर्ट, /player_api.php के बिना)।</string>
+    <string name="error_xtream_bad_response">सर्वर से अनपेक्षित जवाब। जाँचें कि URL कोई Xtream पैनल है।</string>
+    <string name="default_m3u_name">M3U सूची</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">संपादित या हटाने के लिए प्रोफ़ाइल को देर तक दबाएँ</string>
+    <string name="action_edit">संपादित करें</string>
+    <string name="action_delete">हटाएँ</string>
+    <string name="action_cancel">रद्द करें</string>
+    <string name="action_move_left">◀ ले जाएँ</string>
+    <string name="action_move_right">ले जाएँ ▶</string>
+    <string name="action_remove_favorite">पसंदीदा से हटाएँ</string>
+    <string name="reorder_a11y_position">क्रम बदला जा रहा है, %2$d में से %1$d वाँ स्थान</string>
+    <string name="action_accept">हो गया</string>
+    <string name="action_add">जोड़ें</string>
+    <string name="add_profile">प्रोफ़ाइल जोड़ें</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_clear_cache">चैनल और गाइड का कैश मिटाएँ</string>
+    <string name="settings_cache_cleared">कैश मिटाया गया</string>
+    <string name="settings_open_source">ओपन-सोर्स लाइसेंस</string>
+    <string name="settings_language">भाषा</string>
+    <string name="language_system">स्वचालित (डिवाइस)</string>
+    <string name="support_entry">मुझे एक कॉफ़ी पिलाएँ ☕</string>
+    <string name="support_title">ऐप पसंद आया?</string>
+    <string name="support_message">यह ऐप मुफ़्त और ओपन-सोर्स है। अगर यह आपके काम आया, तो मुझे एक कॉफ़ी पिला सकते हैं — जितना चाहें। बहुत-बहुत धन्यवाद! अपने फ़ोन से कोड स्कैन करें:</string>
+    <string name="support_qr_desc">Ko-fi पर दान के लिए QR कोड</string>
+    <string name="coffee_bug_text">ऐप पसंद आया? मुझे एक कॉफ़ी पिलाएँ</string>
+    <string name="coffee_dismiss">यह रिमाइंडर फिर न दिखाएँ</string>
+    <string name="coffee_reenable">रिमाइंडर फिर से दिखाएँ</string>
+    <string name="coffee_thanks">धन्यवाद! Jorge ❤️</string>
+    <string name="coffee_disable_hint">यह रिमाइंडर आप होम स्क्रीन की सेटिंग में बंद कर सकते हैं ⚙️</string>
+</resources>

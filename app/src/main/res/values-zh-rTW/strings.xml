@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">只有體育直播</string>
+    <string name="app_loading">載入中…</string>
+    <string name="press_back_to_exit">再按一次返回鍵即可退出</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">體育直播</string>
+    <string name="live_sports_of">%1$s 的體育直播</string>
+    <plurals name="channels_count">
+        <item quantity="other">%1$d 個頻道</item>
+    </plurals>
+    <string name="error_load_channels">無法載入頻道。</string>
+    <string name="action_retry">重試</string>
+    <string name="action_search">🔍 搜尋</string>
+    <string name="action_reload">↻ 重新載入</string>
+    <string name="action_filters">篩選</string>
+    <string name="search_field_label">搜尋  (例如：足球、籃球、網球)</string>
+    <string name="no_sports_channels">此設定檔中找不到體育頻道。</string>
+    <string name="no_results">找不到「%1$s」的結果。</string>
+    <string name="now_live">正在直播</string>
+    <string name="section_favorite_channels">最愛頻道</string>
+    <string name="section_recent">最近觀看</string>
+    <string name="section_favorite_folders">最愛資料夾</string>
+    <string name="section_football">足球</string>
+    <string name="section_more_sports">更多運動</string>
+    <string name="loading_channels">正在載入頻道…</string>
+    <string name="folder_back_hint">按返回鍵離開</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">自動</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ 切換頻道</string>
+    <string name="menu_nav_hint">▲▼ 選擇 · ◀▶ 區段 · OK 確認</string>
+    <string name="controls_legend">OK：選單  ·  長按 OK：★  ·  ▲▼：畫質  ·  ◀▶：頻道（×2 資料夾）</string>
+    <string name="controls_legend_touch">點一下：選單  ·  滑動 ▲▼：畫質  ·  滑動 ◀▶：頻道</string>
+    <string name="menu_nav_hint_touch">點一下：選擇  ·  滑動 ◀▶：區段</string>
+    <string name="added_to_favorites">★ 已加入最愛</string>
+    <string name="player_paused">⏸ 已暫停</string>
+    <string name="removed_from_favorites">已從最愛移除</string>
+    <string name="epg_now">現在：%1$s</string>
+    <string name="epg_next_suffix">   ·   接下來：%1$s</string>
+    <string name="menu_section_quality">畫質</string>
+    <string name="menu_section_audio">音訊</string>
+    <string name="menu_section_subtitles">字幕</string>
+    <string name="menu_section_guide">節目表</string>
+    <string name="menu_section_info">資訊</string>
+    <string name="info_show">👁️ 顯示</string>
+    <string name="info_hide">🙈 隱藏</string>
+    <string name="player_only_one_quality">只有一種畫質可用</string>
+    <string name="audio_none">沒有音軌</string>
+    <string name="audio_track_n">音訊 %1$d</string>
+    <string name="subtitles_off">關閉</string>
+    <string name="subtitle_track_n">字幕 %1$d</string>
+    <string name="guide_none">沒有節目表</string>
+    <string name="player_blocked_skipping">在您的地區遭封鎖 (%1$d) · 正在略過…</string>
+    <string name="player_skipping_unavailable">正在略過無法使用的頻道…</string>
+    <string name="player_blocked_no_access">在您的地區遭封鎖或無法存取 (%1$d)%2$s</string>
+    <string name="player_channel_from"> · 來自 %1$s 的頻道</string>
+    <string name="player_no_channel">沒有可用的頻道</string>
+    <string name="player_low_bandwidth">連線速度慢 (~%1$s Mbps) · 頻寬不足以觀看直播 — 問題出在您的網路，不是 App。</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">編輯設定檔</string>
+    <string name="add_connect_list">連接您的清單</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U 清單</string>
+    <string name="profile_type_direct">直接連結</string>
+    <string name="add_desc_direct">貼上串流網址（HLS .m3u8 或 DASH .mpd）。將直接播放，不套用體育篩選。</string>
+    <string name="add_desc_m3u">貼上您的播放清單網址（.m3u / m3u_plus）。若供應商封鎖 API，這是相容性最高的選項。</string>
+    <string name="add_desc_xtream">使用伺服器位址、您的使用者名稱和密碼連線。</string>
+    <string name="field_stream_url">串流網址 (HLS/DASH)</string>
+    <string name="field_m3u_url">M3U 播放清單網址</string>
+    <string name="helper_direct">例如：https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">例如：http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">設定檔名稱（選填）</string>
+    <string name="field_server_url">伺服器網址</string>
+    <string name="field_username">使用者名稱</string>
+    <string name="field_password">密碼</string>
+    <string name="show_password">顯示密碼</string>
+    <string name="hide_password">隱藏密碼</string>
+    <string name="helper_server">例如：http://mydomain.com:8080</string>
+    <string name="btn_connecting">連線中…</string>
+    <string name="btn_save_changes">儲存變更</string>
+    <string name="btn_save_enter">儲存並進入</string>
+    <string name="error_m3u_load">無法載入 M3U 播放清單。請檢查網址。</string>
+    <string name="error_xtream_auth">伺服器拒絕了使用者名稱或密碼。</string>
+    <string name="error_xtream_unreachable">無法連上伺服器 (%1$s)。請檢查網址，或改用供應商的其他主機。</string>
+    <string name="error_xtream_http">伺服器回應 HTTP %1$d。請檢查網址（只需主機和連接埠，不含 /player_api.php）。</string>
+    <string name="error_xtream_bad_response">伺服器回應異常。請確認網址是 Xtream 面板。</string>
+    <string name="default_m3u_name">M3U 清單</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">長按設定檔即可編輯或刪除</string>
+    <string name="action_edit">編輯</string>
+    <string name="action_delete">刪除</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_move_left">◀ 移動</string>
+    <string name="action_move_right">移動 ▶</string>
+    <string name="action_remove_favorite">從最愛移除</string>
+    <string name="reorder_a11y_position">正在重新排序，第 %1$d 個，共 %2$d 個</string>
+    <string name="action_accept">完成</string>
+    <string name="action_add">新增</string>
+    <string name="add_profile">新增設定檔</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">設定</string>
+    <string name="settings_clear_cache">清除頻道與節目表快取</string>
+    <string name="settings_cache_cleared">已清除快取</string>
+    <string name="settings_open_source">開放原始碼授權</string>
+    <string name="settings_language">語言</string>
+    <string name="language_system">自動（裝置）</string>
+    <string name="support_entry">請我喝杯咖啡 ☕</string>
+    <string name="support_title">喜歡這個 App 嗎？</string>
+    <string name="support_message">這個 App 免費且開放原始碼。如果對您有幫助，可以請我喝杯咖啡 — 金額隨意。非常感謝！用手機掃描這個條碼：</string>
+    <string name="support_qr_desc">在 Ko-fi 贊助的 QR 碼</string>
+    <string name="coffee_bug_text">喜歡這個 App 嗎？請我喝杯咖啡</string>
+    <string name="coffee_dismiss">不再顯示此提醒</string>
+    <string name="coffee_reenable">再次顯示提醒</string>
+    <string name="coffee_thanks">謝謝！Jorge ❤️</string>
+    <string name="coffee_disable_hint">您可以在主畫面的「設定」中關閉此提醒 ⚙️</string>
+</resources>

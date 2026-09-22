@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Alleen live sport</string>
+    <string name="app_loading">Laden…</string>
+    <string name="press_back_to_exit">Druk nogmaals op Terug om af te sluiten</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Live sport</string>
+    <string name="live_sports_of">Live sport van %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d kanaal</item>
+        <item quantity="other">%1$d kanalen</item>
+    </plurals>
+    <string name="error_load_channels">Kan de zenders niet laden.</string>
+    <string name="action_retry">Opnieuw</string>
+    <string name="action_search">🔍 Zoeken</string>
+    <string name="action_reload">↻ Herladen</string>
+    <string name="action_filters">Filters</string>
+    <string name="search_field_label">Zoeken  (bijv. voetbal, basketbal, tennis)</string>
+    <string name="no_sports_channels">Geen sportzenders gevonden in dit profiel.</string>
+    <string name="no_results">Geen resultaten voor \"%1$s\".</string>
+    <string name="now_live">Nu live</string>
+    <string name="section_favorite_channels">Favoriete zenders</string>
+    <string name="section_recent">Recent</string>
+    <string name="section_favorite_folders">Favoriete mappen</string>
+    <string name="section_football">Voetbal</string>
+    <string name="section_more_sports">Meer sport</string>
+    <string name="loading_channels">Zenders laden…</string>
+    <string name="folder_back_hint">Terug om te sluiten</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ zender wisselen</string>
+    <string name="menu_nav_hint">▲▼ kiezen · ◀▶ sectie · OK bevestigen</string>
+    <string name="controls_legend">OK: menu  ·  OK ingedrukt houden: ★  ·  ▲▼: kwaliteit  ·  ◀▶: zender (×2 map)</string>
+    <string name="controls_legend_touch">Tikken: menu  ·  vegen ▲▼: kwaliteit  ·  vegen ◀▶: zender</string>
+    <string name="menu_nav_hint_touch">tikken: kiezen  ·  vegen ◀▶: sectie</string>
+    <string name="added_to_favorites">★ Toegevoegd aan favorieten</string>
+    <string name="player_paused">⏸ Gepauzeerd</string>
+    <string name="removed_from_favorites">Verwijderd uit favorieten</string>
+    <string name="epg_now">Nu: %1$s</string>
+    <string name="epg_next_suffix">   ·   Hierna: %1$s</string>
+    <string name="menu_section_quality">Kwaliteit</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Ondertitels</string>
+    <string name="menu_section_guide">Gids</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Tonen</string>
+    <string name="info_hide">🙈 Verbergen</string>
+    <string name="player_only_one_quality">Slechts één kwaliteit beschikbaar</string>
+    <string name="audio_none">Geen audiosporen</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Uit</string>
+    <string name="subtitle_track_n">Ondertitel %1$d</string>
+    <string name="guide_none">Geen gids beschikbaar</string>
+    <string name="player_blocked_skipping">Geblokkeerd in jouw regio (%1$d) · overslaan…</string>
+    <string name="player_skipping_unavailable">Niet-beschikbare zender overslaan…</string>
+    <string name="player_blocked_no_access">Geblokkeerd in jouw regio of geen toegang (%1$d)%2$s</string>
+    <string name="player_channel_from"> · zender uit %1$s</string>
+    <string name="player_no_channel">Geen zender beschikbaar</string>
+    <string name="player_low_bandwidth">Trage verbinding (~%1$s Mbps) · te weinig bandbreedte voor live tv — het ligt aan je netwerk, niet aan de app.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Profiel bewerken</string>
+    <string name="add_connect_list">Verbind je lijst</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">M3U-lijst</string>
+    <string name="profile_type_direct">Directe link</string>
+    <string name="add_desc_direct">Plak een stream-URL (HLS .m3u8 of DASH .mpd). Wordt afgespeeld zoals hij is, zonder sportfilter.</string>
+    <string name="add_desc_m3u">Plak de URL van je afspeellijst (.m3u / m3u_plus). De meest compatibele optie als je provider de API blokkeert.</string>
+    <string name="add_desc_xtream">Verbind met het serveradres, je gebruikersnaam en je wachtwoord.</string>
+    <string name="field_stream_url">Stream-URL (HLS/DASH)</string>
+    <string name="field_m3u_url">URL van M3U-afspeellijst</string>
+    <string name="helper_direct">Bijv.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">Bijv.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Profielnaam (optioneel)</string>
+    <string name="field_server_url">Server-URL</string>
+    <string name="field_username">Gebruikersnaam</string>
+    <string name="field_password">Wachtwoord</string>
+    <string name="show_password">Wachtwoord tonen</string>
+    <string name="hide_password">Wachtwoord verbergen</string>
+    <string name="helper_server">Bijv.: http://mijndomein.com:8080</string>
+    <string name="btn_connecting">Verbinden…</string>
+    <string name="btn_save_changes">Wijzigingen opslaan</string>
+    <string name="btn_save_enter">Opslaan en openen</string>
+    <string name="error_m3u_load">Kan de M3U-afspeellijst niet laden. Controleer de URL.</string>
+    <string name="error_xtream_auth">De server heeft de gebruikersnaam of het wachtwoord geweigerd.</string>
+    <string name="error_xtream_unreachable">De server is niet bereikbaar (%1$s). Controleer de URL of probeer een andere host van je provider.</string>
+    <string name="error_xtream_http">De server antwoordde met HTTP %1$d. Controleer de URL (alleen host en poort, zonder /player_api.php).</string>
+    <string name="error_xtream_bad_response">Onverwacht antwoord van de server. Controleer of de URL een Xtream-paneel is.</string>
+    <string name="default_m3u_name">M3U-lijst</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Houd een profiel ingedrukt om het te bewerken of te verwijderen</string>
+    <string name="action_edit">Bewerken</string>
+    <string name="action_delete">Verwijderen</string>
+    <string name="action_cancel">Annuleren</string>
+    <string name="action_move_left">◀ Verplaatsen</string>
+    <string name="action_move_right">Verplaatsen ▶</string>
+    <string name="action_remove_favorite">Uit favorieten verwijderen</string>
+    <string name="reorder_a11y_position">Herschikken, positie %1$d van %2$d</string>
+    <string name="action_accept">Klaar</string>
+    <string name="action_add">Toevoegen</string>
+    <string name="add_profile">Profiel toevoegen</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_clear_cache">Cache van zenders &amp; gids wissen</string>
+    <string name="settings_cache_cleared">Cache gewist</string>
+    <string name="settings_open_source">Opensourcelicenties</string>
+    <string name="settings_language">Taal</string>
+    <string name="language_system">Automatisch (apparaat)</string>
+    <string name="support_entry">Trakteer me op een koffie ☕</string>
+    <string name="support_title">Bevalt de app?</string>
+    <string name="support_message">Deze app is gratis en open source. Als je er iets aan hebt, kun je me op een koffie trakteren — wat je maar wilt geven. Heel erg bedankt! Scan de code met je telefoon:</string>
+    <string name="support_qr_desc">QR-code om te doneren op Ko-fi</string>
+    <string name="coffee_bug_text">Bevalt de app? Trakteer me op een koffie</string>
+    <string name="coffee_dismiss">Deze herinnering niet meer tonen</string>
+    <string name="coffee_reenable">Herinnering weer tonen</string>
+    <string name="coffee_thanks">Bedankt! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Je kunt deze herinnering uitzetten bij Instellingen op het startscherm ⚙️</string>
+</resources>

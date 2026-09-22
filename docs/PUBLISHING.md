@@ -307,15 +307,17 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   pasar el toque a lo que hubiera debajo (menú de perfil → abría el perfil en vez de editarlo).
   Ojo: en ese Xiaomi (HyperOS) `adb shell input` está bloqueado (`INJECT_EVENTS`); las pruebas táctiles las
   hace el usuario a mano y se verifican con `screencap`.
-- **10 idiomas nuevos (2026-09-22)** → **18 en total**. Bloque 1: alemán, turco, polaco y árabe
+- **16 idiomas nuevos (2026-09-22)** → **24 en total**. Bloque 1: alemán, turco, polaco y árabe
   (`values-de/-tr/-pl/-ar`). Bloque 2: indonesio (`values-in`, código Android heredado; tag `id`), vietnamita,
   rumano, griego, croata y serbio latino (`values-b+sr+Latn`, tag `sr-Latn`; croata y serbio son ficheros
-  distintos porque el léxico difiere: nogomet/fudbal, poslužitelj/server…). 105 cadenas cada uno, plurales
-  completos según el lint (rumano 3 formas, croata/serbio 3, árabe 6, polaco 4), `LocaleHelper.supportedTags`,
+  distintos porque el léxico difiere: nogomet/fudbal, poslužitelj/server…). Bloque 3: tailandés, chino
+  tradicional (`values-zh-rTW`, tag `zh-TW`: en China continental no hay Play, el público de Play es Taiwán,
+  Hong Kong, Malasia y Singapur), ruso, neerlandés, albanés e hindi. 105 cadenas cada uno, plurales
+  completos según el lint (rumano 3 formas, croata/serbio 3, ruso 4, árabe 6, polaco 4), `LocaleHelper.supportedTags`,
   autónimos en el selector y columnas en `translations.csv`. **Árabe verificado en RTL** en el móvil (perfiles,
-  parrilla, reproductor, formulario): Compose invierte los layouts solo gracias a `supportsRtl`. Griego
-  verificado en pantalla como muestra de alfabeto no latino. Al publicar la 0.1.7: ficha de Play con "18 idiomas"
-  (`docs/store-listing.md` ya lo dice) y mezclar la rama `feature/12-languages` del repo web (ya dice 18).
+  parrilla, reproductor, formulario): Compose invierte los layouts solo gracias a `supportsRtl`. Griego y
+  tailandés verificados en pantalla como muestra de alfabetos no latinos. Al publicar la 0.1.7: ficha de Play con
+  "24 idiomas" (`docs/store-listing.md` ya lo dice) y mezclar la rama `feature/12-languages` del repo web (ya dice 24).
 - **Decisión pendiente: cuándo subirla.** La 0.1.6 sigue en revisión; crear otra versión de Producción la
   sustituye y reinicia la revisión. Nota: la 0.1.5 publicada (aprobada por Google) ya llevaba el fallo de la
   pulsación larga, así que no es motivo de rechazo conocido. Opción prudente: esperar el veredicto de la 0.1.6
@@ -327,7 +329,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Android TV: vuelve a funcionar mantener OK sobre un canal, carpeta o perfil (reordenar favoritos, menús, editar).
   • Muchos más logos de canal, también en listas M3U sin logos.
   • Móvil: desliza ◀▶ para cambiar de canal y ▲▼ la calidad; toca para el menú. Menús de perfil y favoritos ya responden al dedo.
-  • 10 idiomas nuevos: alemán, turco, polaco, árabe, indonesio, vietnamita, rumano, griego, croata y serbio.
+  • 16 idiomas nuevos, del alemán, el árabe o el turco al hindi, el tailandés o el chino tradicional.
   </es-ES>
   ```
   ```
@@ -336,7 +338,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Android TV: holding OK on a channel, folder or profile works again (reorder favorites, menus, edit).
   • Many more channel logos, also for M3U playlists that ship none.
   • Phone: swipe ◀▶ to change channel and ▲▼ for quality; tap for the menu. Profile and favorites menus respond to touch.
-  • 10 new languages: German, Turkish, Polish, Arabic, Indonesian, Vietnamese, Romanian, Greek, Croatian and Serbian.
+  • 16 new languages, from German, Arabic or Turkish to Hindi, Thai or Traditional Chinese.
   </en-US>
   ```
 

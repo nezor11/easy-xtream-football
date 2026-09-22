@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_tagline">Vetëm sport drejtpërdrejt</string>
+    <string name="app_loading">Duke u ngarkuar…</string>
+    <string name="press_back_to_exit">Shtyp sërish Prapa për të dalë</string>
+
+    <!-- Pantalla de canales -->
+    <string name="live_sports">Sport drejtpërdrejt</string>
+    <string name="live_sports_of">Sport drejtpërdrejt nga %1$s</string>
+    <plurals name="channels_count">
+        <item quantity="one">%1$d kanal</item>
+        <item quantity="other">%1$d kanale</item>
+    </plurals>
+    <string name="error_load_channels">Kanalet nuk u ngarkuan dot.</string>
+    <string name="action_retry">Provo sërish</string>
+    <string name="action_search">🔍 Kërko</string>
+    <string name="action_reload">↻ Rifresko</string>
+    <string name="action_filters">Filtra</string>
+    <string name="search_field_label">Kërko  (p.sh. futboll, basketboll, tenis)</string>
+    <string name="no_sports_channels">Nuk u gjetën kanale sportive në këtë profil.</string>
+    <string name="no_results">Asnjë rezultat për \"%1$s\".</string>
+    <string name="now_live">Tani drejtpërdrejt</string>
+    <string name="section_favorite_channels">Kanalet e preferuara</string>
+    <string name="section_recent">Të fundit</string>
+    <string name="section_favorite_folders">Dosjet e preferuara</string>
+    <string name="section_football">Futboll</string>
+    <string name="section_more_sports">Sporte të tjera</string>
+    <string name="loading_channels">Duke ngarkuar kanalet…</string>
+    <string name="folder_back_hint">Prapa për t\'u kthyer</string>
+
+    <!-- Reproductor -->
+    <string name="quality_auto">Auto</string>
+    <string name="player_error_with_hint">%1$s  ·  ◀▶ ndrysho kanalin</string>
+    <string name="menu_nav_hint">▲▼ zgjidh · ◀▶ seksion · OK konfirmo</string>
+    <string name="controls_legend">OK: menu  ·  mbaj OK: ★  ·  ▲▼: cilësia  ·  ◀▶: kanali (×2 dosje)</string>
+    <string name="controls_legend_touch">Prek: menu  ·  rrëshqit ▲▼: cilësia  ·  rrëshqit ◀▶: kanali</string>
+    <string name="menu_nav_hint_touch">prek: zgjidh  ·  rrëshqit ◀▶: seksion</string>
+    <string name="added_to_favorites">★ U shtua te të preferuarat</string>
+    <string name="player_paused">⏸ Në pauzë</string>
+    <string name="removed_from_favorites">U hoq nga të preferuarat</string>
+    <string name="epg_now">Tani: %1$s</string>
+    <string name="epg_next_suffix">   ·   Më pas: %1$s</string>
+    <string name="menu_section_quality">Cilësia</string>
+    <string name="menu_section_audio">Audio</string>
+    <string name="menu_section_subtitles">Titrat</string>
+    <string name="menu_section_guide">Programi</string>
+    <string name="menu_section_info">Info</string>
+    <string name="info_show">👁️ Shfaq</string>
+    <string name="info_hide">🙈 Fshih</string>
+    <string name="player_only_one_quality">Vetëm një cilësi e disponueshme</string>
+    <string name="audio_none">Nuk ka gjurmë audio</string>
+    <string name="audio_track_n">Audio %1$d</string>
+    <string name="subtitles_off">Fikur</string>
+    <string name="subtitle_track_n">Titra %1$d</string>
+    <string name="guide_none">Programi nuk disponohet</string>
+    <string name="player_blocked_skipping">I bllokuar në rajonin tënd (%1$d) · duke kapërcyer…</string>
+    <string name="player_skipping_unavailable">Duke kapërcyer kanalin e padisponueshëm…</string>
+    <string name="player_blocked_no_access">I bllokuar në rajonin tënd ose pa akses (%1$d)%2$s</string>
+    <string name="player_channel_from"> · kanal nga %1$s</string>
+    <string name="player_no_channel">Asnjë kanal i disponueshëm</string>
+    <string name="player_low_bandwidth">Lidhje e ngadaltë (~%1$s Mbps) · gjerësi brezi e pamjaftueshme për TV drejtpërdrejt — është rrjeti yt, jo aplikacioni.</string>
+
+    <!-- Añadir / editar perfil -->
+    <string name="add_edit_profile">Ndrysho profilin</string>
+    <string name="add_connect_list">Lidh listën tënde</string>
+    <string name="profile_type_xtream">Xtream</string>
+    <string name="profile_type_m3u">Listë M3U</string>
+    <string name="profile_type_direct">Lidhje direkte</string>
+    <string name="add_desc_direct">Ngjit një URL transmetimi (HLS .m3u8 ose DASH .mpd). Luhet siç është, pa filtër sportiv.</string>
+    <string name="add_desc_m3u">Ngjit URL-në e listës tënde (.m3u / m3u_plus). Opsioni më i përputhshëm nëse ofruesi bllokon API-n.</string>
+    <string name="add_desc_xtream">Lidhu me adresën e serverit, emrin e përdoruesit dhe fjalëkalimin.</string>
+    <string name="field_stream_url">URL e transmetimit (HLS/DASH)</string>
+    <string name="field_m3u_url">URL e listës M3U</string>
+    <string name="helper_direct">P.sh.: https://server/stream.m3u8  ·  https://server/manifest.mpd</string>
+    <string name="helper_m3u">P.sh.: http://host:port/get.php?username=…&amp;password=…&amp;type=m3u_plus</string>
+    <string name="field_profile_name">Emri i profilit (opsional)</string>
+    <string name="field_server_url">URL e serverit</string>
+    <string name="field_username">Emri i përdoruesit</string>
+    <string name="field_password">Fjalëkalimi</string>
+    <string name="show_password">Shfaq fjalëkalimin</string>
+    <string name="hide_password">Fshih fjalëkalimin</string>
+    <string name="helper_server">P.sh.: http://domenimim.com:8080</string>
+    <string name="btn_connecting">Duke u lidhur…</string>
+    <string name="btn_save_changes">Ruaj ndryshimet</string>
+    <string name="btn_save_enter">Ruaj dhe hyr</string>
+    <string name="error_m3u_load">Lista M3U nuk u ngarkua dot. Kontrollo URL-në.</string>
+    <string name="error_xtream_auth">Serveri refuzoi emrin e përdoruesit ose fjalëkalimin.</string>
+    <string name="error_xtream_unreachable">Serveri nuk arrihet (%1$s). Kontrollo URL-në ose provo një host tjetër të ofruesit.</string>
+    <string name="error_xtream_http">Serveri u përgjigj HTTP %1$d. Kontrollo URL-në (vetëm host dhe port, pa /player_api.php).</string>
+    <string name="error_xtream_bad_response">Përgjigje e papritur nga serveri. Kontrollo që URL-ja të jetë një panel Xtream.</string>
+    <string name="default_m3u_name">Listë M3U</string>
+
+    <!-- Selector de perfiles -->
+    <string name="profiles_longpress_hint">Mbaj shtypur një profil për ta ndryshuar ose fshirë</string>
+    <string name="action_edit">Ndrysho</string>
+    <string name="action_delete">Fshi</string>
+    <string name="action_cancel">Anulo</string>
+    <string name="action_move_left">◀ Zhvendos</string>
+    <string name="action_move_right">Zhvendos ▶</string>
+    <string name="action_remove_favorite">Hiq nga të preferuarat</string>
+    <string name="reorder_a11y_position">Duke rirenditur, pozicioni %1$d nga %2$d</string>
+    <string name="action_accept">U krye</string>
+    <string name="action_add">Shto</string>
+    <string name="add_profile">Shto profil</string>
+
+    <!-- Selección de idioma -->
+    <string name="settings_title">Cilësimet</string>
+    <string name="settings_clear_cache">Pastro cache-in e kanaleve dhe programit</string>
+    <string name="settings_cache_cleared">Cache-i u pastrua</string>
+    <string name="settings_open_source">Licencat me burim të hapur</string>
+    <string name="settings_language">Gjuha</string>
+    <string name="language_system">Automatik (pajisja)</string>
+    <string name="support_entry">Më bli një kafe ☕</string>
+    <string name="support_title">Të pëlqen aplikacioni?</string>
+    <string name="support_message">Ky aplikacion është falas dhe me burim të hapur. Nëse të hyn në punë, mund të më blesh një kafe — sa të duash. Faleminderit shumë! Skano kodin me telefonin:</string>
+    <string name="support_qr_desc">Kod QR për dhurim në Ko-fi</string>
+    <string name="coffee_bug_text">Të pëlqen aplikacioni? Më bli një kafe</string>
+    <string name="coffee_dismiss">Mos e shfaq më këtë kujtesë</string>
+    <string name="coffee_reenable">Shfaqe sërish kujtesën</string>
+    <string name="coffee_thanks">Faleminderit! Jorge ❤️</string>
+    <string name="coffee_disable_hint">Këtë kujtesë mund ta çaktivizosh te Cilësimet, në ekranin kryesor ⚙️</string>
+</resources>

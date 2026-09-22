@@ -63,6 +63,12 @@ private fun autonym(tag: String): String = when (tag) {
     "el" -> "Ελληνικά"
     "hr" -> "Hrvatski"
     "sr-Latn" -> "Srpski"
+    "th" -> "ไทย"
+    "zh-TW" -> "繁體中文"
+    "ru" -> "Русский"
+    "nl" -> "Nederlands"
+    "sq" -> "Shqip"
+    "hi" -> "हिन्दी"
     else -> tag
 }
 
