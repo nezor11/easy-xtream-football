@@ -342,6 +342,34 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   </en-US>
   ```
 
+## Amazon Appstore (Fire TV) — preparado el 2026-09-22
+Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
+desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la de Google.
+- ✅ **APK universal firmado** con la clave de subida (Amazon no usa Play App Signing; re-firma con su propio
+  certificado al publicar): `app/build/outputs/apk/full/release/app-full-universal-release.apk`, 26,8 MB,
+  `versionCode 8 · 0.1.7`, ABIs arm64-v8a + armeabi-v7a (+ x86 que trae FFmpeg). Se genera con
+  `gradlew :app:assembleFullRelease` (en `build.gradle.kts` `isUniversalApk = true`; para Play sigue usándose
+  el AAB, no le afecta). Verificado con `apksigner verify --print-certs` → `CN=Jorge Mtnez`.
+- ✅ Requisitos técnicos de Fire TV que ya cumple: sin Google Play Services, `leanback` + `LEANBACK_LAUNCHER`,
+  `touchscreen` no requerido, manejo completo con mando (D-pad, OK, Back, teclas multimedia), minSdk 24
+  (Fire OS 6/7/8 = Android 7.1/9/11; el Stick de 2ª gen con Fire OS 5 queda fuera), targetSdk 36.
+- ✅ Materiales en `docs/store-assets/`: icono **512×512** y **114×114** (`icon-114.png`, generado), capturas
+  1920×1080 (4), imagen promocional 1024×500 (`feature-1024x500.png`). Textos en `docs/store-listing.md`
+  (ES/EN; Amazon admite localizaciones). Política de privacidad: la misma URL de GitHub.
+- ✅ Clasificación por edades: **IARC** — en el alta Amazon pide el *Global Rating ID* del correo de IARC del
+  2026-09-21 (asunto *IARC Live Rating Notice: Easy Xtream Football*, de noreply@globalratings.com).
+- ⚠️ **Riesgo de revisión:** Amazon es más estricta que Google con las apps IPTV ("apps que facilitan acceso a
+  contenido pirata"). Defensa: la app es solo el reproductor, no incluye contenido ni listas, cada usuario pone
+  su proveedor; dejarlo igual de claro que en Play en la descripción, y no usar capturas con logos de canales
+  de pago reconocibles.
+- ⏳ **Pasos (el usuario, en developer.amazon.com):** 1) crear la cuenta de desarrollador (gratis; requiere
+  aceptar el acuerdo de distribución) → 2) *Apps & Services → Add New App → Android* → 3) subir el APK
+  universal → 4) *Device support*: Fire TV (todos los modelos compatibles que ofrezca) y, si se quiere, Fire
+  tablets y móviles Android → 5) *Content rating*: IARC con el Global Rating ID → 6) ficha: título, descripciones
+  corta/larga, palabras clave, categoría Entretenimiento, icono 512 y 114, capturas, imagen promocional,
+  política de privacidad, correo de soporte → 7) enviar. Revisión: días. Anotar aquí el resultado.
+- Amazon **re-firma** el APK con su certificado: no afecta a nada (la app no verifica firmas ni usa licencias).
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
