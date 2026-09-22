@@ -177,7 +177,13 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   prácticamente los mismos 712 que da la API Xtream.
 - 📈 **Memoria**: pico de ~235 MB PSS durante el parseo (a los ~28 s), estabilizado en ~147 MB. Tarda ~45 s
   en total en un Chromecast con Google TV.
-- ⚠️ Cosmético: con M3U faltan bastantes logos (el `tvg-logo` no siempre está).
+- ✅ **Logos que faltaban: MEJORADO en `main` el 2026-09-22** (entra en 0.1.7). Con datos reales: la M3U del
+  proveedor no trae **ningún** `tvg-logo` y todos sus `tvg-id` valen `ext`, así que el único origen es la base
+  de iptv-org por nombre, que solo casaba el nombre exacto (M3U 302/715, Xtream 374/712). Ahora
+  `LogoMatching` prueba variantes léxicas (sport/sports, "TV" final), luego el nombre sin sufijo (feed, región)
+  y sin prefijo (país, proveedor) con guardas para no coger logos ajenos, y lo que queda sin logo toma el de un
+  hermano de su carpeta. Simulado sobre las cachés del Chromecast: **M3U 578/715 (81%) y Xtream 625/712
+  (88%)**, revisados uno a uno los casos difusos. Verificado en la tele. 6 tests nuevos, 69 en total.
 - ✅ **Favoritos 39 → 34 entre perfiles: CORREGIDO en `main` el 2026-09-22** (entra en 0.1.7). La clave de
   favoritos es el nombre normalizado (`ChannelGroup.key`), no el id. Los 5 perdidos eran canales "solo
   eventos": la API los nombra `… (SOLO EVENTOS)` y la M3U `…  SOLO EVENTOS`; el parser quitaba lo que va

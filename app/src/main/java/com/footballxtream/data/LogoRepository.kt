@@ -31,10 +31,10 @@ class LogoRepository(private val cacheDir: File) {
             }
     }
 
+    /** Logo for a channel name, trying the exact name first and then its looser [LogoMatching] keys. */
     fun logoFor(name: String): String? {
-        val key = normalize(name)
-        if (key.isBlank()) return null
-        return nameToLogo?.get(key)
+        val map = nameToLogo ?: return null
+        return LogoMatching.candidates(name).firstNotNullOfOrNull { map[it] }
     }
 
     private fun loadFromCache(): Map<String, String>? {
@@ -59,7 +59,7 @@ class LogoRepository(private val cacheDir: File) {
         channels.forEach { channel ->
             val url = logoById[channel.id] ?: return@forEach
             (listOf(channel.name) + channel.altNames).forEach { candidate ->
-                val key = normalize(candidate)
+                val key = LogoMatching.normalize(candidate)
                 if (key.isNotBlank()) map.putIfAbsent(key, url)
             }
         }
@@ -68,9 +68,6 @@ class LogoRepository(private val cacheDir: File) {
     }
 
     private fun mapFile() = File(cacheDir, "logo_map_v$CACHE_VERSION.json")
-
-    private fun normalize(name: String): String =
-        name.lowercase().filter { it.isLetterOrDigit() }
 
     @Serializable
     private data class IptvChannel(

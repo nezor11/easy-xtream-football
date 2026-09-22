@@ -190,13 +190,15 @@ class ContentRepository(
             // slow links don't pay for data they'd never use.
             if (groups.all { !it.iconUrl.isNullOrBlank() }) return@withContext groups
             logoRepository.ensureLoaded()
-            groups.map { group ->
+            val byName = groups.map { group ->
                 if (!group.iconUrl.isNullOrBlank()) {
                     group
                 } else {
                     logoRepository.logoFor(group.displayName)?.let { group.copy(iconUrl = it) } ?: group
                 }
             }
+            // Whatever is still bare borrows from its folder, so a numbered feed shows its family's logo.
+            LogoMatching.fillFromFolderSiblings(byName)
         }
 
     /**
