@@ -350,7 +350,7 @@ class ContentRepository(
     private companion object {
         const val TAG = "FXContent"
         const val CACHE_TTL_MS = 12L * 60 * 60 * 1000 // 12 h
-        const val CACHE_VERSION = 17 // bump when parsing/filtering/grouping logic or cache shape changes
+        const val CACHE_VERSION = 18 // bump when parsing/filtering/grouping logic or cache shape changes
         const val EPG_TTL_MS = 2L * 60 * 60 * 1000 // 2 h — rebuild the XMLTV index at most this often
         const val NOW_TTL_MS = 10L * 60 * 1000 // 10 min — how long a cached "live now" lookup is reused
         const val NOW_EMPTY_TTL_MS = 60L * 1000 // 1 min — empty/failed lookups expire fast, to recover

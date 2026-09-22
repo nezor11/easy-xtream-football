@@ -10,7 +10,9 @@ data class ChannelCategory(
 
 /**
  * A single playable live channel, independent of the source (Xtream API or M3U playlist).
- * [streamUrl] is the directly playable URL; [streamId] is a stable id used as the favorites key.
+ * [streamUrl] is the directly playable URL. [streamId] is the source's own id (Xtream stream id, or a
+ * hash of the M3U URL) and is NOT what favorites are keyed by: those use [ChannelGroup.key], derived
+ * from the normalized name, so they survive switching between profiles of the same provider.
  */
 @Serializable
 data class LiveChannel(

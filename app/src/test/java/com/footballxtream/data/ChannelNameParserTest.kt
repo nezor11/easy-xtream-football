@@ -47,6 +47,36 @@ class ChannelNameParserTest {
     }
 
     @Test
+    fun baseName_stripsEventOnlyTagBareOrBracketed() {
+        // The same provider writes the tag in parentheses over Xtream and bare in its M3U.
+        assertEquals("CANAL DEPORTE3", ChannelNameParser.baseName("CANAL DEPORTE3 (SOLO EVENTOS)"))
+        assertEquals("CANAL DEPORTE3", ChannelNameParser.baseName("CANAL DEPORTE3  SOLO EVENTOS"))
+        assertEquals("Canal Sport 5", ChannelNameParser.baseName("|BE| Canal Sport 5 HD (ONLY EVENTS)"))
+        assertEquals("Canal Sport 5", ChannelNameParser.baseName("|BE| Canal Sport 5 HD  ONLY EVENTS"))
+        assertEquals("Canal Sport 5", ChannelNameParser.baseName("Canal Sport 5 EVENTS ONLY"))
+    }
+
+    @Test
+    fun baseName_keepsChannelNamesThatMerelyContainEvent() {
+        // Only the whole availability phrase is a tag; "event" inside a real name is untouched.
+        assertEquals("Canal Sports Main Event", ChannelNameParser.baseName("|UK| Canal Sports Main Event"))
+        assertEquals("CANAL EVENTOS 1", ChannelNameParser.baseName("CANAL EVENTOS 1"))
+        assertEquals("Eventos Solo Fútbol", ChannelNameParser.baseName("Eventos Solo Fútbol"))
+    }
+
+    @Test
+    fun groupKey_matchesAcrossXtreamAndM3uSpellingsOfEventOnlyTag() {
+        assertEquals(
+            ChannelNameParser.groupKey("CANAL DEPORTE3 (SOLO EVENTOS)"),
+            ChannelNameParser.groupKey("CANAL DEPORTE3  SOLO EVENTOS"),
+        )
+        assertEquals(
+            ChannelNameParser.groupKey("|BE| Canal Sport 6  HD (ONLY EVENTS)"),
+            ChannelNameParser.groupKey("|BE| Canal Sport 6  HD  ONLY EVENTS"),
+        )
+    }
+
+    @Test
     fun baseName_keepsPlainTwoLetterWords() {
         // Without a separator a leading short word is part of the name, never a prefix.
         assertEquals("La Liga TV", ChannelNameParser.baseName("La Liga TV"))

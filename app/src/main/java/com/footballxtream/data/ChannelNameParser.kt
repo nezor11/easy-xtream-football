@@ -34,6 +34,16 @@ object ChannelNameParser {
         RegexOption.IGNORE_CASE,
     )
 
+    // Availability tags a panel appends to event-only feeds: "Canal 3 (SOLO EVENTOS)" over the
+    // Xtream API but "Canal 3  SOLO EVENTOS" in the same provider's M3U. [bracketed] already drops
+    // the parenthesised form, so the bare form must go too or the two sources yield different keys
+    // for one channel and favorites don't carry over between profiles. Whole phrases only, so a
+    // name that merely contains the word ("Canal Main Event", "Canal Eventos 1") stays intact.
+    private val availabilityTags = Regex(
+        """(?<!\p{L})(solo\s+eventos|only\s+events|events\s+only)(?!\p{L})""",
+        RegexOption.IGNORE_CASE,
+    )
+
     // Leading provider/country prefix: "ES|", "ES:", "EN -", "VIP >" and the pipe-wrapped form
     // "|IT| ", "|DE|  " that many M3U panels use. The optional leading separator catches the
     // wrapped form; a trailing separator is always required, so a plain word ("La Liga", "Al
@@ -157,9 +167,9 @@ object ChannelNameParser {
         return Quality.UNKNOWN
     }
 
-    /** Canonical channel name with quality tags, prefixes and noise removed. */
+    /** Canonical channel name with quality tags, availability tags, prefixes and noise removed. */
     fun baseName(rawName: String): String {
-        val name = allQualityTokens.replace(normalizeForTokens(rawName), " ")
+        val name = availabilityTags.replace(allQualityTokens.replace(normalizeForTokens(rawName), " "), " ")
         return multiSpace.replace(name, " ").trim().trim('-', '|', ':', '.', '·').trim()
     }
 

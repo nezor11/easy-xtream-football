@@ -177,8 +177,14 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   prácticamente los mismos 712 que da la API Xtream.
 - 📈 **Memoria**: pico de ~235 MB PSS durante el parseo (a los ~28 s), estabilizado en ~147 MB. Tarda ~45 s
   en total en un Chromecast con Google TV.
-- ⚠️ Cosmético: con M3U faltan bastantes logos (el `tvg-logo` no siempre está), y los favoritos guardados con
-  el perfil Xtream no se mapean del todo (39 → 34) porque los identificadores de canal difieren entre ambos.
+- ⚠️ Cosmético: con M3U faltan bastantes logos (el `tvg-logo` no siempre está).
+- ✅ **Favoritos 39 → 34 entre perfiles: CORREGIDO en `main` el 2026-09-22** (entra en 0.1.7). La clave de
+  favoritos es el nombre normalizado (`ChannelGroup.key`), no el id. Los 5 perdidos eran canales "solo
+  eventos": la API los nombra `… (SOLO EVENTOS)` y la M3U `…  SOLO EVENTOS`; el parser quitaba lo que va
+  entre paréntesis pero no la coletilla suelta. Ahora la etiqueta de disponibilidad se elimina en ambas
+  formas (solo como frase completa) y `CACHE_VERSION` pasa a 18. Verificado en el Chromecast con las cachés
+  reales: M3U pasa de 34 a **39/39 favoritos**, 715 grupos antes y después (ninguna fusión indebida), claves
+  comunes Xtream/M3U 620 → 630, y Xtream idéntico (712 claves iguales una a una). 4 tests nuevos, 63 en total.
 - ℹ️ Del proveedor: de los 3 hosts M3U solo responde uno; otro ya es un **dominio aparcado con publicidad**.
   Igual que en Xtream, los hosts son espejos de una sola cuenta con **1 conexión simultánea**.
 

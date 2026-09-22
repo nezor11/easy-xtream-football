@@ -51,6 +51,16 @@ class ChannelGroupingTest {
     }
 
     @Test
+    fun build_sameChannelKeyedAlikeFromXtreamAndM3uNaming() {
+        // Favorites are keyed by ChannelGroup.key, so the two spellings one provider uses for an
+        // event-only feed (parenthesised over Xtream, bare in its M3U) must yield one key.
+        val fromXtream = ChannelGrouping.build(listOf(channel("CANAL DEPORTE3 (SOLO EVENTOS)", "Deportes")))
+        val fromM3u = ChannelGrouping.build(listOf(channel("CANAL DEPORTE3  SOLO EVENTOS", "Deportes")))
+        assertEquals(fromXtream.single().key, fromM3u.single().key)
+        assertEquals("CANAL DEPORTE3", fromM3u.single().displayName)
+    }
+
+    @Test
     fun build_separatesDifferentChannelNumbers() {
         val groups = ChannelGrouping.build(
             listOf(
