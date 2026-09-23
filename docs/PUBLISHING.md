@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-21.
+Última actualización: 2026-09-23.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -342,7 +342,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   </en-US>
   ```
 
-## Amazon Appstore (Fire TV) — preparado el 2026-09-22
+## Amazon Appstore (Fire TV) — preparado el 2026-09-22, ENVIADA el 2026-09-23
 Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
 desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la de Google.
 - ✅ **APK universal firmado** con la clave de subida (Amazon no usa Play App Signing; re-firma con su propio
@@ -362,12 +362,30 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
   contenido pirata"). Defensa: la app es solo el reproductor, no incluye contenido ni listas, cada usuario pone
   su proveedor; dejarlo igual de claro que en Play en la descripción, y no usar capturas con logos de canales
   de pago reconocibles.
-- ⏳ **Pasos (el usuario, en developer.amazon.com):** 1) crear la cuenta de desarrollador (gratis; requiere
-  aceptar el acuerdo de distribución) → 2) *Apps & Services → Add New App → Android* → 3) subir el APK
-  universal → 4) *Device support*: Fire TV (todos los modelos compatibles que ofrezca) y, si se quiere, Fire
-  tablets y móviles Android → 5) *Content rating*: IARC con el Global Rating ID → 6) ficha: título, descripciones
-  corta/larga, palabras clave, categoría Entretenimiento, icono 512 y 114, capturas, imagen promocional,
-  política de privacidad, correo de soporte → 7) enviar. Revisión: días. Anotar aquí el resultado.
+- ✅ **ENVIADA A REVISIÓN el 2026-09-23** (13:10 hora española) desde la máquina Linux, con el navegador
+  guiado por Claude. Estado en la consola: **SUBMITTED**, "estimated to go live before 04:30 AM PDT,
+  28 Sept 2026". Cuenta de desarrollador de Amazon aprobada ese mismo día. Consola:
+  https://developer.amazon.com/apps-and-games/console/apps/list.html
+  - App ID `amzn1.devportal.mobileapp.07ea2808a33b46da999e14dfd0bf5184` · SKU `com.footballxtream` ·
+    categoría **Movies & TV** (Amazon no tiene "Entertainment"; sin subcategoría) · gratuita · DRM **No**
+    (aviso "outdated SDK version" = no lleva el Appstore SDK; es informativo).
+  - Dispositivos: **Fire TV (91 modelos)** y **Fire tablets (12)**; Automotive quitado. Los Vega TV (Vega OS,
+    no Android) no se pueden marcar. **Amazon ya no acepta apps para móviles Android** (desde 2025-08-20).
+  - Touch: sí · offline: no · todos los países · público **16-17 y 18+** (nada de niños) · cuestionario de
+    contenido propio de Amazon (no IARC, no pidió el Global Rating ID): todo "None"/"No" · privacidad: no recoge
+    datos + URL de la política · idiomas marcados: los 14 de la lista de Amazon que coinciden con los 24.
+  - Ficha en **inglés y español** (descripción corta, larga, 9 viñetas, palabras clave), iconos 512/114,
+    4 capturas de tablet, promocional 1024×500; para Fire TV: icono 1280×720 (el banner), 4 capturas
+    **aplanadas a RGB sin alfa** (Amazon rechaza transparencia en TV) y un fondo 1920×1080 generado con
+    `magick` a partir de la captura de canales (desenfoque + oscurecido). Las subidas hay que hacerlas de una
+    en una: en paralelo se pierden.
+  - **Instrucciones de prueba** al revisor: perfil M3U con la lista pública de deportes de iptv-org
+    (`https://iptv-org.github.io/iptv/categories/sports.m3u`, ~400 canales en abierto; alternativas `countries/es.m3u`
+    e `index.m3u`). **No se dan credenciales Xtream del usuario** (decisión 2026-09-23).
+  - Export compliance marcada (cifrado = AES-GCM del Android Keystore + HTTPS del sistema, sin librerías
+    propias; además código abierto público).
+  - ⏳ Esperar el correo de Amazon. Si la aprueban, anotar aquí la URL de la ficha y la fecha. Cuando salga
+    una versión nueva: *Add upcoming version* en la consola, subir el APK universal nuevo y reenviar.
 - Amazon **re-firma** el APK con su certificado: no afecta a nada (la app no verifica firmas ni usa licencias).
 
 ## Pendiente ⏳ (en orden)
