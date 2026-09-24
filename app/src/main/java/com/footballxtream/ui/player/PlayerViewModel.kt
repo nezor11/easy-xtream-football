@@ -28,6 +28,7 @@ import com.footballxtream.model.ChannelGroup
 import com.footballxtream.model.ChannelVariant
 import com.footballxtream.model.EpgProgram
 import com.footballxtream.model.Quality
+import com.footballxtream.player.IcyTitles
 import com.footballxtream.player.PlaybackSession
 import com.footballxtream.player.PlayerEngine
 import kotlinx.coroutines.Job
@@ -210,8 +211,9 @@ class PlayerViewModel(
         override fun onMetadata(metadata: Metadata) {
             for (i in 0 until metadata.length()) {
                 val entry = metadata.get(i) as? IcyInfo ?: continue
-                val title = entry.title?.trim().orEmpty()
-                if (title.isNotEmpty()) _ui.update { it.copy(nowPlaying = title) }
+                // Most talk stations send an empty/placeholder title: keep whatever was last shown.
+                val title = IcyTitles.clean(entry.title) ?: continue
+                _ui.update { it.copy(nowPlaying = title) }
             }
         }
     }

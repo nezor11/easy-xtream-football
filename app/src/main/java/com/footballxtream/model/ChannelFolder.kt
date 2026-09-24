@@ -16,6 +16,8 @@ data class ChannelFolder(
     val country: String? = null,
     /** True when every channel in the folder is flagged geo-blocked. */
     val geoBlocked: Boolean = false,
+    /** True when every channel in the folder is a radio station. */
+    val isRadio: Boolean = false,
 ) {
     val isSingle: Boolean get() = channels.size == 1
     val single: ChannelGroup get() = channels.first()

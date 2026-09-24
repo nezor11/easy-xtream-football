@@ -430,16 +430,19 @@ private fun RadioOverlay(
                     modifier = Modifier.size(96.dp),
                 )
             }
-            // Small radio badge on the logo, so a logo alone still reads as "radio".
-            Image(
-                painter = painterResource(R.drawable.ic_radio),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(colors.primary),
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(10.dp)
-                    .size(26.dp),
-            )
+            // Small radio badge on the logo, so a logo alone still reads as "radio" (redundant when
+            // the big glyph is already showing).
+            if (iconUrl != null && !imageFailed) {
+                Image(
+                    painter = painterResource(R.drawable.ic_radio),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(colors.primary),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(10.dp)
+                        .size(26.dp),
+                )
+            }
         }
         Text(
             text = name,

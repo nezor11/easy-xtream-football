@@ -285,6 +285,7 @@ class ChannelsViewModel(
                     channels = sorted,
                     country = sorted.firstNotNullOfOrNull { it.country },
                     geoBlocked = sorted.all { it.geoBlocked },
+                    isRadio = sorted.all { it.isRadio },
                 )
             }
             .sortedBy { it.name.lowercase() }

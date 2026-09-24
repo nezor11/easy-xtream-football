@@ -819,6 +819,7 @@ private fun FolderCard(
         modifier = modifier,
         countryCode = folder.country,
         geoBlocked = folder.geoBlocked,
+        isRadio = folder.isRadio,
     )
 }
 
