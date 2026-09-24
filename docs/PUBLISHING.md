@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-23.
+Última actualización: 2026-09-24.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -342,6 +342,45 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   </en-US>
   ```
 
+## 0.1.8 PREPARADA — 2026-09-24 (máquina Linux)
+- `versionCode` **9** · `versionName` **0.1.8**. Todo en `main` (commits del 2026-09-24). Firmados con la clave de
+  subida (`CN=Jorge Mtnez`, SHA-256 `E9:9B:9E:F2:…`), copias listas para subir en `~/Downloads/easy-xtream-0.1.8/`:
+  - Play: `easy-xtream-football-0.1.8-vc9.aab` (16,5 MB) = `app/build/outputs/bundle/fullRelease/app-full-release.aab`
+  - Amazon: `easy-xtream-football-0.1.8-vc9-universal.apk` (26,8 MB) = `app/build/outputs/apk/full/release/app-full-universal-release.apk`
+  - Regenerar: `./gradlew :app:bundleFullRelease :app:assembleFullRelease` (JDK 25 + SDK 36 en esta máquina).
+- Contenido (probado en el Xiaomi por el usuario y en el Chromecast por adb):
+  - **Radio**: emisoras marcadas en la lista (`radio="true"`, `stream_type=radio_streams`, categoría "Radio") o
+    detectadas al reproducir sin pista de vídeo → pantalla con logo/icono, nombre y "Sonando: …" (ICY; casi todas
+    las radios de tertulia lo mandan vacío y se muestra "Solo audio"). Icono de radio en las tarjetas.
+  - **Pausa**: doble OK en el mando / doble toque en el móvil. En pausa, un solo OK o toque reanuda sin abrir el
+    menú. La tecla ⏯ física sigue funcionando.
+  - **Listas de ejemplo**: botón "Probar con listas de ejemplo" en el primer arranque y en la pantalla de perfiles
+    vacía. Crea "Demo · Deporte en abierto" (iptv-org `categories/sports.m3u`) y "Demo · Radios deportivas"
+    (`docs/playlists/sports-radio.m3u` de este repo, 14 emisoras de 9 países con streams oficiales). **La app sigue
+    arrancando vacía**: decisión del usuario para no romper el argumento de "solo reproductor" ante las revisiones.
+  - Filtros de la parrilla desplazables en horizontal (en el móvil en vertical no cabían).
+- **Notas de versión de 0.1.8** (máx. 500 caracteres por idioma):
+  ```
+  <es-ES>
+  • Radio: las emisoras de tu lista se ven con su logo, nombre y lo que está sonando.
+  • Pausa: pulsa OK dos veces (o toca dos veces en el móvil). En pausa, un solo OK reanuda.
+  • Listas de ejemplo: si aún no tienes proveedor, prueba la app con dos listas públicas de emisiones en abierto (deporte y radios deportivas), que puedes borrar cuando quieras.
+  • Móvil: los filtros de la parrilla se desplazan en vertical.
+  • Incluye todo lo de la 0.1.7: favoritos compartidos, más logos, gestos táctiles y 24 idiomas.
+  </es-ES>
+  ```
+  ```
+  <en-US>
+  • Radio: stations in your playlist show their logo, name and what's on air.
+  • Pause: press OK twice (or double-tap on a phone). While paused, a single OK resumes.
+  • Sample playlists: no provider yet? Try the app with two public free-to-air playlists (sports TV and sports radio); delete them whenever you like.
+  • Phone: the grid filters scroll in portrait.
+  • Includes everything from 0.1.7: shared favorites, more logos, touch gestures and 24 languages.
+  </en-US>
+  ```
+- **Ficha**: sustituir el párrafo "IMPORTANTE" en Play (ES/EN) y en Amazon (ES/EN) por el texto de
+  `docs/store-listing.md` → "Pendiente para la 0.1.8". Play ya dice "24 idiomas".
+
 ## Amazon Appstore (Fire TV) — preparado el 2026-09-22, ENVIADA el 2026-09-23
 Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
 desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la de Google.
@@ -406,10 +445,10 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
    ✅ **Clave restaurada también en la máquina Linux el 2026-09-22** (ver abajo): ya se puede firmar desde
    cualquiera de las dos.
 
-9. ⏳ **0.1.8 en preparación** (rama `feature/radio-and-double-ok-pause`, 2026-09-24): radio (pantalla,
-   icono, metadatos ICY), doble OK / doble toque = pausa, botón "Probar con listas de ejemplo" en el primer
-   arranque, y filtros desplazables en el móvil en vertical. Probado en el Xiaomi y en el Chromecast (2026-09-24). Al publicarla: **cambiar la frase "NO incluye ningún canal"**
-   de la ficha en Play y Amazon (texto nuevo en `docs/store-listing.md`) y subir `versionCode` a 9.
+9. ✅ **0.1.8 PREPARADA y firmada el 2026-09-24** (ver sección abajo). ⏳ **Subirla cuando Google apruebe la
+   0.1.6** (crear otra versión de Producción antes reiniciaría esa revisión). En Amazon: *Add upcoming version*
+   con el APK universal. En ambas tiendas **cambiar la frase "NO incluye ningún canal"** por el texto nuevo de
+   `docs/store-listing.md`.
 
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
