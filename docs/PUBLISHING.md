@@ -450,6 +450,13 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
    con el APK universal. En ambas tiendas **cambiar la frase "NO incluye ningún canal"** por el texto nuevo de
    `docs/store-listing.md`.
 
+10. ⏳ **0.1.9 (planificada el 2026-09-24): propina con Google Play Billing.** Sustituir el QR de Ko-fi por un
+    producto consumible "Invitar a un café" (1,99 / 4,99 / 9,99 €) en la sección Café del menú del reproductor.
+    Solo en la versión de Play (móvil, Android TV, Chromecast); en la de Amazon se mantiene el QR. Antes de tocar
+    código: crear el **perfil de pagos** en Play Console (datos fiscales y cuenta bancaria) y los productos in-app;
+    probar con compradores de prueba. Motivo: Ko-fi resulta engorroso y el enlace externo está en zona gris de la
+    política de pagos de Play.
+
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
   reciente). El Fire Stick 2ª gen (Fire OS 5 / Android 5.1, API 22) **no es compatible** (< minSdk 24).
