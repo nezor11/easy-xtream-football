@@ -366,7 +366,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Pausa: pulsa OK dos veces (o toca dos veces en el móvil). En pausa, un solo OK reanuda.
   • Listas de ejemplo: si aún no tienes proveedor, prueba la app con dos listas públicas de emisiones en abierto (deporte y radios deportivas), que puedes borrar cuando quieras.
   • Móvil: los filtros de la parrilla se desplazan en vertical.
-  • Incluye todo lo de la 0.1.7: favoritos compartidos, más logos, gestos táctiles y 24 idiomas.
+  • Y todo lo de la 0.1.7: favoritos compartidos, más logos, gestos táctiles y 24 idiomas.
   </es-ES>
   ```
   ```
