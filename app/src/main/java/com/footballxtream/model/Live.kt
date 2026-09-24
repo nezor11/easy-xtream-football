@@ -27,4 +27,10 @@ data class LiveChannel(
     val country: String? = null,
     /** True when the playlist flags the channel as geo-blocked (iptv-org's "[Geo-blocked]" tag). */
     val geoBlocked: Boolean = false,
+    /**
+     * True when the source marks this as a radio station (M3U `radio="true"`, Xtream
+     * `stream_type = "radio_streams"`, or a "Radio" category). Audio-only streams that come unmarked
+     * are still recognised at playback time from the absence of a video track.
+     */
+    val isRadio: Boolean = false,
 )

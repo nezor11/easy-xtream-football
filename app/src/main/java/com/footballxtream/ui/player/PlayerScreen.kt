@@ -29,27 +29,34 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -64,6 +71,10 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.R
 import com.footballxtream.ui.components.isTv
+import coil.compose.AsyncImage
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -81,6 +92,11 @@ fun PlayerScreen(
     // Timestamp of the OK key-down, to tell a short press (menu) from a long press (toggle favorite).
     // 0L = idle (no press in progress); -1L = long-press already handled on key-down.
     val okDownAt = remember { LongArray(1) }
+    // A short OK opens the menu only if a second short OK doesn't follow within the system's
+    // double-tap window: two quick OKs are play/pause (the Chromecast remote has no ⏯ key).
+    val scope = rememberCoroutineScope()
+    val doubleTapMs = LocalViewConfiguration.current.doubleTapTimeoutMillis
+    val pendingOk = remember { arrayOfNulls<Job>(1) }
 
     // Back closes the options menu first; otherwise it leaves the player.
     BackHandler(enabled = ui.menuOpen) { viewModel.closeMenu() }
@@ -164,7 +180,17 @@ fun PlayerScreen(
                                 okDownAt[0] == -1L -> Unit
                                 System.currentTimeMillis() - okDownAt[0] >= 450L ->
                                     viewModel.toggleCurrentChannelFavorite()
-                                else -> viewModel.openMenu()
+                                pendingOk[0]?.isActive == true -> {
+                                    // Second short OK inside the window: it's a double press.
+                                    pendingOk[0]?.cancel()
+                                    pendingOk[0] = null
+                                    viewModel.togglePlayPause()
+                                }
+                                else -> pendingOk[0] = scope.launch {
+                                    delay(doubleTapMs)
+                                    pendingOk[0] = null
+                                    viewModel.openMenu()
+                                }
                             }
                             okDownAt[0] = 0L
                             true
@@ -204,15 +230,19 @@ fun PlayerScreen(
         )
 
         // Touch controls (phones/tablets), on a layer above the video so the PlayerView never sees
-        // them: they mirror the remote — a tap is OK (open/close the menu), a horizontal swipe is
-        // ◀▶ (channel, or menu section while the menu is open) and a vertical swipe is ▲▼ (quality).
+        // them: they mirror the remote — a tap is OK (open/close the menu), a double tap is
+        // play/pause, a horizontal swipe is ◀▶ (channel, or menu section while the menu is open) and
+        // a vertical swipe is ▲▼ (quality).
         // The overlays drawn later sit on top, so their own taps (menu options, QR) still win.
         val swipeThreshold = with(LocalDensity.current) { 64.dp.toPx() }
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .pointerInput(ui.menuOpen) {
-                    detectTapGestures { if (ui.menuOpen) viewModel.closeMenu() else viewModel.openMenu() }
+                    detectTapGestures(
+                        onDoubleTap = { if (!ui.menuOpen) viewModel.togglePlayPause() },
+                        onTap = { if (ui.menuOpen) viewModel.closeMenu() else viewModel.openMenu() },
+                    )
                 }
                 .pointerInput(ui.menuOpen) {
                     var dx = 0f
@@ -279,17 +309,34 @@ fun PlayerScreen(
             )
         }
 
-        if (ui.paused) {
-            Text(
-                text = stringResource(R.string.player_paused),
-                style = MaterialTheme.typography.titleMedium,
-                color = Color(0xFFE6EAEE),
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color(0xE60A0E12))
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            )
+        // Centre of the screen: the radio view (there is no picture to show) and the paused label.
+        val radioView = (ui.isRadio || ui.audioOnly) && ui.errorMessage == null
+        if (radioView || ui.paused) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                if (radioView) {
+                    RadioOverlay(
+                        name = ui.channelName,
+                        iconUrl = ui.channelIconUrl,
+                        nowPlaying = ui.nowPlaying,
+                        isBuffering = ui.isBuffering,
+                    )
+                }
+                if (ui.paused) {
+                    Text(
+                        text = stringResource(R.string.player_paused),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color(0xFFE6EAEE),
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color(0xE60A0E12))
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                    )
+                }
+            }
         }
 
         ui.notice?.let { msg ->
@@ -338,6 +385,82 @@ fun PlayerScreen(
         ) {
             CoffeeCard()
         }
+    }
+}
+
+/**
+ * What replaces the (black) picture while a radio station plays: the station logo when it has one,
+ * otherwise a radio glyph; the station name; and the song/programme on air from the ICY metadata,
+ * or an "audio only" line when the stream doesn't announce one.
+ */
+@Composable
+private fun RadioOverlay(
+    name: String,
+    iconUrl: String?,
+    nowPlaying: String?,
+    isBuffering: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MaterialTheme.colorScheme
+    Column(
+        modifier = modifier.widthIn(max = 560.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(168.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFF141A20)),
+            contentAlignment = Alignment.Center,
+        ) {
+            var imageFailed by remember(iconUrl) { mutableStateOf(false) }
+            if (iconUrl != null && !imageFailed) {
+                AsyncImage(
+                    model = iconUrl,
+                    contentDescription = null,
+                    onError = { imageFailed = true },
+                    modifier = Modifier.fillMaxSize().padding(20.dp),
+                )
+            } else {
+                Image(
+                    painter = painterResource(R.drawable.ic_radio),
+                    contentDescription = stringResource(R.string.radio_badge_desc),
+                    colorFilter = ColorFilter.tint(colors.primary),
+                    modifier = Modifier.size(96.dp),
+                )
+            }
+            // Small radio badge on the logo, so a logo alone still reads as "radio".
+            Image(
+                painter = painterResource(R.drawable.ic_radio),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(colors.primary),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(10.dp)
+                    .size(26.dp),
+            )
+        }
+        Text(
+            text = name,
+            style = MaterialTheme.typography.headlineSmall,
+            color = Color(0xFFE6EAEE),
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Text(
+            text = when {
+                !nowPlaying.isNullOrBlank() -> stringResource(R.string.radio_now_playing, nowPlaying)
+                isBuffering -> "⟳"
+                else -> stringResource(R.string.radio_audio_only)
+            },
+            style = MaterialTheme.typography.bodyLarge,
+            color = if (isBuffering) colors.primary else Color(0xCCE6EAEE),
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 

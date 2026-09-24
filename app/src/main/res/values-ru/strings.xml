@@ -34,11 +34,14 @@
     <string name="quality_auto">Авто</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ сменить канал</string>
     <string name="menu_nav_hint">▲▼ выбор · ◀▶ раздел · OK подтвердить</string>
-    <string name="controls_legend">OK: меню  ·  удерживать OK: ★  ·  ▲▼: качество  ·  ◀▶: канал (×2 папка)</string>
-    <string name="controls_legend_touch">Касание: меню  ·  свайп ▲▼: качество  ·  свайп ◀▶: канал</string>
+    <string name="controls_legend">OK: меню  ·  OK ×2: ⏯  ·  удерживать OK: ★  ·  ▲▼: качество  ·  ◀▶: канал (×2 папка)</string>
+    <string name="controls_legend_touch">Касание: меню  ·  Касание ×2: ⏯  ·  свайп ▲▼: качество  ·  свайп ◀▶: канал</string>
     <string name="menu_nav_hint_touch">касание: выбор  ·  свайп ◀▶: раздел</string>
     <string name="added_to_favorites">★ Добавлено в избранное</string>
     <string name="player_paused">⏸ Пауза</string>
+    <string name="radio_badge_desc">Радио</string>
+    <string name="radio_audio_only">Только звук</string>
+    <string name="radio_now_playing">Сейчас играет: %1$s</string>
     <string name="removed_from_favorites">Удалено из избранного</string>
     <string name="epg_now">Сейчас: %1$s</string>
     <string name="epg_next_suffix">   ·   Далее: %1$s</string>
@@ -104,6 +107,10 @@
     <string name="action_accept">Готово</string>
     <string name="action_add">Добавить</string>
     <string name="add_profile">Добавить профиль</string>
+    <string name="sample_lists_button">Попробовать с примерами списков</string>
+    <string name="sample_lists_hint">Публичные списки бесплатных эфирных каналов, поддерживаемые третьими лицами: часть каналов может не работать. Их можно удалить в любой момент.</string>
+    <string name="sample_profile_sports">Демо · Бесплатный спорт</string>
+    <string name="sample_profile_radio">Демо · Спортивное радио</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">Настройки</string>

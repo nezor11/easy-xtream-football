@@ -22,6 +22,8 @@ data class ChannelGroup(
     val country: String? = null,
     /** True when the playlist flags the channel as geo-blocked. */
     val geoBlocked: Boolean = false,
+    /** True when every variant is a radio station (see [LiveChannel.isRadio]). */
+    val isRadio: Boolean = false,
 ) {
     val availableQualities: Set<Quality> = variants.map { it.quality }.toSet()
 

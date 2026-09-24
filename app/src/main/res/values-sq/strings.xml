@@ -32,11 +32,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ ndrysho kanalin</string>
     <string name="menu_nav_hint">▲▼ zgjidh · ◀▶ seksion · OK konfirmo</string>
-    <string name="controls_legend">OK: menu  ·  mbaj OK: ★  ·  ▲▼: cilësia  ·  ◀▶: kanali (×2 dosje)</string>
-    <string name="controls_legend_touch">Prek: menu  ·  rrëshqit ▲▼: cilësia  ·  rrëshqit ◀▶: kanali</string>
+    <string name="controls_legend">OK: menu  ·  OK ×2: ⏯  ·  mbaj OK: ★  ·  ▲▼: cilësia  ·  ◀▶: kanali (×2 dosje)</string>
+    <string name="controls_legend_touch">Prek: menu  ·  Prek ×2: ⏯  ·  rrëshqit ▲▼: cilësia  ·  rrëshqit ◀▶: kanali</string>
     <string name="menu_nav_hint_touch">prek: zgjidh  ·  rrëshqit ◀▶: seksion</string>
     <string name="added_to_favorites">★ U shtua te të preferuarat</string>
     <string name="player_paused">⏸ Në pauzë</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Vetëm audio</string>
+    <string name="radio_now_playing">Tani luan: %1$s</string>
     <string name="removed_from_favorites">U hoq nga të preferuarat</string>
     <string name="epg_now">Tani: %1$s</string>
     <string name="epg_next_suffix">   ·   Më pas: %1$s</string>
@@ -102,6 +105,10 @@
     <string name="action_accept">U krye</string>
     <string name="action_add">Shto</string>
     <string name="add_profile">Shto profil</string>
+    <string name="sample_lists_button">Provo me lista shembull</string>
+    <string name="sample_lists_hint">Lista publike kanalesh të hapura të mbajtura nga palë të treta: disa kanale mund të mos punojnë. Mund t\'i fshish kur të duash.</string>
+    <string name="sample_profile_sports">Demo · Sport i hapur</string>
+    <string name="sample_profile_radio">Demo · Radio sportive</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">Cilësimet</string>

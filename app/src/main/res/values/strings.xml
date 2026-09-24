@@ -33,11 +33,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ to change channel</string>
     <string name="menu_nav_hint">▲▼ choose · ◀▶ section · OK confirm</string>
-    <string name="controls_legend">OK: menu  ·  hold OK: ★  ·  ▲▼: quality  ·  ◀▶: channel (×2 folder)</string>
-    <string name="controls_legend_touch">Tap: menu  ·  swipe ▲▼: quality  ·  swipe ◀▶: channel</string>
+    <string name="controls_legend">OK: menu  ·  OK ×2: ⏯  ·  hold OK: ★  ·  ▲▼: quality  ·  ◀▶: channel (×2 folder)</string>
+    <string name="controls_legend_touch">Tap: menu  ·  Tap ×2: ⏯  ·  swipe ▲▼: quality  ·  swipe ◀▶: channel</string>
     <string name="menu_nav_hint_touch">tap: choose  ·  swipe ◀▶: section</string>
     <string name="added_to_favorites">★ Added to favorites</string>
     <string name="player_paused">⏸ Paused</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Audio only</string>
+    <string name="radio_now_playing">Now playing: %1$s</string>
     <string name="removed_from_favorites">Removed from favorites</string>
     <string name="epg_now">Now: %1$s</string>
     <string name="epg_next_suffix">   ·   Next: %1$s</string>
@@ -103,6 +106,10 @@
     <string name="action_accept">Done</string>
     <string name="action_add">Add</string>
     <string name="add_profile">Add profile</string>
+    <string name="sample_lists_button">Try with sample playlists</string>
+    <string name="sample_lists_hint">Public free-to-air playlists maintained by third parties: some channels may be offline. You can delete them at any time.</string>
+    <string name="sample_profile_sports">Demo · Free-to-air sports</string>
+    <string name="sample_profile_radio">Demo · Sports radio</string>
 
     <!-- Language selection -->
     <string name="settings_title">Settings</string>

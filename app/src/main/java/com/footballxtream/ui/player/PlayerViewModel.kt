@@ -11,12 +11,15 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.media3.common.C
 import androidx.media3.common.Format
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Metadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.TrackSelectionOverride
+import androidx.media3.common.Tracks
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.HttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.extractor.metadata.icy.IcyInfo
 import com.footballxtream.FootballXtreamApp
 import com.footballxtream.R
 import com.footballxtream.data.ContentRepository
@@ -72,6 +75,14 @@ data class PlayerUiState(
     val infoFlash: Boolean = false,
     /** TV-style "bug" inviting a Ko-fi donation; slides in bottom-right once per app session. */
     val showCoffeeBug: Boolean = false,
+    /** Logo of the playing channel (shown on the radio screen, where there is no picture). */
+    val channelIconUrl: String? = null,
+    /** The source marks the playing channel as a radio station. */
+    val isRadio: Boolean = false,
+    /** The stream turned out to carry no video track (radio, or a TV channel down to audio only). */
+    val audioOnly: Boolean = false,
+    /** "StreamTitle" from the stream's ICY metadata (song / programme on air), when a radio sends it. */
+    val nowPlaying: String? = null,
 )
 
 @OptIn(UnstableApi::class)
@@ -186,6 +197,22 @@ class PlayerViewModel(
                 .filterIsInstance<HttpDataSource.InvalidResponseCodeException>()
                 .firstOrNull()?.responseCode
             handleChannelFailure(httpCode = code)
+        }
+
+        /** Radio (or a TV stream reduced to audio) has no video track: switch the screen to the radio view. */
+        override fun onTracksChanged(tracks: Tracks) {
+            val hasAudio = tracks.groups.any { it.type == C.TRACK_TYPE_AUDIO }
+            val hasVideo = tracks.groups.any { it.type == C.TRACK_TYPE_VIDEO }
+            _ui.update { it.copy(audioOnly = hasAudio && !hasVideo) }
+        }
+
+        /** Internet radios announce the song/programme on air through ICY "StreamTitle" metadata. */
+        override fun onMetadata(metadata: Metadata) {
+            for (i in 0 until metadata.length()) {
+                val entry = metadata.get(i) as? IcyInfo ?: continue
+                val title = entry.title?.trim().orEmpty()
+                if (title.isNotEmpty()) _ui.update { it.copy(nowPlaying = title) }
+            }
         }
     }
 
@@ -581,6 +608,10 @@ class PlayerViewModel(
                 errorMessage = null,
                 isFavorite = group.key in favoriteKeys,
                 showCoffeeBug = false, // hide the bug while we switch channels
+                channelIconUrl = group.iconUrl,
+                isRadio = group.isRadio,
+                audioOnly = false,
+                nowPlaying = null,
             )
         }
         playUri(variant)

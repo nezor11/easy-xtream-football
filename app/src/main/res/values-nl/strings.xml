@@ -32,11 +32,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ zender wisselen</string>
     <string name="menu_nav_hint">▲▼ kiezen · ◀▶ sectie · OK bevestigen</string>
-    <string name="controls_legend">OK: menu  ·  OK ingedrukt houden: ★  ·  ▲▼: kwaliteit  ·  ◀▶: zender (×2 map)</string>
-    <string name="controls_legend_touch">Tikken: menu  ·  vegen ▲▼: kwaliteit  ·  vegen ◀▶: zender</string>
+    <string name="controls_legend">OK: menu  ·  OK ×2: ⏯  ·  OK ingedrukt houden: ★  ·  ▲▼: kwaliteit  ·  ◀▶: zender (×2 map)</string>
+    <string name="controls_legend_touch">Tikken: menu  ·  Tikken ×2: ⏯  ·  vegen ▲▼: kwaliteit  ·  vegen ◀▶: zender</string>
     <string name="menu_nav_hint_touch">tikken: kiezen  ·  vegen ◀▶: sectie</string>
     <string name="added_to_favorites">★ Toegevoegd aan favorieten</string>
     <string name="player_paused">⏸ Gepauzeerd</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Alleen audio</string>
+    <string name="radio_now_playing">Nu te horen: %1$s</string>
     <string name="removed_from_favorites">Verwijderd uit favorieten</string>
     <string name="epg_now">Nu: %1$s</string>
     <string name="epg_next_suffix">   ·   Hierna: %1$s</string>
@@ -102,6 +105,10 @@
     <string name="action_accept">Klaar</string>
     <string name="action_add">Toevoegen</string>
     <string name="add_profile">Profiel toevoegen</string>
+    <string name="sample_lists_button">Proberen met voorbeeldlijsten</string>
+    <string name="sample_lists_hint">Openbare lijsten met vrij te ontvangen zenders, beheerd door derden: sommige zenders kunnen offline zijn. Je kunt ze altijd verwijderen.</string>
+    <string name="sample_profile_sports">Demo · Vrij te ontvangen sport</string>
+    <string name="sample_profile_radio">Demo · Sportradio</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">Instellingen</string>

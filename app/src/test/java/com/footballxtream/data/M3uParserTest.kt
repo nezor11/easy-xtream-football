@@ -118,4 +118,22 @@ class M3uParserTest {
     fun epgUrls_emptyWhenNoneDeclared() {
         assertTrue(M3uParser.epgUrls("#EXTM3U\n#EXTINF:-1,Foo\nhttp://x/y.ts").isEmpty())
     }
+
+    @Test
+    fun parse_flagsRadioFromAttributeOrGroup() {
+        val radio = """
+            #EXTM3U
+            #EXTINF:-1 tvg-id="marca.es" radio="true" group-title="Sports",Radio Marca
+            http://host/live/marca
+            #EXTINF:-1 group-title="Radios Deportivas",COPE Deportes
+            http://host/live/cope
+            #EXTINF:-1 group-title="Sports",Radio Marca TV
+            http://host/live/marcatv
+        """.trimIndent()
+        val channels = M3uParser.parse(radio)
+        assertEquals(3, channels.size)
+        assertTrue(channels[0].isRadio) // radio="true"
+        assertTrue(channels[1].isRadio) // "Radios" group
+        assertFalse(channels[2].isRadio) // "Radio" in the name alone is not enough
+    }
 }

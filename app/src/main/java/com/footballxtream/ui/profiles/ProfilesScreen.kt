@@ -76,6 +76,7 @@ fun ProfilesScreen(
     viewModel: ProfilesViewModel = viewModel(factory = ProfilesViewModel.Factory),
 ) {
     val profiles by viewModel.profiles.collectAsStateWithLifecycle()
+    val loaded by viewModel.loaded.collectAsStateWithLifecycle()
     val colors = MaterialTheme.colorScheme
     var menuProfile by remember { mutableStateOf<ProfileEntity?>(null) }
     var showLanguage by remember { mutableStateOf(false) }
@@ -113,14 +114,15 @@ fun ProfilesScreen(
             // deleted from here".
             var hadProfiles by remember { mutableStateOf(false) }
             // Focus the first profile on entry. Never focus the Add button on the initial empty frame
-            // (it would flash green while loading) — but once we've had profiles and the list goes
-            // empty (last one deleted), move focus there so the remote isn't left with nothing focused.
-            LaunchedEffect(profiles.isNotEmpty(), menuOpen) {
+            // (it would flash green while loading) — but once the database has answered and there
+            // are no profiles (fresh install, or the last one deleted), move focus there so the
+            // remote isn't left with nothing focused.
+            LaunchedEffect(profiles.isNotEmpty(), menuOpen, loaded) {
                 if (menuOpen) return@LaunchedEffect
                 if (profiles.isNotEmpty()) {
                     hadProfiles = true
                     runCatching { firstFocus.requestFocus() }
-                } else if (hadProfiles) {
+                } else if (hadProfiles || loaded) {
                     runCatching { addFocus.requestFocus() }
                 }
             }
@@ -142,11 +144,36 @@ fun ProfilesScreen(
                 }
             }
             // Add a new profile: a wide button below the cards (was a "+" tile at the end of the row).
-            AddProfileButton(
-                focusable = !menuOpen,
-                onClick = onAddProfile,
-                modifier = Modifier.focusRequester(addFocus),
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                AddProfileButton(
+                    focusable = !menuOpen,
+                    onClick = onAddProfile,
+                    modifier = Modifier.focusRequester(addFocus),
+                )
+                // Nothing configured yet: offer two sample playlists (free-to-air sports TV and sports
+                // radio) so the player can be tried before adding one's own provider. They become
+                // ordinary M3U profiles, editable and deletable. Only shown once the DB has answered,
+                // so it doesn't flash while loading.
+                if (loaded && profiles.isEmpty()) {
+                    val sportsName = stringResource(R.string.sample_profile_sports)
+                    val radioName = stringResource(R.string.sample_profile_radio)
+                    AddProfileButton(
+                        focusable = !menuOpen,
+                        onClick = { viewModel.addSampleLists(sportsName, radioName) },
+                        label = "▶  " + stringResource(R.string.sample_lists_button),
+                    )
+                    Text(
+                        text = stringResource(R.string.sample_lists_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colors.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.widthIn(max = 520.dp).padding(top = 4.dp),
+                    )
+                }
+            }
             if (profiles.isNotEmpty()) {
                 Text(
                     text = stringResource(R.string.profiles_longpress_hint),
@@ -369,6 +396,7 @@ private fun AddProfileButton(
     focusable: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    label: String = "+  " + stringResource(R.string.add_profile),
 ) {
     val colors = MaterialTheme.colorScheme
     var focused by remember { mutableStateOf(false) }
@@ -387,7 +415,7 @@ private fun AddProfileButton(
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "+  " + stringResource(R.string.add_profile),
+            text = label,
             style = MaterialTheme.typography.bodySmall,
             color = if (focused) colors.onPrimary else colors.onSurfaceVariant,
         )

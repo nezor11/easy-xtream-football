@@ -8,7 +8,7 @@ import org.junit.Test
 
 class ChannelGroupingTest {
 
-    private fun channel(name: String, category: String?, epgId: String? = null) =
+    private fun channel(name: String, category: String?, epgId: String? = null, isRadio: Boolean = false) =
         LiveChannel(
             streamId = name.hashCode(),
             name = name,
@@ -16,6 +16,7 @@ class ChannelGroupingTest {
             categoryName = category,
             streamUrl = "http://host/${name.hashCode()}",
             epgId = epgId,
+            isRadio = isRadio,
         )
 
     @Test
@@ -69,5 +70,18 @@ class ChannelGroupingTest {
             ),
         )
         assertEquals(2, groups.size)
+    }
+
+    @Test
+    fun build_marksGroupAsRadioOnlyWhenEveryVariantIs() {
+        val groups = ChannelGrouping.build(
+            listOf(
+                channel("Radio Marca Deportes", "Sports", isRadio = true),
+                channel("Sport TV HD", "Sports"),
+                channel("Sport TV SD", "Sports", isRadio = true),
+            ),
+        )
+        assertTrue(groups.first { it.displayName.startsWith("Radio Marca") }.isRadio)
+        assertTrue(!groups.first { it.displayName.startsWith("Sport TV") }.isRadio)
     }
 }

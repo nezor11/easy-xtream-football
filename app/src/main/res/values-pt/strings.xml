@@ -30,11 +30,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ para mudar de canal</string>
     <string name="menu_nav_hint">▲▼ escolher · ◀▶ secção · OK confirmar</string>
-    <string name="controls_legend">OK: menu  ·  OK longo: ★  ·  ▲▼: qualidade  ·  ◀▶: canal (×2 pasta)</string>
-    <string name="controls_legend_touch">Toca: menu  ·  desliza ▲▼: qualidade  ·  desliza ◀▶: canal</string>
+    <string name="controls_legend">OK: menu  ·  OK ×2: ⏯  ·  OK longo: ★  ·  ▲▼: qualidade  ·  ◀▶: canal (×2 pasta)</string>
+    <string name="controls_legend_touch">Toca: menu  ·  Toca ×2: ⏯  ·  desliza ▲▼: qualidade  ·  desliza ◀▶: canal</string>
     <string name="menu_nav_hint_touch">toca: escolher  ·  desliza ◀▶: secção</string>
     <string name="added_to_favorites">★ Adicionado aos favoritos</string>
     <string name="player_paused">⏸ Em pausa</string>
+    <string name="radio_badge_desc">Rádio</string>
+    <string name="radio_audio_only">Apenas áudio</string>
+    <string name="radio_now_playing">A tocar: %1$s</string>
     <string name="removed_from_favorites">Removido dos favoritos</string>
     <string name="epg_now">Agora: %1$s</string>
     <string name="epg_next_suffix">   ·   A seguir: %1$s</string>
@@ -98,6 +101,10 @@
     <string name="action_accept">Concluído</string>
     <string name="action_add">Adicionar</string>
     <string name="add_profile">Adicionar perfil</string>
+    <string name="sample_lists_button">Experimentar com listas de exemplo</string>
+    <string name="sample_lists_hint">Listas públicas de emissões em sinal aberto mantidas por terceiros: alguns canais podem estar em baixo. Pode apagá-las quando quiser.</string>
+    <string name="sample_profile_sports">Demo · Desporto em sinal aberto</string>
+    <string name="sample_profile_radio">Demo · Rádios desportivas</string>
 
     <string name="settings_title">Definições</string>
     <string name="settings_clear_cache">Limpar cache de canais e guia</string>

@@ -21,6 +21,8 @@ object M3uParser {
     private val tvgId = Regex("""tvg-id="([^"]*)"""", RegexOption.IGNORE_CASE)
     private val groupTitle = Regex("""group-title="([^"]*)"""", RegexOption.IGNORE_CASE)
     private val tvgLogo = Regex("""tvg-logo="([^"]*)"""", RegexOption.IGNORE_CASE)
+    // Xtream panels export radio stations with radio="true" on the EXTINF line.
+    private val radioAttr = Regex("""\bradio="(true|1|yes)"""", RegexOption.IGNORE_CASE)
     // EPG source(s) declared on the #EXTM3U header: x-tvg-url / url-tvg / tvg-url.
     private val epgUrlAttr = Regex("""(?:x-tvg-url|url-tvg|tvg-url)="([^"]*)"""", RegexOption.IGNORE_CASE)
 
@@ -39,6 +41,7 @@ object M3uParser {
         var logo: String? = null
         var epgId: String? = null
         var geoBlocked = false
+        var isRadio = false
 
         content.lineSequence().forEach { rawLine ->
             val line = rawLine.trim()
@@ -51,6 +54,7 @@ object M3uParser {
                     logo = tvgLogo.find(line)?.groupValues?.get(1)?.trim()?.takeIf { it.isNotBlank() }
                     epgId = tvgId.find(line)?.groupValues?.get(1)?.trim()?.takeIf { it.isNotBlank() }
                     geoBlocked = geoBlockedTag.containsMatchIn(line)
+                    isRadio = radioAttr.containsMatchIn(line) || ChannelNameParser.isRadioCategory(group)
                 }
 
                 line.isEmpty() || line.startsWith("#") -> Unit // skip other directives
@@ -71,6 +75,7 @@ object M3uParser {
                             epgId = epgId,
                             country = countryOf(epgId),
                             geoBlocked = geoBlocked,
+                            isRadio = isRadio,
                         )
                     }
                     name = null
@@ -78,6 +83,7 @@ object M3uParser {
                     logo = null
                     epgId = null
                     geoBlocked = false
+                    isRadio = false
                 }
             }
         }

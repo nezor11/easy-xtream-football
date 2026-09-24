@@ -32,11 +32,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ Sender wechseln</string>
     <string name="menu_nav_hint">▲▼ wählen · ◀▶ Bereich · OK bestätigen</string>
-    <string name="controls_legend">OK: Menü  ·  OK halten: ★  ·  ▲▼: Qualität  ·  ◀▶: Sender (×2 Ordner)</string>
-    <string name="controls_legend_touch">Tippen: Menü  ·  Wischen ▲▼: Qualität  ·  Wischen ◀▶: Sender</string>
+    <string name="controls_legend">OK: Menü  ·  OK ×2: ⏯  ·  OK halten: ★  ·  ▲▼: Qualität  ·  ◀▶: Sender (×2 Ordner)</string>
+    <string name="controls_legend_touch">Tippen: Menü  ·  Tippen ×2: ⏯  ·  Wischen ▲▼: Qualität  ·  Wischen ◀▶: Sender</string>
     <string name="menu_nav_hint_touch">Tippen: wählen  ·  Wischen ◀▶: Bereich</string>
     <string name="added_to_favorites">★ Zu Favoriten hinzugefügt</string>
     <string name="player_paused">⏸ Pausiert</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Nur Audio</string>
+    <string name="radio_now_playing">Jetzt läuft: %1$s</string>
     <string name="removed_from_favorites">Aus Favoriten entfernt</string>
     <string name="epg_now">Jetzt: %1$s</string>
     <string name="epg_next_suffix">   ·   Danach: %1$s</string>
@@ -102,6 +105,10 @@
     <string name="action_accept">Fertig</string>
     <string name="action_add">Hinzufügen</string>
     <string name="add_profile">Profil hinzufügen</string>
+    <string name="sample_lists_button">Mit Beispiellisten ausprobieren</string>
+    <string name="sample_lists_hint">Öffentliche Listen frei empfangbarer Sender, von Dritten gepflegt: einzelne Sender können offline sein. Du kannst sie jederzeit löschen.</string>
+    <string name="sample_profile_sports">Demo · Frei empfangbarer Sport</string>
+    <string name="sample_profile_radio">Demo · Sportradio</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">Einstellungen</string>

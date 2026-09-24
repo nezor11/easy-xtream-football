@@ -31,11 +31,14 @@
     <string name="quality_auto">自動</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ 切換頻道</string>
     <string name="menu_nav_hint">▲▼ 選擇 · ◀▶ 區段 · OK 確認</string>
-    <string name="controls_legend">OK：選單  ·  長按 OK：★  ·  ▲▼：畫質  ·  ◀▶：頻道（×2 資料夾）</string>
-    <string name="controls_legend_touch">點一下：選單  ·  滑動 ▲▼：畫質  ·  滑動 ◀▶：頻道</string>
+    <string name="controls_legend">OK：選單  ·  OK ×2：⏯  ·  長按 OK：★  ·  ▲▼：畫質  ·  ◀▶：頻道（×2 資料夾）</string>
+    <string name="controls_legend_touch">點一下：選單  ·  點一下 ×2：⏯  ·  滑動 ▲▼：畫質  ·  滑動 ◀▶：頻道</string>
     <string name="menu_nav_hint_touch">點一下：選擇  ·  滑動 ◀▶：區段</string>
     <string name="added_to_favorites">★ 已加入最愛</string>
     <string name="player_paused">⏸ 已暫停</string>
+    <string name="radio_badge_desc">廣播電台</string>
+    <string name="radio_audio_only">僅音訊</string>
+    <string name="radio_now_playing">正在播放：%1$s</string>
     <string name="removed_from_favorites">已從最愛移除</string>
     <string name="epg_now">現在：%1$s</string>
     <string name="epg_next_suffix">   ·   接下來：%1$s</string>
@@ -101,6 +104,10 @@
     <string name="action_accept">完成</string>
     <string name="action_add">新增</string>
     <string name="add_profile">新增設定檔</string>
+    <string name="sample_lists_button">用範例播放清單試用</string>
+    <string name="sample_lists_hint">由第三方維護的公開免費頻道清單：部分頻道可能離線。您隨時可以刪除。</string>
+    <string name="sample_profile_sports">示範 · 免費體育頻道</string>
+    <string name="sample_profile_radio">示範 · 體育廣播</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">設定</string>

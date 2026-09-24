@@ -30,11 +30,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ para cambiar de canle</string>
     <string name="menu_nav_hint">▲▼ elixir · ◀▶ sección · OK confirmar</string>
-    <string name="controls_legend">OK: menú  ·  OK longo: ★  ·  ▲▼: calidade  ·  ◀▶: canle (×2 cartafol)</string>
-    <string name="controls_legend_touch">Toca: menú  ·  desliza ▲▼: calidade  ·  desliza ◀▶: canle</string>
+    <string name="controls_legend">OK: menú  ·  OK ×2: ⏯  ·  OK longo: ★  ·  ▲▼: calidade  ·  ◀▶: canle (×2 cartafol)</string>
+    <string name="controls_legend_touch">Toca: menú  ·  Toca ×2: ⏯  ·  desliza ▲▼: calidade  ·  desliza ◀▶: canle</string>
     <string name="menu_nav_hint_touch">toca: escoller  ·  desliza ◀▶: sección</string>
     <string name="added_to_favorites">★ Engadido a favoritos</string>
     <string name="player_paused">⏸ En pausa</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Só audio</string>
+    <string name="radio_now_playing">Soando: %1$s</string>
     <string name="removed_from_favorites">Quitado de favoritos</string>
     <string name="epg_now">Agora: %1$s</string>
     <string name="epg_next_suffix">   ·   Despois: %1$s</string>
@@ -98,6 +101,10 @@
     <string name="action_accept">Feito</string>
     <string name="action_add">Engadir</string>
     <string name="add_profile">Engadir perfil</string>
+    <string name="sample_lists_button">Probar con listas de exemplo</string>
+    <string name="sample_lists_hint">Listas públicas de emisións en aberto mantidas por terceiros: pode haber canles caídas. Podes borralas cando queiras.</string>
+    <string name="sample_profile_sports">Demo · Deporte en aberto</string>
+    <string name="sample_profile_radio">Demo · Radios deportivas</string>
 
     <string name="settings_title">Axustes</string>
     <string name="settings_clear_cache">Borrar a caché de canles e guía</string>

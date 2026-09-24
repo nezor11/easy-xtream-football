@@ -221,6 +221,20 @@ object ChannelNameParser {
     fun isVodCategory(category: String?): Boolean =
         category != null && vodCategory.containsMatchIn(category)
 
+    // "Radio" as a whole word in the category/group title, in the languages the app ships. Only the
+    // category is checked, never the channel name: "Radio Marca TV" is a television channel.
+    private val radioKeywords = listOf(
+        "radio", "radios", "rádio", "rádios", "radyo", "радио", "ραδιόφωνο", "راديو", "إذاعة",
+        "วิทยุ", "電台", "电台", "廣播", "रेडियो",
+    )
+    // Bounded on both sides (unlike the sport keywords) so "Radiotelevisión" is not a radio.
+    private val radioRegex = Regex(
+        """(?<!\p{L})(${radioKeywords.joinToString("|") { Regex.escape(it) }})(?!\p{L})""",
+        RegexOption.IGNORE_CASE,
+    )
+
+    fun isRadioCategory(category: String?): Boolean = matchesAny(category, radioRegex)
+
     private fun boundaryRegex(keywords: List<String>): Regex {
         val alternation = keywords.joinToString("|") { Regex.escape(it) }
         return Regex("""(?<!\p{L})($alternation)""", RegexOption.IGNORE_CASE)

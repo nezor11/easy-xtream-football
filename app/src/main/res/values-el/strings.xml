@@ -32,11 +32,14 @@
     <string name="quality_auto">Αυτόματο</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ αλλαγή καναλιού</string>
     <string name="menu_nav_hint">▲▼ επιλογή · ◀▶ ενότητα · OK επιβεβαίωση</string>
-    <string name="controls_legend">OK: μενού  ·  παρατεταμένο OK: ★  ·  ▲▼: ποιότητα  ·  ◀▶: κανάλι (×2 φάκελος)</string>
-    <string name="controls_legend_touch">Πάτημα: μενού  ·  σύρσιμο ▲▼: ποιότητα  ·  σύρσιμο ◀▶: κανάλι</string>
+    <string name="controls_legend">OK: μενού  ·  OK ×2: ⏯  ·  παρατεταμένο OK: ★  ·  ▲▼: ποιότητα  ·  ◀▶: κανάλι (×2 φάκελος)</string>
+    <string name="controls_legend_touch">Πάτημα: μενού  ·  Πάτημα ×2: ⏯  ·  σύρσιμο ▲▼: ποιότητα  ·  σύρσιμο ◀▶: κανάλι</string>
     <string name="menu_nav_hint_touch">πάτημα: επιλογή  ·  σύρσιμο ◀▶: ενότητα</string>
     <string name="added_to_favorites">★ Προστέθηκε στα αγαπημένα</string>
     <string name="player_paused">⏸ Σε παύση</string>
+    <string name="radio_badge_desc">Ραδιόφωνο</string>
+    <string name="radio_audio_only">Μόνο ήχος</string>
+    <string name="radio_now_playing">Παίζει τώρα: %1$s</string>
     <string name="removed_from_favorites">Αφαιρέθηκε από τα αγαπημένα</string>
     <string name="epg_now">Τώρα: %1$s</string>
     <string name="epg_next_suffix">   ·   Επόμενο: %1$s</string>
@@ -102,6 +105,10 @@
     <string name="action_accept">Τέλος</string>
     <string name="action_add">Προσθήκη</string>
     <string name="add_profile">Προσθήκη προφίλ</string>
+    <string name="sample_lists_button">Δοκιμή με λίστες παραδείγματος</string>
+    <string name="sample_lists_hint">Δημόσιες λίστες ελεύθερων καναλιών που συντηρούν τρίτοι: κάποια κανάλια μπορεί να μη λειτουργούν. Μπορείτε να τις διαγράψετε όποτε θέλετε.</string>
+    <string name="sample_profile_sports">Demo · Ελεύθερος αθλητισμός</string>
+    <string name="sample_profile_radio">Demo · Αθλητικά ραδιόφωνα</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">Ρυθμίσεις</string>

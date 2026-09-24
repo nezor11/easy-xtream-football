@@ -35,6 +35,7 @@ object ChannelGrouping {
                     epgId = variants.firstNotNullOfOrNull { it.channel.epgId },
                     country = variants.firstNotNullOfOrNull { it.channel.country },
                     geoBlocked = variants.all { it.channel.geoBlocked },
+                    isRadio = variants.all { it.channel.isRadio },
                 )
             }
             .sortedBy { it.displayName.lowercase() }

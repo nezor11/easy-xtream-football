@@ -836,6 +836,7 @@ private fun LiveNowCard(
         modifier = modifier,
         countryCode = item.group.country,
         geoBlocked = item.group.geoBlocked,
+        isRadio = item.group.isRadio,
     )
 }
 
@@ -868,6 +869,7 @@ private fun ChannelCard(
         countryCode = group.country,
         geoBlocked = group.geoBlocked,
         highlighted = highlighted,
+        isRadio = group.isRadio,
     )
 }
 
@@ -885,6 +887,7 @@ private fun ImageCard(
     countryCode: String? = null,
     geoBlocked: Boolean = false,
     highlighted: Boolean = false,
+    isRadio: Boolean = false,
 ) {
     val colors = MaterialTheme.colorScheme
     var focused by remember { mutableStateOf(false) }
@@ -920,11 +923,34 @@ private fun ImageCard(
                     onError = { imageFailed = true },
                     modifier = Modifier.fillMaxSize().padding(8.dp),
                 )
+            } else if (isRadio) {
+                // A radio station without a logo shows the radio glyph rather than initials.
+                Image(
+                    painter = painterResource(R.drawable.ic_radio),
+                    contentDescription = stringResource(R.string.radio_badge_desc),
+                    colorFilter = ColorFilter.tint(colors.onSurfaceVariant),
+                    modifier = Modifier.size(40.dp),
+                )
             } else {
                 Text(
                     text = title.take(2).uppercase(),
                     style = MaterialTheme.typography.headlineSmall,
                     color = colors.onSurfaceVariant,
+                )
+            }
+            if (isRadio && iconUrl != null && !imageFailed) {
+                // Radio badge over the logo (top-left, where channels never show the folder hint).
+                Image(
+                    painter = painterResource(R.drawable.ic_radio),
+                    contentDescription = stringResource(R.string.radio_badge_desc),
+                    colorFilter = ColorFilter.tint(colors.onSurface),
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(6.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(colors.surface.copy(alpha = 0.85f))
+                        .padding(3.dp)
+                        .size(14.dp),
                 )
             }
             if (showFavorite) {

@@ -31,11 +31,14 @@
     <string name="quality_auto">Otomatis</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ ganti saluran</string>
     <string name="menu_nav_hint">▲▼ pilih · ◀▶ bagian · OK konfirmasi</string>
-    <string name="controls_legend">OK: menu  ·  tahan OK: ★  ·  ▲▼: kualitas  ·  ◀▶: saluran (×2 folder)</string>
-    <string name="controls_legend_touch">Ketuk: menu  ·  geser ▲▼: kualitas  ·  geser ◀▶: saluran</string>
+    <string name="controls_legend">OK: menu  ·  OK ×2: ⏯  ·  tahan OK: ★  ·  ▲▼: kualitas  ·  ◀▶: saluran (×2 folder)</string>
+    <string name="controls_legend_touch">Ketuk: menu  ·  Ketuk ×2: ⏯  ·  geser ▲▼: kualitas  ·  geser ◀▶: saluran</string>
     <string name="menu_nav_hint_touch">ketuk: pilih  ·  geser ◀▶: bagian</string>
     <string name="added_to_favorites">★ Ditambahkan ke favorit</string>
     <string name="player_paused">⏸ Dijeda</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Hanya audio</string>
+    <string name="radio_now_playing">Sedang diputar: %1$s</string>
     <string name="removed_from_favorites">Dihapus dari favorit</string>
     <string name="epg_now">Sekarang: %1$s</string>
     <string name="epg_next_suffix">   ·   Berikutnya: %1$s</string>
@@ -101,6 +104,10 @@
     <string name="action_accept">Selesai</string>
     <string name="action_add">Tambah</string>
     <string name="add_profile">Tambah profil</string>
+    <string name="sample_lists_button">Coba dengan daftar contoh</string>
+    <string name="sample_lists_hint">Daftar publik siaran gratis yang dikelola pihak ketiga: beberapa saluran mungkin tidak aktif. Anda dapat menghapusnya kapan saja.</string>
+    <string name="sample_profile_sports">Demo · Olahraga siaran gratis</string>
+    <string name="sample_profile_radio">Demo · Radio olahraga</string>
 
     <!-- Selección de idioma -->
     <string name="settings_title">Pengaturan</string>

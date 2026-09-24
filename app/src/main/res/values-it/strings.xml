@@ -30,11 +30,14 @@
     <string name="quality_auto">Auto</string>
     <string name="player_error_with_hint">%1$s  ·  ◀▶ per cambiare canale</string>
     <string name="menu_nav_hint">▲▼ scegli · ◀▶ sezione · OK conferma</string>
-    <string name="controls_legend">OK: menu  ·  OK lungo: ★  ·  ▲▼: qualità  ·  ◀▶: canale (×2 cartella)</string>
-    <string name="controls_legend_touch">Tocca: menu  ·  scorri ▲▼: qualità  ·  scorri ◀▶: canale</string>
+    <string name="controls_legend">OK: menu  ·  OK ×2: ⏯  ·  OK lungo: ★  ·  ▲▼: qualità  ·  ◀▶: canale (×2 cartella)</string>
+    <string name="controls_legend_touch">Tocca: menu  ·  Tocca ×2: ⏯  ·  scorri ▲▼: qualità  ·  scorri ◀▶: canale</string>
     <string name="menu_nav_hint_touch">tocca: scegli  ·  scorri ◀▶: sezione</string>
     <string name="added_to_favorites">★ Aggiunto ai preferiti</string>
     <string name="player_paused">⏸ In pausa</string>
+    <string name="radio_badge_desc">Radio</string>
+    <string name="radio_audio_only">Solo audio</string>
+    <string name="radio_now_playing">In onda: %1$s</string>
     <string name="removed_from_favorites">Rimosso dai preferiti</string>
     <string name="epg_now">Ora: %1$s</string>
     <string name="epg_next_suffix">   ·   Poi: %1$s</string>
@@ -98,6 +101,10 @@
     <string name="action_accept">Fatto</string>
     <string name="action_add">Aggiungi</string>
     <string name="add_profile">Aggiungi profilo</string>
+    <string name="sample_lists_button">Prova con liste di esempio</string>
+    <string name="sample_lists_hint">Liste pubbliche di canali in chiaro gestite da terzi: alcuni canali potrebbero non funzionare. Puoi eliminarle quando vuoi.</string>
+    <string name="sample_profile_sports">Demo · Sport in chiaro</string>
+    <string name="sample_profile_radio">Demo · Radio sportive</string>
 
     <string name="settings_title">Impostazioni</string>
     <string name="settings_clear_cache">Svuota la cache di canali e guida</string>

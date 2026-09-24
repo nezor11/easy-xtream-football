@@ -176,4 +176,14 @@ class ChannelNameParserTest {
         assertFalse(ChannelNameParser.isVodCategory("Deportes"))
         assertFalse(ChannelNameParser.isVodCategory(null))
     }
+
+    @Test
+    fun isRadioCategory_matchesWholeWordOnly() {
+        assertTrue(ChannelNameParser.isRadioCategory("Radio"))
+        assertTrue(ChannelNameParser.isRadioCategory("ES | RADIOS DEPORTIVAS"))
+        assertTrue(ChannelNameParser.isRadioCategory("Радио"))
+        assertFalse(ChannelNameParser.isRadioCategory("Sports"))
+        assertFalse(ChannelNameParser.isRadioCategory("Radiotelevisión"))
+        assertFalse(ChannelNameParser.isRadioCategory(null))
+    }
 }
