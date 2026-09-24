@@ -1,18 +1,33 @@
 #EXTM3U
-# Easy Xtream Football — sample playlist: sports talk radio.
+# Easy Xtream Football — sample playlist: sports talk radio from several countries.
 # Public streams published by the stations themselves. Nothing here is hosted or re-streamed by
 # the app; the list is only a convenience to try the player. Stations may change their URLs.
-#EXTINF:-1 tvg-logo="https://www.marca.com/apple-touch-icon-precomposed.png" radio="true" group-title="Radio Sport",Radio Marca
+# tvg-id carries the country as a suffix so the app can show where each station is from.
+#EXTINF:-1 tvg-id="RadioMarca.es" tvg-logo="https://www.marca.com/apple-touch-icon-precomposed.png" radio="true" group-title="Radio Sport",Radio Marca
 https://playerservices.streamtheworld.com/api/livestream-redirect/RADIOMARCA_NACIONAL_SC
-#EXTINF:-1 radio="true" group-title="Radio Sport",esRadio
-http://livestreaming.esradio.fm/stream64.mp3
-#EXTINF:-1 radio="true" group-title="Radio Sport",Onda Cero
-https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8
-#EXTINF:-1 radio="true" group-title="Radio Sport",Cadena SER
+#EXTINF:-1 tvg-id="CadenaSER.es" radio="true" group-title="Radio Sport",Cadena SER
 https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3
-#EXTINF:-1 tvg-logo="https://www.rac1.cat/apple-touch-icon-120x120.png" radio="true" group-title="Radio Sport",RAC1
+#EXTINF:-1 tvg-id="OndaCero.es" radio="true" group-title="Radio Sport",Onda Cero
+https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8
+#EXTINF:-1 tvg-id="RAC1.es" tvg-logo="https://www.rac1.cat/apple-touch-icon-120x120.png" radio="true" group-title="Radio Sport",RAC1
 https://playerservices.streamtheworld.com/api/livestream-redirect/RAC_1.mp3
-#EXTINF:-1 radio="true" group-title="Radio Sport",talkSPORT
+#EXTINF:-1 tvg-id="talkSPORT.uk" radio="true" group-title="Radio Sport",talkSPORT
 https://radio.talksport.com/stream
-#EXTINF:-1 radio="true" group-title="Radio Sport",RMC
+#EXTINF:-1 tvg-id="RMC.fr" radio="true" group-title="Radio Sport",RMC
 https://audio.bfmtv.com/rmcradio_128.mp3
+#EXTINF:-1 tvg-id="RadioSportiva.it" radio="true" group-title="Radio Sport",Radio Sportiva
+https://sportiva.inmystream.it/stream/sportiva
+#EXTINF:-1 tvg-id="RaiRadio1Sport.it" radio="true" group-title="Radio Sport",Rai Radio 1 Sport
+http://icestreaming.rai.it/13.mp3
+#EXTINF:-1 tvg-id="SportFM946.gr" radio="true" group-title="Radio Sport",Sport FM 94.6
+http://netradio.live24.gr/sportfm7712
+#EXTINF:-1 tvg-id="ERASport.gr" radio="true" group-title="Radio Sport",ERA Sport
+https://radiostreaming.ert.gr/ert-erasport
+#EXTINF:-1 tvg-id="RadyoSpor.tr" radio="true" group-title="Radio Sport",Radyo Spor
+https://moondigitaledge.radyotvonline.net/radyospor/playlist.m3u8
+#EXTINF:-1 tvg-id="FoxSportsRadio.us" radio="true" group-title="Radio Sport",Fox Sports Radio
+http://stream.revma.ihrhls.com/zc4732
+#EXTINF:-1 tvg-id="WDeportes.mx" radio="true" group-title="Radio Sport",W Deportes
+https://playerservices.streamtheworld.com/api/livestream-redirect/TDW730AMAAC.aac
+#EXTINF:-1 tvg-id="RadioGrenal.br" radio="true" group-title="Radio Sport",Rádio Grenal
+https://grenal.audiostream.com.br:20000/aac
