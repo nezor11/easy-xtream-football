@@ -40,6 +40,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.R
 import com.footballxtream.data.local.ProfileType
+import com.footballxtream.ui.components.AppButton
 import com.footballxtream.ui.components.BrandHeader
 import com.footballxtream.ui.components.TvTextField
 import com.footballxtream.ui.components.tvSafeArea
@@ -48,6 +49,7 @@ import com.footballxtream.ui.components.tvSafeArea
 @Composable
 fun AddProfileScreen(
     onSaved: () -> Unit,
+    onSamplesAdded: () -> Unit = {},
     profileId: Long = -1L,
     viewModel: AddProfileViewModel = viewModel(factory = AddProfileViewModel.Factory),
 ) {
@@ -198,6 +200,29 @@ fun AddProfileScreen(
                 enabled = state.canSubmit,
                 onClick = { viewModel.save(onSaved) },
             )
+        }
+
+        // First run (no profile yet): offer the two sample playlists as a way to see the player
+        // working before typing any provider in. They become ordinary, deletable M3U profiles.
+        if (state.offerSamples && !state.isEditing) {
+            val sportsName = stringResource(R.string.sample_profile_sports)
+            val radioName = stringResource(R.string.sample_profile_radio)
+            Column(
+                modifier = Modifier.widthIn(max = 600.dp).fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                AppButton(
+                    text = "▶  " + stringResource(R.string.sample_lists_button),
+                    onClick = { viewModel.addSampleLists(sportsName, radioName, onSamplesAdded) },
+                )
+                Text(
+                    text = stringResource(R.string.sample_lists_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
         }
     }
 }

@@ -406,6 +406,12 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
    ✅ **Clave restaurada también en la máquina Linux el 2026-09-22** (ver abajo): ya se puede firmar desde
    cualquiera de las dos.
 
+9. ⏳ **0.1.8 en preparación** (rama `feature/radio-and-double-ok-pause`, 2026-09-24): radio (pantalla,
+   icono, metadatos ICY), doble OK / doble toque = pausa, botón "Probar con listas de ejemplo" en el primer
+   arranque, y filtros desplazables en el móvil en vertical. Probado en el Xiaomi; **falta probar el doble OK
+   en el Chromecast** (hay que re-emparejar adb). Al publicarla: **cambiar la frase "NO incluye ningún canal"**
+   de la ficha en Play y Amazon (texto nuevo en `docs/store-listing.md`) y subir `versionCode` a 9.
+
 ## Otros TODO de calidad (no bloquean la publicación)
 - Prueba en **hardware flojo** compatible (Fire TV Stick 3ª gen/Lite/4K con Fire OS 7, o Android TV
   reciente). El Fire Stick 2ª gen (Fire OS 5 / Android 5.1, API 22) **no es compatible** (< minSdk 24).

@@ -115,6 +115,12 @@ private fun AppNavigation(start: String, autoEnterChannels: Boolean = false) {
                         popUpTo(Routes.ADD_PROFILE) { inclusive = true }
                     }
                 },
+                // Sample playlists created: show the picker with both demo profiles to choose from.
+                onSamplesAdded = {
+                    navController.navigate(Routes.PROFILES) {
+                        popUpTo(Routes.ADD_PROFILE) { inclusive = true }
+                    }
+                },
             )
         }
 

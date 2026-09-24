@@ -15,6 +15,7 @@ import com.footballxtream.data.ContentRepository
 import com.footballxtream.data.XtreamAuthException
 import com.footballxtream.data.local.ProfileDao
 import com.footballxtream.data.local.ProfileEntity
+import com.footballxtream.data.SampleLists
 import com.footballxtream.data.local.ProfileType
 import com.footballxtream.data.local.Secret
 import com.footballxtream.model.XtreamProfile
@@ -42,6 +43,8 @@ data class AddProfileUiState(
     val isConnecting: Boolean = false,
     val error: String? = null,
     val isEditing: Boolean = false,
+    /** No profile exists yet (first run): also offer the sample playlists below the form. */
+    val offerSamples: Boolean = false,
 ) {
     val isM3u: Boolean get() = mode == ProfileType.M3U
     val isDirect: Boolean get() = mode == ProfileType.DIRECT
@@ -72,6 +75,20 @@ class AddProfileViewModel(
 
     // Non-null when editing an existing profile; drives update-in-place instead of insert.
     private var editingId: Long? = null
+
+    init {
+        viewModelScope.launch {
+            if (profileDao.count() == 0) _state.update { it.copy(offerSamples = true) }
+        }
+    }
+
+    /** Creates the two sample M3U profiles (free-to-air sports TV and sports radio). */
+    fun addSampleLists(sportsName: String, radioName: String, onDone: () -> Unit) {
+        viewModelScope.launch {
+            SampleLists.add(profileDao, sportsName, radioName)
+            onDone()
+        }
+    }
 
     /** Loads an existing profile into the form so it can be edited. No-op for a new profile. */
     fun load(profileId: Long) {

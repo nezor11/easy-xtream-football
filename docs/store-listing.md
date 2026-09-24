@@ -81,3 +81,21 @@ the necessary rights or permissions.
 - **Correo de contacto:** el de la cuenta de desarrollador.
 - **Política de privacidad (URL):** https://github.com/nezor11/easy-xtream-football/blob/main/docs/privacy-policy.md
 - **Público objetivo:** mayores de 13 (no dirigido a niños).
+
+---
+
+## Pendiente para la 0.1.8 (listas de ejemplo) — 2026-09-24
+Desde la 0.1.8 la pantalla de primer arranque ofrece un botón **"Probar con listas de ejemplo"** que crea
+dos perfiles M3U (deporte en abierto de iptv-org y radios deportivas del propio repo). La app sigue
+arrancando vacía, pero la frase "NO incluye ni proporciona ningún canal" ya no es exacta al 100 %.
+Sustituirla en Play y Amazon por:
+
+- **ES:** «IMPORTANTE: Easy Xtream Football NO incluye canales de pago ni ningún servicio de televisión.
+  Solo ofrece, si tú lo pides, dos listas de ejemplo de emisiones en abierto mantenidas por terceros,
+  que puedes borrar. Para lo demás conectas tu propia cuenta de Xtream Codes o tu propia lista M3U/M3U8.
+  La app es únicamente el reproductor.»
+- **EN:** "IMPORTANT: Easy Xtream Football does NOT include any pay-TV channels or any television
+  service. On request it only offers two sample playlists of free-to-air broadcasts maintained by third
+  parties, which you can delete. For everything else you connect your own Xtream Codes account or your
+  own M3U/M3U8 playlist. The app is only the player."
+

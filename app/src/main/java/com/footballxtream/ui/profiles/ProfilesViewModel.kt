@@ -13,8 +13,6 @@ import com.footballxtream.data.local.ProfileEntity
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import com.footballxtream.data.local.Secret
-import com.footballxtream.data.local.ProfileType
 import com.footballxtream.data.SampleLists
 import com.footballxtream.data.local.SettingsStore
 import kotlinx.coroutines.flow.SharingStarted
@@ -49,14 +47,7 @@ class ProfilesViewModel(
 
     /** Adds the two sample M3U profiles (free-to-air sports TV and sports radio). */
     fun addSampleLists(sportsName: String, radioName: String) {
-        viewModelScope.launch {
-            profileDao.upsert(
-                ProfileEntity(name = sportsName, type = ProfileType.M3U, m3uUrl = Secret(SampleLists.SPORTS_TV_URL)),
-            )
-            profileDao.upsert(
-                ProfileEntity(name = radioName, type = ProfileType.M3U, m3uUrl = Secret(SampleLists.SPORTS_RADIO_URL)),
-            )
-        }
+        viewModelScope.launch { SampleLists.add(profileDao, sportsName, radioName) }
     }
 
     companion object {

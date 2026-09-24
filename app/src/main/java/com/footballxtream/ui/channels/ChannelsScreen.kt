@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -262,8 +264,12 @@ private fun FolderGrid(
         if (filtersOpen) {
             // Move focus onto the filters when they open (unless the search field is taking it).
             LaunchedEffect(Unit) { if (!searchOpen) runCatching { filtersFocus.requestFocus() } }
+            // Scrolls sideways: on a phone held upright the chips don't all fit across the screen.
             Row(
-                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, bottom = 14.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(start = 20.dp, end = 20.dp, bottom = 14.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 QualityMode.entries.forEachIndexed { index, mode ->
@@ -291,7 +297,8 @@ private fun FolderGrid(
                     value = query,
                     onValueChange = onQueryChange,
                     label = stringResource(R.string.search_field_label),
-                    modifier = Modifier.padding(start = 20.dp, bottom = 18.dp).width(520.dp),
+                    // Full width on a phone, capped on TV/tablets.
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 18.dp).widthIn(max = 520.dp),
                     focusRequester = searchFocus,
                 )
             }
