@@ -1,0 +1,18 @@
+#EXTM3U
+# Easy Xtream Football — sample playlist: sports talk radio.
+# Public streams published by the stations themselves. Nothing here is hosted or re-streamed by
+# the app; the list is only a convenience to try the player. Stations may change their URLs.
+#EXTINF:-1 tvg-logo="https://www.marca.com/apple-touch-icon-precomposed.png" radio="true" group-title="Radio Sport",Radio Marca
+https://playerservices.streamtheworld.com/api/livestream-redirect/RADIOMARCA_NACIONAL_SC
+#EXTINF:-1 radio="true" group-title="Radio Sport",esRadio
+http://livestreaming.esradio.fm/stream64.mp3
+#EXTINF:-1 radio="true" group-title="Radio Sport",Onda Cero
+https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8
+#EXTINF:-1 radio="true" group-title="Radio Sport",Cadena SER
+https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3
+#EXTINF:-1 tvg-logo="https://www.rac1.cat/apple-touch-icon-120x120.png" radio="true" group-title="Radio Sport",RAC1
+https://playerservices.streamtheworld.com/api/livestream-redirect/RAC_1.mp3
+#EXTINF:-1 radio="true" group-title="Radio Sport",talkSPORT
+https://radio.talksport.com/stream
+#EXTINF:-1 radio="true" group-title="Radio Sport",RMC
+https://audio.bfmtv.com/rmcradio_128.mp3
