@@ -408,8 +408,7 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
 
 9. ⏳ **0.1.8 en preparación** (rama `feature/radio-and-double-ok-pause`, 2026-09-24): radio (pantalla,
    icono, metadatos ICY), doble OK / doble toque = pausa, botón "Probar con listas de ejemplo" en el primer
-   arranque, y filtros desplazables en el móvil en vertical. Probado en el Xiaomi; **falta probar el doble OK
-   en el Chromecast** (hay que re-emparejar adb). Al publicarla: **cambiar la frase "NO incluye ningún canal"**
+   arranque, y filtros desplazables en el móvil en vertical. Probado en el Xiaomi y en el Chromecast (2026-09-24). Al publicarla: **cambiar la frase "NO incluye ningún canal"**
    de la ficha en Play y Amazon (texto nuevo en `docs/store-listing.md`) y subir `versionCode` a 9.
 
 ## Otros TODO de calidad (no bloquean la publicación)
