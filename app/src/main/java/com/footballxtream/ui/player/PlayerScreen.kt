@@ -97,6 +97,9 @@ fun PlayerScreen(
     val scope = rememberCoroutineScope()
     val doubleTapMs = LocalViewConfiguration.current.doubleTapTimeoutMillis
     val pendingOk = remember { arrayOfNulls<Job>(1) }
+    // While paused, a single OK/tap just resumes (no menu). The moment of that resume is kept so the
+    // second press of a habitual double-OK, arriving right after, is swallowed instead of opening the menu.
+    val resumedAt = remember { LongArray(1) }
 
     // Back closes the options menu first; otherwise it leaves the player.
     BackHandler(enabled = ui.menuOpen) { viewModel.closeMenu() }
@@ -180,6 +183,14 @@ fun PlayerScreen(
                                 okDownAt[0] == -1L -> Unit
                                 System.currentTimeMillis() - okDownAt[0] >= 450L ->
                                     viewModel.toggleCurrentChannelFavorite()
+                                ui.paused -> {
+                                    // Paused: OK resumes straight away, no menu.
+                                    pendingOk[0]?.cancel()
+                                    pendingOk[0] = null
+                                    resumedAt[0] = System.currentTimeMillis()
+                                    viewModel.setPaused(false)
+                                }
+                                System.currentTimeMillis() - resumedAt[0] < doubleTapMs -> Unit
                                 pendingOk[0]?.isActive == true -> {
                                     // Second short OK inside the window: it's a double press.
                                     pendingOk[0]?.cancel()
@@ -238,10 +249,16 @@ fun PlayerScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .pointerInput(ui.menuOpen) {
+                .pointerInput(ui.menuOpen, ui.paused) {
                     detectTapGestures(
                         onDoubleTap = { if (!ui.menuOpen) viewModel.togglePlayPause() },
-                        onTap = { if (ui.menuOpen) viewModel.closeMenu() else viewModel.openMenu() },
+                        onTap = {
+                            when {
+                                ui.menuOpen -> viewModel.closeMenu()
+                                ui.paused -> viewModel.setPaused(false) // paused: a tap resumes, no menu
+                                else -> viewModel.openMenu()
+                            }
+                        },
                     )
                 }
                 .pointerInput(ui.menuOpen) {
