@@ -126,4 +126,8 @@
     <string name="coffee_reenable">Herinnering weer tonen</string>
     <string name="coffee_thanks">Bedankt! Jorge ❤️</string>
     <string name="coffee_disable_hint">Je kunt deze herinnering uitzetten bij Instellingen op het startscherm ⚙️</string>
+    <string name="support_message_billing">Deze app is gratis en open source. Als je er iets aan hebt, kun je me op een koffie trakteren — wat je maar wilt geven. Heel erg bedankt!</string>
+    <string name="coffee_thanks_purchase">Bedankt voor de koffie! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Tikken → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">De aankoop kon niet worden voltooid</string>
 </resources>

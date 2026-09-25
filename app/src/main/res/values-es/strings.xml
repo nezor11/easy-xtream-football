@@ -126,4 +126,8 @@
     <string name="coffee_reenable">Volver a mostrar el recordatorio</string>
     <string name="coffee_thanks">¡Gracias! Jorge ❤️</string>
     <string name="coffee_disable_hint">Puedes desactivar este recordatorio en Ajustes, en la pantalla de inicio ⚙️</string>
+    <string name="support_message_billing">Esta app es gratuita y de código abierto. Si te resulta útil, puedes invitarme a un café, lo que quieras aportar. ¡Gracias de corazón!</string>
+    <string name="coffee_thanks_purchase">¡Gracias por el café! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Toca → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">No se ha podido completar la compra</string>
 </resources>

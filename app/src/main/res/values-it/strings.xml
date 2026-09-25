@@ -121,4 +121,8 @@
     <string name="coffee_reenable">Mostra di nuovo il promemoria</string>
     <string name="coffee_thanks">Grazie! Jorge ❤️</string>
     <string name="coffee_disable_hint">Puoi disattivare questo promemoria nelle Impostazioni, nella schermata iniziale ⚙️</string>
+    <string name="support_message_billing">Questa app è gratuita e open source. Se ti è utile, puoi offrirmi un caffè, quanto vuoi. Grazie di cuore!</string>
+    <string name="coffee_thanks_purchase">Grazie per il caffè! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Tocca → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Impossibile completare l\'acquisto</string>
 </resources>

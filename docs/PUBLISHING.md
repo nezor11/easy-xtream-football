@@ -381,6 +381,31 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 - **Ficha**: sustituir el párrafo "IMPORTANTE" en Play (ES/EN) y en Amazon (ES/EN) por el texto de
   `docs/store-listing.md` → "Pendiente para la 0.1.8". Play ya dice "24 idiomas".
 
+## 0.1.9 — Play Billing para el café (código listo el 2026-09-25, rama `feature/play-billing-coffee`)
+- **Qué hace la app.** Al arrancar conecta con Google Play (`CoffeeBilling`, librería `com.android.billingclient:billing`
+  8.3.0, la base Java porque la `-ktx` exige Kotlin 2.2 y el proyecto va en 2.0). Pide los productos consumibles
+  `coffee_small`, `coffee_medium`, `coffee_large`. Si los obtiene: la sección **Café** del menú OK del reproductor
+  lista los cafés con nombre y precio tal como estén en Play Console (localizados por Google), OK abre la hoja de
+  pago de Play; el panel "Invítame a un café" de **Ajustes** muestra un botón por café. Tras pagar: consumo
+  inmediato (se puede repetir), aviso "¡Gracias por el café!" y el recordatorio se silencia para siempre (se puede
+  reactivar en Ajustes). Si Play no está (Fire TV, `Build.MANUFACTURER == Amazon`, cajas sin Play) o los productos
+  no existen todavía → **todo sigue igual que hoy con el QR de Ko-fi**. Cancelar la hoja no muestra error.
+- **Lo que tiene que hacer el usuario en Play Console** (cuenta contact@nezor.es, `/console/u/1/`):
+  1. **Perfil de pagos**: Configuración → Perfil de pagos (o "Monetizar" → configuración). Pide datos fiscales,
+     dirección y cuenta bancaria. La verificación tarda días. Sin esto no se pueden crear productos.
+  2. **Productos integrados**: Monetizar → Productos → Productos integrados → Crear. Tres productos, tipo
+     consumible, con estos **IDs exactos**: `coffee_small` (1,99 €), `coffee_medium` (4,99 €), `coffee_large`
+     (9,99 €). Nombre (es): "Un café" / "Café y tostada" / "Café para el equipo"; en inglés "A coffee" /
+     "Coffee and toast" / "Coffee for the team". Descripción: "Propina voluntaria para el desarrollador. No
+     desbloquea nada." Activarlos.
+  3. **Compradores de prueba**: Configuración → Pruebas de licencias → añadir el Gmail del usuario (y el de la
+     tele). Las compras de prueba no se cobran. Hace falta que la app esté subida al menos a Prueba interna con
+     esta versión para que Play reconozca los productos (subir la 0.1.9 a **Prueba interna** primero).
+  4. Probar en el móvil y en el Chromecast: menú OK → Café → comprar; y Ajustes → café. Comprobar el "¡Gracias!".
+- **Ficha**: no cambia. Amazon: sin cambios (sigue el QR); si algún día se quiere, Amazon IAP es otra integración.
+- **Versión**: al mezclar, `versionCode 10` · `0.1.9`. Notas de versión: "Ahora puedes invitar a un café desde la
+  propia app, con Google Play" / "You can now buy me a coffee right from the app, through Google Play".
+
 ## Amazon Appstore (Fire TV) — preparado el 2026-09-22, ENVIADA el 2026-09-23
 Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
 desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la de Google.
@@ -450,7 +475,10 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
    con el APK universal. En ambas tiendas **cambiar la frase "NO incluye ningún canal"** por el texto nuevo de
    `docs/store-listing.md`.
 
-10. ⏳ **0.1.9 (planificada el 2026-09-24): propina con Google Play Billing.** Sustituir el QR de Ko-fi por un
+10. ⏳ **0.1.9: propina con Google Play Billing** — código hecho el 2026-09-25 en la rama
+    `feature/play-billing-coffee` (ver sección "0.1.9 — Play Billing" abajo). Falta: perfil de pagos +
+    productos en Play Console (el usuario), probar con compradores de prueba, mezclar y publicar.
+    Plan original (2026-09-24): Sustituir el QR de Ko-fi por un
     producto consumible "Invitar a un café" (1,99 / 4,99 / 9,99 €) en la sección Café del menú del reproductor.
     Solo en la versión de Play (móvil, Android TV, Chromecast); en la de Amazon se mantiene el QR. Antes de tocar
     código: crear el **perfil de pagos** en Play Console (datos fiscales y cuenta bancaria) y los productos in-app;

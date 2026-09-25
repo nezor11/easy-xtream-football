@@ -125,4 +125,8 @@
     <string name="coffee_reenable">แสดงการเตือนอีกครั้ง</string>
     <string name="coffee_thanks">ขอบคุณ! Jorge ❤️</string>
     <string name="coffee_disable_hint">ปิดการเตือนนี้ได้ในการตั้งค่าที่หน้าจอหลัก ⚙️</string>
+    <string name="support_message_billing">แอปนี้ฟรีและเป็นโอเพนซอร์ส หากคุณเห็นว่ามีประโยชน์ เลี้ยงกาแฟฉันสักแก้วได้ — ตามใจคุณ ขอบคุณมาก!</string>
+    <string name="coffee_thanks_purchase">ขอบคุณสำหรับกาแฟ! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">แตะ → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">ไม่สามารถทำการซื้อให้เสร็จสิ้นได้</string>
 </resources>

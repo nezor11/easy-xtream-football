@@ -129,4 +129,9 @@
     <string name="coffee_reenable">Show the reminder again</string>
     <string name="coffee_thanks">Thank you! Jorge ❤️</string>
     <string name="coffee_disable_hint">You can turn this reminder off in Settings, on the home screen ⚙️</string>
+    <string name="support_message_billing">This app is free and open source. If you find it useful, you can buy me a coffee — whatever you\'d like to give. Thank you so much!</string>
+    <string name="coffee_thanks_purchase">Thank you for the coffee! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Tap → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">The purchase couldn\'t be completed</string>
+    <string name="coffee_open_menu_hint_tv" translatable="false">OK → ‹ %1$s ›</string>
 </resources>

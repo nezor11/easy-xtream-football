@@ -1,5 +1,9 @@
 package com.footballxtream.ui.settings
 
+import android.app.Activity
+import com.footballxtream.billing.CoffeeBilling
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.map
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -17,7 +21,19 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val repository: ContentRepository,
     private val settingsStore: SettingsStore,
+    private val coffeeBilling: CoffeeBilling,
 ) : ViewModel() {
+
+    /** Purchasable coffees when Google Play billing is available; empty → the support panel shows the Ko-fi QR. */
+    val coffees: StateFlow<List<CoffeeBilling.CoffeeProduct>> = coffeeBilling.state
+        .map { (it as? CoffeeBilling.State.Ready)?.products.orEmpty() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+    /** One-shot purchase outcomes (thanks / failed), for a toast. */
+    val coffeeEvents: SharedFlow<CoffeeBilling.Event> = coffeeBilling.events
+
+    fun buyCoffee(activity: Activity, product: CoffeeBilling.CoffeeProduct) = coffeeBilling.buy(activity, product)
+
 
     /** Whether the user has permanently silenced the Ko-fi reminder; drives the toggle label. */
     val coffeeReminderDismissed: StateFlow<Boolean> = settingsStore.coffeeReminderDismissed
@@ -39,7 +55,7 @@ class SettingsViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val container = (this[APPLICATION_KEY] as FootballXtreamApp).container
-                SettingsViewModel(container.repository, container.settingsStore)
+                SettingsViewModel(container.repository, container.settingsStore, container.coffeeBilling)
             }
         }
     }

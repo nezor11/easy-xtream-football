@@ -41,6 +41,8 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.BuildConfig
 import com.footballxtream.R
+import com.footballxtream.ui.components.findActivity
+import com.footballxtream.billing.CoffeeBilling
 
 /**
  * A small, focused Settings screen: clear the channel/guide cache, plus an "About" block with the
@@ -56,6 +58,16 @@ fun SettingsScreen(
     val clearFocus = remember { FocusRequester() }
     var showSupport by remember { mutableStateOf(false) }
     val coffeeDismissed by viewModel.coffeeReminderDismissed.collectAsStateWithLifecycle()
+    val coffees by viewModel.coffees.collectAsStateWithLifecycle()
+    // Purchase outcome as a toast (the panel stays open so the user can tip again or close it).
+    val thanksText = stringResource(R.string.coffee_thanks_purchase)
+    val failedText = stringResource(R.string.coffee_purchase_failed)
+    LaunchedEffect(Unit) {
+        viewModel.coffeeEvents.collect { event ->
+            val text = if (event is CoffeeBilling.Event.Thanks) thanksText else failedText
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     // Back closes the support overlay first; otherwise it leaves the screen.
     BackHandler(enabled = showSupport) { showSupport = false }
@@ -118,6 +130,8 @@ fun SettingsScreen(
         if (showSupport) {
             SupportOverlay(
                 reminderDismissed = coffeeDismissed,
+                coffees = coffees,
+                onBuy = { product -> context.findActivity()?.let { viewModel.buyCoffee(it, product) } },
                 onToggleReminder = { viewModel.setCoffeeReminderDismissed(!coffeeDismissed) },
                 onDismiss = { showSupport = false },
             )
@@ -125,11 +139,14 @@ fun SettingsScreen(
     }
 }
 
-/** "Buy me a coffee" panel: a QR to the Ko-fi page that the user scans with a phone (TVs have no
- *  browser), plus the handle as text. Dismissed with Back (handled by the caller). */
+/** "Buy me a coffee" panel. With Google Play billing: one button per coffee (name and price from Play
+ *  Console), bought in the Play sheet. Otherwise: a QR to the Ko-fi page that the user scans with a
+ *  phone (TVs have no browser), plus the handle as text. Dismissed with Back (handled by the caller). */
 @Composable
 private fun SupportOverlay(
     reminderDismissed: Boolean,
+    coffees: List<CoffeeBilling.CoffeeProduct>,
+    onBuy: (CoffeeBilling.CoffeeProduct) -> Unit,
     onToggleReminder: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -156,11 +173,20 @@ private fun SupportOverlay(
                 color = colors.onSurface,
             )
             Text(
-                text = stringResource(R.string.support_message),
+                text = stringResource(if (coffees.isEmpty()) R.string.support_message else R.string.support_message_billing),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+            if (coffees.isNotEmpty()) {
+                coffees.forEachIndexed { index, coffee ->
+                    SettingsAction(
+                        label = "☕  ${coffee.name}  ·  ${coffee.price}",
+                        modifier = if (index == 0) Modifier.focusRequester(toggleFocus) else Modifier,
+                        onClick = { onBuy(coffee) },
+                    )
+                }
+            } else {
             Image(
                 painter = painterResource(R.drawable.qr_kofi),
                 contentDescription = stringResource(R.string.support_qr_desc),
@@ -188,11 +214,12 @@ private fun SupportOverlay(
                 style = MaterialTheme.typography.titleMedium,
                 color = colors.primary,
             )
+            }
             SettingsAction(
                 label = stringResource(
                     if (reminderDismissed) R.string.coffee_reenable else R.string.coffee_dismiss,
                 ),
-                modifier = Modifier.focusRequester(toggleFocus),
+                modifier = if (coffees.isEmpty()) Modifier.focusRequester(toggleFocus) else Modifier,
                 onClick = onToggleReminder,
             )
             Text(

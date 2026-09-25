@@ -126,4 +126,8 @@
     <string name="coffee_reenable">Shfaqe sërish kujtesën</string>
     <string name="coffee_thanks">Faleminderit! Jorge ❤️</string>
     <string name="coffee_disable_hint">Këtë kujtesë mund ta çaktivizosh te Cilësimet, në ekranin kryesor ⚙️</string>
+    <string name="support_message_billing">Ky aplikacion është falas dhe me burim të hapur. Nëse të hyn në punë, mund të më blesh një kafe — sa të duash. Faleminderit shumë!</string>
+    <string name="coffee_thanks_purchase">Faleminderit për kafen! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Prek → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Blerja nuk u krye dot</string>
 </resources>

@@ -127,4 +127,8 @@
     <string name="coffee_reenable">Ponovno prikaži podsjetnik</string>
     <string name="coffee_thanks">Hvala! Jorge ❤️</string>
     <string name="coffee_disable_hint">Ovaj podsjetnik možeš isključiti u Postavkama na početnom zaslonu ⚙️</string>
+    <string name="support_message_billing">Aplikacija je besplatna i otvorenog koda. Ako ti je korisna, možeš me počastiti kavom — koliko god želiš. Puno hvala!</string>
+    <string name="coffee_thanks_purchase">Hvala na kavi! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Dodir → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Kupnju nije bilo moguće dovršiti</string>
 </resources>

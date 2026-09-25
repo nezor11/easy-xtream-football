@@ -126,4 +126,8 @@
     <string name="coffee_reenable">Erinnerung wieder anzeigen</string>
     <string name="coffee_thanks">Danke! Jorge ❤️</string>
     <string name="coffee_disable_hint">Diese Erinnerung kannst du in den Einstellungen auf dem Startbildschirm ausschalten ⚙️</string>
+    <string name="support_message_billing">Diese App ist kostenlos und Open Source. Wenn sie dir nützt, kannst du mir einen Kaffee spendieren — so viel du magst. Vielen Dank!</string>
+    <string name="coffee_thanks_purchase">Danke für den Kaffee! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Tippen → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Der Kauf konnte nicht abgeschlossen werden</string>
 </resources>

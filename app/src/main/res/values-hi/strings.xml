@@ -126,4 +126,8 @@
     <string name="coffee_reenable">रिमाइंडर फिर से दिखाएँ</string>
     <string name="coffee_thanks">धन्यवाद! Jorge ❤️</string>
     <string name="coffee_disable_hint">यह रिमाइंडर आप होम स्क्रीन की सेटिंग में बंद कर सकते हैं ⚙️</string>
+    <string name="support_message_billing">यह ऐप मुफ़्त और ओपन-सोर्स है। अगर यह आपके काम आया, तो मुझे एक कॉफ़ी पिला सकते हैं — जितना चाहें। बहुत-बहुत धन्यवाद!</string>
+    <string name="coffee_thanks_purchase">कॉफ़ी के लिए धन्यवाद! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">टैप → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">खरीदारी पूरी नहीं हो सकी</string>
 </resources>
