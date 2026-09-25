@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-24.
+Última actualización: 2026-09-25.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -391,9 +391,14 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   reactivar en Ajustes). Si Play no está (Fire TV, `Build.MANUFACTURER == Amazon`, cajas sin Play) o los productos
   no existen todavía → **todo sigue igual que hoy con el QR de Ko-fi**. Cancelar la hoja no muestra error.
 - **Lo que tiene que hacer el usuario en Play Console** (cuenta contact@nezor.es, `/console/u/1/`):
-  1. **Perfil de pagos**: Configuración → Perfil de pagos (o "Monetizar" → configuración). Pide datos fiscales,
-     dirección y cuenta bancaria. La verificación tarda días. Sin esto no se pueden crear productos.
-  2. **Productos integrados**: Monetizar → Productos → Productos integrados → Crear. Tres productos, tipo
+  1. ✅ **Perfil de pagos creado el 2026-09-25** (Ajustes → Perfil de pagos; perfil "JORGE MARTINEZ ORTIZ",
+     Google Play Apps, 1 usuario). La **cuenta bancaria está "Pendiente de verificar"**: Google hace un
+     microingreso y hay que confirmar el importe en "Gestionar métodos de pago". ⚠️ Arriba de esa página hay un
+     aviso para **registrarse en la cuota de servicio del 15 %** ("Gestionar grupo de cuentas" + aceptar
+     condiciones); sin hacerlo Google aplica el 30 %. Pendiente.
+  2. **Productos únicos** (así se llaman ahora): Monetizar con Play → Productos → Productos únicos. ⚠️ Play no deja
+     crearlos hasta que haya **una build subida con el permiso BILLING** (la librería lo añade sola al manifest):
+     subir primero la 0.1.9 (versionCode 10) a **Prueba interna**, y entonces → Crear producto. Tres productos, tipo
      consumible, con estos **IDs exactos**: `coffee_small` (1,99 €), `coffee_medium` (4,99 €), `coffee_large`
      (9,99 €). Nombre (es): "Un café" / "Café y tostada" / "Café para el equipo"; en inglés "A coffee" /
      "Coffee and toast" / "Coffee for the team". Descripción: "Propina voluntaria para el desarrollador. No
@@ -464,14 +469,15 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
    Crear versión (añadir bundle desde la biblioteca o subir el nuevo) → notas de versión → Revisar → Enviar a revisión.
 5. **(TV)** Subir banner TV + capturas TV en la ficha cuando aparezca la sección Android TV.
 6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → **PUBLICADA el 2026-09-21**. 🎉
-7. ✅ **Actualización 0.1.6** firmada y **enviada a revisión el 2026-09-21**, junto con los materiales de
-   Android TV; factor de forma Android TV ya activo. ⏳ Esperando aprobación de Google.
+7. ✅ **Actualización 0.1.6 + materiales de Android TV PUBLICADOS el 2026-09-25** (envío nº 7 del 21, "Producción,
+   Ficha de Play Store, Distribución avanzada" → *Publicada*; visto en Actividad de envíos). Producción: versión 7
+   (0.1.6), 177 países. La app ya debería aparecer en la Play Store de las teles.
 8. ✅ **Copia de la clave de subida fuera de ambas máquinas** (2026-09-22, `.7z` cifrado en USB offline).
    ✅ **Clave restaurada también en la máquina Linux el 2026-09-22** (ver abajo): ya se puede firmar desde
    cualquiera de las dos.
 
-9. ✅ **0.1.8 PREPARADA y firmada el 2026-09-24** (ver sección abajo). ⏳ **Subirla cuando Google apruebe la
-   0.1.6** (crear otra versión de Producción antes reiniciaría esa revisión). En Amazon: *Add upcoming version*
+9. ✅ **0.1.8 PREPARADA y firmada el 2026-09-24** (ver sección abajo). ⏳ La 0.1.6 ya está publicada (2026-09-25):
+   **se puede subir a Producción en cuanto el usuario dé el visto bueno.** En Amazon: *Add upcoming version*
    con el APK universal. En ambas tiendas **cambiar la frase "NO incluye ningún canal"** por el texto nuevo de
    `docs/store-listing.md`.
 
