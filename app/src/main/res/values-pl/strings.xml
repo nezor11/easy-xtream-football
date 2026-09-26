@@ -128,4 +128,8 @@
     <string name="coffee_reenable">Pokaż przypomnienie ponownie</string>
     <string name="coffee_thanks">Dziękuję! Jorge ❤️</string>
     <string name="coffee_disable_hint">To przypomnienie możesz wyłączyć w Ustawieniach na ekranie głównym ⚙️</string>
+    <string name="support_message_billing">Ta aplikacja jest darmowa i open source. Jeśli jest dla Ciebie przydatna, możesz postawić mi kawę — ile tylko chcesz. Bardzo dziękuję!</string>
+    <string name="coffee_thanks_purchase">Dziękuję za kawę! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Dotknij → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Nie udało się dokończyć zakupu</string>
 </resources>

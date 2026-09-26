@@ -381,6 +381,59 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 - **Ficha**: ✅ Play es-ES cambiada el 2026-09-26 (párrafo IMPORTANTE + "24 idiomas"). Play no tiene ficha en-US
   (pendiente crearla). Amazon (ES/EN): cambiar el párrafo al subir la 0.1.8 allí.
 
+## 0.1.9 — Play Billing para el café (código listo el 2026-09-25, rama `feature/play-billing-coffee`)
+- **Qué hace la app.** Al arrancar conecta con Google Play (`CoffeeBilling`, librería `com.android.billingclient:billing`
+  8.3.0, la base Java porque la `-ktx` exige Kotlin 2.2 y el proyecto va en 2.0; lee la opción de compra con
+  `oneTimePurchaseOfferDetailsList`, el modelo nuevo de Play, con el accesor antiguo de respaldo). Pide los productos consumibles
+  `coffee_small`, `coffee_medium`, `coffee_large`. Si los obtiene: la sección **Café** del menú OK del reproductor
+  lista los cafés con nombre y precio tal como estén en Play Console (localizados por Google), OK abre la hoja de
+  pago de Play; el panel "Invítame a un café" de **Ajustes** muestra un botón por café. Tras pagar: consumo
+  inmediato (se puede repetir), aviso "¡Gracias por el café!" y el recordatorio se silencia para siempre (se puede
+  reactivar en Ajustes). Si Play no está (Fire TV, `Build.MANUFACTURER == Amazon`, cajas sin Play) o los productos
+  no existen todavía → **todo sigue igual que hoy con el QR de Ko-fi**. Cancelar la hoja no muestra error.
+- **Lo que tiene que hacer el usuario en Play Console** (cuenta contact@nezor.es, `/console/u/1/`):
+  1. ✅ **Perfil de pagos creado el 2026-09-25** (Ajustes → Perfil de pagos; perfil "JORGE MARTINEZ ORTIZ",
+     Google Play Apps, 1 usuario). La **cuenta bancaria está "Pendiente de verificar"**: Google hace un
+     microingreso y hay que confirmar el importe en "Gestionar métodos de pago". ⚠️ Arriba de esa página hay un
+     aviso para **registrarse en la cuota de servicio del 15 %** ("Gestionar grupo de cuentas" + aceptar
+     condiciones); sin hacerlo Google aplica el 30 %. Pendiente.
+  2. ✅ **0.1.9 (vc10) publicada en Prueba interna el 2026-09-26 11:38** (hacía falta una build con el permiso
+     BILLING para poder crear productos). ✅ **Tres productos únicos creados el 2026-09-26 como BORRADOR**
+     (`coffee_small` "Un café", `coffee_medium` "Café y tostada", `coffee_large` "Café para el equipo"; opción de
+     compra `buy`, tipo Comprar, retrocompatible, "Ventas de apps digitales", 173 países). ✅ **ACTIVADOS** el
+     2026-09-26 con el OK del usuario.
+     ⚠️ Precios: el importe que se teclea en "Editar precios en bloque" es **sin IVA**; para que en España salga
+     1,99 / 4,99 / 9,99 € hay que poner **1,64 / 4,12 / 8,26 €** de base (Google redondea a precio atractivo:
+     ES 1,99 €, DE 1,99 €, UK 1,69 £, US 1,89 $; 4,99 / 4,89 / 4,29 / 4,69; 9,99 / 9,99 / 8,49 / 9,49).
+     ✅ Testers: la lista **"Internos"** (contact@nezor.es, martinezortiz@gmail.com = móvil, sigfrido.mar@gmail.com =
+     Chromecast) ya estaba asignada a la Prueba interna y el 2026-09-26 se marcó también en Ajustes → **Licencia
+     para testing** (respuesta RESPOND_NORMALLY): las compras de esas cuentas son de prueba, no se cobran.
+     Enlace para unirse a la prueba interna e instalar la 0.1.9: https://play.google.com/apps/internaltest/4701253984818511045 Tres productos, tipo
+     consumible, con estos **IDs exactos**: `coffee_small` (1,99 €), `coffee_medium` (4,99 €), `coffee_large`
+     (9,99 €). Nombre (es): "Un café" / "Café y tostada" / "Café para el equipo"; en inglés "A coffee" /
+     "Coffee and toast" / "Coffee for the team". Descripción: "Propina voluntaria para el desarrollador. No
+     desbloquea nada." Activarlos.
+  3. ✅ Compradores de prueba configurados (ver punto 2).
+  4. ✅ **Probado en el Chromecast el 2026-09-26**: el menú OK → ‹ Invítame a un café › lista los tres cafés con los
+     precios de Play (1,99 / 4,99 / 9,99 €), OK abre la hoja de compra de Google Play ("Revisar y aceptar") y la
+     compra de prueba se completó: en **Gestión de pedidos** figura "Prueba: Un café", `coffee_small`,
+     GPA.3343-1251-1103-24640, Procesado, 1,99 EUR (11:42 UTC; de prueba, no se cobra).
+     Cómo se instaló: la Play Store de la tele instalaba la 0.1.6 (la cuenta aún no había aceptado la invitación) y
+     **no entiende el enlace de compartición interna**; se descargó el **APK universal firmado por Google** desde
+     Explorador de app bundles → 10 (0.1.9) → Descargas (`~/Downloads/10.apk`, firmante CN=Android/Google) y se
+     instaló con `adb install -r -i com.android.vending 10.apk` (marca a Play como instalador, lo que satisface la
+     "comprobación del instalador" de la protección automática). Antes hubo que **desinstalar la build debug** de la
+     tele (otra firma; se perdieron los perfiles de prueba). El APK de mi clave de subida NO sirve para probar compras.
+     ⏳ Falta la misma prueba en el móvil: abrir el enlace de la prueba interna con la cuenta correspondiente,
+     aceptar, instalar la 0.1.9 desde Play; menú OK → ‹ Invítame a un café › → elegir café → hoja de Play; y
+     Ajustes → café. Comprobar el "¡Gracias por el café!" y que la compra sale como prueba (0 €). Verificar también
+     el **fallback al QR** en un dispositivo sin Play / sin productos.
+  5. ⏳ Mezclar `feature/play-billing-coffee` en main (incluye el fix de `oneTimePurchaseOfferDetailsList`) y, tras
+     probar, promocionar o resubir a Producción como 0.1.9 cuando la 0.1.8 esté publicada.
+- **Ficha**: no cambia. Amazon: sin cambios (sigue el QR); si algún día se quiere, Amazon IAP es otra integración.
+- **Versión**: al mezclar, `versionCode 10` · `0.1.9`. Notas de versión: "Ahora puedes invitar a un café desde la
+  propia app, con Google Play" / "You can now buy me a coffee right from the app, through Google Play".
+
 ## Amazon Appstore (Fire TV) — preparado el 2026-09-22, enviada el 2026-09-23, PUBLICADA el 2026-09-26
 Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
 desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la de Google.

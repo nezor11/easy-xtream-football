@@ -22,8 +22,8 @@ android {
         applicationId = "com.footballxtream"
         minSdk = 24
         targetSdk = 36
-        versionCode = 9
-        versionName = "0.1.8"
+        versionCode = 10
+        versionName = "0.1.9"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -133,6 +133,10 @@ dependencies {
     // audio are not silent on devices without a hardware Dolby decoder. Only in the "full" flavor;
     // "lite" ships without it (see the per-flavor RenderersFactory in src/full and src/lite).
     "fullImplementation"(libs.nextlib.media3ext)
+
+    // Google Play Billing: the "buy me a coffee" tip as a consumable in-app product. On devices
+    // without Google Play (Fire TV) the client reports unavailable and the app falls back to the Ko-fi QR.
+    implementation(libs.billing)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.serialization)

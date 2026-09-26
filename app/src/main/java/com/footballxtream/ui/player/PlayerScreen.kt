@@ -70,6 +70,7 @@ import androidx.media3.ui.PlayerView
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.footballxtream.R
+import com.footballxtream.ui.components.findActivity
 import com.footballxtream.ui.components.isTv
 import coil.compose.AsyncImage
 import kotlinx.coroutines.Job
@@ -100,6 +101,14 @@ fun PlayerScreen(
     // While paused, a single OK/tap just resumes (no menu). The moment of that resume is kept so the
     // second press of a habitual double-OK, arriving right after, is swallowed instead of opening the menu.
     val resumedAt = remember { LongArray(1) }
+
+    // A coffee picked in the Café section: open the Google Play purchase sheet (needs the Activity).
+    val context = LocalContext.current
+    LaunchedEffect(ui.coffeeToBuy) {
+        val product = ui.coffeeToBuy ?: return@LaunchedEffect
+        viewModel.coffeePurchaseLaunched()
+        context.findActivity()?.let { viewModel.buyCoffee(it, product) }
+    }
 
     // Back closes the options menu first; otherwise it leaves the player.
     BackHandler(enabled = ui.menuOpen) { viewModel.closeMenu() }
@@ -400,7 +409,7 @@ fun PlayerScreen(
             exit = slideOutVertically(animationSpec = tween(350)) { it } + fadeOut(tween(350)),
             modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
         ) {
-            CoffeeCard()
+            CoffeeCard(showQr = !ui.coffeeViaBilling)
         }
     }
 }
@@ -628,7 +637,7 @@ private fun CoffeeMenuPanel(section: String, modifier: Modifier = Modifier) {
 /** Shared Ko-fi card (QR + invite + thanks) used by both the timed reminder "bug" and the OK-menu
  *  "Café" section, so they look and animate identically. */
 @Composable
-private fun CoffeeCard(modifier: Modifier = Modifier) {
+private fun CoffeeCard(showQr: Boolean, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Row(
         modifier = modifier
@@ -638,26 +647,35 @@ private fun CoffeeCard(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Image(
-            painter = painterResource(R.drawable.qr_kofi),
-            contentDescription = stringResource(R.string.support_qr_desc),
-            modifier = Modifier
-                .size(96.dp)
-                .clip(RoundedCornerShape(6.dp))
-                // Tapping the QR opens Ko-fi directly (handy on a phone; harmless on TV — no browser).
-                .clickable {
-                    runCatching {
-                        context.startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://" + context.getString(R.string.support_kofi_handle)),
-                            ),
-                        )
+        if (showQr) {
+            Image(
+                painter = painterResource(R.drawable.qr_kofi),
+                contentDescription = stringResource(R.string.support_qr_desc),
+                modifier = Modifier
+                    .size(96.dp)
+                    .clip(RoundedCornerShape(6.dp))
+                    // Tapping the QR opens Ko-fi directly (handy on a phone; harmless on TV — no browser).
+                    .clickable {
+                        runCatching {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://" + context.getString(R.string.support_kofi_handle)),
+                                ),
+                            )
+                        }
                     }
-                }
-                .background(Color.White)
-                .padding(5.dp),
-        )
+                    .background(Color.White)
+                    .padding(5.dp),
+            )
+        } else {
+            // With Google Play billing the coffee is bought from the OK menu: say how to get there.
+            Text(
+                text = "☕",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 8.dp),
+            )
+        }
         Column(
             modifier = Modifier.width(160.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -672,6 +690,16 @@ private fun CoffeeCard(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
+            if (!showQr) {
+                Text(
+                    text = stringResource(
+                        if (isTv()) R.string.coffee_open_menu_hint_tv else R.string.coffee_open_menu_hint_touch,
+                        stringResource(R.string.support_entry),
+                    ),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color(0xCCE6EAEE),
+                )
+            }
             Text(
                 text = stringResource(R.string.coffee_thanks),
                 style = MaterialTheme.typography.labelMedium,

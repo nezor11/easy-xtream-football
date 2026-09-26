@@ -121,4 +121,8 @@
     <string name="coffee_reenable">Torna a mostrar el recordatori</string>
     <string name="coffee_thanks">Gràcies! Jorge ❤️</string>
     <string name="coffee_disable_hint">Pots desactivar aquest recordatori a Configuració, a la pantalla d\'inici ⚙️</string>
+    <string name="support_message_billing">Aquesta app és gratuïta i de codi obert. Si et resulta útil, em pots convidar a un cafè, el que vulguis aportar. Moltes gràcies!</string>
+    <string name="coffee_thanks_purchase">Gràcies pel cafè! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Toca → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">No s\'ha pogut completar la compra</string>
 </resources>

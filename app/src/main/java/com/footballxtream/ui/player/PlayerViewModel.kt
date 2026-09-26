@@ -22,6 +22,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.extractor.metadata.icy.IcyInfo
 import com.footballxtream.FootballXtreamApp
 import com.footballxtream.R
+import com.footballxtream.billing.CoffeeBilling
 import com.footballxtream.data.ContentRepository
 import com.footballxtream.data.local.SettingsStore
 import com.footballxtream.model.ChannelGroup
@@ -84,6 +85,10 @@ data class PlayerUiState(
     val audioOnly: Boolean = false,
     /** "StreamTitle" from the stream's ICY metadata (song / programme on air), when a radio sends it. */
     val nowPlaying: String? = null,
+    /** Google Play billing is ready: the Café section lists purchasable coffees instead of the Ko-fi QR. */
+    val coffeeViaBilling: Boolean = false,
+    /** A coffee the user picked in the menu; the screen launches the Play purchase sheet and clears it. */
+    val coffeeToBuy: CoffeeBilling.CoffeeProduct? = null,
 )
 
 @OptIn(UnstableApi::class)
@@ -93,6 +98,7 @@ class PlayerViewModel(
     private val playerEngine: PlayerEngine,
     private val repository: ContentRepository,
     private val context: Context,
+    private val coffeeBilling: CoffeeBilling,
 ) : ViewModel() {
 
     val canPlay: Boolean = playbackSession.current != null
@@ -264,6 +270,29 @@ class PlayerViewModel(
                 settingsStore.coffeeReminderDismissed.collect { dismissed ->
                     coffeeDismissed = dismissed
                     if (dismissed) _ui.update { it.copy(showCoffeeBug = false) }
+                }
+            }
+            // Google Play tips: switch the Café section to the purchasable coffees when available.
+            viewModelScope.launch {
+                coffeeBilling.state.collect { state ->
+                    val ready = state is CoffeeBilling.State.Ready
+                    _ui.update { it.copy(coffeeViaBilling = ready) }
+                    // Refresh the section if it is the one on screen.
+                    if (_ui.value.menuOpen && currentSection == MenuSection.COFFEE) showSection(MenuSection.COFFEE)
+                }
+            }
+            viewModelScope.launch {
+                coffeeBilling.events.collect { event ->
+                    when (event) {
+                        CoffeeBilling.Event.Thanks -> {
+                            showNotice(context.getString(R.string.coffee_thanks_purchase))
+                            // A tip given: stop the reminder for good (it can be re-enabled in Settings).
+                            coffeeJob?.cancel()
+                            _ui.update { it.copy(showCoffeeBug = false) }
+                            settingsStore.setCoffeeReminderDismissed(true)
+                        }
+                        CoffeeBilling.Event.Failed -> showNotice(context.getString(R.string.coffee_purchase_failed))
+                    }
                 }
             }
         }
@@ -475,13 +504,33 @@ class PlayerViewModel(
                 menuSection = sectionLabel(section),
                 menuOptions = options.labels,
                 menuSelectedIndex = options.selected,
-                menuCoffee = section == MenuSection.COFFEE,
+                // Café shows the QR card only while Play billing is not available; otherwise it is a
+                // plain list of purchasable coffees.
+                menuCoffee = section == MenuSection.COFFEE && !it.coffeeViaBilling,
             )
         }
     }
 
-    /** The "Café" OK-menu section has no list — the screen renders the Ko-fi QR for this section. */
-    private fun coffeeMenuOptions(): MenuOptions = MenuOptions(emptyList(), 0) {}
+    /**
+     * The "Café" OK-menu section: with Google Play billing, one option per coffee (name and price as
+     * configured in Play Console); picking one hands the product to the screen, which opens the
+     * purchase sheet. Without billing there is no list — the screen renders the Ko-fi QR instead.
+     */
+    private fun coffeeMenuOptions(): MenuOptions {
+        val products = (coffeeBilling.state.value as? CoffeeBilling.State.Ready)?.products.orEmpty()
+        if (products.isEmpty()) return MenuOptions(emptyList(), 0) {}
+        return MenuOptions(
+            labels = products.map { "${it.name}  ·  ${it.price}" },
+            selected = 0,
+            apply = { index -> products.getOrNull(index)?.let { p -> _ui.update { it.copy(coffeeToBuy = p) } } },
+        )
+    }
+
+    /** The screen took [PlayerUiState.coffeeToBuy] to the Play purchase sheet. */
+    fun coffeePurchaseLaunched() = _ui.update { it.copy(coffeeToBuy = null) }
+
+    fun buyCoffee(activity: android.app.Activity, product: CoffeeBilling.CoffeeProduct) =
+        coffeeBilling.buy(activity, product)
 
     private fun qualityMenuOptions(): MenuOptions {
         val group = currentGroup
@@ -941,6 +990,7 @@ class PlayerViewModel(
                     container.playerEngine,
                     container.repository,
                     app,
+                    container.coffeeBilling,
                 )
             }
         }

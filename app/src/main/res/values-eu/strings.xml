@@ -121,4 +121,8 @@
     <string name="coffee_reenable">Erakutsi gogorarazpena berriro</string>
     <string name="coffee_thanks">Eskerrik asko! Jorge ❤️</string>
     <string name="coffee_disable_hint">Gogorarazpen hau Ezarpenetan desaktiba dezakezu, hasierako pantailan ⚙️</string>
+    <string name="support_message_billing">Aplikazio hau doakoa eta kode irekikoa da. Erabilgarria bazaizu, kafe batera gonbida nazakezu, nahi duzun ekarpena. Mila esker bihotzez!</string>
+    <string name="coffee_thanks_purchase">Eskerrik asko kafeagatik! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Ukitu → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Ezin izan da erosketa osatu</string>
 </resources>

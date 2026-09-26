@@ -125,4 +125,8 @@
     <string name="coffee_reenable">Hiện lại lời nhắc</string>
     <string name="coffee_thanks">Cảm ơn! Jorge ❤️</string>
     <string name="coffee_disable_hint">Bạn có thể tắt lời nhắc này trong Cài đặt, ở màn hình chính ⚙️</string>
+    <string name="support_message_billing">Ứng dụng này miễn phí và mã nguồn mở. Nếu thấy hữu ích, bạn có thể mời tôi một ly cà phê — tùy tâm. Cảm ơn bạn rất nhiều!</string>
+    <string name="coffee_thanks_purchase">Cảm ơn vì ly cà phê! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Chạm → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Không thể hoàn tất giao dịch mua</string>
 </resources>

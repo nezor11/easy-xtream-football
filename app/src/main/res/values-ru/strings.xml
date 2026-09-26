@@ -128,4 +128,8 @@
     <string name="coffee_reenable">Показывать напоминание снова</string>
     <string name="coffee_thanks">Спасибо! Jorge ❤️</string>
     <string name="coffee_disable_hint">Отключить это напоминание можно в настройках на главном экране ⚙️</string>
+    <string name="support_message_billing">Приложение бесплатное и с открытым исходным кодом. Если оно вам полезно, можете угостить меня кофе — на любую сумму. Большое спасибо!</string>
+    <string name="coffee_thanks_purchase">Спасибо за кофе! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Касание → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Не удалось завершить покупку</string>
 </resources>

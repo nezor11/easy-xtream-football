@@ -125,4 +125,8 @@
     <string name="coffee_reenable">Tampilkan pengingat lagi</string>
     <string name="coffee_thanks">Terima kasih! Jorge ❤️</string>
     <string name="coffee_disable_hint">Pengingat ini bisa dimatikan di Pengaturan, di layar utama ⚙️</string>
+    <string name="support_message_billing">Aplikasi ini gratis dan sumber terbuka. Jika bermanfaat, Anda bisa mentraktir saya kopi — seikhlasnya. Terima kasih banyak!</string>
+    <string name="coffee_thanks_purchase">Terima kasih atas kopinya! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Ketuk → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Pembelian tidak dapat diselesaikan</string>
 </resources>

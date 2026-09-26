@@ -130,4 +130,8 @@
     <string name="coffee_reenable">إظهار التذكير مجددًا</string>
     <string name="coffee_thanks">شكرًا! Jorge ❤️</string>
     <string name="coffee_disable_hint">يمكنك إيقاف هذا التذكير من الإعدادات في الشاشة الرئيسية ⚙️</string>
+    <string name="support_message_billing">هذا التطبيق مجاني ومفتوح المصدر. إذا وجدته مفيدًا، يمكنك أن تشتري لي قهوة — بالقدر الذي تريد. شكرًا جزيلًا!</string>
+    <string name="coffee_thanks_purchase">شكرًا على القهوة! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">انقر → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">تعذّر إتمام عملية الشراء</string>
 </resources>

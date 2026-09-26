@@ -126,4 +126,8 @@
     <string name="coffee_reenable">Εμφάνιση της υπενθύμισης ξανά</string>
     <string name="coffee_thanks">Ευχαριστώ! Jorge ❤️</string>
     <string name="coffee_disable_hint">Μπορείς να απενεργοποιήσεις την υπενθύμιση στις Ρυθμίσεις, στην αρχική οθόνη ⚙️</string>
+    <string name="support_message_billing">Η εφαρμογή είναι δωρεάν και ανοιχτού κώδικα. Αν σου είναι χρήσιμη, μπορείς να με κεράσεις έναν καφέ — όσο θέλεις. Ευχαριστώ πολύ!</string>
+    <string name="coffee_thanks_purchase">Ευχαριστώ για τον καφέ! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Πάτημα → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Η αγορά δεν ολοκληρώθηκε</string>
 </resources>

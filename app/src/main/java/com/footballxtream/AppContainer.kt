@@ -2,6 +2,7 @@ package com.footballxtream
 
 import android.content.Context
 import androidx.room.Room
+import com.footballxtream.billing.CoffeeBilling
 import com.footballxtream.data.ContentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,8 +43,12 @@ class AppContainer(context: Context) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    /** "Buy me a coffee" through Google Play; unavailable (→ Ko-fi QR) on Fire TV and Play-less boxes. */
+    val coffeeBilling: CoffeeBilling = CoffeeBilling(appContext, scope)
+
     init {
         encryptExistingCredentials()
+        coffeeBilling.start()
     }
 
     // One-time pass for profiles saved before encryption existed: reading decrypts (plain text

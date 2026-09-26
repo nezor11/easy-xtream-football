@@ -125,4 +125,8 @@
     <string name="coffee_reenable">再次顯示提醒</string>
     <string name="coffee_thanks">謝謝！Jorge ❤️</string>
     <string name="coffee_disable_hint">您可以在主畫面的「設定」中關閉此提醒 ⚙️</string>
+    <string name="support_message_billing">這個 App 免費且開放原始碼。如果對您有幫助，可以請我喝杯咖啡 — 金額隨意。非常感謝！</string>
+    <string name="coffee_thanks_purchase">謝謝你的咖啡！❤️</string>
+    <string name="coffee_open_menu_hint_touch">點一下 → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">無法完成購買</string>
 </resources>

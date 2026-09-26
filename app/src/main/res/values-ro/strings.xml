@@ -127,4 +127,8 @@
     <string name="coffee_reenable">Arată memento-ul din nou</string>
     <string name="coffee_thanks">Mulțumesc! Jorge ❤️</string>
     <string name="coffee_disable_hint">Poți opri acest memento din Setări, pe ecranul principal ⚙️</string>
+    <string name="support_message_billing">Aplicația e gratuită și open source. Dacă ți-e utilă, îmi poți face cinste cu o cafea — cât vrei tu. Mulțumesc mult!</string>
+    <string name="coffee_thanks_purchase">Mulțumesc pentru cafea! ❤️</string>
+    <string name="coffee_open_menu_hint_touch">Atinge → ‹ %1$s ›</string>
+    <string name="coffee_purchase_failed">Achiziția nu a putut fi finalizată</string>
 </resources>
