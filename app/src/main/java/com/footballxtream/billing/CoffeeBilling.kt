@@ -128,7 +128,11 @@ class CoffeeBilling(context: Context, private val scope: CoroutineScope) : Purch
                 return@queryProductDetailsAsync
             }
             val products = list.mapNotNull { pd ->
-                val offer = pd.oneTimePurchaseOfferDetails ?: return@mapNotNull null
+                // Play Console's current product model exposes purchase options as a list; the single
+                // accessor only works for "backwards compatible" ones, so try the list first.
+                val offer = pd.oneTimePurchaseOfferDetailsList?.firstOrNull()
+                    ?: pd.oneTimePurchaseOfferDetails
+                    ?: return@mapNotNull null
                 CoffeeProduct(pd.productId, pd.name, offer.formattedPrice, pd) to offer.priceAmountMicros
             }.sortedBy { it.second }.map { it.first }
             _state.value = if (products.isEmpty()) State.Unavailable else State.Ready(products)
