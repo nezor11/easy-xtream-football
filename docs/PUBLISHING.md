@@ -381,7 +381,7 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 - **Ficha**: ✅ Play es-ES cambiada el 2026-09-26 (párrafo IMPORTANTE + "24 idiomas"). Play no tiene ficha en-US
   (pendiente crearla). Amazon (ES/EN): cambiar el párrafo al subir la 0.1.8 allí.
 
-## Amazon Appstore (Fire TV) — preparado el 2026-09-22, ENVIADA el 2026-09-23
+## Amazon Appstore (Fire TV) — preparado el 2026-09-22, enviada el 2026-09-23, PUBLICADA el 2026-09-26
 Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
 desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la de Google.
 - ✅ **APK universal firmado** con la clave de subida (Amazon no usa Play App Signing; re-firma con su propio
@@ -401,9 +401,12 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
   contenido pirata"). Defensa: la app es solo el reproductor, no incluye contenido ni listas, cada usuario pone
   su proveedor; dejarlo igual de claro que en Play en la descripción, y no usar capturas con logos de canales
   de pago reconocibles.
-- ✅ **ENVIADA A REVISIÓN el 2026-09-23** (13:10 hora española) desde la máquina Linux, con el navegador
-  guiado por Claude. Estado en la consola: **SUBMITTED**, "estimated to go live before 04:30 AM PDT,
-  28 Sept 2026". Cuenta de desarrollador de Amazon aprobada ese mismo día. Consola:
+- ✅ **PUBLICADA (LIVE) en la Amazon Appstore el 2026-09-26** 🎉: correo "Your recent submission, Easy Xtream
+  Football version 0.1.7, was successfully published and is now LIVE" con Primary / Content Policy / Functionality
+  Validation en PASS. Enviada el 2026-09-23 (13:10) desde la máquina Linux con el navegador guiado por Claude.
+  Cuenta de desarrollador de Amazon aprobada ese mismo día. ⏳ Pendiente: **subir la 0.1.8** (APK universal vc9,
+  `~/Downloads/easy-xtream-0.1.8/`) como *Add upcoming version* y cambiar el párrafo IMPORTANTE (ES/EN) de la ficha;
+  anotar aquí la URL de la ficha en amazon.es. Consola:
   https://developer.amazon.com/apps-and-games/console/apps/list.html
   - App ID `amzn1.devportal.mobileapp.07ea2808a33b46da999e14dfd0bf5184` · SKU `com.footballxtream` ·
     categoría **Movies & TV** (Amazon no tiene "Entertainment"; sin subcategoría) · gratuita · DRM **No**
