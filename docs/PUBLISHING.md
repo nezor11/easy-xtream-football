@@ -414,7 +414,15 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
      "Coffee and toast" / "Coffee for the team". Descripción: "Propina voluntaria para el desarrollador. No
      desbloquea nada." Activarlos.
   3. ✅ Compradores de prueba configurados (ver punto 2).
-  4. ⏳ **Probar** en el móvil y en el Chromecast: abrir el enlace de la prueba interna con la cuenta correspondiente,
+  4. ✅ **Probado en el Chromecast el 2026-09-26**: el menú OK → ‹ Invítame a un café › lista los tres cafés con los
+     precios de Play (1,99 / 4,99 / 9,99 €) y OK abre la hoja de compra de Google Play ("Revisar y aceptar").
+     Cómo se instaló: la Play Store de la tele instalaba la 0.1.6 (la cuenta aún no había aceptado la invitación) y
+     **no entiende el enlace de compartición interna**; se descargó el **APK universal firmado por Google** desde
+     Explorador de app bundles → 10 (0.1.9) → Descargas (`~/Downloads/10.apk`, firmante CN=Android/Google) y se
+     instaló con `adb install -r -i com.android.vending 10.apk` (marca a Play como instalador, lo que satisface la
+     "comprobación del instalador" de la protección automática). Antes hubo que **desinstalar la build debug** de la
+     tele (otra firma; se perdieron los perfiles de prueba). El APK de mi clave de subida NO sirve para probar compras.
+     ⏳ Falta la misma prueba en el móvil: abrir el enlace de la prueba interna con la cuenta correspondiente,
      aceptar, instalar la 0.1.9 desde Play; menú OK → ‹ Invítame a un café › → elegir café → hoja de Play; y
      Ajustes → café. Comprobar el "¡Gracias por el café!" y que la compra sale como prueba (0 €). Verificar también
      el **fallback al QR** en un dispositivo sin Play / sin productos.
