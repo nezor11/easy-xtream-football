@@ -415,7 +415,9 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
      desbloquea nada." Activarlos.
   3. ✅ Compradores de prueba configurados (ver punto 2).
   4. ✅ **Probado en el Chromecast el 2026-09-26**: el menú OK → ‹ Invítame a un café › lista los tres cafés con los
-     precios de Play (1,99 / 4,99 / 9,99 €) y OK abre la hoja de compra de Google Play ("Revisar y aceptar").
+     precios de Play (1,99 / 4,99 / 9,99 €), OK abre la hoja de compra de Google Play ("Revisar y aceptar") y la
+     compra de prueba se completó: en **Gestión de pedidos** figura "Prueba: Un café", `coffee_small`,
+     GPA.3343-1251-1103-24640, Procesado, 1,99 EUR (11:42 UTC; de prueba, no se cobra).
      Cómo se instaló: la Play Store de la tele instalaba la 0.1.6 (la cuenta aún no había aceptado la invitación) y
      **no entiende el enlace de compartición interna**; se descargó el **APK universal firmado por Google** desde
      Explorador de app bundles → 10 (0.1.9) → Descargas (`~/Downloads/10.apk`, firmante CN=Android/Google) y se
