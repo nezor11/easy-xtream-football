@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-24.
+Última actualización: 2026-09-26.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -378,8 +378,8 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   • Includes everything from 0.1.7: shared favorites, more logos, touch gestures and 24 languages.
   </en-US>
   ```
-- **Ficha**: sustituir el párrafo "IMPORTANTE" en Play (ES/EN) y en Amazon (ES/EN) por el texto de
-  `docs/store-listing.md` → "Pendiente para la 0.1.8". Play ya dice "24 idiomas".
+- **Ficha**: ✅ Play es-ES cambiada el 2026-09-26 (párrafo IMPORTANTE + "24 idiomas"). Play no tiene ficha en-US
+  (pendiente crearla). Amazon (ES/EN): cambiar el párrafo al subir la 0.1.8 allí.
 
 ## Amazon Appstore (Fire TV) — preparado el 2026-09-22, ENVIADA el 2026-09-23
 Objetivo: que los Fire TV Stick instalen la app desde su tienda (no tienen Google Play). Cuenta de
@@ -439,14 +439,16 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
    Crear versión (añadir bundle desde la biblioteca o subir el nuevo) → notas de versión → Revisar → Enviar a revisión.
 5. **(TV)** Subir banner TV + capturas TV en la ficha cuando aparezca la sección Android TV.
 6. ✅ **Producción** → 0.1.5 enviada a revisión el 2026-09-14 → **PUBLICADA el 2026-09-21**. 🎉
-7. ✅ **Actualización 0.1.6** firmada y **enviada a revisión el 2026-09-21**, junto con los materiales de
-   Android TV; factor de forma Android TV ya activo. ⏳ Esperando aprobación de Google.
+7. ✅ **Actualización 0.1.6 + materiales de Android TV PUBLICADOS el 2026-09-25** (envío nº 7 del 21 → *Publicada*
+   en Actividad de envíos). Producción: versión 7 (0.1.6), 177 países.
 8. ✅ **Copia de la clave de subida fuera de ambas máquinas** (2026-09-22, `.7z` cifrado en USB offline).
    ✅ **Clave restaurada también en la máquina Linux el 2026-09-22** (ver abajo): ya se puede firmar desde
    cualquiera de las dos.
 
-9. ✅ **0.1.8 PREPARADA y firmada el 2026-09-24** (ver sección abajo). ⏳ **Subirla cuando Google apruebe la
-   0.1.6** (crear otra versión de Producción antes reiniciaría esa revisión). En Amazon: *Add upcoming version*
+9. ✅ **0.1.8 ENVIADA A REVISIÓN el 2026-09-26 (00:05)**: Producción 9 (0.1.8), lanzamiento completo, notas es/en,
+   junto con la ficha es-ES con el párrafo nuevo y "24 idiomas" (decía "8"). ⏳ Esperando a Google (hasta 7 días).
+   ⚠️ Descubierto al hacerlo: **la ficha de Play solo existe en español (es-ES)**; no hay traducción en-US. Añadirla
+   (textos en `docs/store-listing.md`) es tarea pendiente. La 0.1.6 se publicó el 2026-09-25. En Amazon: *Add upcoming version*
    con el APK universal. En ambas tiendas **cambiar la frase "NO incluye ningún canal"** por el texto nuevo de
    `docs/store-listing.md`.
 
