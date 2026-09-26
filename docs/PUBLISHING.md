@@ -383,7 +383,8 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
 
 ## 0.1.9 — Play Billing para el café (código listo el 2026-09-25, rama `feature/play-billing-coffee`)
 - **Qué hace la app.** Al arrancar conecta con Google Play (`CoffeeBilling`, librería `com.android.billingclient:billing`
-  8.3.0, la base Java porque la `-ktx` exige Kotlin 2.2 y el proyecto va en 2.0). Pide los productos consumibles
+  8.3.0, la base Java porque la `-ktx` exige Kotlin 2.2 y el proyecto va en 2.0; lee la opción de compra con
+  `oneTimePurchaseOfferDetailsList`, el modelo nuevo de Play, con el accesor antiguo de respaldo). Pide los productos consumibles
   `coffee_small`, `coffee_medium`, `coffee_large`. Si los obtiene: la sección **Café** del menú OK del reproductor
   lista los cafés con nombre y precio tal como estén en Play Console (localizados por Google), OK abre la hoja de
   pago de Play; el panel "Invítame a un café" de **Ajustes** muestra un botón por café. Tras pagar: consumo
@@ -396,16 +397,22 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
      microingreso y hay que confirmar el importe en "Gestionar métodos de pago". ⚠️ Arriba de esa página hay un
      aviso para **registrarse en la cuota de servicio del 15 %** ("Gestionar grupo de cuentas" + aceptar
      condiciones); sin hacerlo Google aplica el 30 %. Pendiente.
-  2. **Productos únicos** (así se llaman ahora): Monetizar con Play → Productos → Productos únicos. ⚠️ Play no deja
-     crearlos hasta que haya **una build subida con el permiso BILLING** (la librería lo añade sola al manifest):
-     subir primero la 0.1.9 (versionCode 10) a **Prueba interna**, y entonces → Crear producto. Tres productos, tipo
+  2. ✅ **0.1.9 (vc10) publicada en Prueba interna el 2026-09-26 11:38** (hacía falta una build con el permiso
+     BILLING para poder crear productos). ✅ **Tres productos únicos creados el 2026-09-26 como BORRADOR**
+     (`coffee_small` "Un café", `coffee_medium` "Café y tostada", `coffee_large` "Café para el equipo"; opción de
+     compra `buy`, tipo Comprar, retrocompatible, "Ventas de apps digitales", 173 países). ⏳ **Activarlos** (botón
+     "Activar" en cada producto) cuando el usuario dé el OK.
+     ⚠️ Precios: el importe que se teclea en "Editar precios en bloque" es **sin IVA**; para que en España salga
+     1,99 / 4,99 / 9,99 € hay que poner **1,64 / 4,12 / 8,26 €** de base (Google redondea a precio atractivo:
+     ES 1,99 €, DE 1,99 €, UK 1,69 £, US 1,89 $; 4,99 / 4,89 / 4,29 / 4,69; 9,99 / 9,99 / 8,49 / 9,49).
+     ⚠️ **Lista de testers internos vacía**: hay que crear una lista de correos (Prueba interna → Testers) con el
+     Gmail del usuario para poder instalar la 0.1.9 y probar las compras. Tres productos, tipo
      consumible, con estos **IDs exactos**: `coffee_small` (1,99 €), `coffee_medium` (4,99 €), `coffee_large`
      (9,99 €). Nombre (es): "Un café" / "Café y tostada" / "Café para el equipo"; en inglés "A coffee" /
      "Coffee and toast" / "Coffee for the team". Descripción: "Propina voluntaria para el desarrollador. No
      desbloquea nada." Activarlos.
   3. **Compradores de prueba**: Configuración → Pruebas de licencias → añadir el Gmail del usuario (y el de la
-     tele). Las compras de prueba no se cobran. Hace falta que la app esté subida al menos a Prueba interna con
-     esta versión para que Play reconozca los productos (subir la 0.1.9 a **Prueba interna** primero).
+     tele). Las compras de prueba no se cobran.
   4. Probar en el móvil y en el Chromecast: menú OK → Café → comprar; y Ajustes → café. Comprobar el "¡Gracias!".
 - **Ficha**: no cambia. Amazon: sin cambios (sigue el QR); si algún día se quiere, Amazon IAP es otra integración.
 - **Versión**: al mezclar, `versionCode 10` · `0.1.9`. Notas de versión: "Ahora puedes invitar a un café desde la
