@@ -400,20 +400,26 @@ Se dio de alta un perfil **Lista M3U** con la lista del proveedor (11 MB, **51.0
   2. ✅ **0.1.9 (vc10) publicada en Prueba interna el 2026-09-26 11:38** (hacía falta una build con el permiso
      BILLING para poder crear productos). ✅ **Tres productos únicos creados el 2026-09-26 como BORRADOR**
      (`coffee_small` "Un café", `coffee_medium` "Café y tostada", `coffee_large` "Café para el equipo"; opción de
-     compra `buy`, tipo Comprar, retrocompatible, "Ventas de apps digitales", 173 países). ⏳ **Activarlos** (botón
-     "Activar" en cada producto) cuando el usuario dé el OK.
+     compra `buy`, tipo Comprar, retrocompatible, "Ventas de apps digitales", 173 países). ✅ **ACTIVADOS** el
+     2026-09-26 con el OK del usuario.
      ⚠️ Precios: el importe que se teclea en "Editar precios en bloque" es **sin IVA**; para que en España salga
      1,99 / 4,99 / 9,99 € hay que poner **1,64 / 4,12 / 8,26 €** de base (Google redondea a precio atractivo:
      ES 1,99 €, DE 1,99 €, UK 1,69 £, US 1,89 $; 4,99 / 4,89 / 4,29 / 4,69; 9,99 / 9,99 / 8,49 / 9,49).
-     ⚠️ **Lista de testers internos vacía**: hay que crear una lista de correos (Prueba interna → Testers) con el
-     Gmail del usuario para poder instalar la 0.1.9 y probar las compras. Tres productos, tipo
+     ✅ Testers: la lista **"Internos"** (contact@nezor.es, martinezortiz@gmail.com = móvil, sigfrido.mar@gmail.com =
+     Chromecast) ya estaba asignada a la Prueba interna y el 2026-09-26 se marcó también en Ajustes → **Licencia
+     para testing** (respuesta RESPOND_NORMALLY): las compras de esas cuentas son de prueba, no se cobran.
+     Enlace para unirse a la prueba interna e instalar la 0.1.9: https://play.google.com/apps/internaltest/4701253984818511045 Tres productos, tipo
      consumible, con estos **IDs exactos**: `coffee_small` (1,99 €), `coffee_medium` (4,99 €), `coffee_large`
      (9,99 €). Nombre (es): "Un café" / "Café y tostada" / "Café para el equipo"; en inglés "A coffee" /
      "Coffee and toast" / "Coffee for the team". Descripción: "Propina voluntaria para el desarrollador. No
      desbloquea nada." Activarlos.
-  3. **Compradores de prueba**: Configuración → Pruebas de licencias → añadir el Gmail del usuario (y el de la
-     tele). Las compras de prueba no se cobran.
-  4. Probar en el móvil y en el Chromecast: menú OK → Café → comprar; y Ajustes → café. Comprobar el "¡Gracias!".
+  3. ✅ Compradores de prueba configurados (ver punto 2).
+  4. ⏳ **Probar** en el móvil y en el Chromecast: abrir el enlace de la prueba interna con la cuenta correspondiente,
+     aceptar, instalar la 0.1.9 desde Play; menú OK → ‹ Invítame a un café › → elegir café → hoja de Play; y
+     Ajustes → café. Comprobar el "¡Gracias por el café!" y que la compra sale como prueba (0 €). Verificar también
+     el **fallback al QR** en un dispositivo sin Play / sin productos.
+  5. ⏳ Mezclar `feature/play-billing-coffee` en main (incluye el fix de `oneTimePurchaseOfferDetailsList`) y, tras
+     probar, promocionar o resubir a Producción como 0.1.9 cuando la 0.1.8 esté publicada.
 - **Ficha**: no cambia. Amazon: sin cambios (sigue el QR); si algún día se quiere, Amazon IAP es otra integración.
 - **Versión**: al mezclar, `versionCode 10` · `0.1.9`. Notas de versión: "Ahora puedes invitar a un café desde la
   propia app, con Google Play" / "You can now buy me a coffee right from the app, through Google Play".
