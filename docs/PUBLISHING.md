@@ -1,7 +1,7 @@
 # Publicación en Google Play — estado y pasos
 
 Checklist vivo del proceso de publicación de **Easy Xtream Football**.
-Última actualización: 2026-09-29.
+Última actualización: 2026-10-12.
 
 ## Datos clave
 - **Nombre de la app:** Easy Xtream Football
@@ -732,6 +732,18 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
         once we have more detailed information". No es un veredicto ni pide nada: el caso sigue abierto y
         en sus manos. No hay que contestar (y el correo es *no-reply*; para escribirles, el enlace del caso).
         Se sigue sin reenviar la 0.1.12.
+      - 🎉 **2026-10-12: la 0.1.11 (vc15) está LIVE en Amazon.** Correo de Amazon Appstore Team: *"Your recent
+        submission, Easy Xtream Football version 0.1.11, was successfully published and is now LIVE"*, con
+        Primary / Content Policy / Functionality Validation **PASS** las tres. Es la **misma 0.1.11 que
+        rechazaron el 2026-10-01**, sin reenvío por nuestra parte: la consulta del caso `22369540491` ha
+        servido para que revisaran el rechazo y lo revirtieran (no ha llegado otra respuesta al caso;
+        comprobar en *My Appstore Cases* si lo han cerrado). Consecuencias:
+        - La 0.1.12 "solo reproductor" (`-Pstore=amazon`) **ya no hace falta reenviarla**. Se queda en `main`
+          como opción de reserva por si un futuro envío vuelve a caer por lo mismo.
+        - Amazon y Play tienen ahora la misma versión (0.1.11, vc15, con lista de ejemplo de radios).
+        - Pendiente de poco: actualizar la ficha de Amazon con las capturas neutras nuevas
+          (`~/Downloads/easy-xtream-0.1.12-vc16-amazon/screenshots/`) cuando toque el siguiente envío, y
+          cambiar el párrafo IMPORTANTE de la ficha si no se cambió al enviar la 0.1.11.
       - ✅ **Probada en el Chromecast el 2026-10-01 (17:20-17:50)** con la build debug de Amazon
         (`0.1.12-debug`, `-Pstore=amazon`, datos vacíos, al lado de la de Play): ni el primer arranque ni el
         final de "Connect your list" muestran el botón de ejemplo; la lista `review-test.m3u` carga y **Big
