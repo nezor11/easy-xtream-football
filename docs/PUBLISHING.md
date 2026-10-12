@@ -837,6 +837,14 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
   cuenta: sin problemas. No requiere ninguna acción.
 - ✅ **Cuenta bancaria VERIFICADA el 2026-09-28**: el microingreso "GOOGLE" llegó ese día (segundo día hábil)
   y el usuario tecleó el importe en Perfil de pagos
+  ⏳ **2026-10-13: aviso nuevo en el Perfil de pagos: "proporciona tu información fiscal de Irlanda lo antes
+  posible"** (retención de impuestos). Google Ireland es quien paga a los desarrolladores europeos; el
+  formulario (Ajustes → Perfil de pagos → Gestionar configuración → Información fiscal → Irlanda) pide
+  residencia fiscal (España), NIF, si hay establecimiento permanente en Irlanda (no) y si se pide exención o
+  tipo reducido por convenio; puede pedir un documento de residencia (certificado de la AEAT, tarjeta del NIF
+  o DNI vigente con dirección; pasaporte y carné de conducir no valen). Según la ayuda de Google
+  (support.google.com/product-documentation/answer/14754400) hoy no limita la cuenta ni afecta a los pagos
+  ni a la retención. **Lo rellena el usuario** (datos fiscales + documento de identidad).
   (`https://play.google.com/console/u/1/developers/7549371768525842906/paymentssettings`; ojo, la ruta es
   `paymentssettings`, `payments-profile` redirige a la lista de apps) → *Cómo recibes los pagos* → *Gestionar
   métodos de pago* → **Verificar**. Comprobado en la consola esa misma tarde: la cuenta acabada en 6844 ya
