@@ -575,6 +575,9 @@ Respuesta al rechazo de Amazon de la 0.1.8 (ver la sección de Amazon). `version
   "Live sports of TDTChannels" (Teledeporte, Esport 3, Sportitalia: emisiones en abierto, menos preocupante).
   Si Amazon o Google vuelven a rechazar por contenido, es lo siguiente a cambiar: rehacerlas con nombres
   neutros ("Demo · Radios deportivas", "Mi proveedor"). No tocar la ficha mientras haya revisión en curso.
+  - ✅ **PUBLICADA el 2026-10-01 a las 19:04**, 20 minutos después de enviarla (comprobado en *Actividad de
+    envíos* el 2026-10-12: envío nº 10, 5 cambios, estado *Publicada*). La ficha en-US y las capturas neutras
+    (teléfono, tablets 7" y 10", Android TV) ya están en la tienda. **No queda nada en revisión en Play.**
   - Notas de versión usadas en Play (viene de la 0.1.6, por eso son más largas que las de Amazon):
     ```
     <es-ES>
@@ -736,8 +739,9 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
         submission, Easy Xtream Football version 0.1.11, was successfully published and is now LIVE"*, con
         Primary / Content Policy / Functionality Validation **PASS** las tres. Es la **misma 0.1.11 que
         rechazaron el 2026-10-01**, sin reenvío por nuestra parte: la consulta del caso `22369540491` ha
-        servido para que revisaran el rechazo y lo revirtieran (no ha llegado otra respuesta al caso;
-        comprobar en *My Appstore Cases* si lo han cerrado). Consecuencias:
+        servido para que revisaran el rechazo y lo revirtieran. Comprobado en la consola el 2026-10-12: el caso
+        está **Resolved** (última actualización 10/12/26) sin ningún texto de respuesta en la ficha del caso, y
+        en *App List* la app sale **Live** sin *Upcoming version*. Consecuencias:
         - La 0.1.12 "solo reproductor" (`-Pstore=amazon`) **ya no hace falta reenviarla**. Se queda en `main`
           como opción de reserva por si un futuro envío vuelve a caer por lo mismo.
         - Amazon y Play tienen ahora la misma versión (0.1.11, vc15, con lista de ejemplo de radios).
