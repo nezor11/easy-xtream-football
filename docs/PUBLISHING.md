@@ -791,6 +791,13 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
     una versión nueva: *Add upcoming version* en la consola, subir el APK universal nuevo y reenviar.
 - Amazon **re-firma** el APK con su certificado: no afecta a nada (la app no verifica firmas ni usa licencias).
 
+## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
+- ✅ **2026-10-14 · recordatorio del café discreto en móvil apaisado** (merge `9586c87`): en apaisado la
+  tarjeta pasa a ser pequeña y flota en la esquina inferior derecha como en la tele (taza de 40 dp, una
+  línea); en vertical sigue igual; la ficha de la radio del centro (logo, nombre, "Solo audio") es más
+  pequeña en móvil. La tele no cambia. Probado en el Pixel 11 Pro. Irá en la próxima versión de Play
+  (la siguiente `versionCode` libre es **17**; la 16 es la 0.1.12 de Amazon, nunca enviada).
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
