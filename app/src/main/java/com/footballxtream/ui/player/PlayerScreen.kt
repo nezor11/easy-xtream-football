@@ -326,6 +326,7 @@ fun PlayerScreen(
         )
 
         val touch = !isTv()
+        val landscape = LocalConfiguration.current.screenWidthDp > LocalConfiguration.current.screenHeightDp
 
         ui.errorMessage?.let { msg ->
             Text(
@@ -396,11 +397,13 @@ fun PlayerScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (touch) {
-                // On a phone the coffee reminder and the controls legend join the stack instead of
-                // floating bottom-right: absolutely positioned, they landed on the channel info.
-                // They are never on screen together (the legend hides while the reminder is up).
+                // On a phone held upright the coffee reminder (the full card) and the controls legend
+                // join the stack instead of floating bottom-right: absolutely positioned, they landed
+                // on the channel info. They are never on screen together (the legend hides while the
+                // reminder is up). Held sideways there is room beside the channel info, so a small
+                // reminder floats in the corner like on TV (see the block after this column).
                 AnimatedVisibility(
-                    visible = ui.showCoffeeBug && !ui.menuOpen,
+                    visible = ui.showCoffeeBug && !ui.menuOpen && !landscape,
                     enter = slideInVertically(animationSpec = tween(450)) { it } + fadeIn(tween(450)),
                     exit = slideOutVertically(animationSpec = tween(350)) { it } + fadeOut(tween(350)),
                 ) {
@@ -529,9 +532,11 @@ fun PlayerScreen(
         // Ko-fi "bug": one shared card (same module) used both for the timed reminder and the OK-menu
         // "Café" section. Slides up from the bottom-right; any key dismisses it (sliding back down).
         AnimatedVisibility(
-            // TV only: on a phone the reminder rides in the bottom stack and the Café section lives
-            // inside the sheet, so nothing of this floats over the channel info any more.
-            visible = !touch && ((ui.showCoffeeBug && !ui.menuOpen) || (ui.menuOpen && ui.menuCoffee)),
+            // TV, plus the timed reminder on a phone held sideways: a small card in the corner, like
+            // on TV, instead of a full-width one that climbed over the radio card. Upright, the
+            // reminder rides in the bottom stack; the Café section always lives inside the sheet.
+            visible = (!touch && ((ui.showCoffeeBug && !ui.menuOpen) || (ui.menuOpen && ui.menuCoffee))) ||
+                (touch && landscape && ui.showCoffeeBug && !ui.menuOpen),
             enter = slideInVertically(animationSpec = tween(450)) { it } + fadeIn(tween(450)),
             exit = slideOutVertically(animationSpec = tween(350)) { it } + fadeOut(tween(350)),
             modifier = Modifier.align(Alignment.BottomEnd).padding(overlayPadding),
@@ -540,6 +545,7 @@ fun PlayerScreen(
                 showQr = !ui.coffeeViaBilling,
                 // Small QR in the floating reminder; a scannable one when the Café section is open.
                 compact = !ui.menuOpen,
+                small = touch,
                 onOpenCoffee = viewModel::openCoffeeSection,
             )
         }
@@ -560,15 +566,18 @@ private fun RadioOverlay(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
+    // The TV sizes read well from the sofa; on a phone the same card filled the picture, so
+    // everything comes down a notch (logo box, glyph, badge, both lines, spacing).
+    val tv = isTv()
     Column(
         modifier = modifier.widthIn(max = 560.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(14.dp),
+        verticalArrangement = Arrangement.spacedBy(if (tv) 14.dp else 10.dp),
     ) {
         Box(
             modifier = Modifier
-                .size(168.dp)
-                .clip(RoundedCornerShape(24.dp))
+                .size(if (tv) 168.dp else 112.dp)
+                .clip(RoundedCornerShape(if (tv) 24.dp else 18.dp))
                 .background(Color(0xFF141A20)),
             contentAlignment = Alignment.Center,
         ) {
@@ -578,14 +587,14 @@ private fun RadioOverlay(
                     model = iconUrl,
                     contentDescription = null,
                     onError = { imageFailed = true },
-                    modifier = Modifier.fillMaxSize().padding(20.dp),
+                    modifier = Modifier.fillMaxSize().padding(if (tv) 20.dp else 14.dp),
                 )
             } else {
                 Image(
                     painter = painterResource(R.drawable.ic_radio),
                     contentDescription = stringResource(R.string.radio_badge_desc),
                     colorFilter = ColorFilter.tint(colors.primary),
-                    modifier = Modifier.size(96.dp),
+                    modifier = Modifier.size(if (tv) 96.dp else 64.dp),
                 )
             }
             // Small radio badge on the logo, so a logo alone still reads as "radio" (redundant when
@@ -597,14 +606,14 @@ private fun RadioOverlay(
                     colorFilter = ColorFilter.tint(colors.primary),
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
-                        .padding(10.dp)
-                        .size(26.dp),
+                        .padding(if (tv) 10.dp else 7.dp)
+                        .size(if (tv) 26.dp else 20.dp),
                 )
             }
         }
         Text(
             text = name,
-            style = MaterialTheme.typography.headlineSmall,
+            style = if (tv) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.titleMedium,
             color = Color(0xFFE6EAEE),
             textAlign = TextAlign.Center,
             maxLines = 2,
@@ -616,7 +625,7 @@ private fun RadioOverlay(
                 isBuffering -> "⟳"
                 else -> stringResource(R.string.radio_audio_only)
             },
-            style = MaterialTheme.typography.bodyLarge,
+            style = if (tv) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.bodyMedium,
             color = if (isBuffering) colors.primary else Color(0xCCE6EAEE),
             textAlign = TextAlign.Center,
             maxLines = 2,
@@ -1000,6 +1009,9 @@ private fun CoffeeCard(
     compact: Boolean,
     onOpenCoffee: () -> Unit,
     modifier: Modifier = Modifier,
+    // Phone reminder: the TV card scaled down to stay out of the way on a small screen — a 40 dp
+    // cup, one label-sized line, no title and no thanks line (the Café section has them).
+    small: Boolean = false,
 ) {
     val context = LocalContext.current
     val openSite = {
@@ -1017,9 +1029,9 @@ private fun CoffeeCard(
             // With Play billing the whole card is the button (tap on a phone, OK on TV — see the key
             // handler). With the QR there is nothing to open: the QR keeps its own tap → Ko-fi.
             .then(if (showQr || !compact) Modifier else Modifier.clickable { onOpenCoffee() })
-            .padding(12.dp),
+            .padding(if (small) 10.dp else 12.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(if (small) 10.dp else 12.dp),
     ) {
         // The QR comes first: it is what the viewer is meant to scan with a phone. It opens the app's
         // own site (which invites to Ko-fi), never a payment page. On a phone you can't scan your own
@@ -1043,18 +1055,23 @@ private fun CoffeeCard(
                 painter = painterResource(R.drawable.ic_coffee),
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
-                modifier = Modifier.size(88.dp),
+                modifier = Modifier.size(if (small) 40.dp else 88.dp),
             )
         }
+        val textStyle = if (small) MaterialTheme.typography.labelMedium else MaterialTheme.typography.bodyMedium
         Column(
-            modifier = Modifier.widthIn(min = 160.dp, max = 220.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = if (small) Modifier.widthIn(max = 200.dp) else Modifier.widthIn(min = 160.dp, max = 220.dp),
+            verticalArrangement = Arrangement.spacedBy(if (small) 4.dp else 8.dp),
         ) {
-            Text(
-                text = stringResource(R.string.support_title),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
-            )
+            // The phone card keeps only the call to action: with the system font at its largest the
+            // title alone doubled the card's height.
+            if (!small) {
+                Text(
+                    text = stringResource(R.string.support_title),
+                    style = textStyle,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
             Text(
                 text = stringResource(
                     when {
@@ -1064,15 +1081,17 @@ private fun CoffeeCard(
                         else -> R.string.coffee_bug_action_touch
                     },
                 ),
-                style = MaterialTheme.typography.bodyMedium,
+                style = textStyle,
                 color = MaterialTheme.colorScheme.primary,
             )
-            Text(
-                text = stringResource(R.string.coffee_thanks),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(top = 4.dp),
-            )
+            if (!small) {
+                Text(
+                    text = stringResource(R.string.coffee_thanks),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+            }
         }
     }
 }
