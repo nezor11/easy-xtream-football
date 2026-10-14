@@ -852,6 +852,13 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
   o DNI vigente con dirección; pasaporte y carné de conducir no valen). Según la ayuda de Google
   (support.google.com/product-documentation/answer/14754400) hoy no limita la cuenta ni afecta a los pagos
   ni a la retención. **Lo rellena el usuario** (datos fiscales + documento de identidad).
+  **2026-10-14:** abierto en la consola: Perfil de pagos → *Añadir información fiscal* (`?place=TAX_CENTER`,
+  "Gestionar información fiscal", bloques Estados Unidos / **Irlanda** / Taiwán; solo Irlanda tiene aviso).
+  El botón de Irlanda abre un diálogo "Antes de empezar" (3-5 min) que exige subir un **PDF/PNG/JPEG de un
+  documento de régimen fiscal** (certificado de residencia fiscal). ⏳ **Pendiente: el usuario va a sacar el
+  certificado de residencia fiscal de la AEAT** (Sede Electrónica → Certificados tributarios → Residencia
+  fiscal, con Cl@ve) y luego rellenar el formulario (residencia España, NIF, sin establecimiento permanente
+  en Irlanda, convenio España-Irlanda).
   (`https://play.google.com/console/u/1/developers/7549371768525842906/paymentssettings`; ojo, la ruta es
   `paymentssettings`, `payments-profile` redirige a la lista de apps) → *Cómo recibes los pagos* → *Gestionar
   métodos de pago* → **Verificar**. Comprobado en la consola esa misma tarde: la cuenta acabada en 6844 ya
