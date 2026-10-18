@@ -42,10 +42,11 @@ export function addProfileScreen(existing: Profile | null, onSaved: (p: Profile)
     const save = h('div', { class: 'btn primary focusable', text: existing ? t('btn_save_changes') : t('btn_save_enter'), style: { marginTop: '30px' }, onclick: () => submit(save) });
     form.appendChild(save);
     if (!existing && SAMPLE_LIST && Store.profiles().length === 0) {
-      form.appendChild(h('div', { class: 'btn focusable', text: '▶  ' + t('sample_radio_button'), style: { marginTop: '40px' }, onclick: () => {
+      // Its own line, well apart from the save button (inline-flex buttons would otherwise sit side by side).
+      form.appendChild(h('div', { style: { marginTop: '40px' } }, h('div', { class: 'btn focusable', text: '▶  ' + t('sample_radio_button'), onclick: () => {
         const p = Store.saveProfile({ name: t('sample_profile_radio'), type: 'M3U', serverUrl: '', username: '', password: '', m3uUrl: SPORTS_RADIO_URL });
         onSaved(p);
-      } }));
+      } })));
       form.appendChild(h('div', { class: 'helper', text: t('sample_radio_hint'), style: { marginTop: '10px' } }));
     }
   }
