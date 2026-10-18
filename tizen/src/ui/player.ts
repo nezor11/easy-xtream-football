@@ -183,7 +183,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
     return s === 'QUALITY' ? t('menu_section_quality') : s === 'AUDIO' ? t('menu_section_audio') : s === 'SUBTITLES' ? t('menu_section_subtitles') : s === 'GUIDE' ? t('menu_section_guide') : s === 'INFO' ? t('menu_section_info') : t('support_entry');
   }
   function option(label: string, selected: boolean, onPick: () => void): HTMLElement {
-    return h('div', { class: 'option focusable' + (selected ? ' selected' : ''), text: (selected ? '●  ' : '○  ') + label, onclick: onPick });
+    return h('div', { class: 'option focusable' + (selected ? ' selected' : ''), 'data-key': label, text: (selected ? '●  ' : '○  ') + label, onclick: onPick });
   }
   function renderMenu(): void {
     clear(menu);

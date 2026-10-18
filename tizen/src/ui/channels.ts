@@ -169,7 +169,7 @@ export function channelsScreen(): Screen {
 
   return {
     el,
-    onShow: () => { renderFilters(); if (!groups.length) load(); else { renderRows(); refocus(); refreshLiveNow(); } },
+    onShow: () => { renderFilters(); if (!groups.length) load(); else { renderRows(); refocus('.card'); refreshLiveNow(); } },
     onHide: () => { unsubscribe(); },
     initialFocus: '.card',
     onKey: (code) => {

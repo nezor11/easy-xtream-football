@@ -61,8 +61,22 @@ export function focusFirst(selector?: string): void {
 }
 
 /** Restores focus to the current element if still visible, else to the first focusable. */
-export function refocus(): void {
-  if (focused && focusables().includes(focused)) setFocus(focused); else focusFirst();
+/**
+ * Restores focus after a re-render: the same element if still attached, else the new element with the
+ * same `data-key` (in the same row when rows repeat keys), else the first focusable matching `selector`.
+ */
+export function refocus(selector?: string): void {
+  const list = focusables();
+  if (focused && list.includes(focused)) { setFocus(focused); return; }
+  const key = focused && focused.dataset ? focused.dataset.key : undefined;
+  if (key) {
+    const rowTitle = (el: HTMLElement): string => { const h2 = el.closest('.row') && el.closest('.row')!.querySelector('h2'); return h2 && h2.firstChild ? h2.firstChild.textContent || '' : ''; };
+    const wanted = rowTitle(focused!);
+    const same = list.filter((el) => el.dataset.key === key);
+    const el = same.find((e) => rowTitle(e) === wanted) || same[0];
+    if (el) { setFocus(el); return; }
+  }
+  focusFirst(selector);
 }
 
 function move(dir: number): boolean {
@@ -72,8 +86,11 @@ function move(dir: number): boolean {
   const a = focused.getBoundingClientRect();
   const ax = (a.left + a.right) / 2, ay = (a.top + a.bottom) / 2;
   let best: HTMLElement | null = null, bestScore = Infinity;
+  // ◀ ▶ inside a horizontal row stay in that row (and wrap at its ends, below); ▲ ▼ change rows.
+  const row = dir === KEY.LEFT || dir === KEY.RIGHT ? focused.closest<HTMLElement>('.cards:not(.wrap)') : null;
   for (const el of list) {
     if (el === focused) continue;
+    if (row && !row.contains(el)) continue;
     const b = el.getBoundingClientRect();
     const bx = (b.left + b.right) / 2, by = (b.top + b.bottom) / 2;
     const dx = bx - ax, dy = by - ay;
@@ -89,6 +106,11 @@ function move(dir: number): boolean {
     if (score < bestScore) { bestScore = score; best = el; }
   }
   if (best) { setFocus(best); return true; }
+  // End of a horizontal row: wrap around to the other end (rows are circular, like channel zapping).
+  if (row) {
+    const items = list.filter((el) => row.contains(el));
+    if (items.length > 1) { setFocus(dir === KEY.RIGHT ? items[0] : items[items.length - 1]); return true; }
+  }
   return false;
 }
 

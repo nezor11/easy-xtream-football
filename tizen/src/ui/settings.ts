@@ -13,7 +13,7 @@ const LANGUAGE_NAMES: Record<string, string> = { en: 'English', es: 'Español', 
 export function settingsScreen(): Screen {
   const list = h('div', { class: 'settings', style: { width: '1100px', marginTop: '30px' } });
   const el = h('div', { class: 'screen' }, h('h1', { text: t('settings_title') }), list);
-  function item(label: string, value: string, onclick: () => void): HTMLElement { return h('div', { class: 'item focusable', onclick }, h('span', { text: label }), h('span', { class: 'value', text: value })); }
+  function item(label: string, value: string, onclick: () => void): HTMLElement { return h('div', { class: 'item focusable', 'data-key': label, onclick }, h('span', { text: label }), h('span', { class: 'value', text: value })); }
   function render(): void {
     clear(list);
     list.appendChild(item(t('settings_language'), Store.language() ? LANGUAGE_NAMES[Store.language()] || Store.language() : t('language_system'), () => push(languageScreen())));
