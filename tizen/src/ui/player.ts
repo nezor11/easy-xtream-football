@@ -30,7 +30,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
   const legend = h('div', { class: 'osd-legend hidden' });
   const radio = h('div', { class: 'radio hidden' });
   const menu = h('div', { class: 'menu hidden' });
-  const coffee = h('div', { class: 'hidden', style: { position: 'absolute', right: '48px', bottom: '48px', padding: '14px 18px', borderRadius: '12px', background: 'rgba(10,14,18,0.9)', display: 'flex', gap: '14px', alignItems: 'center' } });
+  const coffee = h('div', { class: 'hidden gap14', style: { position: 'absolute', right: '48px', bottom: '48px', padding: '14px 18px', borderRadius: '12px', background: 'rgba(10,14,18,0.9)', display: 'flex', alignItems: 'center' } });
   const el = h('div', { class: 'screen player' }, radio, info, msg, legend, coffee, menu);
 
   function fixedFromMode(): QualityName | null { const m = Store.qualityMode(); return m === 'AUTO' ? null : m; }
@@ -185,7 +185,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
       const v = tracks.filter((x) => x.type === 'VIDEO' || x.type === 'AUDIO').map((x) => `${x.type}: ${x.codec}${x.width ? ' ' + x.width + 'x' + x.height : ''}`).join('\n');
       if (v) options.appendChild(h('div', { class: 'text', text: v }));
     } else if (section === 'COFFEE') {
-      options.appendChild(h('div', { style: { display: 'flex', gap: '18px', alignItems: 'center' } }, h('img', { src: 'qr.png', class: 'qr', style: { width: '148px', height: '148px' } }), h('div', { class: 'text', text: t('support_message') + '\n' + t('support_site_handle'), style: { marginTop: '0' } })));
+      options.appendChild(h('div', { class: 'gap18', style: { display: 'flex', alignItems: 'center' } }, h('img', { src: 'qr.png', class: 'qr', style: { width: '148px', height: '148px' } }), h('div', { class: 'text', text: t('support_message') + '\n' + t('support_site_handle'), style: { marginTop: '0' } })));
       const dismissed = Store.coffeeReminderDismissed();
       options.appendChild(option(dismissed ? t('coffee_reenable') : t('coffee_dismiss'), false, () => { Store.setCoffeeReminderDismissed(!dismissed); renderMenu(); refocus(); }));
     }

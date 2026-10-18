@@ -20,7 +20,7 @@ export function channelsScreen(): Screen {
   let liveNowToken = 0;
   const header = h('h1', null);
   const sub = h('h2', { style: { marginTop: '6px' } });
-  const filters = h('div', { class: 'hidden', style: { display: 'flex', gap: '12px', marginTop: '18px' } });
+  const filters = h('div', { class: 'hidden gap12', style: { display: 'flex', marginTop: '18px' } });
   const rows = h('div', { class: 'rows' });
   const topbar = h('div', { class: 'topbar' },
     h('div', { class: 'btn icon focusable', text: '⚲', title: t('action_filters'), onclick: () => { filtersOpen = !filtersOpen; filters.classList.toggle('hidden', !filtersOpen); renderRows(); if (filtersOpen) focusFirst('.chip'); } }));
@@ -82,7 +82,7 @@ export function channelsScreen(): Screen {
     rows.style.top = filtersOpen ? '230px' : '150px';
     if (opened) {
       rows.appendChild(h('div', { class: 'row' }, h('h2', null, opened.name, h('span', { class: 'count', text: String(opened.channels.length) }), h('span', { style: { fontSize: '18px', marginLeft: '20px' }, text: t('folder_back_hint') })),
-        h('div', { class: 'cards', style: { flexWrap: 'wrap' } }, ...opened.channels.map((g, i) => card(g, null, () => playFolder(opened!, i), () => toggleFavChannel(g))))));
+        h('div', { class: 'cards wrap', style: { flexWrap: 'wrap' } }, ...opened.channels.map((g, i) => card(g, null, () => playFolder(opened!, i), () => toggleFavChannel(g))))));
       return;
     }
     const mode = Store.qualityMode(); const fixed = fixedQuality(mode);
@@ -92,7 +92,7 @@ export function channelsScreen(): Screen {
     const favFolderNames = Store.favoriteFolders();
     const isFav = (f: ChannelFolder) => favFolderNames.includes(f.name);
     const favoriteFolders = visible.filter(isFav), football = visible.filter((f) => f.isFootball && !isFav(f)), other = visible.filter((f) => !f.isFootball && !isFav(f));
-    const folderCard = (f: ChannelFolder) => card(isSingle(f) ? f.channels[0] : null, isSingle(f) ? null : f, () => { if (isSingle(f)) playFolder(f, 0); else { opened = f; renderRows(); focusFirst(); } }, () => { if (isSingle(f)) toggleFavChannel(f.channels[0]); else { Store.toggleFavoriteFolder(f.name); renderRows(); refocus(); } });
+    const folderCard = (f: ChannelFolder) => card(isSingle(f) ? f.channels[0] : null, isSingle(f) ? null : f, () => { if (isSingle(f)) playFolder(f, 0); else { opened = f; renderRows(); focusFirst('.card'); } }, () => { if (isSingle(f)) toggleFavChannel(f.channels[0]); else { Store.toggleFavoriteFolder(f.name); renderRows(); refocus(); } });
     if (!needle) {
       if (liveNow.length) rows.appendChild(row(t('now_live'), liveNow.map((x, i) => card(x.group, null, () => playList(liveNow.map((y) => y.group), i, false)))));
       const favs = Store.favoriteChannelKeys().map(findGroup).filter((g): g is ChannelGroup => !!g);

@@ -1,9 +1,10 @@
-/* 1920x1080 TV layout. Colours mirror the Android theme. The page background must stay transparent
+/* 1920x1080 TV layout. Tizen 5.5 runs Chrome 69: no `inset`, no flexbox `gap` (margins on siblings instead).
+   Colours mirror the Android theme. The page background must stay transparent
    while the player is open: AVPlay draws the picture on a plane behind the page. */
 :root { --bg: #0a0e12; --fg: #e6eaee; --fg2: #b9c2cc; --primary: #39d353; --on-primary: #06210e; --surface: #141b22; --surface2: #1e2730; --danger: #e5484d; }
 html, body { margin: 0; width: 1920px; height: 1080px; background: transparent; color: var(--fg); font-family: "Roboto", "Noto Sans", sans-serif; overflow: hidden; font-size: 24px; }
-#app { position: absolute; inset: 0; }
-.screen { position: absolute; inset: 0; background: var(--bg); box-sizing: border-box; padding: 48px 72px; }
+#app { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.screen { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: var(--bg); box-sizing: border-box; padding: 48px 72px; }
 .screen.player { background: transparent; padding: 0; }
 .hidden { display: none !important; }
 h1 { font-size: 44px; margin: 0; font-weight: 600; }
@@ -22,7 +23,7 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .chip.selected { background: var(--primary); color: var(--on-primary); }
 .chip.focus { border-color: var(--primary); }
 .chip.selected.focus { border-color: #fff; }
-.card { position: relative; width: 272px; height: 190px; border-radius: 18px; background: var(--surface); border: 4px solid transparent; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+.card { position: relative; flex: 0 0 auto; width: 272px; height: 190px; border-radius: 18px; background: var(--surface); border: 4px solid transparent; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 .card.focus { border-color: var(--primary); background: var(--surface2); transform: scale(1.04); }
 .card .logo { width: 120px; height: 90px; object-fit: contain; }
 .card .monogram { width: 90px; height: 90px; border-radius: 45px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 600; color: var(--primary); }
@@ -42,7 +43,7 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .field input.focus, .field input:focus { border-color: var(--primary); }
 .field .helper { font-size: 20px; color: var(--fg2); margin-top: 6px; }
 .error { color: var(--danger); font-size: 22px; margin-top: 18px; }
-.center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+.center { position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
 .spinner { width: 56px; height: 56px; border: 6px solid var(--surface2); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .hint { position: absolute; bottom: 36px; left: 72px; right: 72px; font-size: 20px; color: var(--fg2); text-align: center; }
@@ -67,7 +68,7 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .menu .option.selected { color: var(--primary); }
 .menu .option.focus { border-color: var(--primary); background: var(--surface2); }
 .menu .text { font-size: 22px; color: var(--fg2); white-space: pre-wrap; margin-top: 14px; }
-.radio { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.radio { position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
 .radio .box { width: 168px; height: 168px; border-radius: 24px; background: #141a20; display: flex; align-items: center; justify-content: center; }
 .radio .box img { width: 128px; height: 128px; object-fit: contain; }
 .radio .title { font-size: 36px; }
@@ -80,7 +81,27 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .list .item { padding: 12px 20px; border-radius: 12px; font-size: 26px; border: 3px solid transparent; }
 .list .item.selected { color: var(--primary); }
 .list .item.focus { border-color: var(--primary); background: var(--surface2); }
-.dialog { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+.dialog { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
 .dialog .box { background: var(--surface); border-radius: 20px; padding: 36px 44px; min-width: 640px; max-width: 1200px; }
 .dialog .box .title { font-size: 30px; margin-bottom: 20px; }
 .dialog .actions { display: flex; gap: 14px; justify-content: flex-end; margin-top: 28px; }
+
+/* flexbox spacing without `gap` (Chrome 69) */
+.brand > * + * { margin-left: 20px; }
+.topbar > * + * { margin-left: 14px; }
+.btn > * + * { margin-left: 10px; }
+.card .name, .card .sub { margin-top: 10px; }
+.row h2 > * + * { margin-left: 12px; }
+.row .cards > * { margin-right: 18px; }
+.row .cards.wrap > * { margin-bottom: 18px; }
+.center > * + * { margin-top: 18px; }
+.osd-info .line > * + * { margin-left: 14px; }
+.osd-legend > * + * { margin-left: 10px; }
+.menu .tab { margin: 0 8px 8px 0; }
+.menu .options > * + * { margin-top: 4px; }
+.radio > * + * { margin-top: 14px; }
+.list > * + * { margin-top: 6px; }
+.dialog .actions > * + * { margin-left: 14px; }
+.gap12 > * + * { margin-left: 12px; }
+.gap14 > * + * { margin-left: 14px; }
+.gap18 > * + * { margin-left: 18px; }

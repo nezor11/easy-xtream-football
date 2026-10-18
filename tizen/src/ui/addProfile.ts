@@ -15,7 +15,7 @@ export function addProfileScreen(existing: Profile | null, onSaved: (p: Profile)
   let busy = false;
   const form = h('div', { style: { width: '1100px', marginTop: '24px' } });
   const errorEl = h('div', { class: 'error' });
-  const tabs = h('div', { style: { display: 'flex', gap: '12px', marginTop: '28px' } });
+  const tabs = h('div', { class: 'gap12', style: { display: 'flex', marginTop: '28px' } });
   const el = h('div', { class: 'screen' }, h('h1', { text: existing ? t('add_edit_profile') : t('add_connect_list') }), tabs, form, errorEl);
 
   function tab(label: string, value: ProfileType): HTMLElement {
