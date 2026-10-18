@@ -8,7 +8,7 @@ import { Store } from './storage';
 import { LOGO_MAP_URL } from './logos';
 
 const PROBE_MIN_BYTES = 300_000;
-const PROBE_STALE_MS = 24 * 60 * 60 * 1000;
+const PROBE_STALE_MS = 60 * 60 * 1000; // Wi-Fi conditions change: re-measure after an hour and start from the new value
 
 /** Records a measured rate; keeps the best of the recent probes (a slow server must not hide a fast network). */
 export function recordBandwidth(bps: number, what: string): void {
@@ -20,7 +20,7 @@ export function recordBandwidth(bps: number, what: string): void {
   console.log('bandwidth ' + what + ' ' + (bps / 1e6).toFixed(1) + ' Mbps → using ' + (next / 1e6).toFixed(1) + ' Mbps');
 }
 
-/** Downloads the logo map (static, CDN) once a day to measure the rate between the first and last bytes. */
+/** Downloads the logo map (static, CDN) at most hourly to measure the rate between the first and last bytes. */
 export function probeBandwidthIfStale(): void {
   if (Date.now() - Store.bandwidthAt() < PROBE_STALE_MS && Store.bandwidthBps() > 0) return;
   try {
