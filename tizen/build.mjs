@@ -10,7 +10,7 @@ const options = {
   sourcemap: false,
   minify: false,
   legalComments: 'none',
-  define: { __EXF_LOG_URL__: JSON.stringify(process.env.EXF_LOG_URL ?? '') },
+  define: { __EXF_LOG_URL__: JSON.stringify(process.env.EXF_LOG_URL ?? ''), __EXF_SAMPLE_LIST__: process.env.EXF_SAMPLE_LIST === 'false' ? 'false' : 'true' },
 };
 if (watch) {
   const ctx = await esbuild.context(options);
