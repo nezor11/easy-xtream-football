@@ -5,6 +5,7 @@ import { M3uParser, javaHash } from './m3u';
 import { Store } from './storage';
 import { fetchText, loadXtreamChannels, login, shortEpg } from './xtream';
 import { indexGuides, normId } from './xmltv';
+import { ensureLogoMap, logoFor } from './logos';
 
 export { XtreamAuthError, HttpError } from './xtream';
 
@@ -63,8 +64,12 @@ export const Repository = {
   clearCache(): void { Store.clearCache(); m3uEpgIndex = null; m3uEpgBuiltKey = ''; m3uEpgBuiltAt = 0; nowCache.clear(); },
 
   /** Logos for bare channels, borrowed from folder siblings (the iptv-org logo database is not used here). */
-  enrichLogos(groups: ChannelGroup[]): ChannelGroup[] {
-    return groups.every((g) => !!g.iconUrl) ? groups : fillFromFolderSiblings(groups);
+  /** Fills in logos for channels that carry none, from the published logo map; then bare ones borrow from folder siblings. */
+  async enrichLogos(groups: ChannelGroup[]): Promise<ChannelGroup[]> {
+    if (groups.every((g) => !!g.iconUrl)) return groups;
+    const map = await ensureLogoMap();
+    const byName = map ? groups.map((g) => g.iconUrl ? g : (logoFor(g.displayName) ? { ...g, iconUrl: logoFor(g.displayName) } : g)) : groups;
+    return fillFromFolderSiblings(byName);
   },
 
   /** "Now / next" whatever the source; empty when no guide. */

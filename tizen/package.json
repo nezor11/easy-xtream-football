@@ -8,7 +8,7 @@
     "build": "npm run strings && node build.mjs",
     "watch": "node build.mjs --watch",
     "check": "tsc --noEmit",
-    "test": "node --test tests/"
+    "test": "node --test tests/*.test.mjs"
   },
   "devDependencies": {
     "esbuild": "0.24.2",

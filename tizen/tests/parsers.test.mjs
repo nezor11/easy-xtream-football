@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import * as esbuild from 'esbuild';
 
 const bundle = await esbuild.build({
-  stdin: { contents: `export * from './src/core/m3u'; export * from './src/core/grouping'; export * from './src/core/names';`, resolveDir: process.cwd(), loader: 'ts' },
+  stdin: { contents: `export * from './src/core/m3u'; export * from './src/core/grouping'; export * from './src/core/names'; export * as logos from './src/core/logos';`, resolveDir: process.cwd(), loader: 'ts' },
   bundle: true, format: 'esm', write: false, target: ['node22'],
 });
 const mod = await import('data:text/javascript;base64,' + Buffer.from(bundle.outputFiles[0].text).toString('base64'));
@@ -33,4 +33,22 @@ test('real playlist', { skip: !process.env.EXF_M3U }, () => {
   console.log(`live channels ${channels.length}, sports groups ${groups.length}, folders ${folders.length}, ${Date.now() - t0} ms`);
   console.log('football folders:', folders.filter((f) => f.isFootball).slice(0, 8).map((f) => `${f.name} (${f.channels.length})`).join(' · '));
   assert.ok(groups.length > 0);
+});
+
+test('logo matching candidates (port of LogoMatchingTest)', () => {
+  const c = mod.logos.candidates;
+  assert.equal(c('Canal Deporte 2')[0], 'canaldeporte2');
+  assert.ok(c('Canal Sport 1').includes('canalsports1'));
+  assert.ok(c('Canal Sports').includes('canalsport'));
+  assert.ok(c('Canal Deporte TV').includes('canaldeporte'));
+  const keys = c('Pais Canal Deporte Norte Alternate');
+  assert.ok(keys.indexOf('paiscanaldeportenorte') < keys.indexOf('canaldeportenortealternate'));
+  assert.ok(keys.includes('paiscanaldeporte'));
+  assert.ok(!keys.includes('canaldeportenorte'));
+  assert.ok(!c('Canal Deporte 2').includes('canal'));
+  assert.ok(!c('Canal Deporte 2').includes('deporte2'));
+  assert.ok(!c('Pais TV Sports').includes('tvsports'));
+  assert.ok(!c('Pais TV Sports').includes('tvsport'));
+  assert.ok(c('Pais Canal Deporte 2').includes('canaldeporte2'));
+  assert.equal(mod.logos.normalize('Rádio Ñandú 1!'), 'rádioñandú1');
 });

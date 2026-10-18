@@ -116,11 +116,13 @@ export function channelsScreen(): Screen {
     header.textContent = sourceTitle(); sub.textContent = '';
     try {
       groups = await Repository.loadLiveGroups(force);
-      groups = Repository.enrichLogos(groups);
       folders = foldIntoFolders(groups);
       sub.textContent = plural('channels_count', groups.length);
       renderRows(); focusFirst('.card');
       refreshLiveNow();
+      // Logos arrive later (the map may need a download): re-render in place, keeping the focus.
+      const loaded = groups;
+      Repository.enrichLogos(groups).then((enriched) => { if (groups !== loaded || enriched === loaded) return; groups = enriched; folders = foldIntoFolders(groups); renderRows(); refocus(); });
     } catch (e) {
       clear(rows);
       rows.appendChild(h('div', { class: 'center' }, h('div', { text: t('error_load_channels') }), h('div', { class: 'btn primary focusable', text: t('action_retry'), onclick: () => load(true) })));
