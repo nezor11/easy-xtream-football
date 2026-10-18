@@ -3,6 +3,7 @@ import { Profile } from '../core/model';
 import { Store } from '../core/storage';
 import { t } from '../core/i18n';
 import { h, clear } from './dom';
+import { platform } from '../platform';
 import { KEY, refocus } from './focus';
 import { Screen, push, pop } from './screens';
 import { addProfileScreen } from './addProfile';
@@ -49,7 +50,7 @@ let backArmedAt = 0;
 export function exitApp(): void {
   // Two quick Backs exit, like the Android app.
   const now = Date.now();
-  if (now - backArmedAt < 2500) { try { (window as any).tizen.application.getCurrentApplication().exit(); } catch (e) { /* desktop */ } return; }
+  if (now - backArmedAt < 2500) { platform.exitApp(); return; }
   backArmedAt = now;
   toast(t('press_back_to_exit'));
 }

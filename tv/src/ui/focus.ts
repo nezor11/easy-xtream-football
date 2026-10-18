@@ -2,11 +2,10 @@
  * Remote-control focus for a TV page: spatial navigation between `.focusable` elements inside the
  * active container (nearest element in the pressed direction), OK → click, long OK → `longpress` event.
  */
-export const KEY = {
-  LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, ENTER: 13, BACK: 10009, EXIT: 10182,
-  PLAY_PAUSE: 10252, PLAY: 415, PAUSE: 19, STOP: 413, CH_UP: 427, CH_DOWN: 428, RED: 403, GREEN: 404, YELLOW: 405, BLUE: 406,
-  IME_DONE: 65376, IME_CANCEL: 65385, INFO: 457,
-};
+import { platform } from '../platform';
+
+/** Arrows, OK and digits are universal; the rest come from the platform's key map. */
+export const KEY = { LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, ENTER: 13, ...platform.keys };
 
 let root: HTMLElement | null = null;
 let focused: HTMLElement | null = null;
@@ -141,5 +140,7 @@ export function installKeyboard(): void {
       if (!wasLong && focused) { if (focused.tagName === 'INPUT') (focused as HTMLInputElement).focus(); else focused.click(); }
     }
   });
-  try { (window as any).tizen.tvinputdevice.registerKeyBatch(['ChannelUp', 'ChannelDown', 'MediaPlayPause', 'MediaPlay', 'MediaPause', 'MediaStop', 'ColorF0Red', 'ColorF1Green', 'ColorF2Yellow', 'ColorF3Blue', 'Info']); } catch (e) { /* not on a TV */ }
+  platform.registerKeys();
+  // A pointer (LG's Magic Remote, a mouse on a desktop) focuses what it hovers, so OK then acts on it.
+  document.addEventListener('mouseover', (ev) => { const target = ev.target as HTMLElement; const el = target && target.closest ? target.closest<HTMLElement>('.focusable') : null; if (el && el !== focused && (!root || root.contains(el))) setFocus(el, false); });
 }

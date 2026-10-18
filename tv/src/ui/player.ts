@@ -1,6 +1,7 @@
 /** Full-screen player: zapping, OK menu (quality / audio / subtitles / guide / info / coffee), channel info, radio view. */
 import { ChannelFolder, ChannelGroup, EpgProgram, QUALITY, QUALITY_TIERS, QualityName, availableQualities, variantAtOrBelow, variantFor } from '../core/model';
-import { Player, TrackInfo } from '../core/avplay';
+import { platform, TrackInfo } from '../platform';
+const Player = platform.player;
 import { Repository } from '../core/repository';
 import { Store } from '../core/storage';
 import { t } from '../core/i18n';
@@ -39,8 +40,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
 
   /** Highest tier worth decoding on this panel: 4K only on an UHD panel, else FHD. */
   function panelCap(): number {
-    try { if ((window as any).webapis.productinfo.isUdPanelSupported()) return QUALITY.UHD_4K.rank; } catch (e) { /* not a TV */ }
-    return QUALITY.FHD.rank;
+    return platform.isUdPanel() ? QUALITY.UHD_4K.rank : QUALITY.FHD.rank;
   }
   function pickVariant(g: ChannelGroup) {
     if (quality) { const v = variantFor(g, quality) || variantAtOrBelow(g, quality); currentQuality = v.quality; return v; }

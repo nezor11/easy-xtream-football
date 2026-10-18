@@ -1,0 +1,14 @@
+{
+  "id": "es.nezor.easyxtreamfootball",
+  "version": "0.1.0",
+  "vendor": "Nezor",
+  "type": "web",
+  "main": "index.html",
+  "title": "Easy Xtream Football",
+  "icon": "icon80.png",
+  "largeIcon": "icon130.png",
+  "bgColor": "#0a0e12",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true,
+  "supportTouchMode": "none"
+}

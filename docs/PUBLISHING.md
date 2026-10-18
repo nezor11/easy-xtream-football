@@ -793,8 +793,8 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
-> La carpeta `tizen/` (app para Samsung TV, mezclada el 2026-10-18) y `docs/logos/` no entran en el APK:
-> no afectan a Play ni a Amazon. Ver `tizen/README.md`.
+> La carpeta `tv/` (app web para Samsung y LG, mezclada el 2026-10-18) y `docs/logos/` no entran en el APK:
+> no afectan a Play ni a Amazon. Ver `tv/README.md`.
 - ✅ **2026-10-14 · recordatorio del café discreto en móvil apaisado** (merge `9586c87`): en apaisado la
   tarjeta pasa a ser pequeña y flota en la esquina inferior derecha como en la tele (taza de 40 dp, una
   línea); en vertical sigue igual; la ficha de la radio del centro (logo, nombre, "Solo audio") es más
