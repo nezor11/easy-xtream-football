@@ -1,5 +1,5 @@
 /** Full-screen player: zapping, OK menu (quality / audio / subtitles / guide / info / coffee), channel info, radio view. */
-import { ChannelFolder, ChannelGroup, EpgProgram, QUALITY, QUALITY_TIERS, QualityName, availableQualities, bestVariant, variantAtOrBelow, variantFor } from '../core/model';
+import { ChannelFolder, ChannelGroup, EpgProgram, QUALITY, QUALITY_TIERS, QualityName, availableQualities, variantAtOrBelow, variantFor } from '../core/model';
 import { Player, TrackInfo } from '../core/avplay';
 import { Repository } from '../core/repository';
 import { Store } from '../core/storage';
@@ -37,22 +37,48 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
   function channels(): ChannelGroup[] { return (folders[fi] && folders[fi].channels) || []; }
   function current(): ChannelGroup | null { return channels()[ci] || null; }
 
+  /** Highest tier worth decoding on this panel: 4K only on an UHD panel, else FHD. */
+  function panelCap(): number {
+    try { if ((window as any).webapis.productinfo.isUdPanelSupported()) return QUALITY.UHD_4K.rank; } catch (e) { /* not a TV */ }
+    return QUALITY.FHD.rank;
+  }
   function pickVariant(g: ChannelGroup) {
     if (quality) { const v = variantFor(g, quality) || variantAtOrBelow(g, quality); currentQuality = v.quality; return v; }
-    const v = bestVariant(g); currentQuality = v.quality; return v;
+    // Auto (port of PlayerViewModel.variantForEmission): cap by the panel, then the best variant the measured
+    // network sustains with a 20 % margin; without a measurement, FHD or below.
+    const cap = panelCap();
+    const allowed = g.variants.filter((v) => QUALITY[v.quality].rank <= cap);
+    const pool = allowed.length ? allowed : g.variants;
+    const bandwidth = Store.bandwidthBps();
+    const v = bandwidth <= 0
+      ? (pool.find((x) => QUALITY[x.quality].rank <= QUALITY.FHD.rank) || pool[pool.length - 1])
+      : (pool.find((x) => QUALITY[x.quality].typicalBitrateBps <= bandwidth * 0.8) || pool[pool.length - 1]);
+    currentQuality = v.quality; return v;
+  }
+  // Buffering stalls: three within a minute on an Auto pick means the network is slower than measured.
+  let stalls: number[] = [];
+  function onStall(): void {
+    const now = Date.now(); stalls = stalls.filter((at) => now - at < 60000); stalls.push(now);
+    if (quality || stalls.length < 3 || !group) return;
+    const lower = group.variants.find((v) => QUALITY[v.quality].rank < QUALITY[currentQuality].rank);
+    if (!lower) return;
+    const bits = QUALITY[currentQuality].typicalBitrateBps;
+    Store.setBandwidthBps(Math.min(Store.bandwidthBps() || bits, bits) * 0.8);
+    console.log('stepping down after stalls, bandwidth now', Store.bandwidthBps());
+    stalls = []; play();
   }
 
   function play(): void {
     group = current();
     if (!group) { showMsg(t('player_no_channel'), true); return; }
     const variant = pickVariant(group);
-    paused = false; tracks = []; audioIndex = -1; subtitleIndex = -1; epg = [];
+    paused = false; tracks = []; audioIndex = -1; subtitleIndex = -1; epg = []; stalls = [];
     renderInfo(); showMsg('', false);
     radio.classList.toggle('hidden', !group.isRadio);
     if (group.isRadio) renderRadio();
     Player.open(variant.channel.streamUrl, {
       onReady: () => { skipCount = 0; showMsg('', false); tracks = Player.tracks(); if (menuOpen) renderMenu(); renderInfo(); if (group) Store.pushRecentChannel(group.key); },
-      onBuffering: (b) => { if (b) showMsg(t('app_loading'), false); else showMsg('', false); },
+      onBuffering: (b) => { if (b) { showMsg(t('app_loading'), false); onStall(); } else showMsg('', false); },
       onError: (e) => onPlayError(e),
       onEnded: () => onPlayError('ended'),
     });

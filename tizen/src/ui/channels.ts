@@ -5,7 +5,8 @@ import { Repository } from '../core/repository';
 import { Store } from '../core/storage';
 import { t, plural } from '../core/i18n';
 import { h, clear, icon } from './dom';
-import { KEY, refocus, focusFirst } from './focus';
+import { confirmDialog } from './dialog';
+import { KEY, refocus, focusFirst, setFocus } from './focus';
 import { Screen, push, pop } from './screens';
 import { playerScreen } from './player';
 import { toast } from './profiles';
@@ -15,6 +16,7 @@ export function channelsScreen(): Screen {
   let groups: ChannelGroup[] = [];
   let opened: ChannelFolder | null = null;
   let filtersOpen = false;
+  let reorderKey: string | null = null; // favorite being moved with ◀ ▶
   let query = '';
   let liveNow: Array<{ group: ChannelGroup; title: string }> = [];
   let liveNowToken = 0;
@@ -46,7 +48,7 @@ export function channelsScreen(): Screen {
     const geo = group ? !!group.geoBlocked : !!folder!.geoBlocked;
     const country = group ? group.country : folder!.country;
     const fav = group ? Store.favoriteChannelKeys().includes(group.key) : Store.favoriteFolders().includes(folder!.name);
-    const c = h('div', { class: 'card focusable', onclick },
+    const c = h('div', { class: 'card focusable' + (group && group.key === reorderKey ? ' reorder' : ''), 'data-key': group ? group.key : '', onclick },
       icon ? h('img', { class: 'logo', src: icon, onerror: (e: Event) => { const img = e.target as HTMLElement; img.replaceWith(h('div', { class: 'monogram', text: name.slice(0, 2).toUpperCase() })); } }) : h('div', { class: 'monogram', text: name.slice(0, 2).toUpperCase() }),
       h('div', { class: 'name', text: name }),
       folder && !isSingle(folder) ? h('div', { class: 'sub', text: plural('channels_count', folder.channels.length) }) : (group ? h('div', { class: 'sub', text: qualityLabel(group) }) : null),
@@ -95,7 +97,12 @@ export function channelsScreen(): Screen {
     if (!needle) {
       if (liveNow.length) rows.appendChild(row(t('now_live'), liveNow.map((x, i) => card(x.group, null, () => playList(liveNow.map((y) => y.group), i, false)))));
       const favs = Store.favoriteChannelKeys().map(findGroup).filter((g): g is ChannelGroup => !!g);
-      if (favs.length) rows.appendChild(row(t('section_favorite_channels'), favs.map((g, i) => card(g, null, () => playList(favs, i, true), () => toggleFavChannel(g)))));
+      if (favs.length) {
+        const favRow = row(t('section_favorite_channels'), favs.map((g, i) => card(g, null, () => playList(favs, i, true), () => favoriteMenu(g))));
+        const pos = reorderKey ? favs.findIndex((g) => g.key === reorderKey) : -1;
+        if (pos >= 0) favRow.querySelector('h2')!.appendChild(h('span', { style: { fontSize: '18px', marginLeft: '20px', color: '#ffd54f' }, text: t('reorder_a11y_position', pos + 1, favs.length) + ' · ◀ ▶ · OK' }));
+        rows.appendChild(favRow);
+      }
       const recents = Store.recentChannelKeys().map(findGroup).filter((g): g is ChannelGroup => !!g);
       if (recents.length) rows.appendChild(row(t('section_recent'), recents.map((g, i) => card(g, null, () => playList(recents, i, false), () => toggleFavChannel(g)))));
     }
@@ -104,6 +111,21 @@ export function channelsScreen(): Screen {
     if (other.length) rows.appendChild(row(t('section_more_sports'), other.map(folderCard)));
     if (!visible.length) rows.appendChild(h('div', { class: 'center' }, h('div', { text: needle ? t('no_results') : t('no_sports_channels') })));
   }
+
+  /** Long OK on a favorite: move it (then ◀ ▶ keep moving until OK or Back) or drop it. */
+  function favoriteMenu(g: ChannelGroup): void {
+    confirmDialog(g.displayName, [
+      { label: t('action_move_left'), onPick: () => moveFavorite(g.key, -1) },
+      { label: t('action_move_right'), onPick: () => moveFavorite(g.key, 1) },
+      { label: t('action_remove_favorite'), onPick: () => toggleFavChannel(g), danger: true },
+    ]);
+  }
+  function moveFavorite(key: string, delta: number): void {
+    reorderKey = key; Store.moveFavoriteChannel(key, delta); renderRows();
+    const card = rows.querySelector<HTMLElement>('.card[data-key="' + key.replace(/"/g, '\\"') + '"]');
+    if (card) setFocus(card); else refocus();
+  }
+  function endReorder(): void { if (!reorderKey) return; const key = reorderKey; reorderKey = null; renderRows(); const card = rows.querySelector<HTMLElement>('.card[data-key="' + key.replace(/"/g, '\\"') + '"]'); if (card) setFocus(card); else refocus(); }
 
   function toggleFavChannel(g: ChannelGroup): void {
     const added = Store.toggleFavoriteChannel(g.key);
@@ -151,6 +173,11 @@ export function channelsScreen(): Screen {
     onHide: () => { unsubscribe(); },
     initialFocus: '.card',
     onKey: (code) => {
+      if (reorderKey) {
+        if (code === KEY.LEFT || code === KEY.RIGHT) { moveFavorite(reorderKey, code === KEY.LEFT ? -1 : 1); return true; }
+        if (code === KEY.ENTER || code === KEY.BACK) { endReorder(); return true; }
+        if (code === KEY.UP || code === KEY.DOWN) endReorder();
+      }
       if (code === KEY.BACK) {
         if (document.activeElement && document.activeElement.tagName === 'INPUT') { (document.activeElement as HTMLElement).blur(); return true; }
         if (opened) { opened = null; renderRows(); focusFirst('.card'); return true; }

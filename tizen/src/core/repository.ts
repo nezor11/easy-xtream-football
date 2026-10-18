@@ -3,7 +3,7 @@ import { buildGroups, fillFromFolderSiblings } from './grouping';
 import { ChannelGroup, EpgProgram, LiveChannel, Profile, XtreamProfile, bestVariant } from './model';
 import { M3uParser, javaHash } from './m3u';
 import { Store } from './storage';
-import { fetchText, loadXtreamChannels, login, shortEpg } from './xtream';
+import { fetchText, lastDownload, loadXtreamChannels, login, shortEpg } from './xtream';
 import { indexGuides, normId } from './xmltv';
 import { ensureLogoMap, logoFor } from './logos';
 
@@ -17,6 +17,16 @@ const NOW_TTL_MS = 10 * 60 * 1000;
 const NOW_EMPTY_TTL_MS = 60 * 1000;
 
 export class M3uFormatError extends Error { constructor(public head: string) { super('Not an M3U playlist'); } }
+
+const BANDWIDTH_PROBE_MIN_BYTES = 1_000_000;
+/** A playlist download of 1 MB+ from the provider is a fair bandwidth probe (AVPlay exposes no byte counter). */
+function recordBandwidth(): void {
+  if (lastDownload.bytes >= BANDWIDTH_PROBE_MIN_BYTES && lastDownload.ms > 0) {
+    const bps = lastDownload.bytes * 8 * 1000 / lastDownload.ms;
+    Store.setBandwidthBps(bps);
+    console.log('bandwidth probe', Math.round(lastDownload.bytes / 1024) + ' KB in ' + lastDownload.ms + ' ms = ' + (bps / 1e6).toFixed(1) + ' Mbps');
+  }
+}
 
 let binding: Binding | null = null;
 let activeProfileName: string | null = null;
@@ -99,6 +109,7 @@ async function loadM3uGroups(url: string, forceRefresh: boolean): Promise<Channe
     if (cached) { bindEpgSource(url, cached.epgUrls, cached.groups); return cached.groups; }
   }
   const content = await fetchText(url, 120000);
+  recordBandwidth();
   const groups = buildGroups(M3uParser.parse(content));
   const epgUrls = M3uParser.epgUrls(content);
   Store.cacheGroups(key, groups, epgUrls);
@@ -132,6 +143,7 @@ async function loadXtreamGroups(profile: XtreamProfile, forceRefresh: boolean): 
   const key = 'xt_' + javaHash(profile.serverUrl + '|' + profile.username);
   if (!forceRefresh) { const cached = Store.cachedGroups(key, CACHE_TTL_MS); if (cached) return cached.groups; }
   const groups = buildGroups(await loadXtreamChannels(profile));
+  recordBandwidth();
   Store.cacheGroups(key, groups, []);
   return groups;
 }

@@ -21,13 +21,19 @@ export function liveUrl(profile: XtreamProfile, streamId: number, extension = 't
   return `${base}/live/${profile.username}/${profile.password}/${streamId}.${extension}`;
 }
 
+/** Size and duration of the last completed download, so a big playlist doubles as a bandwidth probe. */
+export const lastDownload = { bytes: 0, ms: 0 };
+
 export async function fetchText(url: string, timeoutMs = 60000): Promise<string> {
   const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
   const timer = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
+  const started = Date.now();
   try {
     const res = await fetch(url.trim(), { signal: ctrl ? ctrl.signal : undefined });
     if (!res.ok) throw new HttpError(res.status);
-    return await res.text();
+    const text = await res.text();
+    lastDownload.bytes = text.length; lastDownload.ms = Date.now() - started;
+    return text;
   } finally { if (timer) clearTimeout(timer); }
 }
 

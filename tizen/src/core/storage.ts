@@ -5,7 +5,7 @@ const KEY = {
   profiles: 'exf.profiles', lastProfile: 'exf.last_profile', quality: 'exf.quality_mode',
   recents: 'exf.recent_channel_keys', favorites: 'exf.favorite_channel_keys', favoriteFolders: 'exf.favorite_folders',
   hints: 'exf.player_hints_shown', infoVisible: 'exf.channel_info_visible', coffeeDismissed: 'exf.coffee_reminder_dismissed',
-  language: 'exf.language', cache: 'exf.cache.',
+  language: 'exf.language', cache: 'exf.cache.', bandwidth: 'exf.bandwidth_bps',
 };
 const MAX_RECENT = 10;
 const CACHE_VERSION = 19; // keep in step with the Android app's ContentRepository.CACHE_VERSION
@@ -39,6 +39,9 @@ export const Store = {
   setLastProfileId(id: number): void { write(KEY.lastProfile, id); },
 
   // --- settings ---
+  /** Last measured network speed (bits per second), 0 when never measured. Used by the Auto quality. */
+  bandwidthBps(): number { return read<number>(KEY.bandwidth, 0); },
+  setBandwidthBps(bps: number): void { write(KEY.bandwidth, Math.max(0, Math.round(bps))); },
   qualityMode(): QualityMode { return read<QualityMode>(KEY.quality, 'AUTO'); },
   setQualityMode(m: QualityMode): void { write(KEY.quality, m); notify(); },
   channelInfoVisible(): boolean { return read<boolean>(KEY.infoVisible, true); },

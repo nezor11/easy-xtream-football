@@ -25,6 +25,7 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .chip.selected.focus { border-color: #fff; }
 .card { position: relative; flex: 0 0 auto; width: 272px; height: 190px; border-radius: 18px; background: var(--surface); border: 4px solid transparent; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 .card.focus { border-color: var(--primary); background: var(--surface2); transform: scale(1.04); }
+.card.reorder, .card.reorder.focus { border-color: #ffd54f; }
 .card .logo { width: 120px; height: 90px; object-fit: contain; }
 .card .monogram { width: 90px; height: 90px; border-radius: 45px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 600; color: var(--primary); }
 .card .name { font-size: 22px; text-align: center; width: 236px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -74,7 +75,7 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .radio .box img { width: 128px; height: 128px; object-fit: contain; }
 .radio .title { font-size: 36px; }
 .radio .sub { font-size: 24px; color: var(--fg2); }
-.qr { width: 220px; height: 220px; background: #fff; border-radius: 8px; padding: 8px; }
+.qr { flex: 0 0 auto; width: 220px; height: 220px; background: #fff; border-radius: 8px; padding: 8px; }
 .settings .item { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-radius: 14px; background: var(--surface); border: 3px solid transparent; margin-top: 12px; font-size: 26px; }
 .settings .item.focus { border-color: var(--primary); background: var(--surface2); }
 .settings .item .value { color: var(--fg2); }
