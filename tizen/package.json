@@ -1,0 +1,21 @@
+{
+  "name": "easy-xtream-football-tizen",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Easy Xtream Football for Samsung TV (Tizen)",
+  "scripts": {
+    "strings": "python3 -I scripts/strings.py ../app/src/main/res www/strings.json",
+    "build": "npm run strings && node build.mjs",
+    "watch": "node build.mjs --watch",
+    "check": "tsc --noEmit",
+    "test": "node --test tests/"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.2",
+    "typescript": "5.7.3"
+  },
+  "dependencies": {
+    "@types/pako": "^2.0.3",
+    "pako": "^2.1.0"
+  }
+}
