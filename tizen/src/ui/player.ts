@@ -52,7 +52,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
     if (group.isRadio) renderRadio();
     Player.open(variant.channel.streamUrl, {
       onReady: () => { skipCount = 0; showMsg('', false); tracks = Player.tracks(); if (menuOpen) renderMenu(); renderInfo(); if (group) Store.pushRecentChannel(group.key); },
-      onBuffering: (b) => { if (b) showMsg('⟳', false); else showMsg('', false); },
+      onBuffering: (b) => { if (b) showMsg(t('app_loading'), false); else showMsg('', false); },
       onError: (e) => onPlayError(e),
       onEnded: () => onPlayError('ended'),
     });

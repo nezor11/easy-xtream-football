@@ -4,7 +4,7 @@ import { foldIntoFolders } from '../core/grouping';
 import { Repository } from '../core/repository';
 import { Store } from '../core/storage';
 import { t, plural } from '../core/i18n';
-import { h, clear } from './dom';
+import { h, clear, icon } from './dom';
 import { KEY, refocus, focusFirst } from './focus';
 import { Screen, push, pop } from './screens';
 import { playerScreen } from './player';
@@ -23,7 +23,7 @@ export function channelsScreen(): Screen {
   const filters = h('div', { class: 'hidden gap12', style: { display: 'flex', marginTop: '18px' } });
   const rows = h('div', { class: 'rows' });
   const topbar = h('div', { class: 'topbar' },
-    h('div', { class: 'btn icon focusable', text: '⚲', title: t('action_filters'), onclick: () => { filtersOpen = !filtersOpen; filters.classList.toggle('hidden', !filtersOpen); renderRows(); if (filtersOpen) focusFirst('.chip'); } }));
+    h('div', { class: 'btn icon focusable', title: t('action_filters'), onclick: () => { filtersOpen = !filtersOpen; filters.classList.toggle('hidden', !filtersOpen); renderRows(); if (filtersOpen) focusFirst('.chip'); } }, icon('search')));
   const el = h('div', { class: 'screen' }, header, sub, topbar, filters, rows);
 
   function sourceTitle(): string { const n = Repository.activeProfileName(); return n ? t('live_sports_of', n) : t('live_sports'); }
@@ -35,9 +35,8 @@ export function channelsScreen(): Screen {
       filters.appendChild(h('div', { class: 'chip focusable' + (m === mode ? ' selected' : ''), text: m === 'AUTO' ? t('quality_auto') : m.replace('UHD_4K', '4K'), onclick: () => { Store.setQualityMode(m); renderFilters(); renderRows(); refocus(); } }));
     }
     const search = h('input', { type: 'text', class: 'chip focusable', placeholder: t('search_field_label'), value: query, style: { width: '320px', background: '#141b22', color: '#e6eaee' }, oninput: (e: Event) => { query = (e.target as HTMLInputElement).value; renderRows(); } }) as HTMLInputElement;
-    search.addEventListener('keydown', (e) => { if (e.keyCode === KEY.IME_DONE || e.keyCode === KEY.ENTER) search.blur(); });
-    filters.appendChild(search);
-    filters.appendChild(h('div', { class: 'chip focusable', text: '↻ ' + t('action_reload'), onclick: () => load(true) }));
+        filters.appendChild(search);
+    filters.appendChild(h('div', { class: 'chip focusable', onclick: () => load(true) }, icon('reload'), ' ' + t('action_reload').replace(/^↻\s*/, '')));
   }
 
   function card(group: ChannelGroup | null, folder: ChannelFolder | null, onclick: () => void, onlong?: () => void): HTMLElement {
@@ -78,7 +77,7 @@ export function channelsScreen(): Screen {
   }
 
   function renderRows(): void {
-    clear(rows); rows.style.transform = ''; rows.dataset.ty = '0';
+    clear(rows); rows.scrollTop = 0;
     rows.style.top = filtersOpen ? '230px' : '150px';
     if (opened) {
       rows.appendChild(h('div', { class: 'row' }, h('h2', null, opened.name, h('span', { class: 'count', text: String(opened.channels.length) }), h('span', { style: { fontSize: '18px', marginLeft: '20px' }, text: t('folder_back_hint') })),

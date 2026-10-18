@@ -31,31 +31,26 @@ export function setFocus(el: HTMLElement | null, scroll = true): void {
   focused = el;
   if (el) {
     el.classList.add('focus');
-    if (el.tagName === 'INPUT') (el as HTMLInputElement).focus(); else if (document.activeElement && document.activeElement !== document.body) (document.activeElement as HTMLElement).blur();
+    // Text fields get DOM focus (and the TV keyboard) only on OK, see installKeyboard.
+    if (document.activeElement && document.activeElement !== document.body && document.activeElement !== el) (document.activeElement as HTMLElement).blur();
     if (scroll) keepVisible(el);
     el.dispatchEvent(new CustomEvent('focused', { bubbles: true }));
   }
 }
 
-/** Scrolls horizontal card rows and vertical lists so the focused element stays in view (translate-based). */
+/** Scrolls horizontal card rows and vertical lists (overflow: hidden) so the focused element stays in view. */
 function keepVisible(el: HTMLElement): void {
   const row = el.closest<HTMLElement>('.cards');
   if (row) {
     const r = el.getBoundingClientRect(), c = row.getBoundingClientRect();
-    const cur = parseFloat(row.dataset.tx || '0');
-    let tx = cur;
-    if (r.right > c.right - 20) tx = cur - (r.right - c.right + 40);
-    if (r.left < c.left + 20) tx = Math.min(0, cur + (c.left - r.left + 40));
-    if (tx !== cur) { row.dataset.tx = String(tx); row.style.transform = `translateX(${tx}px)`; }
+    if (r.right > c.right - 20) row.scrollLeft += r.right - c.right + 40;
+    else if (r.left < c.left + 20) row.scrollLeft -= c.left - r.left + 40;
   }
   const col = el.closest<HTMLElement>('.rows, .options, .list');
   if (col) {
     const r = el.getBoundingClientRect(), c = col.getBoundingClientRect();
-    const cur = parseFloat(col.dataset.ty || '0');
-    let ty = cur;
-    if (r.bottom > c.bottom - 10) ty = cur - (r.bottom - c.bottom + 30);
-    if (r.top < c.top + 10) ty = Math.min(0, cur + (c.top - r.top + 30));
-    if (ty !== cur) { col.dataset.ty = String(ty); col.style.transform = `translateY(${ty}px)`; }
+    if (r.bottom > c.bottom - 10) col.scrollTop += r.bottom - c.bottom + 30;
+    else if (r.top < c.top + 10) col.scrollTop -= c.top - r.top + 30;
   }
 }
 
@@ -103,8 +98,11 @@ export function installKeyboard(): void {
   document.addEventListener('keydown', (ev) => {
     const code = ev.keyCode;
     const inInput = document.activeElement && document.activeElement.tagName === 'INPUT';
-    if (keyHandler && keyHandler(code, ev)) { ev.preventDefault(); return; }
+    if (inInput && (code === KEY.ENTER || code === KEY.IME_DONE || code === KEY.IME_CANCEL || code === KEY.BACK)) {
+      (document.activeElement as HTMLElement).blur(); ev.preventDefault(); return; // leave edit mode, keep the logical focus
+    }
     if (inInput && (code === KEY.LEFT || code === KEY.RIGHT)) return; // caret movement inside the field
+    if (keyHandler && keyHandler(code, ev)) { ev.preventDefault(); return; }
     if (code === KEY.LEFT || code === KEY.RIGHT || code === KEY.UP || code === KEY.DOWN) {
       if (inInput && (code === KEY.UP || code === KEY.DOWN)) (document.activeElement as HTMLElement).blur();
       if (move(code)) ev.preventDefault();
@@ -118,7 +116,7 @@ export function installKeyboard(): void {
     if (ev.keyCode === KEY.ENTER && okDownAt) {
       if (okTimer) clearTimeout(okTimer);
       const wasLong = okLong; okDownAt = 0; okLong = false;
-      if (!wasLong && focused) focused.click();
+      if (!wasLong && focused) { if (focused.tagName === 'INPUT') (focused as HTMLInputElement).focus(); else focused.click(); }
     }
   });
   try { (window as any).tizen.tvinputdevice.registerKeyBatch(['ChannelUp', 'ChannelDown', 'MediaPlayPause', 'MediaPlay', 'MediaPause', 'MediaStop', 'ColorF0Red', 'ColorF1Green', 'ColorF2Yellow', 'ColorF3Blue', 'Info']); } catch (e) { /* not on a TV */ }
