@@ -10,8 +10,10 @@ compilación). Reproduce con AVPlay, el reproductor nativo de Samsung. Sin factu
 - `src/ui/`: motor de foco para el mando (`focus.ts`), pila de pantallas, perfiles, añadir perfil, canales,
   reproductor, ajustes.
 - `www/`: `config.xml`, `index.html`, `style.css`, icono y QR; `app.js` y `strings.json` se generan.
-- `scripts/strings.py`: strings.xml → strings.json. `tests/`: pruebas de los parsers (`node --test tests/`,
-  con `EXF_M3U=<lista>` prueba una lista real).
+- `scripts/strings.py`: strings.xml → strings.json. `tests/`: pruebas de los parsers (`npm test`,
+  con `EXF_M3U=<lista>` prueba una lista real). `scripts/logo-coverage.mjs <lista>`: cuántos canales de una
+  lista reciben logo del mapa `docs/logos/sports.json` (lo genera `scripts/build-logo-map.py` en la raíz y
+  lo refresca cada semana la acción `logo-map.yml`; la app lo descarga y lo cachea 7 días en localStorage).
 
 ## Compilar, probar e instalar
 ```
@@ -28,3 +30,13 @@ $T/tools/sdb -s <ip-tele>:26101 shell 0 was_execute EXFOOTBALL.EasyXtreamFootbal
 ```
 El fondo de la página es transparente a propósito: AVPlay pinta el vídeo en un plano por detrás de la página.
 Las teclas de color, canal ±, reproducción e Info se registran con `tizen.tvinputdevice`.
+
+## Depurar en la tele
+- Tizen 5.5 es Chrome 69: sin `inset`, sin `gap` en flexbox, sin `trimStart`. El CSS usa márgenes entre hermanos.
+- `sdb shell 0 debug EXFOOTBALL.EasyXtreamFootball` lanza la app con el inspector y devuelve un puerto;
+  `sdb forward tcp:P tcp:P` y `http://127.0.0.1:P/json` dan el websocket del DevTools Protocol
+  (`Runtime.evaluate` funciona; `Page.captureScreenshot` se cuelga). Las teclas del mando se simulan
+  despachando `KeyboardEvent` con el `keyCode` de Tizen (Atrás 10009).
+- `console.log` no llega a `sdb dlog`: compilando con `EXF_LOG_URL=http://<pc>:8787/log npm run build` la
+  app reenvía la consola y los errores por POST a ese servidor.
+- Los campos de texto solo entran en edición (teclado de Samsung) al pulsar OK; Atrás o Listo salen.
