@@ -114,8 +114,16 @@ Release builds are signed when a gitignored `keystore.properties` is present (`s
 > minSdk 24 (Android 7.0), targetSdk 36. Very old Fire TV devices on Fire OS 5 (Android 5.1) are
 > not supported.
 
+## Samsung TV (Tizen)
+
+A port for Samsung Smart TVs lives in [`tizen/`](tizen/README.md): the same channel grouping, 24
+languages, favorites and player (AVPlay), as a TypeScript web app for Tizen 5.5+. Tested on a Smart
+Monitor M7. Not yet on the Samsung store. Channels without a logo get one from the
+[logo map](docs/logos/sports.json) built weekly from the iptv-org database (URLs only).
+
 ## Roadmap
 
+- [ ] **Samsung TV app on the Samsung Apps store** (code in `tizen/`, working on a real TV).
 - [ ] **Catch-up / timeshift** (`has_archive`).
 - [ ] **Browse playlists by country and sport** from the app, to add them in one step.
 - [ ] **Optional Chromecast** (decoupled to avoid depending on Google Play Services on Fire TV).
