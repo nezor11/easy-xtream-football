@@ -2,6 +2,7 @@
 import strings from '../www/strings.json';
 import { initStrings } from './core/i18n';
 import { installRemoteLog } from './core/rlog';
+import { probeBandwidthIfStale } from './core/bandwidth';
 import { Store } from './core/storage';
 import { Repository } from './core/repository';
 import { Profile } from './core/model';
@@ -35,3 +36,4 @@ initStrings(strings as any);
 installKeyboard();
 (window as any).__exfRerender = home;
 home();
+probeBandwidthIfStale();

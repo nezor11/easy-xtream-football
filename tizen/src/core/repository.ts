@@ -6,6 +6,7 @@ import { Store } from './storage';
 import { fetchText, lastDownload, loadXtreamChannels, login, shortEpg } from './xtream';
 import { indexGuides, normId } from './xmltv';
 import { ensureLogoMap, logoFor } from './logos';
+import { recordBandwidth as recordProbe } from './bandwidth';
 
 export { XtreamAuthError, HttpError } from './xtream';
 
@@ -19,13 +20,9 @@ const NOW_EMPTY_TTL_MS = 60 * 1000;
 export class M3uFormatError extends Error { constructor(public head: string) { super('Not an M3U playlist'); } }
 
 const BANDWIDTH_PROBE_MIN_BYTES = 1_000_000;
-/** A playlist download of 1 MB+ from the provider is a fair bandwidth probe (AVPlay exposes no byte counter). */
+/** A playlist download of 1 MB+ doubles as a bandwidth probe (a lower bound: dynamic playlists are server-paced). */
 function recordBandwidth(): void {
-  if (lastDownload.bytes >= BANDWIDTH_PROBE_MIN_BYTES && lastDownload.ms > 0) {
-    const bps = lastDownload.bytes * 8 * 1000 / lastDownload.ms;
-    Store.setBandwidthBps(bps);
-    console.log('bandwidth probe', Math.round(lastDownload.bytes / 1024) + ' KB in ' + lastDownload.ms + ' ms = ' + (bps / 1e6).toFixed(1) + ' Mbps');
-  }
+  if (lastDownload.bytes >= BANDWIDTH_PROBE_MIN_BYTES && lastDownload.ms > 0) recordProbe(lastDownload.bytes * 8 * 1000 / lastDownload.ms, 'playlist ' + Math.round(lastDownload.bytes / 1024) + ' KB');
 }
 
 let binding: Binding | null = null;
