@@ -1,0 +1,30 @@
+name: Refresh logo map
+
+# Rebuilds docs/logos/sports.json from the iptv-org database once a week (the apps download it
+# to give logos to channels whose playlist has none). Commits only when the map changed.
+on:
+  schedule:
+    - cron: '20 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build the map
+        run: python3 -I scripts/build-logo-map.py docs/logos/sports.json
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- docs/logos/sports.json; then echo "no change"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/logos/sports.json
+          git commit -m "chore(logos): mapa de logos actualizado desde iptv-org"
+          git push
