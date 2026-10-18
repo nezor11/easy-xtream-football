@@ -10,5 +10,6 @@
   "bgColor": "#0a0e12",
   "resolution": "1920x1080",
   "disableBackHistoryAPI": true,
-  "supportTouchMode": "none"
+  "supportTouchMode": "none",
+  "requiredACG": []
 }
