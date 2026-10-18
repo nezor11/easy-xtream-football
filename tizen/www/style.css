@@ -35,7 +35,8 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .row { margin-top: 28px; }
 .row h2 { display: flex; gap: 12px; align-items: baseline; }
 .row h2 .count { font-size: 20px; background: var(--surface2); padding: 2px 10px; border-radius: 12px; }
-.row .cards { display: flex; gap: 18px; margin-top: 14px; overflow: hidden; padding: 6px; }
+.cards { display: flex; gap: 18px; overflow: hidden; padding: 6px; }
+.row .cards { margin-top: 14px; }
 .rows { position: absolute; left: 72px; right: 72px; top: 150px; bottom: 60px; overflow: hidden; }
 .field { margin-top: 26px; }
 .field label { display: block; font-size: 22px; color: var(--fg2); margin-bottom: 8px; }
@@ -92,8 +93,8 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .btn > * + * { margin-left: 10px; }
 .card .name, .card .sub { margin-top: 10px; }
 .row h2 > * + * { margin-left: 12px; }
-.row .cards > * { margin-right: 18px; }
-.row .cards.wrap > * { margin-bottom: 18px; }
+.cards > * { margin-right: 18px; }
+.cards.wrap > * { margin-bottom: 18px; }
 .center > * + * { margin-top: 18px; }
 .osd-info .line > * + * { margin-left: 14px; }
 .osd-legend > * + * { margin-left: 10px; }

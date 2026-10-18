@@ -10,7 +10,7 @@ import { settingsScreen, languageScreen } from './settings';
 import { confirmDialog } from './dialog';
 
 export function profilesScreen(onOpen: (p: Profile) => void): Screen {
-  const grid = h('div', { class: 'cards', style: { flexWrap: 'wrap', marginTop: '40px', maxHeight: '700px' } });
+  const grid = h('div', { class: 'cards wrap', style: { flexWrap: 'wrap', marginTop: '40px', maxHeight: '700px' } });
   const el = h('div', { class: 'screen' },
     h('div', { class: 'brand' }, h('img', { class: 'logo', src: 'icon.png' }), h('div', null, h('h1', { text: t('app_name') }), h('div', { class: 'tagline', text: t('brand_tagline') }))),
     h('div', { class: 'topbar' },
