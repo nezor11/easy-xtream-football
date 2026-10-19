@@ -16,3 +16,13 @@ if (!String.prototype.padEnd) {
   };
 }
 export {};
+// ChildNode.replaceWith() arrived in Chrome 54; without it a failed logo never falls back to the monogram.
+if (typeof Element !== 'undefined' && !Element.prototype.replaceWith) {
+  Element.prototype.replaceWith = function (this: Element, ...nodes: Array<Node | string>): void {
+    const parent = this.parentNode;
+    if (!parent) return;
+    const frag = document.createDocumentFragment();
+    nodes.forEach((n) => frag.appendChild(typeof n === 'string' ? document.createTextNode(n) : n));
+    parent.replaceChild(frag, this);
+  };
+}
