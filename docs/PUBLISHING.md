@@ -826,8 +826,28 @@ capturas 1280x720, título y descripción en inglés, y dos documentos obligator
 = scroll de filas y listas, clic en el vídeo = menú), un solo Atrás en la pantalla de entrada sale de la app,
 símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDelivr + proxy de logos).
 
+**ALTA Y FORMULARIO HECHOS el 2026-10-20 (madrugada), consola guiada por Claude:**
+- Cuenta Seller Lounge creada con la cuenta LG (martinezortiz@gmail.com): región Europe & CIS, vendedor "Nezor",
+  nickname nezor26, correo de avisos activado. La pregunta de "App Transfer" (migrar apps de la Seller Lounge
+  antigua) se contesta Cancel.
+- App creada (Save as Draft) con ID `es.nezor.easyxtreamfootball`, plataforma webOS. Todos los pasos en verde:
+  File Upload (ipk 1.0.0, chipset All, plataforma "2018 and later" = SDK 4.0.0, 1920x1080, File Ver 1.0.0;
+  al subir el ipk preguntó por usar appinfo.json: decir NO, porque intenta usar el icono de 80 px y salta el
+  aviso "only 400x400"), Images (icono 400, color de tile #39D353, 6 capturas, fondo como splash y launcher),
+  Service Country Info ("Select Available Countries" = todos los países con tienda, incluida España; 21 idiomas de
+  la app, LG no tiene ca/eu/gl), Display Info (título + descripción EN de 1296 bytes), Service Info
+  (Entertainment > Sports, versión 1.0.0, General Audiences en los 193 países, Brasil "All" vía cuestionario,
+  sin contenido adulto, keywords, contacto web+correo, política de privacidad por URL, sin datos recogidos ni
+  compartidos), Feature Info (requisitos None, mando normal + Magic), Test Info (correo contact@nezor.es, pptx
+  del escenario UX, nota para el tester con las dos listas de prueba, sin cuenta/voucher, sin geo-block, sin
+  billing ni anuncios, player spec: HTTP progresivo + HLS, H.264/H.265, MP3/AAC/HE-AAC/AC3/EAC3), Self-check
+  list (se rellena ONLINE, versión 5.0 = nuestro xlsx: 39 Pass / 14 N/A copiados por script; el xlsx no se sube).
+- ⚠️ La "Note for Tester" NO se conserva al recargar la página (y sin ella Test Info no cuenta como completo y
+  SUBMIT queda deshabilitado): hay que escribirla y pulsar SUBMIT en la misma sesión. Los avisos "Successfully
+  Saved" son alert() nativos que bloquean la extensión de Chrome: los acepta el usuario.
+
 **Pendiente (en orden):**
-1. ⏳ El usuario crea la cuenta en seller.lgappstv.com y comprueba qué países ofrece (¿España sin partner?).
+1. ⏳ Pulsar SUBMIT en la Seller Lounge (lo hace el usuario) y anotar aquí fecha y estado.
 2. Última prueba en la LG real con la build de tienda 1.0.0 (`ares-install -d lg tv/dist/*.ipk`, con
    `OPENSSL_ENABLE_SHA1_SIGNATURES=1`), incluido el Atrás de salida.
 3. Bajar la versión vigente de la checklist y el escenario desde Seller Lounge al enviar (rechazan plantillas
