@@ -9,7 +9,8 @@
     "watch": "node build.mjs --watch",
     "check": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
-    "build:store": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs"
+    "build:store": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs",
+    "build:store:webos": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs --platform=webos && ares-package dist/webos -o dist"
   },
   "devDependencies": {
     "esbuild": "0.24.2",

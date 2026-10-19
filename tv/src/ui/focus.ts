@@ -143,4 +143,19 @@ export function installKeyboard(): void {
   platform.registerKeys();
   // A pointer (LG's Magic Remote, a mouse on a desktop) focuses what it hovers, so OK then acts on it.
   document.addEventListener('mouseover', (ev) => { const target = ev.target as HTMLElement; const el = target && target.closest ? target.closest<HTMLElement>('.focusable') : null; if (el && el !== focused && (!root || root.contains(el))) setFocus(el, false); });
+  // The Magic Remote wheel (or a mouse wheel) scrolls the list under the pointer: the containers are
+  // overflow:hidden, so the browser does nothing by itself. A card row scrolls sideways, the rest vertically.
+  document.addEventListener('wheel', (ev) => {
+    const target = ev.target as HTMLElement;
+    if (!target || !target.closest) return;
+    const row = target.closest<HTMLElement>('.cards:not(.wrap)');
+    const col = target.closest<HTMLElement>('.rows, .options, .list');
+    const delta = ev.deltaY || ev.deltaX;
+    if (!delta) return;
+    // Over a card row that overflows, the wheel pans that row; otherwise it scrolls the enclosing column.
+    if (row && row.scrollWidth > row.clientWidth + 4) row.scrollLeft += delta > 0 ? 300 : -300;
+    else if (col) col.scrollTop += delta > 0 ? 160 : -160;
+    else return;
+    ev.preventDefault();
+  });
 }

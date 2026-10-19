@@ -48,7 +48,9 @@ export function profilesScreen(onOpen: (p: Profile) => void): Screen {
 
 let backArmedAt = 0;
 export function exitApp(): void {
-  // Two quick Backs exit, like the Android app.
+  // Two quick Backs exit, like the Android app. On webOS the first Back leaves: LG's QA requires that Back on
+  // the entry page returns to where the app was launched from.
+  if (platform.name === 'webos') { platform.exitApp(); return; }
   const now = Date.now();
   if (now - backArmedAt < 2500) { platform.exitApp(); return; }
   backArmedAt = now;

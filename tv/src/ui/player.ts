@@ -259,6 +259,8 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
   };
   function togglePause(): void { paused = !paused; if (paused) { Player.pause(); showMsg(t('player_paused'), false); } else { Player.resume(); showMsg('', false); } }
 
+  // A pointer click on the picture (Magic Remote, mouse) = OK: opens the menu. Clicks inside the menu are its own.
+  el.addEventListener('click', (ev) => { const target = ev.target as HTMLElement; if (menuOpen || (target.closest && target.closest('.menu'))) return; openMenu(); });
   // Long OK on the player = favorite toggle (the focus root is the screen itself).
   el.addEventListener('longpress', () => { const g = group; if (!g) return; const added = Store.toggleFavoriteChannel(g.key); showMsg(added ? t('added_to_favorites') : t('removed_from_favorites'), false, 1800); });
 
