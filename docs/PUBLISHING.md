@@ -791,6 +791,40 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
     una versión nueva: *Add upcoming version* en la consola, subir el APK universal nuevo y reenviar.
 - Amazon **re-firma** el APK con su certificado: no afecta a nada (la app no verifica firmas ni usa licencias).
 
+## LG Content Store (webOS) — materiales PREPARADOS el 2026-10-19, pendiente de cuenta Seller Lounge
+
+> La app de TV vive en `tv/` (compartida con Samsung). Probada el 2026-10-19 en una LG 32LM637BPLA real
+> (webOS 4.9 = Chrome 53): vídeo MPEG-TS, radios, teclas, puntero. Ver `tv/README.md` y la memoria de Claude.
+
+**Lo que pide LG** (webostv.developer.lge.com/distribute/app-approval-process + plantillas oficiales
+`documents_for_app_qa.zip`): cuenta gratuita en seller.lgappstv.com con la cuenta LG (martinezortiz@gmail.com),
+.ipk SIN firmar (LG lo firma), icono cuadrado 400x400 opaco sin esquinas redondeadas, fondo 1920x1080, de 3 a 6
+capturas 1280x720, título y descripción en inglés, y dos documentos obligatorios: la lista de comprobación
+(xlsx, 53 casos + contenido) y el escenario de uso (ppt). QA en tres fases, de 3 semanas a 3 meses por vuelta.
+
+**Listo en el repo (`docs/store-assets/lg/`):**
+- `icon-400x400.png`, `background-1920x1080.jpg`, `screenshots/01..06` (1280x720, contenido de demo neutro:
+  Blender + radios, en inglés; generadas con Chromium headless desde la build webOS: `tv/` + playwright).
+- `self_evaluation_checklist_5.0.xlsx`: rellenada con los resultados reales en la LG (Pass / N/A + comentario).
+- `ux_scenario_easy_xtream_football.pptx`: estructura de la plantilla 4.3 de LG, 18 diapositivas con cada pantalla,
+  botones numerados, datos de prueba para QA (listas review-test.m3u y sports-radio.m3u por jsDelivr) y mapa de teclas.
+  ⚠️ En la portada el "App Developer Name" va como "Nezor": poner el nombre real antes de enviar.
+- Paquete: `cd tv && npm run build:store:webos` → `tv/dist/es.nezor.easyxtreamfootball_0.1.12_all.ipk`
+  (sin lista de radios de ejemplo, como la build de tienda de Samsung; appinfo version 0.1.12).
+
+**Hecho en la app para su QA (commits del 2026-10-19):** Magic Remote completo (hover = foco, clic = OK, rueda
+= scroll de filas y listas, clic en el vídeo = menú), un solo Atrás en la pantalla de entrada sale de la app,
+símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDelivr + proxy de logos).
+
+**Pendiente (en orden):**
+1. ⏳ El usuario crea la cuenta en seller.lgappstv.com y comprueba qué países ofrece (¿España sin partner?).
+2. Última prueba en la LG real con la build de tienda 0.1.12 (`ares-install -d lg tv/dist/*.ipk`, con
+   `OPENSSL_ENABLE_SHA1_SIGNATURES=1`), incluido el Atrás de salida.
+3. Bajar la versión vigente de la checklist y el escenario desde Seller Lounge al enviar (rechazan plantillas
+   antiguas) y, si cambió, volcar las respuestas.
+4. App Management > App Submission: ID `es.nezor.easyxtreamfootball`, subir .ipk, datos en inglés, URL de
+   política de privacidad (la misma de Play), imágenes, los dos documentos, países. Anotar aquí fecha y estado.
+
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
 > La carpeta `tv/` (app web para Samsung y LG, mezclada el 2026-10-18) y `docs/logos/` no entran en el APK:
