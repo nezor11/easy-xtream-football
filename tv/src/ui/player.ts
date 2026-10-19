@@ -130,7 +130,8 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
   function renderInfo(): void {
     clear(info);
     if (!Store.channelInfoVisible() || !group) return;
-    const video = tracks.find((x) => x.type === 'VIDEO');
+    // The size comes from the active video track: on webOS it is only known once the element has metadata.
+    const video = Player.currentTracks().find((x) => x.type === 'VIDEO') || tracks.find((x) => x.type === 'VIDEO');
     const line = h('div', { class: 'line' },
       h('span', { class: 'name', text: group.displayName }), h('span', { text: '•' }), h('span', { text: `${ci + 1}/${channels().length}` }),
       h('span', { text: '•' }), h('span', { text: '‹ ' + (quality ? QUALITY[quality].label : t('quality_auto')) + ' ›' }),

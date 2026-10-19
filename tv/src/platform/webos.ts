@@ -21,6 +21,8 @@ function element(): HTMLVideoElement {
   video.addEventListener('canplay', () => { if (current.onBuffering) current.onBuffering(false); });
   video.addEventListener('timeupdate', () => { if (current.onTime) current.onTime(video!.currentTime * 1000); });
   video.addEventListener('ended', () => { if (current.onEnded) current.onEnded(); });
+  // Picture size known or changed after playback started (e.g. an HLS variant switch): refresh the info line.
+  video.addEventListener('resize', () => { if (ready && current.onReady) current.onReady(); });
   video.addEventListener('error', () => {
     const err = video!.error;
     const code = err ? err.code : 0;
@@ -62,7 +64,8 @@ const player: TvPlayer = {
   tracks(): TrackInfo[] {
     if (!video) return [];
     const v = video as any;
-    return [...toTracks(v.audioTracks, 'AUDIO'), ...toTracks(v.textTracks, 'TEXT')];
+    const vt: TrackInfo[] = video.videoWidth ? [{ index: 0, type: 'VIDEO', language: '', codec: '', width: video.videoWidth, height: video.videoHeight }] : [];
+    return [...vt, ...toTracks(v.audioTracks, 'AUDIO'), ...toTracks(v.textTracks, 'TEXT')];
   },
   currentTracks(): TrackInfo[] {
     if (!video) return [];
