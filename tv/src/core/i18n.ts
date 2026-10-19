@@ -35,11 +35,16 @@ export function applyLanguage(tag: string): void {
 export function languageTag(): string { return currentTag; }
 
 /** Looks up `key` with %1$s / %2$d / %s / %d substitution. Falls back to English, then to the key. */
+// Symbols the Android strings use that TV fonts lack (a 2019 LG has no U+23EF/U+23F8/U+2699/U+21BB):
+// swapped for glyphs every TV font has. Keep in step with the Android res when new symbols appear.
+const GLYPHS: Array<[RegExp, string]> = [[/⏯/g, '▶‖'], [/⏸/g, '‖'], [/\s*⚙️?/g, ''], [/↻\s*/g, '']];
+export function tvGlyphs(s: string): string { for (const [re, to] of GLYPHS) s = s.replace(re, to); return s; }
+
 export function t(key: string, ...args: Array<string | number>): string {
   let s = current[key];
   if (s === undefined) s = (tables.en || {})[key];
   if (typeof s !== 'string') return key;
-  return format(s, args);
+  return tvGlyphs(format(s, args));
 }
 
 /** Plural string: {"one": …, "other": …}. */

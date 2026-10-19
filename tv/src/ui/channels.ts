@@ -39,7 +39,7 @@ export function channelsScreen(): Screen {
     }
     const search = h('input', { type: 'text', class: 'chip focusable', placeholder: t('search_field_label'), value: query, style: { width: '320px', background: '#141b22', color: '#e6eaee' }, oninput: (e: Event) => { query = (e.target as HTMLInputElement).value; renderRows(); } }) as HTMLInputElement;
         filters.appendChild(search);
-    filters.appendChild(h('div', { class: 'chip focusable', onclick: () => load(true) }, icon('reload'), ' ' + t('action_reload').replace(/^↻\s*/, '')));
+    filters.appendChild(h('div', { class: 'chip focusable', onclick: () => load(true) }, icon('reload'), ' ' + t('action_reload')));
   }
 
   function card(group: ChannelGroup | null, folder: ChannelFolder | null, onclick: () => void, onlong?: () => void): HTMLElement {
@@ -55,7 +55,7 @@ export function channelsScreen(): Screen {
       folder && !isSingle(folder) ? h('div', { class: 'sub', text: plural('channels_count', folder.channels.length) }) : (group ? h('div', { class: 'sub', text: qualityLabel(group) }) : null),
       h('div', { class: 'badge', text: [isRadio ? '📻' : '', country ? country.toUpperCase() : '', geo ? '🔒' : ''].filter(Boolean).join(' ') }),
       fav ? h('div', { class: 'star', text: '★' }) : null,
-      folder && !isSingle(folder) ? h('div', { class: 'arrow', text: '▸' }) : null);
+      folder && !isSingle(folder) ? h('div', { class: 'arrow', text: '›' }) : null);
     if (onlong) c.addEventListener('longpress', onlong);
     return c;
   }

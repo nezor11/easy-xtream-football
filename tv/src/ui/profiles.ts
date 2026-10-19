@@ -2,7 +2,7 @@
 import { Profile } from '../core/model';
 import { Store } from '../core/storage';
 import { t } from '../core/i18n';
-import { h, clear } from './dom';
+import { h, clear, icon } from './dom';
 import { platform } from '../platform';
 import { KEY, refocus } from './focus';
 import { Screen, push, pop } from './screens';
@@ -15,7 +15,7 @@ export function profilesScreen(onOpen: (p: Profile) => void): Screen {
   const el = h('div', { class: 'screen' },
     h('div', { class: 'brand' }, h('img', { class: 'logo', src: 'icon.png' }), h('div', null, h('h1', { text: t('app_name') }), h('div', { class: 'tagline', text: t('brand_tagline') }))),
     h('div', { class: 'topbar' },
-      h('div', { class: 'btn icon focusable', text: '⚙', title: t('settings_title'), onclick: () => push(settingsScreen()) }),
+      h('div', { class: 'btn icon focusable', title: t('settings_title'), onclick: () => push(settingsScreen()) }, icon('settings')),
       h('div', { class: 'btn icon focusable', text: '🌐', title: t('settings_language'), onclick: () => push(languageScreen()) })),
     grid,
     h('div', { class: 'hint', text: t('profiles_longpress_hint') }));
