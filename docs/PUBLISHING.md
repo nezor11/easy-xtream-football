@@ -745,9 +745,14 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
         - La 0.1.12 "solo reproductor" (`-Pstore=amazon`) **ya no hace falta reenviarla**. Se queda en `main`
           como opción de reserva por si un futuro envío vuelve a caer por lo mismo.
         - Amazon y Play tienen ahora la misma versión (0.1.11, vc15, con lista de ejemplo de radios).
-        - Pendiente de poco: actualizar la ficha de Amazon con las capturas neutras nuevas
-          (`~/Downloads/easy-xtream-0.1.12-vc16-amazon/screenshots/`) cuando toque el siguiente envío, y
-          cambiar el párrafo IMPORTANTE de la ficha si no se cambió al enviar la 0.1.11.
+        - ✅ **Capturas neutras subidas a la ficha de Amazon el 2026-10-19** (consola guiada por Claude, sobre la
+          release Live `f4bab9bc…`): en *Tablet assets* y *FireTV Assets* se añadieron `01-channels.png` y
+          `02-profiles.png` (copias RGB sin alfa en `docs/store-assets/amazon/`, hechas con `magick -alpha off`)
+          y se borraron las dos antiguas (TDTChannels / perfiles iptv-org). Quedan 4 por sección en este orden:
+          idiomas, añadir perfil, canales, perfiles. El formulario autoguarda, pero para que se publiquen hay
+          que pulsar **Submit App** en *Review & submit* (reenvía la ficha a revisión). El párrafo IMPORTANTE
+          de la descripción ya es el de la 0.1.11 (lista de radios de ejemplo), coherente con la app Live: no
+          se toca.
       - ✅ **Probada en el Chromecast el 2026-10-01 (17:20-17:50)** con la build debug de Amazon
         (`0.1.12-debug`, `-Pstore=amazon`, datos vacíos, al lado de la de Play): ni el primer arranque ni el
         final de "Connect your list" muestran el botón de ejemplo; la lista `review-test.m3u` carga y **Big
