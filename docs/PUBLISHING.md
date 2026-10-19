@@ -749,8 +749,9 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
           release Live `f4bab9bc…`): en *Tablet assets* y *FireTV Assets* se añadieron `01-channels.png` y
           `02-profiles.png` (copias RGB sin alfa en `docs/store-assets/amazon/`, hechas con `magick -alpha off`)
           y se borraron las dos antiguas (TDTChannels / perfiles iptv-org). Quedan 4 por sección en este orden:
-          idiomas, añadir perfil, canales, perfiles. El formulario autoguarda, pero para que se publiquen hay
-          que pulsar **Submit App** en *Review & submit* (reenvía la ficha a revisión). El párrafo IMPORTANTE
+          idiomas, añadir perfil, canales, perfiles. **Submit App pulsado por el usuario el 2026-10-19 (~22:50)**:
+          la ficha (mismo APK vc15, solo cambian las imágenes) está en revisión; anotar aquí el resultado
+          cuando llegue el correo a contact@nezor.es. El párrafo IMPORTANTE
           de la descripción ya es el de la 0.1.11 (lista de radios de ejemplo), coherente con la app Live: no
           se toca.
       - ✅ **Probada en el Chromecast el 2026-10-01 (17:20-17:50)** con la build debug de Amazon
