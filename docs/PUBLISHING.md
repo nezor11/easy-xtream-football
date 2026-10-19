@@ -808,7 +808,8 @@ capturas 1280x720, título y descripción en inglés, y dos documentos obligator
 - `self_evaluation_checklist_5.0.xlsx`: rellenada con los resultados reales en la LG (Pass / N/A + comentario).
 - `ux_scenario_easy_xtream_football.pptx`: estructura de la plantilla 4.3 de LG, 18 diapositivas con cada pantalla,
   botones numerados, datos de prueba para QA (listas review-test.m3u y sports-radio.m3u por jsDelivr) y mapa de teclas.
-  ⚠️ En la portada el "App Developer Name" va como "Nezor": poner el nombre real antes de enviar.
+  Portada: "App Developer Name" = Jorge Mtnez (decidido el 2026-10-19). Magic Remote: el usuario no tiene; la
+  checklist y el pptx dicen que puntero y rueda se verificaron con eventos de ratón en la build webOS, no en hardware.
 - Paquete: `cd tv && npm run build:store:webos` → `tv/dist/es.nezor.easyxtreamfootball_0.1.12_all.ipk`
   (sin lista de radios de ejemplo, como la build de tienda de Samsung; appinfo version 0.1.12).
 
