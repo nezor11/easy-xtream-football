@@ -10,7 +10,7 @@
     "check": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "build:store": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs",
-    "build:store:webos": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs --platform=webos && ares-package dist/webos -o dist"
+    "build:store:webos": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs --platform=webos && ares-package dist/webos -o dist && EXF_SAMPLE_LIST=false node build.mjs --platform=webos --res=720 && ares-package dist/webos720 -o dist/720"
   },
   "devDependencies": {
     "esbuild": "0.24.2",

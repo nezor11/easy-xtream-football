@@ -816,8 +816,11 @@ capturas 1280x720, título y descripción en inglés, y dos documentos obligator
   botones numerados, datos de prueba para QA (listas review-test.m3u y sports-radio.m3u por jsDelivr) y mapa de teclas.
   Portada: "App Developer Name" = Jorge Mtnez (decidido el 2026-10-19). Magic Remote: el usuario no tiene; la
   checklist y el pptx dicen que puntero y rueda se verificaron con eventos de ratón en la build webOS, no en hardware.
-- Paquete: `cd tv && npm run build:store:webos` → `tv/dist/es.nezor.easyxtreamfootball_1.0.0_all.ipk`
-  (sin lista de radios de ejemplo, como la build de tienda de Samsung). **Versión webOS = 1.0.0**: Seller Lounge
+- Paquete: `cd tv && npm run build:store:webos` → `tv/dist/es.nezor.easyxtreamfootball_1.0.0_all.ipk` (1920x1080,
+  modelos UHD) **y** `tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk` (1280x720, modelos FHD como la
+  32LM637: la misma app con `resolution` 1280x720 y `html { zoom: 2/3 }`, build.mjs `--res=720`; la tienda exige
+  un paquete por resolución o excluye los modelos FHD; verificado en Chromium a 1280x720, pendiente de probar en la
+  LG real) (sin lista de radios de ejemplo, como la build de tienda de Samsung). **Versión webOS = 1.0.0**: Seller Lounge
   rechaza "File Version" menores que 1.0.0 (comprobado el 2026-10-19 al subir la 0.1.12), así que la numeración
   de LG va aparte de la de Android (appinfo.json `version`); el pptx y la checklist dicen 1.0.0. Hace falta
   `~/.local/webos/node_modules/.bin` en el PATH para `ares-package`.
