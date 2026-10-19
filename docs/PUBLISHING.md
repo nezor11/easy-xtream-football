@@ -816,8 +816,11 @@ capturas 1280x720, título y descripción en inglés, y dos documentos obligator
   botones numerados, datos de prueba para QA (listas review-test.m3u y sports-radio.m3u por jsDelivr) y mapa de teclas.
   Portada: "App Developer Name" = Jorge Mtnez (decidido el 2026-10-19). Magic Remote: el usuario no tiene; la
   checklist y el pptx dicen que puntero y rueda se verificaron con eventos de ratón en la build webOS, no en hardware.
-- Paquete: `cd tv && npm run build:store:webos` → `tv/dist/es.nezor.easyxtreamfootball_0.1.12_all.ipk`
-  (sin lista de radios de ejemplo, como la build de tienda de Samsung; appinfo version 0.1.12).
+- Paquete: `cd tv && npm run build:store:webos` → `tv/dist/es.nezor.easyxtreamfootball_1.0.0_all.ipk`
+  (sin lista de radios de ejemplo, como la build de tienda de Samsung). **Versión webOS = 1.0.0**: Seller Lounge
+  rechaza "File Version" menores que 1.0.0 (comprobado el 2026-10-19 al subir la 0.1.12), así que la numeración
+  de LG va aparte de la de Android (appinfo.json `version`); el pptx y la checklist dicen 1.0.0. Hace falta
+  `~/.local/webos/node_modules/.bin` en el PATH para `ares-package`.
 
 **Hecho en la app para su QA (commits del 2026-10-19):** Magic Remote completo (hover = foco, clic = OK, rueda
 = scroll de filas y listas, clic en el vídeo = menú), un solo Atrás en la pantalla de entrada sale de la app,
@@ -825,7 +828,7 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
 
 **Pendiente (en orden):**
 1. ⏳ El usuario crea la cuenta en seller.lgappstv.com y comprueba qué países ofrece (¿España sin partner?).
-2. Última prueba en la LG real con la build de tienda 0.1.12 (`ares-install -d lg tv/dist/*.ipk`, con
+2. Última prueba en la LG real con la build de tienda 1.0.0 (`ares-install -d lg tv/dist/*.ipk`, con
    `OPENSSL_ENABLE_SHA1_SIGNATURES=1`), incluido el Atrás de salida.
 3. Bajar la versión vigente de la checklist y el escenario desde Seller Lounge al enviar (rechazan plantillas
    antiguas) y, si cambió, volcar las respuestas.
