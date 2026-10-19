@@ -4,15 +4,17 @@
  * A straight port of the Android ChannelNameParser — keep the two in sync.
  */
 import { QualityName } from './model';
+import { L, N } from './unicode';
 
 function escapeRe(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // Order matters: 4K before 2K before FHD before HD ("FULL HD" contains "HD"). Matches a quality either
-// delimited or glued to the end of a word ("LaLigaTVHD"); must not start mid-number.
+// delimited or glued to the end of a word ("LaLigaTVHD"); must not start mid-number. No lookbehind on
+// Chrome 53, so the "not after X" checks consume the previous character as group 1 (kept by replacements).
 function tokenRegex(...tokens: string[]): RegExp {
-  return new RegExp(`(?<![0-9])(${tokens.join('|')})(?![a-z0-9])`, 'iu');
+  return new RegExp(`(^|[^0-9])(${tokens.join('|')})(?![a-z0-9])`, 'iu');
 }
 const qualityPatterns: Array<[QualityName, RegExp]> = [
   ['UHD_4K', tokenRegex('4k', 'uhd', '2160p?')],
@@ -21,14 +23,14 @@ const qualityPatterns: Array<[QualityName, RegExp]> = [
   ['HD', tokenRegex('hd', '720p?')],
   ['SD', tokenRegex('sd', '480p?', '360p?')],
 ];
-const allQualityTokens = /(?<![0-9])(4k|uhd|2160p?|2k|1440p?|qhd|fhd|full\s*hd|1080p?|hd|720p?|sd|480p?|360p?)(?![a-z0-9])/giu;
+const allQualityTokens = /(^|[^0-9])(4k|uhd|2160p?|2k|1440p?|qhd|fhd|full\s*hd|1080p?|hd|720p?|sd|480p?|360p?)(?![a-z0-9])/giu;
 // Availability tags a panel appends to event-only feeds, whole phrases only.
-const availabilityTags = /(?<!\p{L})(solo\s+eventos|only\s+events|events\s+only)(?!\p{L})/giu;
+const availabilityTags = new RegExp(`(^|[^${L}])(solo\\s+eventos|only\\s+events|events\\s+only)(?![${L}])`, 'giu');
 // Leading provider/country prefix: "ES|", "ES:", "EN -", "VIP >" and the pipe-wrapped "|IT| ".
-const leadingPrefix = /^\s*[|:>\-•]?\s*[\p{L}0-9]{1,4}\s*[|:>\-•]\s*/u;
+const leadingPrefix = new RegExp(`^\\s*[|:>\\-•]?\\s*[${L}0-9]{1,4}\\s*[|:>\\-•]\\s*`, 'u');
 const bracketed = /[\[(][^\])]*[\])]/gu;
 // Strip emoji / flags / symbol noise (keep letters, numbers, spaces, basic punctuation).
-const noise = /[^\p{L}\p{N}\s&+./'-]/gu;
+const noise = new RegExp(`[^${L}${N}\\s&+./'-]`, 'gu');
 const multiSpace = /\s{2,}/g;
 
 // Brand-agnostic on purpose: generic sport terms, sport types and competitions — never channel brands.
@@ -61,21 +63,32 @@ const footballKeywords = [
 ];
 // Keywords match only at the start of a word (not preceded by a letter).
 function boundaryRegex(keywords: string[]): RegExp {
-  return new RegExp(`(?<!\\p{L})(${keywords.map(escapeRe).join('|')})`, 'iu');
+  return new RegExp(`(^|[^${L}])(${keywords.map(escapeRe).join('|')})`, 'iu');
 }
 const sportsRegex = boundaryRegex(sportsKeywords);
 const footballRegex = boundaryRegex(footballKeywords);
 // Strong roots that also count mid-word; "sport" excludes "transport"/"passport".
-const sportsSubstringRegex = /(?<!tran)(?<!pas)sport|deporte|fútbol|futbol|football|calcio/iu;
+const sportsRoots = /deporte|fútbol|futbol|football|calcio/iu;
+const sportWord = /sport/giu;
+function hasSportRoot(text: string): boolean {
+  if (sportsRoots.test(text)) return true;
+  sportWord.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = sportWord.exec(text)) !== null) {
+    const before = text.slice(Math.max(0, m.index - 4), m.index).toLowerCase();
+    if (!before.endsWith('tran') && !before.endsWith('pas')) return true;
+  }
+  return false;
+}
 const vodCategory = /\bvod\b/i;
 const radioKeywords = [
   'radio', 'radios', 'rádio', 'rádios', 'radyo', 'радио', 'ραδιόφωνο', 'راديو', 'إذاعة',
   'วิทยุ', '電台', '电台', '廣播', 'रेडियो',
 ];
-const radioRegex = new RegExp(`(?<!\\p{L})(${radioKeywords.map(escapeRe).join('|')})(?!\\p{L})`, 'iu');
+const radioRegex = new RegExp(`(^|[^${L}])(${radioKeywords.map(escapeRe).join('|')})(?![${L}])`, 'iu');
 
 const firstWord = /^\S+/u;
-const nonLetters = /\P{L}+/gu;
+const nonLetters = new RegExp(`[^${L}]+`, 'gu');
 const whitespace = /\s+/u;
 const FOLDER_KEY_LEN = 6;
 
@@ -138,7 +151,7 @@ export const ChannelNameParser = {
 
   /** Canonical channel name with quality tags, availability tags, prefixes and noise removed. */
   baseName(rawName: string): string {
-    const name = normalizeForTokens(rawName).replace(allQualityTokens, ' ').replace(availabilityTags, ' ');
+    const name = normalizeForTokens(rawName).replace(allQualityTokens, '$1 ').replace(availabilityTags, '$1 ');
     return trimChars(name.replace(multiSpace, ' ').trim(), '-|:.·').trim();
   },
 
@@ -148,7 +161,7 @@ export const ChannelNameParser = {
   },
 
   isSports(channelName: string, categoryName: string | null | undefined): boolean {
-    const sport = (t: string | null | undefined) => matchesAny(t, sportsRegex) || matchesAny(t, sportsSubstringRegex);
+    const sport = (t: string | null | undefined) => matchesAny(t, sportsRegex) || (!!t && t.trim() !== '' && hasSportRoot(t));
     return sport(channelName) || sport(categoryName);
   },
 

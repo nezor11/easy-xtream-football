@@ -4,8 +4,10 @@
  * LogoRepository + LogoMatching: which name keys to try, most specific first. Brand-agnostic.
  */
 import { fetchText } from './xtream';
+import { L, N } from './unicode';
 
-export const LOGO_MAP_URL = 'https://raw.githubusercontent.com/nezor11/easy-xtream-football/main/docs/logos/sports.json';
+// jsDelivr, not raw.githubusercontent.com: old TVs do not trust Let's Encrypt (see sample.ts).
+export const LOGO_MAP_URL = 'https://cdn.jsdelivr.net/gh/nezor11/easy-xtream-football@main/docs/logos/sports.json';
 const CACHE_KEY = 'exf.logos';
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -15,9 +17,11 @@ let doc: LogoDoc | null = null;
 let loading: Promise<LogoDoc | null> | null = null;
 
 /** The map is keyed by name with everything but letters and digits removed. */
-export function normalize(name: string): string { return name.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ''); }
+const nonAlnum = new RegExp(`[^${L}${N}]`, 'gu');
+export function normalize(name: string): string { return name.toLowerCase().replace(nonAlnum, ''); }
 
-const LETTER = /\p{L}/u;
+const LETTER = new RegExp(`[${L}]`, 'u');
+const LETTERS = new RegExp(`[${L}]`, 'gu');
 function variants(key: string): string[] {
   return [key, key.replace(/sports/g, 'sport'), key.replace(/sport(?!s)/g, 'sports'), key.replace(/(tv|channel)$/, '')];
 }
@@ -41,7 +45,7 @@ export function candidates(displayName: string): string[] {
   for (let start = 1; start < words.length - 1; start++) {
     const run = words.slice(start);
     const key = normalize(run.join(' '));
-    const firstLetters = (run[0].match(/\p{L}/gu) || []).length;
+    const firstLetters = (run[0].match(LETTERS) || []).length;
     if (lettered(run) >= 2 && firstLetters >= 3 && key.length >= 8) add(variants(key));
   }
   return keys;
@@ -86,4 +90,15 @@ export function logoFor(name: string): string | null {
     if (v) return v.startsWith('i:') ? doc.imgur + v.slice(2) : v;
   }
   return null;
+}
+
+/**
+ * Second try for a logo that failed to load: the same image through the wsrv.nl image proxy. Old TVs
+ * (webOS 4.x, 2019) do not trust Let's Encrypt, which most logo hosts use; the proxy's CA they do trust.
+ * Only ever called after a failure, so a working logo never goes through it. Null once already proxied.
+ */
+const PROXY = 'https://wsrv.nl/?url=';
+export function logoRetryUrl(url: string, width: number): string | null {
+  if (!url || url.indexOf(PROXY) === 0) return null;
+  return `${PROXY}${encodeURIComponent(url)}&w=${width}&h=${width}&fit=inside`;
 }

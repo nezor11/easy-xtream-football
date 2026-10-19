@@ -1,5 +1,6 @@
 /** Channel grid: header, filters, sections (live now / favorites / recents / favorite folders / football / more sports), folder view. */
 import { ChannelFolder, ChannelGroup, QUALITY_MODES, availableQualities, fixedQuality, isSingle } from '../core/model';
+import { logoRetryUrl } from '../core/logos';
 import { foldIntoFolders } from '../core/grouping';
 import { Repository } from '../core/repository';
 import { Store } from '../core/storage';
@@ -49,7 +50,7 @@ export function channelsScreen(): Screen {
     const country = group ? group.country : folder!.country;
     const fav = group ? Store.favoriteChannelKeys().includes(group.key) : Store.favoriteFolders().includes(folder!.name);
     const c = h('div', { class: 'card focusable' + (group && group.key === reorderKey ? ' reorder' : ''), 'data-key': group ? group.key : '', onclick },
-      icon ? h('img', { class: 'logo', src: icon, onerror: (e: Event) => { const img = e.target as HTMLElement; img.replaceWith(h('div', { class: 'monogram', text: name.slice(0, 2).toUpperCase() })); } }) : h('div', { class: 'monogram', text: name.slice(0, 2).toUpperCase() }),
+      icon ? h('img', { class: 'logo', src: icon, onerror: (e: Event) => { const img = e.target as HTMLImageElement; const retry = logoRetryUrl(img.src, 240); if (retry) img.src = retry; else img.replaceWith(h('div', { class: 'monogram', text: name.slice(0, 2).toUpperCase() })); } }) : h('div', { class: 'monogram', text: name.slice(0, 2).toUpperCase() }),
       h('div', { class: 'name', text: name }),
       folder && !isSingle(folder) ? h('div', { class: 'sub', text: plural('channels_count', folder.channels.length) }) : (group ? h('div', { class: 'sub', text: qualityLabel(group) }) : null),
       h('div', { class: 'badge', text: [isRadio ? '📻' : '', country ? country.toUpperCase() : '', geo ? '🔒' : ''].filter(Boolean).join(' ') }),

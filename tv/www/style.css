@@ -51,13 +51,14 @@ h2 { font-size: 28px; margin: 0; font-weight: 500; color: var(--fg2); }
 .hint { position: absolute; bottom: 36px; left: 72px; right: 72px; font-size: 20px; color: var(--fg2); text-align: center; }
 .pill { display: inline-block; padding: 8px 16px; border-radius: 10px; background: rgba(10,14,18,0.85); font-size: 22px; }
 /* player overlays */
-.osd-info { position: absolute; left: 48px; bottom: 48px; max-width: 1400px; }
+/* Player overlays keep a 72/64 px safe margin: a 2019 LG with overscan on cropped the 48 px ones. */
+.osd-info { position: absolute; left: 72px; bottom: 64px; max-width: 1400px; }
 .osd-info .line { display: flex; gap: 14px; align-items: center; padding: 10px 18px; border-radius: 12px; background: rgba(10,14,18,0.8); font-size: 24px; white-space: nowrap; }
 .osd-info .name { color: var(--primary); font-weight: 600; }
 .osd-info .epg { margin-top: 8px; font-size: 20px; color: var(--fg2); }
 .osd-msg { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 16px 28px; border-radius: 12px; background: rgba(10,14,18,0.9); font-size: 28px; text-align: center; max-width: 1200px; }
 .osd-msg.error { color: #ff8a8a; }
-.osd-legend { position: absolute; right: 48px; bottom: 48px; display: flex; gap: 10px; }
+.osd-legend { position: absolute; right: 72px; bottom: 64px; display: flex; gap: 10px; }
 .osd-legend .k { padding: 6px 12px; border-radius: 8px; background: rgba(10,14,18,0.8); font-size: 20px; color: var(--fg2); }
 .osd-legend .k b { color: var(--primary); font-weight: 600; }
 .menu { position: absolute; left: 48px; bottom: 48px; width: 560px; max-height: 760px; border-radius: 16px; background: rgba(10,14,18,0.92); padding: 18px 22px; box-sizing: border-box; }

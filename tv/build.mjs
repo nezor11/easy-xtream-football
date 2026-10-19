@@ -13,12 +13,13 @@ const watch = !!args.watch;
 const toDist = !!args.platform;
 const outDir = toDist ? join('dist', platform) : 'www';
 
-// Tizen 5.5 = Chrome 69; webOS 6 = Chrome 79 (and webOS 22+ far newer). The lower target serves both.
+// Tizen 5.5 = Chrome 69; webOS 4.x (2018-2019 TVs) = Chrome 53, webOS 6 = Chrome 79. The lowest target serves all:
+// esbuild lowers async/await, object spread and `??` for it; the few missing APIs are in src/polyfills.ts.
 const options = {
   entryPoints: ['src/app.ts'],
   bundle: true,
   format: 'iife',
-  target: ['chrome69'],
+  target: ['chrome53'],
   outfile: join(outDir, 'app.js'),
   sourcemap: false,
   minify: false,

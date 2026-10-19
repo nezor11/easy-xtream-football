@@ -21,7 +21,7 @@ compilación). Reproduce con AVPlay, el reproductor nativo de Samsung. Sin factu
 ## Compilar, probar e instalar
 ```
 npm install
-npm run build                       # strings.json + www/app.js (esbuild, target chrome69)
+npm run build                       # strings.json + www/app.js (esbuild, target chrome53: webOS 4.x)
 npm run check                       # tsc
 python3 -m http.server 8788 --directory www   # prueba en un navegador de escritorio (todo menos el vídeo)
 # Samsung
@@ -46,7 +46,12 @@ El fondo de la página es transparente a propósito: AVPlay pinta el vídeo en u
 Las teclas de color, canal ±, reproducción e Info se registran con `tizen.tvinputdevice`.
 
 ## Depurar en la tele
-- Tizen 5.5 es Chrome 69: sin `inset`, sin `gap` en flexbox, sin `trimStart`. El CSS usa márgenes entre hermanos.
+- Tizen 5.5 es Chrome 69 y webOS 4.x (LG de 2018-2019) es Chrome 53: sin `inset`, sin `gap` en flexbox, sin `trimStart`
+  ni `padStart` (polyfill en `src/polyfills.ts`). El CSS usa márgenes entre hermanos.
+- Las LG de 2019 (webOS 4.x) no confían en Let's Encrypt: toda petición HTTPS a un host con esa CA falla con estado 0.
+  Por eso la lista de radios y el mapa de logos se sirven por jsDelivr y un logo que falla se reintenta una vez por
+  el proxy de imágenes wsrv.nl (`logoRetryUrl`) antes de caer a las iniciales. Los rótulos del reproductor llevan
+  72/64 px de margen porque esas teles recortan los bordes (overscan).
 - `sdb shell 0 debug EXFOOTBALL.EasyXtreamFootball` lanza la app con el inspector y devuelve un puerto;
   `sdb forward tcp:P tcp:P` y `http://127.0.0.1:P/json` dan el websocket del DevTools Protocol
   (`Runtime.evaluate` funciona; `Page.captureScreenshot` se cuelga). Las teclas del mando se simulan

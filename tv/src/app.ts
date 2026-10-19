@@ -1,4 +1,5 @@
 /** Easy Xtream Football for Samsung TV: boot, strings, first screen. */
+import './polyfills';
 import strings from '../www/strings.json';
 import { initStrings } from './core/i18n';
 import { installRemoteLog } from './core/rlog';

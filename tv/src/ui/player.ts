@@ -1,5 +1,6 @@
 /** Full-screen player: zapping, OK menu (quality / audio / subtitles / guide / info / coffee), channel info, radio view. */
 import { ChannelFolder, ChannelGroup, EpgProgram, QUALITY, QUALITY_TIERS, QualityName, availableQualities, variantAtOrBelow, variantFor } from '../core/model';
+import { logoRetryUrl } from '../core/logos';
 import { platform, TrackInfo } from '../platform';
 const Player = platform.player;
 import { Repository } from '../core/repository';
@@ -142,7 +143,10 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
 
   function renderRadio(): void {
     clear(radio); const g = group; if (!g) return;
-    radio.appendChild(h('div', { class: 'box' }, g.iconUrl ? h('img', { src: g.iconUrl }) : h('div', { text: '📻', style: { fontSize: '96px' } })));
+    // A logo that fails to load (dead link, or a CA this TV does not trust) falls back to the radio glyph.
+    const glyph = () => h('div', { text: '📻', style: { fontSize: '96px' } });
+    const onerror = (e: Event) => { const img = e.target as HTMLImageElement; const retry = logoRetryUrl(img.src, 256); if (retry) img.src = retry; else img.replaceWith(glyph()); };
+    radio.appendChild(h('div', { class: 'box' }, g.iconUrl ? h('img', { src: g.iconUrl, onerror }) : glyph()));
     radio.appendChild(h('div', { class: 'title', text: g.displayName }));
     radio.appendChild(h('div', { class: 'sub', text: t('radio_audio_only') }));
   }
