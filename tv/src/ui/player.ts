@@ -23,7 +23,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
   let epg: EpgProgram[] = [];
   let lastKeyAt = 0, lastKeyCode = 0;
   let skipCount = 0;
-  let legendTimer: number | null = null, coffeeTimer: number | null = null;
+  let legendTimer: number | null = null, coffeeTimer: number | null = null, statsTimer: number | null = null;
   let tracks: TrackInfo[] = [];
   let audioIndex = -1, subtitleIndex = -1;
 
@@ -132,10 +132,16 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
     if (!Store.channelInfoVisible() || !group) return;
     // The size comes from the active video track: on webOS it is only known once the element has metadata.
     const video = Player.currentTracks().find((x) => x.type === 'VIDEO') || tracks.find((x) => x.type === 'VIDEO');
+    const bandwidth = Store.bandwidthBps();
+    const ahead = group.isRadio ? -1 : Player.bufferAheadMs();
     const line = h('div', { class: 'line' },
       h('span', { class: 'name', text: group.displayName }), h('span', { text: '•' }), h('span', { text: `${ci + 1}/${channels().length}` }),
       h('span', { text: '•' }), h('span', { text: '‹ ' + (quality ? QUALITY[quality].label : t('quality_auto')) + ' ›' }),
       video && video.width ? h('span', { text: '•' }) : null, video && video.width ? h('span', { text: `${video.width}x${video.height}` }) : null,
+      // Connection health: measured network speed (CDN probe / stall step-down) and seconds buffered ahead
+      // of the playhead where the platform reports it (webOS); a shrinking buffer means the link is too slow.
+      bandwidth > 0 ? h('span', { text: '•' }) : null, bandwidth > 0 ? h('span', { text: '↓ ' + (bandwidth / 1e6).toFixed(bandwidth >= 10e6 ? 0 : 1) + ' Mbps' }) : null,
+      ahead >= 0 ? h('span', { text: '•' }) : null, ahead >= 0 ? h('span', { text: '⏳ ' + Math.round(ahead / 1000) + ' s', style: ahead < 3000 ? { color: '#ff8a8a' } : {} }) : null,
       folders[fi] && folders[fi].name && folders[fi].channels.length > 1 ? h('span', { class: 'sub', text: t('player_channel_from', folders[fi].name), style: { color: '#b9c2cc' } }) : null);
     info.appendChild(line);
     const { now, next } = nowNext();
@@ -258,8 +264,8 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
 
   return {
     el,
-    onShow: () => { setFocusRoot(el, screenKeys); play(); showLegend(); },
-    onHide: () => { Player.stop(); if (coffeeTimer) clearTimeout(coffeeTimer); if (legendTimer) clearTimeout(legendTimer); },
+    onShow: () => { setFocusRoot(el, screenKeys); play(); showLegend(); statsTimer = window.setInterval(() => { if (!menuOpen) renderInfo(); }, 2000); },
+    onHide: () => { Player.stop(); if (coffeeTimer) clearTimeout(coffeeTimer); if (legendTimer) clearTimeout(legendTimer); if (statsTimer) clearInterval(statsTimer); statsTimer = null; },
     onKey: screenKeys,
   };
 }

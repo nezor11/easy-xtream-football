@@ -45,6 +45,7 @@ const player: TvPlayer = {
   resume(): void { try { webapis.avplay.play(); } catch (e) { /* ignore */ } },
   state(): string { try { return webapis.avplay.getState(); } catch (e) { return 'NONE'; } },
   tracks(): TrackInfo[] { try { return (webapis.avplay.getTotalTrackInfo() as any[]).map(parseTrack); } catch (e) { return []; } },
+  bufferAheadMs(): number { return -1; }, // AVPlay has no buffered-range API
   currentTracks(): TrackInfo[] { try { return (webapis.avplay.getCurrentStreamInfo() as any[]).map(parseTrack); } catch (e) { return []; } },
   selectTrack(type: 'AUDIO' | 'TEXT', index: number): boolean { try { webapis.avplay.setSelectTrack(type, index); return true; } catch (e) { return false; } },
   setSubtitlesEnabled(on: boolean): void { try { webapis.avplay.setSilentSubtitle(!on); } catch (e) { /* ignore */ } },

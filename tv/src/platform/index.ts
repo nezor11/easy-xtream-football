@@ -22,6 +22,8 @@ export interface TvPlayer {
   state(): string;
   tracks(): TrackInfo[];
   currentTracks(): TrackInfo[];
+  /** Milliseconds of media already downloaded beyond the playhead, or -1 when the platform cannot tell. */
+  bufferAheadMs(): number;
   selectTrack(type: 'AUDIO' | 'TEXT', index: number): boolean;
   setSubtitlesEnabled(on: boolean): void;
 }

@@ -67,6 +67,14 @@ const player: TvPlayer = {
     const vt: TrackInfo[] = video.videoWidth ? [{ index: 0, type: 'VIDEO', language: '', codec: '', width: video.videoWidth, height: video.videoHeight }] : [];
     return [...vt, ...toTracks(v.audioTracks, 'AUDIO'), ...toTracks(v.textTracks, 'TEXT')];
   },
+  bufferAheadMs(): number {
+    if (!video || !video.src) return -1;
+    const ct = video.currentTime;
+    for (let i = 0; i < video.buffered.length; i++) {
+      if (video.buffered.start(i) <= ct + 0.5 && video.buffered.end(i) >= ct) return Math.max(0, (video.buffered.end(i) - ct) * 1000);
+    }
+    return 0;
+  },
   currentTracks(): TrackInfo[] {
     if (!video) return [];
     const info: TrackInfo[] = [];
