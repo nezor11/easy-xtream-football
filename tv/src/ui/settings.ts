@@ -1,5 +1,6 @@
 /** Settings: language, clear cache, coffee reminder, open-source licenses. */
 import { Store } from '../core/storage';
+import { COFFEE } from '../core/sample';
 import { Repository } from '../core/repository';
 import { t, SUPPORTED_TAGS, applyLanguage, languageTag } from '../core/i18n';
 import { h, clear } from './dom';
@@ -19,7 +20,7 @@ export function settingsScreen(): Screen {
     list.appendChild(item(t('settings_language'), Store.language() ? LANGUAGE_NAMES[Store.language()] || Store.language() : t('language_system'), () => push(languageScreen())));
     list.appendChild(item(t('settings_clear_cache'), '', () => { Repository.clearCache(); toast(t('settings_cache_cleared')); }));
     const dismissed = Store.coffeeReminderDismissed();
-    list.appendChild(item(t('support_entry'), dismissed ? t('coffee_reenable') : t('coffee_dismiss'), () => confirmDialog(t('support_title'), [
+    if (COFFEE) list.appendChild(item(t('support_entry'), dismissed ? t('coffee_reenable') : t('coffee_dismiss'), () => confirmDialog(t('support_title'), [
       { label: dismissed ? t('coffee_reenable') : t('coffee_dismiss'), onPick: () => { Store.setCoffeeReminderDismissed(!dismissed); render(); refocus(); } },
       { label: t('action_cancel'), onPick: () => {} },
     ], t('support_message') + '\n' + t('support_site_handle'))));

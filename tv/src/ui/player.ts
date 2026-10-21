@@ -1,5 +1,6 @@
 /** Full-screen player: zapping, OK menu (quality / audio / subtitles / guide / info / coffee), channel info, radio view. */
 import { ChannelFolder, ChannelGroup, EpgProgram, QUALITY, QUALITY_TIERS, QualityName, availableQualities, variantAtOrBelow, variantFor } from '../core/model';
+import { COFFEE } from '../core/sample';
 import { logoRetryUrl } from '../core/logos';
 import { platform, TrackInfo } from '../platform';
 const Player = platform.player;
@@ -11,7 +12,7 @@ import { KEY, setFocusRoot, focusFirst, refocus } from './focus';
 import { Screen, pop } from './screens';
 
 type Section = 'QUALITY' | 'AUDIO' | 'SUBTITLES' | 'GUIDE' | 'INFO' | 'COFFEE';
-const SECTIONS: Section[] = ['QUALITY', 'AUDIO', 'SUBTITLES', 'GUIDE', 'INFO', 'COFFEE'];
+const SECTIONS: Section[] = COFFEE ? ['QUALITY', 'AUDIO', 'SUBTITLES', 'GUIDE', 'INFO', 'COFFEE'] : ['QUALITY', 'AUDIO', 'SUBTITLES', 'GUIDE', 'INFO'];
 
 export function playerScreen(folders: ChannelFolder[], folderIndex: number, channelIndex: number, isFavoritesList: boolean): Screen {
   let fi = folderIndex, ci = channelIndex;
@@ -177,7 +178,7 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
   function armCoffee(): void {
     if (coffeeTimer) clearTimeout(coffeeTimer);
     coffee.classList.add('hidden');
-    if (Store.coffeeReminderDismissed()) return;
+    if (!COFFEE || Store.coffeeReminderDismissed()) return;
     coffeeTimer = window.setTimeout(() => {
       clear(coffee);
       coffee.appendChild(h('img', { src: 'qr.png', class: 'qr', style: { width: '88px', height: '88px', padding: '5px' } }));

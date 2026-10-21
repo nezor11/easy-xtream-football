@@ -4,7 +4,7 @@
 //   node build.mjs --platform=webos --res=720 → dist/webos720/: same app declared as 1280x720 for LG's FHD models
 //                                         (the Content Store needs one package per resolution; the 1920 layout is zoomed to 2/3)
 //   node build.mjs --platform=tizen     → dist/tizen/ with config.xml, ready for tizen package
-// Env: EXF_LOG_URL (remote console for debugging), EXF_SAMPLE_LIST=false (store build).
+// Env: EXF_LOG_URL (remote console for debugging), EXF_SAMPLE_LIST=false (store build), EXF_COFFEE=false (Samsung store build: no tip card/QR).
 import * as esbuild from 'esbuild';
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -31,6 +31,7 @@ const options = {
     __EXF_PLATFORM__: JSON.stringify(platform),
     __EXF_LOG_URL__: JSON.stringify(process.env.EXF_LOG_URL ?? ''),
     __EXF_SAMPLE_LIST__: process.env.EXF_SAMPLE_LIST === 'false' ? 'false' : 'true',
+    __EXF_COFFEE__: process.env.EXF_COFFEE === 'false' ? 'false' : 'true',
   },
 };
 
@@ -43,7 +44,7 @@ function assemble() {
   if (!toDist) return;
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
-  for (const f of ['style.css', 'icon.png', 'qr.png', 'strings.json']) cpSync(join('www', f), join(outDir, f));
+  for (const f of ['style.css', 'icon.png', 'strings.json', ...(process.env.EXF_COFFEE === 'false' ? [] : ['qr.png'])]) cpSync(join('www', f), join(outDir, f));
   let html = readFileSync(join('www', 'index.html'), 'utf8').replace('<!--PLATFORM_SCRIPTS-->', PLATFORM_SCRIPTS[platform] ?? '');
   if (res720) html = html.replace('width=1920, height=1080', 'width=1280, height=720').replace('</head>', '<style>html { zoom: 0.6666667; }</style>\n</head>');
   writeFileSync(join(outDir, 'index.html'), html);

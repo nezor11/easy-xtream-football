@@ -7,3 +7,6 @@ export const SPORTS_RADIO_URL = 'https://cdn.jsdelivr.net/gh/nezor11/easy-xtream
 /** Store builds hide the sample list (a store rejected the app over content it offered itself): `npm run build:store`. */
 declare const __EXF_SAMPLE_LIST__: boolean;
 export const SAMPLE_LIST: boolean = typeof __EXF_SAMPLE_LIST__ === 'boolean' ? __EXF_SAMPLE_LIST__ : true;
+/** Samsung's seller terms take 30 % of any revenue "arising from the app": the Samsung store build hides the coffee card (`EXF_COFFEE=false`). */
+declare const __EXF_COFFEE__: boolean;
+export const COFFEE: boolean = typeof __EXF_COFFEE__ === 'boolean' ? __EXF_COFFEE__ : true;
