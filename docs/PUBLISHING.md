@@ -869,7 +869,7 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
    algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
-## Samsung TV (Tizen) — Seller Office: ALTA HECHA el 2026-10-22, app aún sin crear
+## Samsung TV (Tizen) — ENVIADA A REVISIÓN en Seller Office el 2026-10-22 (solo EE. UU. hasta tener partnership)
 
 > La app de TV es la misma de `tv/` que la de LG (Tizen 5.5 = Chrome 69). Probada por el usuario en el Smart Monitor
 > M7 el 2026-10-18. Build de tienda: `cd tv && npm run build:store` (sin lista de ejemplo) y firmar con `tizen package`.
@@ -931,8 +931,19 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    `cd tv && npm run build:store:tizen` (flags + `tizen package -s nezor` + copia a `dist/exf-store-1.0.0.wgt`).
    Paquete anterior borrado del borrador y el nuevo subido (Pre-Test Pass). Si algún día se quiere el café en
    Samsung, se quita el flag y se sube una versión nueva (pasa QA otra vez).
-5. ⏳ **Distribute → "Request New Release"** (elegir versión, grupos de modelos por año 2022-2026 y la información de
-   la release; lo pulsa el usuario). El aviso DSA de la página pide marcar el tipo de cuenta (individual) en Membership.
+5. ✅ **REQUEST NEW RELEASE ENVIADO el 2026-10-22 (~00:50)**: versión 1.0.0 (paquete sin QR), los **46 grupos de
+   modelos de 2022 a 2026** (Tizen 6.5 → 10.0, incluidos los "LIC"/"LIC2" de terceros), novedades EN, actualización
+   Optional, nota para el verificador con las listas de prueba, "release with minor defects" = Yes. Distribute → App
+   Service muestra cada grupo como **Submitted · 100 % Rollout (scheduled)**. Solo EE. UU. mientras no haya partnership.
+
+**Pendiente (en orden):**
+1. ⏳ Veredicto de la revisión de Samsung (Distribute → App Service y App Review; avisos a contact@nezor.es). Jellyfin
+   tardó meses. Si rechazan: App Review muestra los defectos; corregir, subir versión nueva y volver a pedir release.
+2. ⏳ Respuesta del Content Manager a la petición de partnership (1:1 Q&A del 2026-10-22). Cuando llegue: Membership →
+   Partnership, añadir España/Europa en Service Country/Region y adjuntar la Declaración de Conformidad (EAA) en
+   Service Info punto 6.
+3. Marcar el tipo de cuenta (individual) en Membership por el aviso DSA.
+4. Pasar `~/Downloads/samsung-cert-nezor-2026-10-22.tar.gz` al USB de la clave de Play y borrarla de Downloads.
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
