@@ -869,6 +869,32 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
    algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
+## Samsung TV (Tizen) — Seller Office: ALTA HECHA el 2026-10-22, app aún sin crear
+
+> La app de TV es la misma de `tv/` que la de LG (Tizen 5.5 = Chrome 69). Probada por el usuario en el Smart Monitor
+> M7 el 2026-10-18. Build de tienda: `cd tv && npm run build:store` (sin lista de ejemplo) y firmar con `tizen package`.
+
+**Cuenta (2026-10-22, madrugada):**
+- La cuenta Samsung **contact@nezor.es ya existía** y estaba bloqueada (la recuperación de contraseña pide la fecha de
+  nacimiento y fallaba). Salida: en account.samsung.com → Iniciar sesión → "Verificar con correo de un uso" (código
+  al correo, sin contraseña) y luego Seguridad → "Verificar con correo de un uso" (enlace) → contraseña nueva puesta
+  por el usuario. El perfil tiene fecha de nacimiento 11/06/1983, nombre Jorge Martínez, país España.
+- El ticket de soporte 2358729350 (creado solo el 2026-10-19 desde el flujo de recuperación, sin texto) queda
+  sin contestar: ya no hace falta.
+- **Seller Office (seller.samsungapps.com/tv) dado de alta** con esa cuenta: nombre Jorge Martínez y correo
+  contact@nezor.es (vienen de la cuenta Samsung, no se cambian ahí), Europa/España, zona horaria Madrid, términos y
+  política de privacidad aceptados por el usuario. Tipo: **Public Seller → solo puede distribuir en EE. UU.**
+
+**Pendiente (en orden):**
+1. ⏳ **Partnership para España**: Membership → Partnership exige un acuerdo previo con el Samsung Content Manager
+   local; se pide por 1:1 Q&A. Redactar y enviar la consulta (la envía el usuario).
+2. **Certificado nuevo** con contact@nezor.es en el Certificate Manager de Tizen Studio (el perfil `exf` es de la
+   cuenta del padre). Guardar certificado y contraseña: sin ellos no se puede actualizar la app nunca más.
+3. Crear la app en Seller Office (Applications → Create App), subir el .wgt firmado con el certificado nuevo,
+   iconos de `docs/store-assets/samsung/`, capturas neutras, PPTX de la UI (adaptar el de LG) e info de prueba.
+4. Decidir si la build de Samsung oculta el QR de Ko-fi del menú del café (condiciones 7.1: 30 % de cualquier
+   ingreso "derivado de la app"); se haría con un flag como `EXF_SAMPLE_LIST`.
+
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
 > La carpeta `tv/` (app web para Samsung y LG, mezclada el 2026-10-18) y `docs/logos/` no entran en el APK:
