@@ -900,10 +900,36 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    **Paquete de tienda:** `platforms/tizen/config.xml` ahora es **versión 1.0.0** (misma numeración que LG);
    `cd tv && npm run strings && EXF_SAMPLE_LIST=false node build.mjs --platform=tizen && ~/tizen-studio/tools/ide/bin/tizen package -t wgt -s nezor -o "$PWD/dist" -- "$PWD/dist/tizen"`
    → `tv/dist/exf-store-1.0.0.wgt` (157 KB, firmado por el autor nuevo, verificado en author-signature.xml).
-3. Crear la app en Seller Office (Applications → Create App), subir el .wgt firmado con el certificado nuevo,
-   iconos de `docs/store-assets/samsung/`, capturas neutras, PPTX de la UI (adaptar el de LG) e info de prueba.
-4. Decidir si la build de Samsung oculta el QR de Ko-fi del menú del café (condiciones 7.1: 30 % de cualquier
-   ingreso "derivado de la app"); se haría con un flag como `EXF_SAMPLE_LIST`.
+3. ✅ **App CREADA y formulario COMPLETO el 2026-10-22 (madrugada)**: ID de Seller Office **3202610049966**, nombre de
+   gestión "Easy Xtream Football", Tizen Web (wgt), idioma por defecto inglés. Secciones (todas con tic):
+   - App Package: `exf-store-1.0.0.wgt` subido, Pre-Test **Pass** (v1.0.0, EXFOOTBALL.EasyXtreamFootball, API 5.5,
+     privilegios internet / system info / key capture; pointer y touch "not defined/support"), fuente no compartida con
+     el grupo. Estado "Ready To Submit".
+   - App Images: logo transparente `icon-fg-1920x1080.png` + fondo liso `background-plain-1920x1080.jpg` (los assets 16:9
+     y 1:1 los genera Samsung), icono `icon-512x423.png` (logo centrado en fondo oscuro), 4 capturas JPG de
+     `docs/store-assets/samsung/screenshots/` (lista, reproductor, menú, perfiles). ⚠️ Solo hay UN input de archivo para
+     capturas: cada envío va a la casilla cuyo lápiz se pulsó antes (clic al `<i>` del lápiz vía JS con `input.click`
+     anulado para que no abra el selector nativo).
+   - Service Info: Sports, rating ALL, los 24 idiomas (listas mat-selection-list: clic a cada opción y luego `»`), sin
+     datos personales, vendedor Nezor / contact@nezor.es / repo GitHub / Jorge Martínez, teléfono y dirección puestos
+     por el usuario. Sin DoC (solo hace falta para la UE).
+   - Title/Description on TV: título "Easy Xtream Football", descripción EN (1185 bytes), tags
+     `IPTV,player,sports,football,M3U,Xtream` (sin espacios).
+   - Service Country/Region: solo **United States of America** (lo único que ofrece a un Public Seller); sin
+     certificación de edad.
+   - Billing Info: Free. App Feature Info: Player (vídeo H.264/HEVC/MPEG2, audio AAC/AC3/HE-AAC/MP3/DD+, MPEG-TS y
+     fMP4, sin DRM, HLS + HTTP(S), AVPlay, subtítulos "Other": pistas embebidas).
+   - Verification Info: **App Description** = `docs/store-assets/samsung/app_description_easy_xtream_football.pptx`
+     (16 diapositivas sobre la plantilla Samsung v1.42, generado con `app_description_build.py` + el venv de
+     python-pptx + las capturas con rects de LG), Geo IP block "Unuse", sin cuenta de prueba: instrucciones con las
+     dos listas públicas de prueba en el campo Test Account.
+   - Trucos de la consola: los diálogos de confirmación y "saved" son de la página (no bloquean); los radios y
+     checkboxes son de Angular Material (clic por coordenadas o al `<input>` interno vía JS, los refs no valen); la
+     pestaña se bloqueó una vez al subir archivos en App Images (recargar).
+4. ⏳ **Distribute → "Request New Release"** (elegir grupos de modelos y pedir la revisión; lo pulsa el usuario).
+   Antes: decidir si la build de Samsung oculta el QR de Ko-fi del menú del café (condiciones 7.1: 30 % de cualquier
+   ingreso "derivado de la app"); se haría con un flag como `EXF_SAMPLE_LIST` y habría que resubir el wgt. El aviso
+   DSA de la página pide marcar el tipo de cuenta (individual) en Membership.
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
