@@ -797,7 +797,7 @@ desarrollador de Amazon gratuita. La revisión de Amazon es independiente de la 
     una versión nueva: *Add upcoming version* en la consola, subir el APK universal nuevo y reenviar.
 - Amazon **re-firma** el APK con su certificado: no afecta a nada (la app no verifica firmas ni usa licencias).
 
-## LG Content Store (webOS) — materiales PREPARADOS el 2026-10-19, pendiente de cuenta Seller Lounge
+## LG Content Store (webOS) — ENVIADA A QA el 2026-10-21 (QA Requested)
 
 > La app de TV vive en `tv/` (compartida con Samsung). Probada el 2026-10-19 en una LG 32LM637BPLA real
 > (webOS 4.9 = Chrome 53): vídeo MPEG-TS, radios, teclas, puntero. Ver `tv/README.md` y la memoria de Claude.
@@ -849,14 +849,25 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
   SUBMIT queda deshabilitado): hay que escribirla y pulsar SUBMIT en la misma sesión. Los avisos "Successfully
   Saved" son alert() nativos que bloquean la extensión de Chrome: los acepta el usuario.
 
+**SUBMIT HECHO el 2026-10-21 (noche) → estado "QA Requested":**
+- Antes del envío el SUBMIT dio dos avisos: hacía falta la descripción en ruso (Display Info, añadida) y el
+  paquete solo de 1920x1080 excluía los modelos FHD → se subió un segundo ipk 1280x720 (misma app, zoom 2/3,
+  `npm run build:store:webos` genera los dos). File Upload queda con dos filas, ambas 1.0.0 / SDK 4.0.0.
+- La sesión caducó entre medias y hubo que reescribir la "Note for Tester" (texto en la memoria de Claude y en el
+  historial; ahora menciona también los dos paquetes) y guardar Test Info antes del SUBMIT.
+- Al pulsar SUBMIT aparece la página "Seller Agreement" con cuatro casillas: todas "I agree" (la 3ª permite que
+  LG publique aunque haya defectos menores) → Confirm. Tras confirmar sale "QA Requested" y en la lista de apps el
+  estado pasa a "App Packaging Request" (LG reempaqueta/firma el ipk antes de la QA), Last Submission 2026-10-21.
+  La etiqueta rara "[TEST]U-NEXT!@#..." que aparece sobre la fila es un texto de la propia página de LG, no nuestro.
+- QA: pretest → function → content; LG dice de 3 semanas a 3 meses. Avisos al correo de la cuenta LG
+  (martinezortiz@gmail.com) y en la campana de la Seller Lounge; el contacto de QA es contact@nezor.es.
+
 **Pendiente (en orden):**
-1. ⏳ Pulsar SUBMIT en la Seller Lounge (lo hace el usuario) y anotar aquí fecha y estado.
-2. Última prueba en la LG real con la build de tienda 1.0.0 (`ares-install -d lg tv/dist/*.ipk`, con
-   `OPENSSL_ENABLE_SHA1_SIGNATURES=1`), incluido el Atrás de salida.
-3. Bajar la versión vigente de la checklist y el escenario desde Seller Lounge al enviar (rechazan plantillas
-   antiguas) y, si cambió, volcar las respuestas.
-4. App Management > App Submission: ID `es.nezor.easyxtreamfootball`, subir .ipk, datos en inglés, URL de
-   política de privacidad (la misma de Play), imágenes, los dos documentos, países. Anotar aquí fecha y estado.
+1. ⏳ Esperar el veredicto de QA (estado en Applications > App list). Si rechazan, mirar Defect Info en el
+   borrador y corregir; cada reenvío pasa QA entera otra vez.
+2. Probar la 1.0.0 en la LG real cuando esté encendida, sobre todo el paquete 720p (`OPENSSL_ENABLE_SHA1_SIGNATURES=1
+   ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
+   algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
