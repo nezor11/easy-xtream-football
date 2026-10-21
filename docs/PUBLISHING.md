@@ -891,8 +891,15 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    título "Partnership request to distribute a free app in Spain (Europe) - Easy Xtream Football"): quién es el
    Content Manager de España y qué requisitos tiene el contrato para una app gratuita de un desarrollador
    individual. La respuesta llega al 1:1 Q&A de Seller Office y por correo a contact@nezor.es.
-2. **Certificado nuevo** con contact@nezor.es en el Certificate Manager de Tizen Studio (el perfil `exf` es de la
-   cuenta del padre). Guardar certificado y contraseña: sin ellos no se puede actualizar la app nunca más.
+2. ✅ **Certificado nuevo HECHO el 2026-10-21 (23:51)**: perfil **`nezor`** (activo) en el Certificate Manager
+   (`SWT_GTK3=1 ~/tizen-studio/tools/certificate-manager/certificate-manager`), autor "Jorge Martínez" con la cuenta
+   contact@nezor.es, distribuidor Public con el DUID del M7 (`XTCHCXRMXD3UE`). Ficheros en `~/SamsungCertificate/nezor/`
+   (p12 protegidos con la contraseña que solo sabe el usuario). **Caducan el 2027-10-21** (Samsung los da por un año;
+   se renuevan con la misma cuenta). Copia: `~/Downloads/samsung-cert-nezor-2026-10-22.tar.gz` (pendiente de pasarla
+   al USB de la clave de Play y borrarla de Downloads). El perfil `exf` (cuenta del padre) ya no se usa.
+   **Paquete de tienda:** `platforms/tizen/config.xml` ahora es **versión 1.0.0** (misma numeración que LG);
+   `cd tv && npm run strings && EXF_SAMPLE_LIST=false node build.mjs --platform=tizen && ~/tizen-studio/tools/ide/bin/tizen package -t wgt -s nezor -o "$PWD/dist" -- "$PWD/dist/tizen"`
+   → `tv/dist/exf-store-1.0.0.wgt` (157 KB, firmado por el autor nuevo, verificado en author-signature.xml).
 3. Crear la app en Seller Office (Applications → Create App), subir el .wgt firmado con el certificado nuevo,
    iconos de `docs/store-assets/samsung/`, capturas neutras, PPTX de la UI (adaptar el de LG) e info de prueba.
 4. Decidir si la build de Samsung oculta el QR de Ko-fi del menú del café (condiciones 7.1: 30 % de cualquier
