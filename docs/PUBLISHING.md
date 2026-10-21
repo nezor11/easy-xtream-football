@@ -887,7 +887,10 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
 
 **Pendiente (en orden):**
 1. ⏳ **Partnership para España**: Membership → Partnership exige un acuerdo previo con el Samsung Content Manager
-   local; se pide por 1:1 Q&A. Redactar y enviar la consulta (la envía el usuario).
+   local. **Consulta ENVIADA por 1:1 Q&A el 2026-10-22 a las 00:41** (categoría App Management > Group management,
+   título "Partnership request to distribute a free app in Spain (Europe) - Easy Xtream Football"): quién es el
+   Content Manager de España y qué requisitos tiene el contrato para una app gratuita de un desarrollador
+   individual. La respuesta llega al 1:1 Q&A de Seller Office y por correo a contact@nezor.es.
 2. **Certificado nuevo** con contact@nezor.es en el Certificate Manager de Tizen Studio (el perfil `exf` es de la
    cuenta del padre). Guardar certificado y contraseña: sin ellos no se puede actualizar la app nunca más.
 3. Crear la app en Seller Office (Applications → Create App), subir el .wgt firmado con el certificado nuevo,
