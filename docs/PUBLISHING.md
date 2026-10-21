@@ -926,10 +926,13 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    - Trucos de la consola: los diálogos de confirmación y "saved" son de la página (no bloquean); los radios y
      checkboxes son de Angular Material (clic por coordenadas o al `<input>` interno vía JS, los refs no valen); la
      pestaña se bloqueó una vez al subir archivos en App Images (recargar).
-4. ⏳ **Distribute → "Request New Release"** (elegir grupos de modelos y pedir la revisión; lo pulsa el usuario).
-   Antes: decidir si la build de Samsung oculta el QR de Ko-fi del menú del café (condiciones 7.1: 30 % de cualquier
-   ingreso "derivado de la app"); se haría con un flag como `EXF_SAMPLE_LIST` y habría que resubir el wgt. El aviso
-   DSA de la página pide marcar el tipo de cuenta (individual) en Membership.
+4. ✅ **QR de Ko-fi fuera de la build de Samsung (decidido el 2026-10-22):** flag `EXF_COFFEE=false` (sin pestaña Coffee
+   en el menú del reproductor, sin recordatorio flotante, sin entrada en Ajustes, sin `qr.png` en el paquete). Script
+   `cd tv && npm run build:store:tizen` (flags + `tizen package -s nezor` + copia a `dist/exf-store-1.0.0.wgt`).
+   Paquete anterior borrado del borrador y el nuevo subido (Pre-Test Pass). Si algún día se quiere el café en
+   Samsung, se quita el flag y se sube una versión nueva (pasa QA otra vez).
+5. ⏳ **Distribute → "Request New Release"** (elegir versión, grupos de modelos por año 2022-2026 y la información de
+   la release; lo pulsa el usuario). El aviso DSA de la página pide marcar el tipo de cuenta (individual) en Membership.
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
 
