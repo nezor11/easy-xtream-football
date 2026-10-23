@@ -1022,7 +1022,16 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
   pequeña en móvil. La tele no cambia. Probado en el Pixel 11 Pro. Irá en la próxima versión de Play
   (la siguiente `versionCode` libre es **17**; la 16 es la 0.1.12 de Amazon, nunca enviada).
 
-## 0.1.13 (vc17) PREPARADA — 2026-10-23 (máquina Linux, con la clave) · NO subida a Play
+## 0.1.13 (vc17) ENVIADA A REVISIÓN en Producción — 2026-10-23 (máquina Linux)
+- **Enviada el 2026-10-23 por la tarde** desde Play Console (cuenta contact@nezor.es, `/console/u/1/`): Producción →
+  Crear nueva versión → bundle 17 (0.1.13) → notas ES/EN de abajo → Guardar → Resumen de publicación → "Enviar 1 cambio
+  a revisión" → confirmado. Estado: **"Cambios en revisión"**, "Iniciar lanzamiento completo" (100 %), publicación
+  gestionada desactivada (se publica sola al aprobarse; la 0.1.11 tardó ~7 días). Única advertencia: símbolos de
+  depuración del código nativo (la de siempre). Tamaño de descarga 5,05 MB.
+- Ojo con la subida del bundle: el puente de Claude en Chrome admite 10 MB por archivo y el .aab pesa 16 MB; Chrome
+  bloquea además que play.google.com lea de un servidor en 127.0.0.1. **El archivo lo eligió el usuario** con el botón
+  Subir (selector nativo). Las notas y el resto del formulario sí se rellenan desde Claude.
+- Antes del envío estaba así:
 - Único cambio funcional desde la 0.1.11: el recordatorio del café discreto en móvil apaisado y la ficha de radio
   más pequeña en móvil (merge `9586c87` del 2026-10-14, ya probado en el Pixel 11 Pro). Además `5c7ffd0` (lint: dos
   cadenas marcadas como no traducibles). La `tv/` y `docs/` no entran en el APK.
