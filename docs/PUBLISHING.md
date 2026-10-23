@@ -969,6 +969,13 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    despliega los apartados 4-6 debajo (Pre-Test, info, consideraciones) y luego Done + Confirm. El detalle del
    defecto está en Distribute → App Service → clic en "Rejected" (Model Group History); App Review es solo beta.
 
+8. ℹ️ **1.0.2 preparada, NO enviada (2026-10-23, commit `0097217`):** al probar en el M7, `getCurrentStreamInfo()`
+   seguía diciendo 320x184 mientras AVPlay ya emitía `PLAYER_MSG_BITRATE_CHANGE` a 6,2 Mbps (la variante 1080p):
+   la imagen era buena y la línea de info mentía. Ahora el adaptador guarda ese bitrate y la info y el menú muestran
+   "x.x Mbps" en lugar de la resolución falsa (probado: BipBop "1.9 Mbps", PLAYING). `tv/dist/exf-store-1.0.2.wgt`
+   queda como siguiente versión para cuando Samsung resuelva la 1.0.1; no conviene reenviar ahora y reiniciar la
+   revisión. También se reparó el script `build:store:tizen` (escape inválido en package.json desde a9c4bed).
+
 **Pendiente (en orden):**
 1. ⏳ Veredicto de la nueva revisión (Distribute → App Service y App Review; avisos a contact@nezor.es). Si vuelven a
    rechazar por lo mismo: pedir por 1:1 Q&A el modelo y el stream exactos, y plantearse el `<video>` HTML5 como en
