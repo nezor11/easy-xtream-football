@@ -869,6 +869,9 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
    algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
+- **Estado a 2026-10-23 (mediodía):** en Applications la app figura como **"QA Processing"** (el 21 estaba en "App
+  Packaging Request"), Last Submission 2026-10-21, Last QA "-". QA en marcha; sin avisos. Nada que hacer.
+
 ## Samsung TV (Tizen) — 1.0.0 RECHAZADA el 2026-10-23 (pantalla negra en Tizen 7-10); 1.0.1 REENVIADA ese mismo día a los 30 grupos
 
 > La app de TV es la misma de `tv/` que la de LG (Tizen 5.5 = Chrome 69). Probada por el usuario en el Smart Monitor
