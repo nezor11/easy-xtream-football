@@ -989,8 +989,11 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
 3. Tipo de cuenta (individual) por el aviso DSA. **Averiguado el 2026-10-23:** la cuenta es un grupo "Default" sin tipo
    (API `sbs/membergroup/group-join-info`: `memberGroupAccountTypeCode: DEFAULT`); My Information no tiene el campo y
    Bank Account redirige. El tipo solo se elige en **Membership → Group Information → Create Group** (nombre del
-   grupo, país, Account Type Company/Individual y datos de vendedor por defecto). Crear el grupo es decisión del
-   usuario; también es el paso previo a la partnership ("Request Partnership" cuelga de ahí).
+   grupo, país, Account Type Company/Individual y datos de vendedor por defecto). ✅ **GRUPO CREADO el 2026-10-23**
+   (formulario rellenado por Claude con los datos de Service Info, Done pulsado por el usuario): grupo **Nezor**,
+   Public, **INDIVIDUAL**, España, vendedor Nezor / contact@nezor.es / repo / Jorge Martínez / +34 / dirección de
+   Valencia (API `group-join-info`: `memberGroupAccountTypeCode: INDIVIDUAL`, `type: Public`, usuario MANAGER). El
+   aviso DSA queda resuelto; "Request Partnership" ya cuelga de este grupo.
 4. Pasar `~/Downloads/samsung-cert-nezor-2026-10-22.tar.gz` al USB de la clave de Play y borrarla de Downloads.
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
