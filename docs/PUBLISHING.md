@@ -869,7 +869,7 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
    algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
-## Samsung TV (Tizen) — ENVIADA el 2026-10-22, RECHAZADA el 2026-10-23 (pantalla negra en Tizen 7-10), 1.0.1 lista para reenviar
+## Samsung TV (Tizen) — 1.0.0 RECHAZADA el 2026-10-23 (pantalla negra en Tizen 7-10); 1.0.1 REENVIADA ese mismo día a los 30 grupos
 
 > La app de TV es la misma de `tv/` que la de LG (Tizen 5.5 = Chrome 69). Probada por el usuario en el Smart Monitor
 > M7 el 2026-10-18. Build de tienda: `cd tv && npm run build:store` (sin lista de ejemplo) y firmar con `tizen package`.
@@ -954,12 +954,21 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    AVPlay PLAYING, tiempo avanzando, `object` presente 1920x1080, mensaje "Cargando…" oculto. ⚠️ **No se puede
    verificar en un Tizen 7+**: no hay tele de 2023+ a mano; la confirmación real la dará la nueva revisión.
 
+7. ✅ **1.0.1 REENVIADA el 2026-10-23 (~13:30)**: App Package → Upload (el 1.0.0 "Submitted" no se puede borrar
+   mientras lo revisen los otros grupos) → `exf-store-1.0.1.wgt`, Pre-Test Pass, fuente no compartida. Verification
+   Info: párrafo nuevo sobre la 1.0.1 (object de AVPlay, "Cargando" se quita al avanzar), solo la lista de demos
+   como prueba principal y aclaración de que las radios no tienen vídeo a propósito (1643/4000 bytes). Request New
+   Release: versión 1.0.1, **los 30 grupos rechazados** (2024-2026 + 23TV_BASIC1_LIC/LIC2; los 16 de 2022-2023 en
+   "Submitted" con la 1.0.0 no son seleccionables), OS por defecto, novedades EN, nota al verificador, Optional,
+   minor defects Yes, dos "I have read and confirm". El POST `package/3/distribute` devolvió 200.
+   Trucos de este formulario: los grupos se filtran por **año** (mat-select) y hay que marcar Select All y pulsar
+   `»` año por año (el contador "Selection: N" está en la lista derecha); el aviso rojo "There is a language in
+   which content is not entered" y "Please select the OS version" son texto fijo; **Next no cambia de página**,
+   despliega los apartados 4-6 debajo (Pre-Test, info, consideraciones) y luego Done + Confirm. El detalle del
+   defecto está en Distribute → App Service → clic en "Rejected" (Model Group History); App Review es solo beta.
+
 **Pendiente (en orden):**
-1. ⏳ **Reenviar la 1.0.1 a Samsung**: Applications → app → App Package: borrar el paquete 1.0.0, subir
-   `tv/dist/exf-store-1.0.1.wgt` (Pre-Test), revisar Verification Info (añadir que el vídeo se ve tras el arreglo
-   del área de AVPlay) y Request New Release otra vez con los mismos 46 grupos. Antes: mirar en App Review el
-   detalle del defecto (modelo y capturas del probador) por si aporta algo más.
-2. ⏳ Veredicto de la nueva revisión (Distribute → App Service y App Review; avisos a contact@nezor.es). Si vuelven a
+1. ⏳ Veredicto de la nueva revisión (Distribute → App Service y App Review; avisos a contact@nezor.es). Si vuelven a
    rechazar por lo mismo: pedir por 1:1 Q&A el modelo y el stream exactos, y plantearse el `<video>` HTML5 como en
    webOS para HLS (litefin #510: "AVPlay negro, HTML player bien").
 2. ⏳ **Partnership para España**: el 1:1 Q&A ya respondió (2026-10-22) con el contacto de la Content Manager de
