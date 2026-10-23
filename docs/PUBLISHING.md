@@ -979,7 +979,11 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    versión a la 1.0.1 y mencionando que es un recordatorio del correo del 22. Cuando conteste: Membership → Partnership (acuerdo
    con ella), añadir España/Europa en Service Country/Region y adjuntar la Declaración de Conformidad (EAA) en
    Service Info punto 6.
-3. Marcar el tipo de cuenta (individual) en Membership por el aviso DSA.
+3. Tipo de cuenta (individual) por el aviso DSA. **Averiguado el 2026-10-23:** la cuenta es un grupo "Default" sin tipo
+   (API `sbs/membergroup/group-join-info`: `memberGroupAccountTypeCode: DEFAULT`); My Information no tiene el campo y
+   Bank Account redirige. El tipo solo se elige en **Membership → Group Information → Create Group** (nombre del
+   grupo, país, Account Type Company/Individual y datos de vendedor por defecto). Crear el grupo es decisión del
+   usuario; también es el paso previo a la partnership ("Request Partnership" cuelga de ahí).
 4. Pasar `~/Downloads/samsung-cert-nezor-2026-10-22.tar.gz` al USB de la clave de Play y borrarla de Downloads.
 
 ## Cambios en `main` sin publicar (desde la 0.1.11 / vc15)
