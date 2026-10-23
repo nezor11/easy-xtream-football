@@ -869,7 +869,7 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
    algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
-## Samsung TV (Tizen) — ENVIADA A REVISIÓN en Seller Office el 2026-10-22 (solo EE. UU. hasta tener partnership)
+## Samsung TV (Tizen) — ENVIADA el 2026-10-22, RECHAZADA el 2026-10-23 (pantalla negra en Tizen 7-10), 1.0.1 lista para reenviar
 
 > La app de TV es la misma de `tv/` que la de LG (Tizen 5.5 = Chrome 69). Probada por el usuario en el Smart Monitor
 > M7 el 2026-10-18. Build de tienda: `cd tv && npm run build:store` (sin lista de ejemplo) y firmar con `tizen package`.
@@ -939,9 +939,29 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    Optional, nota para el verificador con las listas de prueba, "release with minor defects" = Yes. Distribute → App
    Service muestra cada grupo como **Submitted · 100 % Rollout (scheduled)**. Solo EE. UU. mientras no haya partnership.
 
+6. ❌ **RECHAZADA en Document Review el 2026-10-23 (correo de las 00:44)** en los **30 grupos Tizen 7.0-10.0** (modelos
+   2023-2026, LIC incluidos); los 16 grupos de 2022 (Tizen 6.5) no aparecen en el correo. Único defecto, CRITICAL:
+   *"Infinite media loading. After App has been installed when media is launched, it displays a black screen with
+   audio."* Los tres streams de `docs/playlists/review-test.m3u` siguen vivos (H.264/AAC, comprobado ese día).
+   **Causa más probable:** la app no creaba el `<object type="application/avplayer">` que la guía de AVPlay pide como
+   paso 1 para marcar el área de vídeo; Tizen 5.5 (el M7) pinta el plano igualmente, los modelos nuevos no.
+   **Arreglo (commit `a9c4bed`, versión Tizen 1.0.1):** `tv/src/platform/tizen.ts` crea ese `object` a pantalla
+   completa detrás de la UI (z-index -1, primer hijo de `body`) al abrir el primer stream, y da por terminado el
+   buffering en cuanto `oncurrentplaytime` avanza aunque no llegue `onbufferingcomplete` (el "infinite loading").
+   `npm run build:store:tizen` nombra el paquete con la versión del config.xml → `tv/dist/exf-store-1.0.1.wgt`.
+   ✅ Probado en el M7 (Tizen 5.5) el 2026-10-23: instalado con el certificado `nezor` (hubo que desinstalar la app
+   firmada con `exf`: "Author certificate not match"), perfil M3U sembrado con review-test.m3u por el inspector,
+   AVPlay PLAYING, tiempo avanzando, `object` presente 1920x1080, mensaje "Cargando…" oculto. ⚠️ **No se puede
+   verificar en un Tizen 7+**: no hay tele de 2023+ a mano; la confirmación real la dará la nueva revisión.
+
 **Pendiente (en orden):**
-1. ⏳ Veredicto de la revisión de Samsung (Distribute → App Service y App Review; avisos a contact@nezor.es). Jellyfin
-   tardó meses. Si rechazan: App Review muestra los defectos; corregir, subir versión nueva y volver a pedir release.
+1. ⏳ **Reenviar la 1.0.1 a Samsung**: Applications → app → App Package: borrar el paquete 1.0.0, subir
+   `tv/dist/exf-store-1.0.1.wgt` (Pre-Test), revisar Verification Info (añadir que el vídeo se ve tras el arreglo
+   del área de AVPlay) y Request New Release otra vez con los mismos 46 grupos. Antes: mirar en App Review el
+   detalle del defecto (modelo y capturas del probador) por si aporta algo más.
+2. ⏳ Veredicto de la nueva revisión (Distribute → App Service y App Review; avisos a contact@nezor.es). Si vuelven a
+   rechazar por lo mismo: pedir por 1:1 Q&A el modelo y el stream exactos, y plantearse el `<video>` HTML5 como en
+   webOS para HLS (litefin #510: "AVPlay negro, HTML player bien").
 2. ⏳ **Partnership para España**: el 1:1 Q&A ya respondió (2026-10-22) con el contacto de la Content Manager de
    España, **Nagore Bilbao <n.bilbao@samsung.com>**. Escribirle desde contact@nezor.es presentando la app (gratuita,
    sin anuncios, ya publicada en Play y Amazon y en QA en LG), con el App ID 3202610049966 y la petición de entrar en
