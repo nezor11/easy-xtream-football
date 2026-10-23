@@ -893,8 +893,9 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    individual. La respuesta llega al 1:1 Q&A de Seller Office y por correo a contact@nezor.es.
    ✅ **RESPONDIDA el 2026-10-22 a las 11:27** (App Management Team, correo de tvapps@samsung.com a las 13:27): hay que
    escribir a **Nagore Bilbao (n.bilbao@samsung.com)**, responsable de la región de España, que explicará cómo entrar
-   en Partner Support. ✅ **Correo ENVIADO por el usuario el 2026-10-23** desde contact@nezor.es (presentación de la
-   app, App ID, estado en las otras tiendas y petición de requisitos de Partner Support para España/Europa).
+   en Partner Support. ✅ **Correo ENVIADO por el usuario el 2026-10-22 a las 17:57** desde **martinezortiz@gmail.com**
+   (firma con contact@nezor.es): presentación de la app, App ID, estado en las otras tiendas y petición de requisitos
+   de Partner Support para España/Europa. ⚠️ La respuesta de Nagore llegará al Gmail personal, no a contact@nezor.es.
 2. ✅ **Certificado nuevo HECHO el 2026-10-21 (23:51)**: perfil **`nezor`** (activo) en el Certificate Manager
    (`SWT_GTK3=1 ~/tizen-studio/tools/certificate-manager/certificate-manager`), autor "Jorge Martínez" con la cuenta
    contact@nezor.es, distribuidor Public con el DUID del M7 (`XTCHCXRMXD3UE`). Ficheros en `~/SamsungCertificate/nezor/`
@@ -973,7 +974,7 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    rechazar por lo mismo: pedir por 1:1 Q&A el modelo y el stream exactos, y plantearse el `<video>` HTML5 como en
    webOS para HLS (litefin #510: "AVPlay negro, HTML player bien").
 2. ⏳ **Partnership para España**: correo a la Content Manager **Nagore Bilbao <n.bilbao@samsung.com>** ENVIADO el
-   2026-10-23. Esperar su respuesta (correo de contact@nezor.es). Cuando conteste: Membership → Partnership (acuerdo
+   2026-10-22 (17:57) desde martinezortiz@gmail.com. Esperar su respuesta **en ese Gmail**. Cuando conteste: Membership → Partnership (acuerdo
    con ella), añadir España/Europa en Service Country/Region y adjuntar la Declaración de Conformidad (EAA) en
    Service Info punto 6.
 3. Marcar el tipo de cuenta (individual) en Membership por el aviso DSA.
