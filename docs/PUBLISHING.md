@@ -975,6 +975,13 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    "x.x Mbps" en lugar de la resolución falsa (probado: BipBop "1.9 Mbps", PLAYING). `tv/dist/exf-store-1.0.2.wgt`
    queda como siguiente versión para cuando Samsung resuelva la 1.0.1; no conviene reenviar ahora y reiniciar la
    revisión. También se reparó el script `build:store:tizen` (escape inválido en package.json desde a9c4bed).
+   Un bitrate de 99999999 (lista de una sola variante) se ignora y se muestra la resolución real.
+9. ✅ **Lista de prueba sin rendición solo de audio (2026-10-23, commit `9cdd1cf`):** las listas maestras de BipBop
+   y Tears of Steel llevan una variante de solo audio a la que un reproductor de TV puede caer con red lenta, lo
+   que un revisor describiría justo como "black screen with audio". `docs/playlists/review-test.m3u` apunta ahora a
+   media playlists de una variante (BBB 720p 2,1 Mbps, BipBop 720p 1 Mbps, Tears of Steel 1680x750 1,5 Mbps); la
+   URL de jsDelivr es la misma, así que la revisión en curso de la 1.0.1 ya carga la lista nueva (caché purgada).
+   Probado en el M7: los tres canales PLAYING con su resolución real en la info.
 
 **Pendiente (en orden):**
 1. ⏳ Veredicto de la nueva revisión (Distribute → App Service y App Review; avisos a contact@nezor.es). Si vuelven a

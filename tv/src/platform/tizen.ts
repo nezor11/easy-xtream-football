@@ -59,7 +59,8 @@ const player: TvPlayer = {
       },
       onerror: (e: any) => { if (events.onError) events.onError(String(e)); },
       onevent: (name: string, data: string) => {
-        if (name === 'PLAYER_MSG_BITRATE_CHANGE') { const m = /BITRATE:(\d+)/.exec(String(data)); if (m) { variantBitrate = Number(m[1]); if (ready && events.onReady) events.onReady(); } }
+        // A single-variant playlist reports 99999999 ("unknown"): keep the real size from the stream info then.
+        if (name === 'PLAYER_MSG_BITRATE_CHANGE') { const m = /BITRATE:(\d+)/.exec(String(data)); if (m) { const b = Number(m[1]); variantBitrate = b > 0 && b < 50e6 ? b : 0; if (ready && events.onReady) events.onReady(); } }
       },
       onstreamcompleted: () => { if (events.onEnded) events.onEnded(); },
       ondrmevent: () => {},
