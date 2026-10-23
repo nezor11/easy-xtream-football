@@ -1030,8 +1030,13 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
 - `./gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` → BUILD OK; bundle firmado con la clave de subida en
   `app/build/outputs/bundle/fullRelease/app-full-release.aab` (16,2 MB). **75 tests, 0 fallos**; firma verificada con
   keytool: CN=Jorge Mtnez, O=nezor (la clave de subida, no la de debug).
-- **Antes de subir:** instalar la release en el Pixel y comprobar el recordatorio en apaisado y el "Acerca de" con
-  0.1.13; luego Play Console → Producción → nueva versión con el bundle 17 y estas notas:
+- **Probada en el Pixel 11 Pro el 2026-10-23** (`adb install -r app-full-arm64-v8a-release.apk` de
+  `assembleFullRelease`, instalación limpia, perfiles M3U `review-test.m3u` y `sports-radio.m3u` de jsDelivr):
+  Ajustes muestra v0.1.13; vídeo OK; recordatorio del café en apaisado como tarjeta pequeña abajo a la derecha
+  (con letra del sistema 1.0 queda limpio; **con letra 2.0 la esquina de la tarjeta pisa el final de la barra de
+  información** "… 13,4 Mbps • 1280x720", defecto menor solo a ese tamaño); en vertical sigue la tarjeta completa
+  en la pila inferior; ficha de radio pequeña correcta en vertical y apaisado con letra 2.0.
+- **Para subir:** Play Console → Producción → nueva versión con el bundle 17 y estas notas:
   ```
   <es-ES>
   • Móvil: en apaisado, el recordatorio del café es una tarjeta pequeña en la esquina, como en la tele.
