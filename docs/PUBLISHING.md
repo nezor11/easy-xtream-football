@@ -974,7 +974,9 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    rechazar por lo mismo: pedir por 1:1 Q&A el modelo y el stream exactos, y plantearse el `<video>` HTML5 como en
    webOS para HLS (litefin #510: "AVPlay negro, HTML player bien").
 2. ⏳ **Partnership para España**: correo a la Content Manager **Nagore Bilbao <n.bilbao@samsung.com>** ENVIADO el
-   2026-10-22 (17:57) desde martinezortiz@gmail.com. Esperar su respuesta **en ese Gmail**. Cuando conteste: Membership → Partnership (acuerdo
+   2026-10-22 (17:57) desde martinezortiz@gmail.com. Esperar su respuesta **en ese Gmail**. Si el **2026-10-29** no ha
+   contestado, reenviar el mismo texto desde **contact@nezor.es** (la cuenta de Seller Office), actualizando la
+   versión a la 1.0.1 y mencionando que es un recordatorio del correo del 22. Cuando conteste: Membership → Partnership (acuerdo
    con ella), añadir España/Europa en Service Country/Region y adjuntar la Declaración de Conformidad (EAA) en
    Service Info punto 6.
 3. Marcar el tipo de cuenta (individual) en Membership por el aviso DSA.
