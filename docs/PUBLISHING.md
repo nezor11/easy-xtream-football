@@ -893,7 +893,8 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    individual. La respuesta llega al 1:1 Q&A de Seller Office y por correo a contact@nezor.es.
    ✅ **RESPONDIDA el 2026-10-22 a las 11:27** (App Management Team, correo de tvapps@samsung.com a las 13:27): hay que
    escribir a **Nagore Bilbao (n.bilbao@samsung.com)**, responsable de la región de España, que explicará cómo entrar
-   en Partner Support. Siguiente paso: correo desde contact@nezor.es (borrador abajo, en el bloque "Pendiente").
+   en Partner Support. ✅ **Correo ENVIADO por el usuario el 2026-10-23** desde contact@nezor.es (presentación de la
+   app, App ID, estado en las otras tiendas y petición de requisitos de Partner Support para España/Europa).
 2. ✅ **Certificado nuevo HECHO el 2026-10-21 (23:51)**: perfil **`nezor`** (activo) en el Certificate Manager
    (`SWT_GTK3=1 ~/tizen-studio/tools/certificate-manager/certificate-manager`), autor "Jorge Martínez" con la cuenta
    contact@nezor.es, distribuidor Public con el DUID del M7 (`XTCHCXRMXD3UE`). Ficheros en `~/SamsungCertificate/nezor/`
@@ -971,11 +972,10 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
 1. ⏳ Veredicto de la nueva revisión (Distribute → App Service y App Review; avisos a contact@nezor.es). Si vuelven a
    rechazar por lo mismo: pedir por 1:1 Q&A el modelo y el stream exactos, y plantearse el `<video>` HTML5 como en
    webOS para HLS (litefin #510: "AVPlay negro, HTML player bien").
-2. ⏳ **Partnership para España**: el 1:1 Q&A ya respondió (2026-10-22) con el contacto de la Content Manager de
-   España, **Nagore Bilbao <n.bilbao@samsung.com>**. Escribirle desde contact@nezor.es presentando la app (gratuita,
-   sin anuncios, ya publicada en Play y Amazon y en QA en LG), con el App ID 3202610049966 y la petición de entrar en
-   Partner Support para distribuir en España. Cuando conteste: Membership → Partnership (acuerdo con ella), añadir
-   España/Europa en Service Country/Region y adjuntar la Declaración de Conformidad (EAA) en Service Info punto 6.
+2. ⏳ **Partnership para España**: correo a la Content Manager **Nagore Bilbao <n.bilbao@samsung.com>** ENVIADO el
+   2026-10-23. Esperar su respuesta (correo de contact@nezor.es). Cuando conteste: Membership → Partnership (acuerdo
+   con ella), añadir España/Europa en Service Country/Region y adjuntar la Declaración de Conformidad (EAA) en
+   Service Info punto 6.
 3. Marcar el tipo de cuenta (individual) en Membership por el aviso DSA.
 4. Pasar `~/Downloads/samsung-cert-nezor-2026-10-22.tar.gz` al USB de la clave de Play y borrarla de Downloads.
 
