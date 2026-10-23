@@ -1,9 +1,25 @@
-/** Samsung Tizen: AVPlay (webapis.avplay) draws the picture on a plane behind the (transparent) page. */
+/**
+ * Samsung Tizen: AVPlay (webapis.avplay) draws the picture on a plane behind the (transparent) page, through
+ * an `<object type="application/avplayer">` element that marks the display area (Samsung's AVPlay guide, step 1).
+ * Tizen 5.5 (2020 Smart Monitor) shows the plane even without that element; the 2023+ models (Tizen 7.0 and
+ * later) do not: Seller Office rejected 1.0.0 with "black screen with audio" on every Tizen 7-10 model group.
+ */
 import { PlayerEvents, TrackInfo, TvPlatform, TvPlayer } from './index';
 
 declare const webapis: any;
 
 function hasAvplay(): boolean { return typeof webapis !== 'undefined' && !!webapis.avplay; }
+
+let surface: HTMLElement | null = null;
+/** The full-screen AVPlay object, behind the UI (`#app` is positioned, so a negative z-index keeps it underneath). */
+function ensureSurface(): void {
+  if (surface || typeof document === 'undefined') return;
+  surface = document.createElement('object');
+  surface.id = 'exf-avplayer';
+  surface.setAttribute('type', 'application/avplayer');
+  Object.assign(surface.style, { position: 'absolute', left: '0', top: '0', width: '1920px', height: '1080px', zIndex: '-1' });
+  document.body.insertBefore(surface, document.body.firstChild);
+}
 
 function parseTrack(t: any): TrackInfo {
   let extra: any = {}; try { extra = JSON.parse(t.extra_info); } catch (e) { /* ignore */ }
@@ -16,16 +32,24 @@ const player: TvPlayer = {
   open(url: string, events: PlayerEvents): void {
     if (!hasAvplay()) { if (events.onError) events.onError('AVPlay unavailable'); return; }
     this.stop();
+    ensureSurface();
     webapis.avplay.open(url);
     webapis.avplay.setDisplayRect(0, 0, 1920, 1080);
     try { webapis.avplay.setDisplayMethod('PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO'); } catch (e) { /* older firmware */ }
     try { webapis.avplay.setStreamingProperty('ADAPTIVE_INFO', 'STARTBITRATE=HIGHEST'); } catch (e) { /* not adaptive */ }
-    let ready = false;
+    let ready = false, buffering = false, lastTime = -1;
+    const setBuffering = (b: boolean) => { if (buffering === b) return; buffering = b; if (events.onBuffering) events.onBuffering(b); };
     webapis.avplay.setListener({
-      onbufferingstart: () => { if (events.onBuffering) events.onBuffering(true); },
+      onbufferingstart: () => { setBuffering(true); },
       onbufferingprogress: () => {},
-      onbufferingcomplete: () => { if (events.onBuffering) events.onBuffering(false); if (!ready) { ready = true; if (events.onReady) events.onReady(); } },
-      oncurrentplaytime: (t: number) => { if (!ready && t > 0) { ready = true; if (events.onReady) events.onReady(); } if (events.onTime) events.onTime(t); },
+      onbufferingcomplete: () => { setBuffering(false); if (!ready) { ready = true; if (events.onReady) events.onReady(); } },
+      // Some firmware never reports onbufferingcomplete for a live stream: playback advancing is proof enough.
+      oncurrentplaytime: (t: number) => {
+        if (t > lastTime && lastTime >= 0) setBuffering(false);
+        lastTime = t;
+        if (!ready && t > 0) { ready = true; if (events.onReady) events.onReady(); }
+        if (events.onTime) events.onTime(t);
+      },
       onerror: (e: any) => { if (events.onError) events.onError(String(e)); },
       onevent: () => {},
       onstreamcompleted: () => { if (events.onEnded) events.onEnded(); },

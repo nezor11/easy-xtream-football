@@ -10,7 +10,7 @@
     "check": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "build:store": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs",
-    "build:store:tizen": "npm run strings && EXF_SAMPLE_LIST=false EXF_COFFEE=false node build.mjs --platform=tizen && ~/tizen-studio/tools/ide/bin/tizen package -t wgt -s nezor -o \"$PWD/dist\" -- \"$PWD/dist/tizen\" && cp \"dist/Easy Xtream Football.wgt\" dist/exf-store-1.0.0.wgt",
+    "build:store:tizen": "npm run strings && EXF_SAMPLE_LIST=false EXF_COFFEE=false node build.mjs --platform=tizen && ~/tizen-studio/tools/ide/bin/tizen package -t wgt -s nezor -o \"$PWD/dist\" -- \"$PWD/dist/tizen\" && cp \"dist/Easy Xtream Football.wgt\" \"dist/exf-store-$(sed -n 's/.*<widget .*version=\"\([0-9.]*\)\".*/\1/p' platforms/tizen/config.xml).wgt\"",
     "build:store:webos": "npm run strings && EXF_SAMPLE_LIST=false node build.mjs --platform=webos && ares-package dist/webos -o dist && EXF_SAMPLE_LIST=false node build.mjs --platform=webos --res=720 && ares-package dist/webos720 -o dist/720"
   },
   "devDependencies": {
