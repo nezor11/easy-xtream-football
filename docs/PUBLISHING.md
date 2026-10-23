@@ -1016,6 +1016,28 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
   pequeña en móvil. La tele no cambia. Probado en el Pixel 11 Pro. Irá en la próxima versión de Play
   (la siguiente `versionCode` libre es **17**; la 16 es la 0.1.12 de Amazon, nunca enviada).
 
+## 0.1.13 (vc17) PREPARADA — 2026-10-23 (máquina Linux, con la clave) · NO subida a Play
+- Único cambio funcional desde la 0.1.11: el recordatorio del café discreto en móvil apaisado y la ficha de radio
+  más pequeña en móvil (merge `9586c87` del 2026-10-14, ya probado en el Pixel 11 Pro). Además `5c7ffd0` (lint: dos
+  cadenas marcadas como no traducibles). La `tv/` y `docs/` no entran en el APK.
+- `app/build.gradle.kts`: versionCode **17**, versionName **0.1.13** (la 16 fue la 0.1.12 de Amazon, nunca enviada).
+- `./gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` → BUILD OK; bundle firmado con la clave de subida en
+  `app/build/outputs/bundle/fullRelease/app-full-release.aab` (16,2 MB). Ver abajo el resultado de tests y firma.
+- **Antes de subir:** instalar la release en el Pixel y comprobar el recordatorio en apaisado y el "Acerca de" con
+  0.1.13; luego Play Console → Producción → nueva versión con el bundle 17 y estas notas:
+  ```
+  <es-ES>
+  • Móvil: en apaisado, el recordatorio del café es una tarjeta pequeña en la esquina, como en la tele.
+  • Móvil: la ficha de las radios ocupa menos pantalla.
+  </es-ES>
+  <en-US>
+  • Phone: in landscape, the coffee reminder is a small corner card, as on TV.
+  • Phone: the radio card takes less screen space.
+  </en-US>
+  ```
+- Amazon: si se sube a Play, valorar subir también la 0.1.13 a Amazon con `-Pstore=amazon` (sustituiría a la 0.1.11
+  live; pasa revisión otra vez).
+
 ## Pendiente ⏳ (en orden)
 1. **Conseguir 12 testers reales** (correos de Google) para la prueba cerrada. Es el cuello de botella.
    - Opciones: amigos/familia · un **Grupo de Google** (groups.google.com) cuyo email se pega en
