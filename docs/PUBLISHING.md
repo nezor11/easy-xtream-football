@@ -1022,7 +1022,8 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
   cadenas marcadas como no traducibles). La `tv/` y `docs/` no entran en el APK.
 - `app/build.gradle.kts`: versionCode **17**, versionName **0.1.13** (la 16 fue la 0.1.12 de Amazon, nunca enviada).
 - `./gradlew :app:testFullReleaseUnitTest :app:bundleFullRelease` → BUILD OK; bundle firmado con la clave de subida en
-  `app/build/outputs/bundle/fullRelease/app-full-release.aab` (16,2 MB). Ver abajo el resultado de tests y firma.
+  `app/build/outputs/bundle/fullRelease/app-full-release.aab` (16,2 MB). **75 tests, 0 fallos**; firma verificada con
+  keytool: CN=Jorge Mtnez, O=nezor (la clave de subida, no la de debug).
 - **Antes de subir:** instalar la release en el Pixel y comprobar el recordatorio en apaisado y el "Acerca de" con
   0.1.13; luego Play Console → Producción → nueva versión con el bundle 17 y estas notas:
   ```
