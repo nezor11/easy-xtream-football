@@ -11,6 +11,12 @@ declare const webapis: any;
 function hasAvplay(): boolean { return typeof webapis !== 'undefined' && !!webapis.avplay; }
 
 let surface: HTMLElement | null = null;
+/**
+ * Variant bitrate from PLAYER_MSG_BITRATE_CHANGE. On an adaptive HLS stream getCurrentStreamInfo() keeps
+ * reporting the size of the first variant (320x184 while 1080p plays, seen on Tizen 5.5), so the info line
+ * shows this instead of a stale resolution.
+ */
+let variantBitrate = 0;
 /** The full-screen AVPlay object, behind the UI (`#app` is positioned, so a negative z-index keeps it underneath). */
 function ensureSurface(): void {
   if (surface || typeof document === 'undefined') return;
@@ -38,6 +44,7 @@ const player: TvPlayer = {
     try { webapis.avplay.setDisplayMethod('PLAYER_DISPLAY_MODE_AUTO_ASPECT_RATIO'); } catch (e) { /* older firmware */ }
     try { webapis.avplay.setStreamingProperty('ADAPTIVE_INFO', 'STARTBITRATE=HIGHEST'); } catch (e) { /* not adaptive */ }
     let ready = false, buffering = false, lastTime = -1;
+    variantBitrate = 0;
     const setBuffering = (b: boolean) => { if (buffering === b) return; buffering = b; if (events.onBuffering) events.onBuffering(b); };
     webapis.avplay.setListener({
       onbufferingstart: () => { setBuffering(true); },
@@ -51,7 +58,9 @@ const player: TvPlayer = {
         if (events.onTime) events.onTime(t);
       },
       onerror: (e: any) => { if (events.onError) events.onError(String(e)); },
-      onevent: () => {},
+      onevent: (name: string, data: string) => {
+        if (name === 'PLAYER_MSG_BITRATE_CHANGE') { const m = /BITRATE:(\d+)/.exec(String(data)); if (m) { variantBitrate = Number(m[1]); if (ready && events.onReady) events.onReady(); } }
+      },
       onstreamcompleted: () => { if (events.onEnded) events.onEnded(); },
       ondrmevent: () => {},
     });
@@ -70,7 +79,11 @@ const player: TvPlayer = {
   state(): string { try { return webapis.avplay.getState(); } catch (e) { return 'NONE'; } },
   tracks(): TrackInfo[] { try { return (webapis.avplay.getTotalTrackInfo() as any[]).map(parseTrack); } catch (e) { return []; } },
   bufferAheadMs(): number { return -1; }, // AVPlay has no buffered-range API
-  currentTracks(): TrackInfo[] { try { return (webapis.avplay.getCurrentStreamInfo() as any[]).map(parseTrack); } catch (e) { return []; } },
+  currentTracks(): TrackInfo[] {
+    try {
+      return (webapis.avplay.getCurrentStreamInfo() as any[]).map(parseTrack).map((t) => (t.type === 'VIDEO' && variantBitrate > 0 ? { ...t, width: undefined, height: undefined, bitrateBps: variantBitrate } : t));
+    } catch (e) { return []; }
+  },
   selectTrack(type: 'AUDIO' | 'TEXT', index: number): boolean { try { webapis.avplay.setSelectTrack(type, index); return true; } catch (e) { return false; } },
   setSubtitlesEnabled(on: boolean): void { try { webapis.avplay.setSilentSubtitle(!on); } catch (e) { /* ignore */ } },
 };

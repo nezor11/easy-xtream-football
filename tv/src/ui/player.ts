@@ -139,6 +139,8 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
       h('span', { class: 'name', text: group.displayName }), h('span', { text: '•' }), h('span', { text: `${ci + 1}/${channels().length}` }),
       h('span', { text: '•' }), h('span', { text: '‹ ' + (quality ? QUALITY[quality].label : t('quality_auto')) + ' ›' }),
       video && video.width ? h('span', { text: '•' }) : null, video && video.width ? h('span', { text: `${video.width}x${video.height}` }) : null,
+      // Adaptive stream: the platform only tells the bitrate of the variant in play, not its size.
+      video && !video.width && video.bitrateBps ? h('span', { text: '•' }) : null, video && !video.width && video.bitrateBps ? h('span', { text: (video.bitrateBps / 1e6).toFixed(1) + ' Mbps' }) : null,
       // Connection health: measured network speed (CDN probe / stall step-down) and seconds buffered ahead
       // of the playhead where the platform reports it (webOS); a shrinking buffer means the link is too slow.
       bandwidth > 0 ? h('span', { text: '•' }) : null, bandwidth > 0 ? h('span', { text: '↓ ' + (bandwidth / 1e6).toFixed(bandwidth >= 10e6 ? 0 : 1) + ' Mbps' }) : null,
@@ -220,7 +222,8 @@ export function playerScreen(folders: ChannelFolder[], folderIndex: number, chan
     } else if (section === 'INFO') {
       const visible = Store.channelInfoVisible();
       options.appendChild(option(visible ? t('info_hide') : t('info_show'), false, () => { Store.setChannelInfoVisible(!visible); renderInfo(); renderMenu(); refocus(); }));
-      const v = tracks.filter((x) => x.type === 'VIDEO' || x.type === 'AUDIO').map((x) => `${x.type}: ${x.codec}${x.width ? ' ' + x.width + 'x' + x.height : ''}`).join('\n');
+      const cur = Player.currentTracks().find((x) => x.type === 'VIDEO');
+      const v = tracks.filter((x) => x.type === 'VIDEO' || x.type === 'AUDIO').map((x) => `${x.type}: ${x.codec}${x.width ? ' ' + x.width + 'x' + x.height : ''}${x.type === 'VIDEO' && cur && cur.bitrateBps ? ' · ' + (cur.bitrateBps / 1e6).toFixed(1) + ' Mbps' : ''}`).join('\n');
       if (v) options.appendChild(h('div', { class: 'text', text: v }));
     } else if (section === 'COFFEE') {
       options.appendChild(h('div', { class: 'gap18', style: { display: 'flex', alignItems: 'center' } }, h('img', { src: 'qr.png', class: 'qr', style: { width: '148px', height: '148px' } }), h('div', { class: 'text', text: t('support_message') + '\n' + t('support_site_handle'), style: { marginTop: '0' } })));

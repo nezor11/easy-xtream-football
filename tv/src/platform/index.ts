@@ -5,7 +5,9 @@
 import { TizenPlatform } from './tizen';
 import { WebosPlatform } from './webos';
 
-export interface TrackInfo { index: number; type: 'AUDIO' | 'TEXT' | 'VIDEO'; language: string; codec: string; width?: number; height?: number; }
+export interface TrackInfo { index: number; type: 'AUDIO' | 'TEXT' | 'VIDEO'; language: string; codec: string; width?: number; height?: number;
+  /** Bitrate of the variant actually playing (adaptive streams), when the platform reports it. */
+  bitrateBps?: number; }
 export interface PlayerEvents {
   onReady?: () => void;            // first frame / buffering complete
   onBuffering?: (buffering: boolean) => void;
