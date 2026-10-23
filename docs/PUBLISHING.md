@@ -869,6 +869,12 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
    ares-install -d lg tv/dist/720/es.nezor.easyxtreamfootball_1.0.0_all.ipk`), incluido el Atrás de salida. Si
    algo falla, corregir y reenviar (QA Requested se puede retirar desde la lista de apps).
 
+- ✅ **Paquete 720p PROBADO en la LG real el 2026-10-23** (`ares-install -d lg tv/dist/720/..._1.0.0_all.ipk`, el mismo
+  ipk enviado a QA): viewport 1280x720, `html { zoom: 0.666667 }` aplicado (layout 1920x1080 escalado), rejilla con la
+  lista real del usuario, un canal reproduce a 1920x1080 con el `<video>` a pantalla completa (readyState 4, 10 s de
+  búfer), Atrás: reproductor → rejilla → perfiles → la app sale (comprobado con `ares-launch --running`). Inspector:
+  `ares-inspect -d lg --app es.nezor.easyxtreamfootball` da un puerto DevTools; Chrome 53 no soporta `awaitPromise`
+  y las teclas sintéticas necesitan `keyCode` definido con `Object.defineProperty` sobre el KeyboardEvent.
 - **Estado a 2026-10-23 (mediodía):** en Applications la app figura como **"QA Processing"** (el 21 estaba en "App
   Packaging Request"), Last Submission 2026-10-21, Last QA "-". QA en marcha; sin avisos. Nada que hacer.
 
