@@ -33,6 +33,20 @@ Checklist vivo del proceso de publicación de **Easy Xtream Football**.
 - Canal **Prueba cerrada – Alpha** montado: países = **Todo el mundo (177)**, notas de versión añadidas,
   app bundle 4 (0.1.3) en estado **Borrador** (NO enviado a revisión).
 
+## DoC de la European Accessibility Act para Samsung (2026-10-27)
+Samsung Seller Office exige en *Service Info → 6. DoC file for European Accessibility Act* una Declaración de
+Conformidad (autodeclaración) para distribuir la app en la UE (salvo Bulgaria). Hará falta el día que la
+partnership con Samsung España abra la distribución fuera de EE. UU.
+- **Fuente en el repo:** `docs/store-assets/samsung/eaa-doc.html` (sigue la plantilla de Samsung,
+  `d3unf4s5rp9dfh.cloudfront.net/SmartTV_doc/eaa_doc_sample.png`: empresa, app, frase de conformidad con la
+  Directiva (UE) 2019/882 y EN 301 549, firma) + anexo con las funciones de accesibilidad reales de la app.
+- **Para generar el PDF:** rellenar `ADDRESS` y `PLACE, DD/MM/YYYY` en una copia local (NO en el repo, es
+  público), y ejecutar
+  `google-chrome --headless --disable-gpu --no-pdf-header-footer --print-to-pdf=docs/store-assets/samsung/eaa-doc-easy-xtream-football.pdf docs/store-assets/samsung/eaa-doc.html`.
+  El PDF resultante está en `.gitignore`. Firmarlo (AutoFirma con el certificado o firma manuscrita escaneada)
+  y subirlo en Service Info cuando la ficha esté desbloqueada (ahora está en revisión y no admite cambios).
+- Firmar la DoC es declarar bajo responsabilidad propia que la app cumple la EAA: revisar el anexo antes.
+
 ## Traspaso entre máquinas (2026-09-06)
 - **Clave de subida:** `keystore.properties` + `keystore/easy-xtream-release.jks` están **solo en la máquina
   que subió 0.1.3–0.1.5** (no están en Gmail ni Drive). Copiarlos a la otra máquina (misma ruta, raíz del

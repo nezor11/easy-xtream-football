@@ -29,3 +29,6 @@ _db/
 _s.png
 _screen.png
 _s*.png
+
+# DoC EAA firmada (lleva direccion y firma): fuera del repo publico
+docs/store-assets/samsung/eaa-doc-easy-xtream-football.pdf
