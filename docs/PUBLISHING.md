@@ -1120,6 +1120,14 @@ símbolos que faltan en la fuente de LG sustituidos, Let's Encrypt evitado (jsDe
   certificado de residencia fiscal de la AEAT** (Sede Electrónica → Certificados tributarios → Residencia
   fiscal, con Cl@ve) y luego rellenar el formulario (residencia España, NIF, sin establecimiento permanente
   en Irlanda, convenio España-Irlanda).
+  ✅ **HECHO el 2026-10-27:** certificado "Residencia fiscal en España. Convenio" (país IRLANDA) sacado en la
+  Sede de la AEAT con Cl@ve (este Chrome no tiene certificado FNMT instalado; la opción de certificado da 403).
+  PDF en `~/Desktop/certificado-residencia-fiscal-irlanda-2026.pdf` (fuera del repo; validez 1 año, caduca el
+  **2027-10-27**). Formulario de Irlanda rellenado por el usuario: entidad "Empresario individual o empresa
+  unipersonal", convenio Sí, NIF, documento subido. Resultado en el Perfil de pagos: bloque **Irlanda: Aceptado**
+  (fecha de envío 2026-10-27, "nunca caduca"); bloque **Residencia fiscal: En revisión** (hasta 7 días hábiles,
+  avisan por correo; mientras tanto aplican las normas por defecto de España). Estados Unidos y Taiwán sin
+  información y sin aviso: no hace falta. Ya no queda ningún aviso pendiente en el Perfil de pagos.
   (`https://play.google.com/console/u/1/developers/7549371768525842906/paymentssettings`; ojo, la ruta es
   `paymentssettings`, `payments-profile` redirige a la lista de apps) → *Cómo recibes los pagos* → *Gestionar
   métodos de pago* → **Verificar**. Comprobado en la consola esa misma tarde: la cuenta acabada en 6844 ya
